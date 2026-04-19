@@ -42,65 +42,81 @@ export const Signup = () => {
   return (
     <div className="page">
       <Header />
-      <main className="auth-container">
-        <div className="auth-form">
-          <h1>Create Account</h1>
-          {message && <div className="message success">{message}</div>}
-          {error && <div className="message error">{error}</div>}
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-              />
+      <main>
+        <section className="hero">
+          <div className="hero-content">
+            <h2>Join Freelancer Hub</h2>
+            <p>Start your journey by creating an account today</p>
+          </div>
+        </section>
+
+        <section className="content-section" style={{ marginBottom: '80px' }}>
+          <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+            <div className="auth-form" style={{ marginTop: '30px' }}>
+              {message && <div className="message success">{message}</div>}
+              {error && <div className="message error">{error}</div>}
+              
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="username">Full Name</label>
+                  <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    value={formData.username}
+                    onChange={handleChange}
+                    placeholder="Enter your full name"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your.email@example.com"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Create a strong password (min 6 characters)"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="role">I'm signing up as</label>
+                  <select
+                    id="role"
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                    style={{ padding: '10px 12px', fontSize: '16px' }}
+                  >
+                    <option value="Client">👤 Client (Hiring freelancers)</option>
+                    <option value="Freelancer">💼 Freelancer (Looking for work)</option>
+                  </select>
+                </div>
+                <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px' }}>
+                  {loading ? 'Creating account...' : 'CREATE ACCOUNT'}
+                </button>
+              </form>
+
+              <p className="auth-link" style={{ marginTop: '20px' }}>
+                Already have an account? <a href="/login">Login here</a>
+              </p>
             </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="role">I am a</label>
-              <select
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-              >
-                <option value="Client">Client</option>
-                <option value="Freelancer">Freelancer</option>
-              </select>
-            </div>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? 'Creating account...' : 'Sign Up'}
-            </button>
-          </form>
-          <p className="auth-link">
-            Already have an account? <a href="/login">Login here</a>
-          </p>
-        </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

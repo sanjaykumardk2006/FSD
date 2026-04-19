@@ -5,9 +5,13 @@ import { Footer } from '../components/Footer';
 export const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
+    mobileNumber: '',
     email: '',
+    city: '',
     message: '',
   });
+
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,53 +21,120 @@ export const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // TODO: Send to backend
-    alert('Thank you for contacting us!');
-    setFormData({ name: '', email: '', message: '' });
+    console.log('Form submitted:', formData);
+    setSubmitted(true);
+    setTimeout(() => {
+      setSubmitted(false);
+      setFormData({ name: '', mobileNumber: '', email: '', city: '', message: '' });
+    }, 3000);
   };
 
   return (
     <div className="page">
       <Header />
-      <main className="content-container">
-        <h1>Contact Us</h1>
-        <form onSubmit={handleSubmit} className="contact-form">
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
+      <main>
+        <section className="hero">
+          <div className="hero-content">
+            <h2>Get in Touch</h2>
+            <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible</p>
           </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
+        </section>
+
+        <section className="content-section">
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'start', marginBottom: '80px' }}>
+            <div>
+              <h2>Contact Information</h2>
+              <div className="cards-grid" style={{ gridTemplateColumns: '1fr', marginTop: '30px' }}>
+                <div className="card" style={{ textAlign: 'left' }}>
+                  <h3>📧 Email</h3>
+                  <p><a href="mailto:support@freelancerhub.com" style={{ color: '#3b82f6', textDecoration: 'none' }}>support@freelancerhub.com</a></p>
+                </div>
+                <div className="card" style={{ textAlign: 'left' }}>
+                  <h3>📞 Phone</h3>
+                  <p><a href="tel:+15551234567" style={{ color: '#3b82f6', textDecoration: 'none' }}>+1 (555) 123-4567</a></p>
+                </div>
+                <div className="card" style={{ textAlign: 'left' }}>
+                  <h3>📍 Address</h3>
+                  <p>123 Tech Street<br />San Francisco, CA 94105<br />United States</p>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h2>Send us a Message</h2>
+              <form onSubmit={handleSubmit} className="contact-form" style={{ marginTop: '30px' }}>
+                {submitted && (
+                  <div style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '15px', borderRadius: '8px', marginBottom: '20px', textAlign: 'center', fontWeight: '600' }}>
+                    ✓ Thank you! We'll get back to you soon.
+                  </div>
+                )}
+                <div className="form-group">
+                  <label htmlFor="name">Full Name *</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your full name"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="mobileNumber">Mobile Number *</label>
+                  <input
+                    type="tel"
+                    id="mobileNumber"
+                    name="mobileNumber"
+                    value={formData.mobileNumber}
+                    onChange={handleChange}
+                    placeholder="+1 (555) 123-4567"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="email">Email Address *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your.email@example.com"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="city">City *</label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    placeholder="Your city"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="message">Message *</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Your message..."
+                    rows="6"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '12px', fontWeight: '700' }}>
+                  SEND MESSAGE
+                </button>
+              </form>
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="message">Message</label>
-            <textarea
-              id="message"
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              rows="5"
-              required
-            ></textarea>
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Send Message
-          </button>
-        </form>
+        </section>
       </main>
       <Footer />
     </div>

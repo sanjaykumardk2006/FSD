@@ -53,59 +53,71 @@ export const Login = () => {
   return (
     <div className="page">
       <Header />
-      <main className="auth-container">
-        <div className="auth-form">
-          <h1>Login</h1>
-          
-          <div className="login-type-selector">
-            <button
-              className={`type-btn ${loginType === 'Client' ? 'active' : ''}`}
-              onClick={() => setLoginType('Client')}
-            >
-              Login as Client
-            </button>
-            <button
-              className={`type-btn ${loginType === 'Freelancer' ? 'active' : ''}`}
-              onClick={() => setLoginType('Freelancer')}
-            >
-              Login as Freelancer
-            </button>
+      <main>
+        <section className="hero">
+          <div className="hero-content">
+            <h2>Welcome Back</h2>
+            <p>Log in to your Freelancer Hub account and continue your journey</p>
           </div>
+        </section>
 
-          {message && <div className="message success">{message}</div>}
-          {error && <div className="message error">{error}</div>}
+        <section className="content-section" style={{ marginBottom: '80px' }}>
+          <div style={{ maxWidth: '500px', margin: '0 auto' }}>
+            <div className="auth-form" style={{ marginTop: '30px' }}>
+              <div className="login-type-selector">
+                <button
+                  className={`type-btn ${loginType === 'Client' ? 'active' : ''}`}
+                  onClick={() => setLoginType('Client')}
+                >
+                  👤 Client
+                </button>
+                <button
+                  className={`type-btn ${loginType === 'Freelancer' ? 'active' : ''}`}
+                  onClick={() => setLoginType('Freelancer')}
+                >
+                  💼 Freelancer
+                </button>
+              </div>
 
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-              />
+              {message && <div className="message success">{message}</div>}
+              {error && <div className="message error">{error}</div>}
+
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label htmlFor="email">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your.email@example.com"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    required
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px' }}>
+                  {loading ? 'Logging in...' : 'LOGIN'}
+                </button>
+              </form>
+
+              <p className="auth-link" style={{ marginTop: '20px' }}>
+                Don't have an account? <a href="/signup">Create one here</a>
+              </p>
             </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" disabled={loading}>
-              {loading ? 'Logging in...' : 'Login'}
-            </button>
-          </form>
-          <p className="auth-link">
-            Don't have an account? <a href="/signup">Sign up here</a>
-          </p>
-        </div>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>
