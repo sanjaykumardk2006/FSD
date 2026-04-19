@@ -1,0 +1,33 @@
+eslint.config.js
+index.html
+package.json
+README.md
+vite.config.js
+.gitignore
+node_modules/
+dist/
+public/
+src/
+	App.css
+	App.jsx
+	index.css
+	main.jsx
+	assets/
+	components/
+		Header.jsx
+		Footer.jsx
+	pages/
+		Home.jsx
+		About.jsx
+		Contact.jsx
+		Signup.jsx
+		Login.jsx
+		ClientDashboard.jsx
+		FreelancerDashboard.jsx
+		JobProposals.jsx
+		ProjectDetail.jsx
+	context/
+		AuthContext.jsx
+	utils/
+		apiClient.js
+		PrivateRoute.jsx

@@ -1,0 +1,289 @@
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import apiClient from '../utils/apiClient';
+import { AuthContext } from '../context/AuthContext';
+import { Header } from '../components/Header';
+import { Footer } from '../components/Footer';
+
+export const FreelancerDashboard = () => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState('jobs');
+  const [jobs, setJobs] = useState([]);
+  const [proposals, setProposals] = useState([]);
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [showProposalForm, setShowProposalForm] = useState(false);
+  const [proposalData, setProposalData] = useState({
+    skills: [],
+    experience: '',
+    proposedCost: '',
+    proposedDeadline: '',
+    coverLetter: '',
+  });
+
+  useEffect(() => {
+    fetchJobs();
+    fetchProposals();
+    fetchProjects();
+  }, []);
+
+  const fetchJobs = async () => {
+    try {
+      const response = await apiClient.get('/jobs/all');
+      setJobs(response.data.jobs || []);
+    } catch (error) {
+      console.error('Error fetching jobs:', error);
+    }
+  };
+
+  const fetchProposals = async () => {
+    try {
+      const response = await apiClient.get('/proposals/my-proposals');
+      setProposals(response.data.proposals || []);
+    } catch (error) {
+      console.error('Error fetching proposals:', error);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await apiClient.get('/projects/freelancer/projects');
+      setProjects(response.data.projects || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleProposalChange = (e) => {
+    const { name, value } = e.target;
+    setProposalData({ ...proposalData, [name]: value });
+  };
+
+  const handleSkillsChange = (e) => {
+    setProposalData({
+      ...proposalData,
+      skills: e.target.value.split(',').map((skill) => skill.trim()),
+    });
+  };
+
+  const handleSubmitProposal = async (e) => {
+    e.preventDefault();
+    try {
+      await apiClient.post('/proposals/submit', {
+        jobId: selectedJob._id,
+        ...proposalData,
+      });
+      alert('Proposal submitted successfully!');
+      setShowProposalForm(false);
+      setSelectedJob(null);
+      setProposalData({
+        skills: [],
+        experience: '',
+        proposedCost: '',
+        proposedDeadline: '',
+        coverLetter: '',
+      });
+      fetchProposals();
+      fetchJobs();
+    } catch (error) {
+      alert('Error submitting proposal: ' + error.response?.data?.message);
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  return (
+    <div className="page">
+      <Header />
+      <main className="dashboard-container">
+        <div className="dashboard-header">
+          <h1>Freelancer Dashboard</h1>
+          <div className="dashboard-actions">
+            <span>Welcome, {user?.username}!</span>
+            <button className="btn btn-secondary" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        </div>
+
+        <div className="dashboard-tabs">
+          <button
+            className={`tab-btn ${activeTab === 'jobs' ? 'active' : ''}`}
+            onClick={() => setActiveTab('jobs')}
+          >
+            Available Jobs ({jobs.length})
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'proposals' ? 'active' : ''}`}
+            onClick={() => setActiveTab('proposals')}
+          >
+            My Proposals ({proposals.length})
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'projects' ? 'active' : ''}`}
+            onClick={() => setActiveTab('projects')}
+          >
+            Projects ({projects.length})
+          </button>
+        </div>
+
+        <div className="dashboard-content">
+          {activeTab === 'jobs' && (
+            <div className="jobs-section">
+              {jobs.length === 0 ? (
+                <p>No available jobs at this moment.</p>
+              ) : (
+                jobs.map((job) => (
+                  <div key={job._id} className="job-card">
+                    <h3>{job.title}</h3>
+                    <p>{job.description}</p>
+                    <p className="job-meta">
+                      Budget: ${job.budget} | Skills: {job.requiredSkills.join(', ')}
+                    </p>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        setSelectedJob(job);
+                        setShowProposalForm(true);
+                      }}
+                    >
+                      Submit Proposal
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {activeTab === 'proposals' && (
+            <div className="proposals-section">
+              {proposals.length === 0 ? (
+                <p>You haven't submitted any proposals yet.</p>
+              ) : (
+                proposals.map((proposal) => (
+                  <div key={proposal._id} className="proposal-card">
+                    <h3>Job: {proposal.jobId?.title}</h3>
+                    <p>Status: {proposal.status}</p>
+                    <p>Proposed Cost: ${proposal.proposedCost}</p>
+                    <p>Submitted: {new Date(proposal.createdAt).toLocaleDateString()}</p>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
+          {activeTab === 'projects' && (
+            <div className="projects-section">
+              {projects.length === 0 ? (
+                <p>No active projects yet. Once a proposal is accepted, it will appear here.</p>
+              ) : (
+                projects.map((project) => (
+                  <div key={project._id} className="project-card">
+                    <h3>{project.jobId?.title}</h3>
+                    <p>Status: {project.status}</p>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => navigate(`/project/${project._id}`)}
+                    >
+                      View & Update
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Proposal Form Modal */}
+        {showProposalForm && selectedJob && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h2>Submit Proposal for: {selectedJob.title}</h2>
+              <form onSubmit={handleSubmitProposal} className="proposal-form">
+                <div className="form-group">
+                  <label htmlFor="skills">Your Skills (comma-separated)</label>
+                  <input
+                    type="text"
+                    id="skills"
+                    value={proposalData.skills.join(', ')}
+                    onChange={handleSkillsChange}
+                    placeholder="React, Node.js, MongoDB"
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="experience">Your Experience</label>
+                  <textarea
+                    id="experience"
+                    name="experience"
+                    value={proposalData.experience}
+                    onChange={handleProposalChange}
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="proposedCost">Proposed Cost ($)</label>
+                    <input
+                      type="number"
+                      id="proposedCost"
+                      name="proposedCost"
+                      value={proposalData.proposedCost}
+                      onChange={handleProposalChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="proposedDeadline">Delivery Date</label>
+                    <input
+                      type="date"
+                      id="proposedDeadline"
+                      name="proposedDeadline"
+                      value={proposalData.proposedDeadline}
+                      onChange={handleProposalChange}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="coverLetter">Cover Letter</label>
+                  <textarea
+                    id="coverLetter"
+                    name="coverLetter"
+                    value={proposalData.coverLetter}
+                    onChange={handleProposalChange}
+                    rows="4"
+                  ></textarea>
+                </div>
+                <div className="modal-buttons">
+                  <button type="submit" className="btn btn-primary">
+                    Submit Proposal
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={() => {
+                      setShowProposalForm(false);
+                      setSelectedJob(null);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+      </main>
+      <Footer />
+    </div>
+  );
+};
