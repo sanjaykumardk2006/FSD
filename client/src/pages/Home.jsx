@@ -64,28 +64,58 @@ export const Home = () => {
 
         <section className="content-section" style={{ marginBottom: '80px' }}>
           <h2>How It Works</h2>
-          <div className="cards-grid">
-            <div className="card">
-              <div className="card-icon">👤</div>
+          <div className="steps-grid">
+            <div className="step-card">
+              <div className="step-number">1</div>
+              <div className="step-icon">👤</div>
               <h3>Create Your Profile</h3>
-              <p>Sign up and showcase your skills or post your project requirements to get started.</p>
+              <p>Sign up and build your professional profile by showcasing your skills, experience, and portfolio. Clients can post project requirements, while freelancers can highlight their expertise to attract the right opportunities.</p>
             </div>
-            <div className="card">
-              <div className="card-icon">🔍</div>
+            <div className="step-card">
+              <div className="step-number">2</div>
+              <div className="step-icon">🔍</div>
               <h3>Find the Perfect Match</h3>
-              <p>Browse freelancers or job listings to find exactly what you need for your project.</p>
+              <p>Explore a wide range of projects or talented freelancers. Use filters based on skills, budget, and experience to connect with the perfect match for your needs.</p>
             </div>
-            <div className="card">
-              <div className="card-icon">🤝</div>
+            <div className="step-card">
+              <div className="step-number">3</div>
+              <div className="step-icon">🤝</div>
               <h3>Collaborate & Communicate</h3>
-              <p>Work directly with your partner through messaging and project management tools.</p>
+              <p>Work seamlessly with built-in chat and project management tools. Share updates, track progress, and stay aligned throughout the project lifecycle.</p>
             </div>
-            <div className="card">
-              <div className="card-icon">✅</div>
+            <div className="step-card">
+              <div className="step-number">4</div>
+              <div className="step-icon">✅</div>
               <h3>Deliver & Get Paid</h3>
-              <p>Complete the project, make payment, and leave reviews for future opportunities.</p>
+              <p>Complete your work, submit deliverables, and receive secure payments. Clients can review freelancers, helping build trust and unlock future opportunities.</p>
             </div>
           </div>
+        </section>
+
+        <section className="content-section" style={{ marginBottom: '60px' }}>
+          <h2>Success Stories</h2>
+          <div className="testimonial-grid">
+            <div className="testimonial-card">
+              <div className="star-rating">⭐⭐⭐⭐⭐</div>
+              <p className="testimonial-text">"Freelancer Hub connected me with the perfect developer for my project. The communication tools made collaboration seamless and the project was delivered on time."</p>
+              <p className="testimonial-author">- Sarah Johnson, CEO at TechStart</p>
+            </div>
+            <div className="testimonial-card">
+              <div className="star-rating">⭐⭐⭐⭐⭐</div>
+              <p className="testimonial-text">"As a freelancer, I've found consistent work through this platform. The secure payment system and professional environment make it my go-to marketplace."</p>
+              <p className="testimonial-author">- Mark Davis, Full Stack Developer</p>
+            </div>
+            <div className="testimonial-card">
+              <div className="star-rating">⭐⭐⭐⭐⭐</div>
+              <p className="testimonial-text">"The platform's support team has been incredible. They helped me navigate the project management features and now I manage multiple projects efficiently."</p>
+              <p className="testimonial-author">- Emily Chen, Project Manager</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="slogan-section">
+          <h2>Your Success is Our Mission</h2>
+          <p>Join thousands of successful freelancers and clients building their dreams on Freelancer Hub</p>
         </section>
       </main>
       <Footer />

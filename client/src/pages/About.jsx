@@ -102,6 +102,11 @@ export const About = () => {
             </div>
           </div>
         </section>
+
+        <section className="slogan-section">
+          <h2>Building the Future of Work</h2>
+          <p>Empowering individuals and businesses to achieve their full potential through meaningful connections</p>
+        </section>
       </main>
       <Footer />
     </div>

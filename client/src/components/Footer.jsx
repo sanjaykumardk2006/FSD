@@ -7,9 +7,18 @@ export const Footer = () => {
         <div className="footer-content">
           <div className="footer-section">
             <h3>Freelancer Hub</h3>
-            <p><strong>Email:</strong> support@freelancerhub.com</p>
-            <p><strong>Phone:</strong> +1 (555) 123-4567</p>
-            <p><strong>Address:</strong> 123 Tech Street, San Francisco, CA 94105</p>
+            <div className="footer-contact-item">
+              <strong>Email</strong>
+              <p><a href="mailto:support@freelancerhub.com">support@freelancerhub.com</a></p>
+            </div>
+            <div className="footer-contact-item">
+              <strong>Phone</strong>
+              <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+            </div>
+            <div className="footer-contact-item">
+              <strong>Address</strong>
+              <p>123 Tech Street, San Francisco, CA 94105</p>
+            </div>
             <div className="social-links">
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

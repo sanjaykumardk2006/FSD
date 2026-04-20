@@ -135,6 +135,11 @@ export const Contact = () => {
             </div>
           </div>
         </section>
+
+        <section className="slogan-section">
+          <h2>Let's Connect</h2>
+          <p>Have questions? Our team is here to help you succeed on Freelancer Hub</p>
+        </section>
       </main>
       <Footer />
     </div>
