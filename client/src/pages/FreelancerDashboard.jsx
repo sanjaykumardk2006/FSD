@@ -99,6 +99,19 @@ export const FreelancerDashboard = () => {
     navigate('/');
   };
 
+  const handleDeleteProposal = async (proposalId) => {
+    if (!window.confirm('Are you sure you want to delete this proposal?')) {
+      return;
+    }
+    try {
+      await apiClient.delete(`/proposals/${proposalId}`);
+      alert('Proposal deleted successfully!');
+      fetchProposals();
+    } catch (error) {
+      alert('Error deleting proposal: ' + error.response?.data?.message);
+    }
+  };
+
   return (
     <div className="page">
       <Header />
@@ -173,6 +186,16 @@ export const FreelancerDashboard = () => {
                     <p>Status: {proposal.status}</p>
                     <p>Proposed Cost: ${proposal.proposedCost}</p>
                     <p>Submitted: {new Date(proposal.createdAt).toLocaleDateString()}</p>
+                    <div style={{ marginTop: '10px' }}>
+                      <button
+                        className="btn btn-secondary"
+                        onClick={() => handleDeleteProposal(proposal._id)}
+                        style={{ backgroundColor: '#dc3545', borderColor: '#dc3545' }}
+                        disabled={proposal.status === 'Accepted'}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 ))
               )}

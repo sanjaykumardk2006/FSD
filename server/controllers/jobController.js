@@ -108,3 +108,29 @@ exports.updateJobStatus = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Client - Delete job
+exports.deleteJob = async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.jobId);
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+
+    // Verify client owns this job
+    if (job.clientId.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    // Delete associated proposals
+    await Proposal.deleteMany({ jobId: req.params.jobId });
+
+    // Delete the job
+    await Job.findByIdAndDelete(req.params.jobId);
+
+    res.status(200).json({ message: 'Job deleted successfully' });
+  } catch (error) {
+    console.error('Delete job error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

@@ -102,8 +102,8 @@ export const Signup = () => {
                     onChange={handleChange}
                     style={{ padding: '10px 12px', fontSize: '16px' }}
                   >
-                    <option value="Client">👤 Client (Hiring freelancers)</option>
-                    <option value="Freelancer">💼 Freelancer (Looking for work)</option>
+                    <option value="Client">Client</option>
+                    <option value="Freelancer">Freelancer</option>
                   </select>
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px' }}>

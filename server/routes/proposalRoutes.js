@@ -1,5 +1,5 @@
 const express = require('express');
-const { submitProposal, getFreelancerProposals, acceptProposal, rejectProposal } = require('../controllers/proposalController');
+const { submitProposal, getFreelancerProposals, acceptProposal, rejectProposal, deleteProposal } = require('../controllers/proposalController');
 const { authMiddleware, roleMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -15,5 +15,8 @@ router.put('/:proposalId/accept', authMiddleware, roleMiddleware(['Client']), ac
 
 // Client - Reject proposal
 router.put('/:proposalId/reject', authMiddleware, roleMiddleware(['Client']), rejectProposal);
+
+// Freelancer - Delete proposal
+router.delete('/:proposalId', authMiddleware, roleMiddleware(['Freelancer']), deleteProposal);
 
 module.exports = router;

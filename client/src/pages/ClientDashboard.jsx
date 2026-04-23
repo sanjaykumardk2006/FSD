@@ -82,6 +82,19 @@ export const ClientDashboard = () => {
     navigate('/');
   };
 
+  const handleDeleteJob = async (jobId) => {
+    if (!window.confirm('Are you sure you want to delete this job? All associated proposals will also be deleted.')) {
+      return;
+    }
+    try {
+      await apiClient.delete(`/jobs/${jobId}`);
+      alert('Job deleted successfully!');
+      fetchJobs();
+    } catch (error) {
+      alert('Error deleting job: ' + error.response?.data?.message);
+    }
+  };
+
   return (
     <div className="page">
       <Header />
@@ -197,12 +210,21 @@ export const ClientDashboard = () => {
                       <p className="job-meta">
                         Budget: ${job.budget} | Status: {job.status}
                       </p>
-                      <button
-                        className="btn btn-secondary"
-                        onClick={() => navigate(`/job/${job._id}/proposals`)}
-                      >
-                        View Proposals
-                      </button>
+                      <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => navigate(`/job/${job._id}/proposals`)}
+                        >
+                          View Proposals
+                        </button>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => handleDeleteJob(job._id)}
+                          style={{ backgroundColor: '#dc3545', borderColor: '#dc3545' }}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   ))
                 )}

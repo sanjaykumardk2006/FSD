@@ -169,3 +169,31 @@ exports.rejectProposal = [
     }
   },
 ];
+
+// Freelancer - Delete proposal
+exports.deleteProposal = async (req, res) => {
+  try {
+    const proposal = await Proposal.findById(req.params.proposalId);
+    if (!proposal) {
+      return res.status(404).json({ message: 'Proposal not found' });
+    }
+
+    // Verify freelancer owns this proposal
+    if (proposal.freelancerId.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    // Only allow deletion if proposal is not accepted
+    if (proposal.status === 'Accepted') {
+      return res.status(400).json({ message: 'Cannot delete an accepted proposal' });
+    }
+
+    // Delete the proposal
+    await Proposal.findByIdAndDelete(req.params.proposalId);
+
+    res.status(200).json({ message: 'Proposal deleted successfully' });
+  } catch (error) {
+    console.error('Delete proposal error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
