@@ -65,11 +65,21 @@ main {
 .logo h1 {
   font-size: 28px;
   font-weight: 800;
-  background-color: #000000;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 6px;
+  color: var(--dark-blue);
   display: inline-block;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.freelancer-text {
+  color: #000000;
+}
+
+.logo h1 .hub-text {
+  color: #ff6b6b;
 }
 
 .nav {
@@ -769,7 +779,6 @@ main {
   margin-bottom: 30px;
   border-bottom: 2px solid var(--border-color);
 }
-
 .tab-btn {
   padding: 12px 24px;
   background-color: transparent;
@@ -785,8 +794,6 @@ main {
   color: var(--light-blue);
   border-bottom-color: var(--light-blue);
 }
-}
-
 .tab-btn {
   padding: 12px 20px;
   border: none;

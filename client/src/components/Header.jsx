@@ -6,7 +6,7 @@ export const Header = () => {
     <header className="header">
       <div className="header-container">
         <div className="logo">
-          <h1>💼 Freelancer Hub</h1>
+          <h1><span className="freelancer-text">Freelancer</span> <span className="hub-text">Hub</span></h1>
         </div>
         <nav className="nav">
           <a href="/">Home</a>

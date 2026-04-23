@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import apiClient from '../utils/apiClient';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
@@ -18,15 +19,18 @@ export const Contact = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Send to backend
-    console.log('Form submitted:', formData);
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
+    try {
+      const response = await apiClient.post('/contact/submit', formData);
+      setSubmitted(true);
       setFormData({ name: '', mobileNumber: '', email: '', city: '', message: '' });
-    }, 3000);
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3000);
+    } catch (error) {
+      alert('Error sending message: ' + error.response?.data?.message || 'Something went wrong');
+    }
   };
 
   return (
@@ -47,15 +51,15 @@ export const Contact = () => {
               <div className="cards-grid" style={{ gridTemplateColumns: '1fr', marginTop: '30px' }}>
                 <div className="card" style={{ textAlign: 'left' }}>
                   <h3>📧 Email</h3>
-                  <p><a href="mailto:support@freelancerhub.com" style={{ color: '#3b82f6', textDecoration: 'none' }}>support@freelancerhub.com</a></p>
+                  <p><a href="mailto:sanjaykumardk.24cse@kongu.edu" style={{ color: '#3b82f6', textDecoration: 'none' }}>sanjaykumardk.24cse@kongu.edu</a></p>
                 </div>
                 <div className="card" style={{ textAlign: 'left' }}>
                   <h3>📞 Phone</h3>
-                  <p><a href="tel:+15551234567" style={{ color: '#3b82f6', textDecoration: 'none' }}>+1 (555) 123-4567</a></p>
+                  <p><a href="tel:xxxxxxxxxx" style={{ color: '#3b82f6', textDecoration: 'none' }}>xxxxxxxxxx</a></p>
                 </div>
                 <div className="card" style={{ textAlign: 'left' }}>
                   <h3>📍 Address</h3>
-                  <p>123 Tech Street<br />San Francisco, CA 94105<br />United States</p>
+                  <p>Kongu Engineering College<br />Perundurai<br />Erode - 638060</p>
                 </div>
               </div>
             </div>
@@ -76,7 +80,7 @@ export const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Your full name"
+                    placeholder="Your Name"
                     required
                   />
                 </div>
@@ -88,7 +92,7 @@ export const Contact = () => {
                     name="mobileNumber"
                     value={formData.mobileNumber}
                     onChange={handleChange}
-                    placeholder="+1 (555) 123-4567"
+                    placeholder="xxxxxxxxxx"
                     required
                   />
                 </div>
@@ -129,7 +133,7 @@ export const Contact = () => {
                   ></textarea>
                 </div>
                 <button type="submit" className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '12px', fontWeight: '700' }}>
-                  SEND MESSAGE
+                  CONNECT
                 </button>
               </form>
             </div>
