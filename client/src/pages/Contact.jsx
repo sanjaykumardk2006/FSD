@@ -55,7 +55,7 @@ export const Contact = () => {
                 </div>
                 <div className="card" style={{ textAlign: 'left' }}>
                   <h3>📞 Phone</h3>
-                  <p><a href="tel:xxxxxxxxxx" style={{ color: '#3b82f6', textDecoration: 'none' }}>xxxxxxxxxx</a></p>
+                  <p><a href="tel:7397544021" style={{ color: '#3b82f6', textDecoration: 'none' }}>7397544021</a></p>
                 </div>
                 <div className="card" style={{ textAlign: 'left' }}>
                   <h3>📍 Address</h3>

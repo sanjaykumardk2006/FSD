@@ -28,6 +28,7 @@ exports.submitContactForm = [
       });
       
       await contactMessage.save();
+      console.log('✅ Contact message saved to database:', contactMessage._id);
 
       // Send confirmation email to user's email
       try {
