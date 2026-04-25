@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -6,6 +6,28 @@ import '../App.css';
 
 export const Home = () => {
   const navigate = useNavigate();
+  const sectionRefs = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sectionRefs.current.forEach((section) => {
+      if (section) {
+        section.style.opacity = '0';
+        observer.observe(section);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="page">
@@ -26,7 +48,7 @@ export const Home = () => {
           </div>
         </section>
 
-        <section className="content-section">
+        <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
           <h2>Why Choose Freelancer Hub?</h2>
           <div className="cards-grid">
             <div className="card">
@@ -62,37 +84,7 @@ export const Home = () => {
           </div>
         </section>
 
-        <section className="content-section" style={{ marginBottom: '80px' }}>
-          <h2>How It Works</h2>
-          <div className="steps-grid">
-            <div className="step-card">
-              <div className="step-number">1</div>
-              <div className="step-icon">👤</div>
-              <h3>Create Your Profile</h3>
-              <p>Sign up and build your professional profile by showcasing your skills, experience, and portfolio. Clients can post project requirements, while freelancers can highlight their expertise to attract the right opportunities.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">2</div>
-              <div className="step-icon">🔍</div>
-              <h3>Find the Perfect Match</h3>
-              <p>Explore a wide range of projects or talented freelancers. Use filters based on skills, budget, and experience to connect with the perfect match for your needs.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">3</div>
-              <div className="step-icon">🤝</div>
-              <h3>Collaborate & Communicate</h3>
-              <p>Work seamlessly with built-in chat and project management tools. Share updates, track progress, and stay aligned throughout the project lifecycle.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">4</div>
-              <div className="step-icon">✅</div>
-              <h3>Deliver & Get Paid</h3>
-              <p>Complete your work, submit deliverables, and receive secure payments. Clients can review freelancers, helping build trust and unlock future opportunities.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="content-section" style={{ marginBottom: '60px' }}>
+        <section className="content-section" style={{ marginBottom: '60px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2>Success Stories</h2>
           <div className="testimonial-grid">
             <div className="testimonial-card">
@@ -113,7 +105,7 @@ export const Home = () => {
           </div>
         </section>
 
-        <section className="slogan-section">
+        <section className="slogan-section" ref={(el) => sectionRefs.current.push(el)}>
           <h2>Your Success is Our Mission</h2>
           <p>Join thousands of successful freelancers and clients building their dreams on Freelancer Hub</p>
         </section>
