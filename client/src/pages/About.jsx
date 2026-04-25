@@ -30,23 +30,47 @@ export const About = () => {
           </div>
         </section>
 
-        <section className="content-section">
-          <h2>Key Statistics</h2>
-          <div className="cards-grid">
-            <div className="card">
-              <div className="card-icon">👥</div>
-              <h3>100K+ Users</h3>
-              <p>Join thousands of freelancers and clients finding success on our platform every day.</p>
+        <section className="content-section zigzag-section">
+          <h2>How We Work</h2>
+          <div className="zigzag-container">
+            <div className="zigzag-item zigzag-left">
+              <div className="zigzag-image">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Create Profile" />
+              </div>
+              <div className="zigzag-content">
+                <h3>Create Your Profile</h3>
+                <p>Sign up and build your professional profile by showcasing your skills, experience, and portfolio. Clients can post project requirements, while freelancers can highlight their expertise to attract the right opportunities.</p>
+              </div>
             </div>
-            <div className="card">
-              <div className="card-icon">🌐</div>
-              <h3>150+ Countries</h3>
-              <p>Operating globally, connecting talented professionals across continents and time zones.</p>
+
+            <div className="zigzag-item zigzag-right">
+              <div className="zigzag-image">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Find Match" />
+              </div>
+              <div className="zigzag-content">
+                <h3>Find the Perfect Match</h3>
+                <p>Explore a wide range of projects or talented freelancers. Use filters based on skills, budget, and experience to connect with the perfect match for your needs.</p>
+              </div>
             </div>
-            <div className="card">
-              <div className="card-icon">🤝</div>
-              <h3>50K+ Connections</h3>
-              <p>Thousands of successful collaborations happening every month on our platform.</p>
+
+            <div className="zigzag-item zigzag-left">
+              <div className="zigzag-image">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Collaborate" />
+              </div>
+              <div className="zigzag-content">
+                <h3>Collaborate & Communicate</h3>
+                <p>Work seamlessly with built-in chat and project management tools. Share updates, track progress, and stay aligned throughout the project lifecycle.</p>
+              </div>
+            </div>
+
+            <div className="zigzag-item zigzag-right">
+              <div className="zigzag-image">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&h=400&fit=crop" alt="Get Paid" />
+              </div>
+              <div className="zigzag-content">
+                <h3>Deliver & Get Paid</h3>
+                <p>Complete your work, submit deliverables, and receive secure payments. Clients can review freelancers, helping build trust and unlock future opportunities.</p>
+              </div>
             </div>
           </div>
         </section>
@@ -106,6 +130,24 @@ export const About = () => {
         <section className="slogan-section">
           <h2>Building the Future of Work</h2>
           <p>Empowering individuals and businesses to achieve their full potential through meaningful connections</p>
+        </section>
+
+        <section className="content-section">
+          <h2>Key Statistics</h2>
+          <div className="cards-grid">
+            <div className="card stats-card">
+              <h3>1M+ Users</h3>
+              <p>Join thousands of freelancers and clients finding success on our platform every day.</p>
+            </div>
+            <div className="card stats-card">
+              <h3>150+ Countries</h3>
+              <p>Operating globally, connecting talented professionals across continents and time zones.</p>
+            </div>
+            <div className="card stats-card">
+              <h3>500K+ Connections</h3>
+              <p>Thousands of successful collaborations happening every month on our platform.</p>
+            </div>
+          </div>
         </section>
       </main>
       <Footer />

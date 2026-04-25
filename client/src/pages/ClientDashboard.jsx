@@ -100,9 +100,11 @@ export const ClientDashboard = () => {
       <Header />
       <main className="dashboard-container">
         <div className="dashboard-header">
-          <h1>Client Dashboard</h1>
+          <div className="dashboard-title-section">
+            <h1>Client Dashboard</h1>
+            <span className="welcome-message">Welcome, {user?.username}!</span>
+          </div>
           <div className="dashboard-actions">
-            <span>Welcome, {user?.username}!</span>
             <button className="btn btn-secondary" onClick={handleLogout}>
               Logout
             </button>
@@ -116,23 +118,19 @@ export const ClientDashboard = () => {
           >
             My Jobs ({jobs.length})
           </button>
-          <button
-            className={`tab-btn ${activeTab === 'projects' ? 'active' : ''}`}
-            onClick={() => setActiveTab('projects')}
-          >
-            Projects ({projects.length})
-          </button>
         </div>
 
         <div className="dashboard-content">
           {activeTab === 'jobs' && (
             <div className="jobs-section">
-              <button
-                className="btn btn-primary"
-                onClick={() => setShowJobForm(!showJobForm)}
-              >
-                {showJobForm ? 'Cancel' : 'Post New Job'}
-              </button>
+              <div className="job-buttons-container">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => setShowJobForm(!showJobForm)}
+                >
+                  Post New Job
+                </button>
+              </div>
 
               {showJobForm && (
                 <form onSubmit={handlePostJob} className="job-form">
@@ -165,7 +163,6 @@ export const ClientDashboard = () => {
                       id="requiredSkills"
                       value={formData.requiredSkills.join(', ')}
                       onChange={handleSkillsChange}
-                      placeholder="React, Node.js, MongoDB"
                       required
                     />
                   </div>
@@ -193,9 +190,18 @@ export const ClientDashboard = () => {
                       />
                     </div>
                   </div>
-                  <button type="submit" className="btn btn-primary">
-                    Post Job
-                  </button>
+                  <div className="form-buttons-group">
+                    <button type="submit" className="btn btn-primary">
+                      Post Job
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      onClick={() => setShowJobForm(!showJobForm)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </form>
               )}
 
@@ -229,27 +235,6 @@ export const ClientDashboard = () => {
                   ))
                 )}
               </div>
-            </div>
-          )}
-
-          {activeTab === 'projects' && (
-            <div className="projects-section">
-              {projects.length === 0 ? (
-                <p>No active projects yet.</p>
-              ) : (
-                projects.map((project) => (
-                  <div key={project._id} className="project-card">
-                    <h3>{project.jobId?.title}</h3>
-                    <p>Status: {project.status}</p>
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => navigate(`/project/${project._id}`)}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                ))
-              )}
             </div>
           )}
         </div>

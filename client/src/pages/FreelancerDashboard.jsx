@@ -11,7 +11,6 @@ export const FreelancerDashboard = () => {
   const [activeTab, setActiveTab] = useState('jobs');
   const [jobs, setJobs] = useState([]);
   const [proposals, setProposals] = useState([]);
-  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
   const [showProposalForm, setShowProposalForm] = useState(false);
@@ -26,7 +25,6 @@ export const FreelancerDashboard = () => {
   useEffect(() => {
     fetchJobs();
     fetchProposals();
-    fetchProjects();
   }, []);
 
   const fetchJobs = async () => {
@@ -44,15 +42,6 @@ export const FreelancerDashboard = () => {
       setProposals(response.data.proposals || []);
     } catch (error) {
       console.error('Error fetching proposals:', error);
-    }
-  };
-
-  const fetchProjects = async () => {
-    try {
-      const response = await apiClient.get('/projects/freelancer/projects');
-      setProjects(response.data.projects || []);
-    } catch (error) {
-      console.error('Error fetching projects:', error);
     } finally {
       setLoading(false);
     }
@@ -117,9 +106,11 @@ export const FreelancerDashboard = () => {
       <Header />
       <main className="dashboard-container">
         <div className="dashboard-header">
-          <h1>Freelancer Dashboard</h1>
+          <div className="dashboard-title-section">
+            <h1>Freelancer Dashboard</h1>
+            <span className="welcome-message">Welcome, {user?.username}!</span>
+          </div>
           <div className="dashboard-actions">
-            <span>Welcome, {user?.username}!</span>
             <button className="btn btn-secondary" onClick={handleLogout}>
               Logout
             </button>
@@ -138,12 +129,6 @@ export const FreelancerDashboard = () => {
             onClick={() => setActiveTab('proposals')}
           >
             My Proposals ({proposals.length})
-          </button>
-          <button
-            className={`tab-btn ${activeTab === 'projects' ? 'active' : ''}`}
-            onClick={() => setActiveTab('projects')}
-          >
-            Projects ({projects.length})
           </button>
         </div>
 
@@ -201,27 +186,6 @@ export const FreelancerDashboard = () => {
               )}
             </div>
           )}
-
-          {activeTab === 'projects' && (
-            <div className="projects-section">
-              {projects.length === 0 ? (
-                <p>No active projects yet. Once a proposal is accepted, it will appear here.</p>
-              ) : (
-                projects.map((project) => (
-                  <div key={project._id} className="project-card">
-                    <h3>{project.jobId?.title}</h3>
-                    <p>Status: {project.status}</p>
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => navigate(`/project/${project._id}`)}
-                    >
-                      View & Update
-                    </button>
-                  </div>
-                ))
-              )}
-            </div>
-          )}
         </div>
 
         {/* Proposal Form Modal */}
@@ -237,7 +201,6 @@ export const FreelancerDashboard = () => {
                     id="skills"
                     value={proposalData.skills.join(', ')}
                     onChange={handleSkillsChange}
-                    placeholder="React, Node.js, MongoDB"
                     required
                   />
                 </div>
