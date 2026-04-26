@@ -73,12 +73,11 @@ export const ProjectDetail = () => {
     e.preventDefault();
     try {
       await apiClient.post(`/projects/${projectId}/progress`, progressData);
-      alert('Progress updated!');
       setShowProgressForm(false);
       setProgressData({ stage: '', description: '' });
       fetchProject();
     } catch (error) {
-      alert('Error updating progress: ' + error.response?.data?.message);
+      console.error('Error updating progress:', error.response?.data?.message || error.message);
     }
   };
 

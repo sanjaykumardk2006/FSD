@@ -62,7 +62,6 @@ export const ClientDashboard = () => {
     e.preventDefault();
     try {
       await apiClient.post('/jobs/post', formData);
-      alert('Job posted successfully!');
       setShowJobForm(false);
       setFormData({
         title: '',
@@ -73,7 +72,7 @@ export const ClientDashboard = () => {
       });
       fetchJobs();
     } catch (error) {
-      alert('Error posting job: ' + error.response?.data?.message);
+      console.error('Error posting job:', error.response?.data?.message || error.message);
     }
   };
 
@@ -88,10 +87,9 @@ export const ClientDashboard = () => {
     }
     try {
       await apiClient.delete(`/jobs/${jobId}`);
-      alert('Job deleted successfully!');
       fetchJobs();
     } catch (error) {
-      alert('Error deleting job: ' + error.response?.data?.message);
+      console.error('Error deleting job:', error.response?.data?.message || error.message);
     }
   };
 

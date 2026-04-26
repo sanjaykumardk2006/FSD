@@ -66,7 +66,6 @@ export const FreelancerDashboard = () => {
         jobId: selectedJob._id,
         ...proposalData,
       });
-      alert('Proposal submitted successfully!');
       setShowProposalForm(false);
       setSelectedJob(null);
       setProposalData({
@@ -79,7 +78,7 @@ export const FreelancerDashboard = () => {
       fetchProposals();
       fetchJobs();
     } catch (error) {
-      alert('Error submitting proposal: ' + error.response?.data?.message);
+      console.error('Error submitting proposal:', error.response?.data?.message || error.message);
     }
   };
 
@@ -94,10 +93,9 @@ export const FreelancerDashboard = () => {
     }
     try {
       await apiClient.delete(`/proposals/${proposalId}`);
-      alert('Proposal deleted successfully!');
       fetchProposals();
     } catch (error) {
-      alert('Error deleting proposal: ' + error.response?.data?.message);
+      console.error('Error deleting proposal:', error.response?.data?.message || error.message);
     }
   };
 

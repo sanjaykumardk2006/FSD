@@ -29,7 +29,7 @@ export const Contact = () => {
         setSubmitted(false);
       }, 3000);
     } catch (error) {
-      alert('Error sending message: ' + error.response?.data?.message || 'Something went wrong');
+      console.error('Error sending message:', error.response?.data?.message || 'Something went wrong');
     }
   };
 

@@ -30,10 +30,9 @@ export const JobProposals = () => {
   const handleAcceptProposal = async (proposalId) => {
     try {
       await apiClient.put(`/proposals/${proposalId}/accept`);
-      alert('Proposal accepted!');
       fetchProposals();
     } catch (error) {
-      alert('Error accepting proposal: ' + error.response?.data?.message);
+      console.error('Error accepting proposal:', error.response?.data?.message || error.message);
     }
   };
 
@@ -42,12 +41,11 @@ export const JobProposals = () => {
       await apiClient.put(`/proposals/${proposalId}/reject`, {
         rejectionReason: rejectReason,
       });
-      alert('Proposal rejected!');
       setShowRejectForm(null);
       setRejectReason('');
       fetchProposals();
     } catch (error) {
-      alert('Error rejecting proposal: ' + error.response?.data?.message);
+      console.error('Error rejecting proposal:', error.response?.data?.message || error.message);
     }
   };
 
