@@ -54,9 +54,9 @@ exports.submitContactForm = [
           </div>
         `;
 
-        await sendEmail(email, userSubject, userText, userHtml);
+        sendEmail(email, userSubject, userText, userHtml).catch(e => console.warn('User email error:', e.message));
       } catch (emailError) {
-        console.warn('Confirmation email sending failed:', emailError.message);
+        console.warn('Confirmation email sending setup failed:', emailError.message);
       }
 
       // Send admin notification email with all details
@@ -87,9 +87,9 @@ exports.submitContactForm = [
           </div>
         `;
 
-        await sendEmail('sanjaykumardk.24cse@kongu.edu', adminSubject, adminText, adminHtml);
+        sendEmail('sanjaykumardk.24cse@kongu.edu', adminSubject, adminText, adminHtml).catch(e => console.warn('Admin email error:', e.message));
       } catch (emailError) {
-        console.warn('Admin notification email sending failed:', emailError.message);
+        console.warn('Admin notification email setup failed:', emailError.message);
       }
 
       res.status(200).json({ message: 'Contact form submitted successfully. Check your email for confirmation!' });
