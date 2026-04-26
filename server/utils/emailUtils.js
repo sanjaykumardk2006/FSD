@@ -79,9 +79,19 @@ const sendProjectUpdateReminder = async (email, projectTitle) => {
   return await sendEmail(email, subject, text);
 };
 
+const testSMTP = async () => {
+  try {
+    await transporter.verify();
+    return { success: true, message: 'SMTP connection successful' };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
 module.exports = {
   sendEmail,
   sendContactFormEmail,
   sendProposalRejectionEmail,
   sendProjectUpdateReminder,
+  testSMTP,
 };

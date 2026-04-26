@@ -1,6 +1,15 @@
-const { sendEmail } = require('../utils/emailUtils');
+const { sendEmail, testSMTP } = require('../utils/emailUtils');
 const ContactMessage = require('../models/ContactMessage');
 const { body, validationResult } = require('express-validator');
+
+exports.testSMTPConfig = async (req, res) => {
+  const result = await testSMTP();
+  const envStatus = {
+    GMAIL_USER_SET: !!process.env.GMAIL_USER,
+    GMAIL_PASSWORD_SET: !!process.env.GMAIL_PASSWORD
+  };
+  res.json({ ...result, env: envStatus });
+};
 
 // Submit contact form
 exports.submitContactForm = [
