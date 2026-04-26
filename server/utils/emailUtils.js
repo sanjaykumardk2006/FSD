@@ -1,38 +1,46 @@
-// Email utility functions using nodemailer with Gmail
+// Email utility functions using SendGrid
 const nodemailer = require('nodemailer');
 
-// Create transporter DYNAMICALLY to ensure env vars are loaded
+// Create transporter using SendGrid SMTP
 const getTransporter = () => {
-  console.log('📧 Creating SMTP transporter with:');
-  console.log('   GMAIL_USER:', process.env.GMAIL_USER ? '✓ Set' : '❌ NOT SET');
-  console.log('   GMAIL_PASSWORD:', process.env.GMAIL_PASSWORD ? '✓ Set' : '❌ NOT SET');
+  const apiKey = process.env.SENDGRID_API_KEY;
+  
+  console.log('📧 Creating SendGrid SMTP transporter with:');
+  console.log('   SENDGRID_API_KEY:', apiKey ? '✓ Set' : '❌ NOT SET');
+  
+  if (!apiKey) {
+    console.error('❌ SENDGRID_API_KEY is not configured!');
+  }
   
   return nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: 'smtp.sendgrid.net',
     port: 587,
-    secure: false, // true for 465, false for other ports
-    requireTLS: true,
+    secure: false,
     auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_PASSWORD,
+      user: 'apikey',  // SendGrid requires 'apikey' as username
+      pass: apiKey,    // API key as password
     },
-    connectionTimeout: 10000, // 10 seconds
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
+    connectionTimeout: 30000,
+    greetingTimeout: 30000,
+    socketTimeout: 30000,
+    pool: {
+      maxConnections: 5,
+      maxMessages: 100,
+    },
   });
 };
 
 // Check credentials on startup
-if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
-  console.warn('⚠️  WARNING: Gmail credentials not configured. Email sending will fail!');
-  console.warn('Set GMAIL_USER and GMAIL_PASSWORD environment variables.');
+if (!process.env.SENDGRID_API_KEY) {
+  console.warn('⚠️  WARNING: SendGrid API key not configured. Email sending will fail!');
+  console.warn('Set SENDGRID_API_KEY environment variable.');
 }
 
 const sendEmail = async (to, subject, text, html) => {
   try {
     // Verify credentials are set
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
-      const error = 'Gmail credentials missing! Set GMAIL_USER and GMAIL_PASSWORD env vars';
+    if (!process.env.SENDGRID_API_KEY) {
+      const error = 'SendGrid API key missing! Set SENDGRID_API_KEY env var';
       console.error('❌', error);
       return false;
     }
@@ -40,24 +48,24 @@ const sendEmail = async (to, subject, text, html) => {
     const transporter = getTransporter();
     
     const mailOptions = {
-      from: process.env.EMAIL_FROM || process.env.GMAIL_USER || 'support@freelancerhub.com',
+      from: process.env.EMAIL_FROM || 'support@freelancerhub.com',
       to,
       subject,
       text,
       html: html || text,
     };
 
-    console.log(`📤 Sending email to: ${to}`);
+    console.log(`📤 Sending email via SendGrid to: ${to}`);
     console.log(`   From: ${mailOptions.from}`);
     console.log(`   Subject: ${subject}`);
 
     const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ Email sent successfully!`);
+    console.log(`✅ Email sent successfully via SendGrid!`);
     console.log(`   Message ID: ${info.messageId}`);
     console.log(`   Response: ${info.response}`);
     return true;
   } catch (error) {
-    console.error('❌ Error sending email:');
+    console.error('❌ Error sending email via SendGrid:');
     console.error(`   To: ${to}`);
     console.error(`   Error: ${error.message}`);
     console.error(`   Code: ${error.code}`);
@@ -114,35 +122,34 @@ const sendProjectUpdateReminder = async (email, projectTitle) => {
 
 const testSMTP = async () => {
   try {
-    console.log('🧪 Testing SMTP configuration...');
+    console.log('🧪 Testing SendGrid SMTP configuration...');
     
-    // Check if credentials are set
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
-      console.warn('⚠️  Credentials not set!');
+    // Check if API key is set
+    if (!process.env.SENDGRID_API_KEY) {
+      console.warn('⚠️  SendGrid API key not set!');
       return {
         success: false,
-        error: 'Gmail credentials not configured',
+        error: 'SendGrid API key not configured',
         details: {
-          GMAIL_USER_SET: !!process.env.GMAIL_USER,
-          GMAIL_PASSWORD_SET: !!process.env.GMAIL_PASSWORD
+          SENDGRID_API_KEY_SET: !!process.env.SENDGRID_API_KEY,
         }
       };
     }
 
     const transporter = getTransporter();
-    console.log('📡 Verifying SMTP connection...');
+    console.log('📡 Verifying SendGrid SMTP connection...');
     
     const result = await transporter.verify();
-    console.log('✅ SMTP connection verified!');
+    console.log('✅ SendGrid SMTP connection verified!');
     
     return {
       success: result,
-      message: 'SMTP connection successful',
-      email: process.env.GMAIL_USER,
+      message: 'SendGrid SMTP connection successful',
+      provider: 'SendGrid',
       timestamp: new Date().toISOString()
     };
   } catch (error) {
-    console.error('❌ SMTP verification failed:');
+    console.error('❌ SendGrid verification failed:');
     console.error(`   Error: ${error.message}`);
     console.error(`   Code: ${error.code}`);
     
@@ -150,8 +157,9 @@ const testSMTP = async () => {
       success: false,
       error: error.message,
       code: error.code,
-      details: 'Check Gmail credentials, allow less secure apps, or use App Password',
-      hint: 'Visit: https://myaccount.google.com/apppasswords'
+      provider: 'SendGrid',
+      details: 'Verify your SendGrid API key is correct',
+      hint: 'Visit: https://app.sendgrid.com/settings/api_keys'
     };
   }
 };

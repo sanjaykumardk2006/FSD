@@ -3,23 +3,22 @@ const ContactMessage = require('../models/ContactMessage');
 const { body, validationResult } = require('express-validator');
 
 exports.testSMTPConfig = async (req, res) => {
-  console.log('🔍 SMTP Test Endpoint Called');
+  console.log('🔍 Email Configuration Test Endpoint Called');
   console.log('Environment Variables:');
   console.log('  NODE_ENV:', process.env.NODE_ENV);
-  console.log('  GMAIL_USER:', process.env.GMAIL_USER ? 'Set ✓' : 'NOT SET ❌');
-  console.log('  GMAIL_PASSWORD:', process.env.GMAIL_PASSWORD ? 'Set ✓' : 'NOT SET ❌');
-  console.log('  EMAIL_FROM:', process.env.EMAIL_FROM || 'Not set (using GMAIL_USER)');
+  console.log('  SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY ? 'Set ✓' : 'NOT SET ❌');
+  console.log('  EMAIL_FROM:', process.env.EMAIL_FROM || 'Not set');
   
   const result = await testSMTP();
   
   const envStatus = {
-    GMAIL_USER_SET: !!process.env.GMAIL_USER,
-    GMAIL_PASSWORD_SET: !!process.env.GMAIL_PASSWORD,
+    SENDGRID_API_KEY_SET: !!process.env.SENDGRID_API_KEY,
     NODE_ENV: process.env.NODE_ENV,
+    EMAIL_FROM: process.env.EMAIL_FROM,
   };
   
   const response = { ...result, env: envStatus };
-  console.log('📤 Test SMTP Response:', JSON.stringify(response, null, 2));
+  console.log('📤 Test Response:', JSON.stringify(response, null, 2));
   
   res.json(response);
 };
