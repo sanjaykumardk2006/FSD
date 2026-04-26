@@ -23,11 +23,26 @@ const app = express();
 // 1. Middleware
 // CORS configuration - allow requests from frontend
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',           // Development
-    'http://localhost:5173',           // Vite dev server alternative
-    process.env.FRONTEND_URL || null   // Production (Railway)
-  ].filter(Boolean),
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      process.env.FRONTEND_URL,
+    ].filter(Boolean);
+
+    // Allow any Vercel preview/production URL for this project
+    const isVercelURL = /^https:\/\/freelancer.*\.vercel\.app$/.test(origin)
+      || /^https:\/\/fsd.*\.vercel\.app$/.test(origin);
+
+    if (allowedOrigins.includes(origin) || isVercelURL) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS blocked: ${origin}`));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };
