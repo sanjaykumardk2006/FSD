@@ -30,8 +30,14 @@ export const Contact = () => {
         setSubmitted(false);
       }, 3000);
     } catch (error) {
-      setErrorMsg('Error sending message: ' + (error.response?.data?.message || 'Something went wrong'));
-      setTimeout(() => setErrorMsg(''), 3000);
+      let errorText = 'Something went wrong';
+      if (error.response?.data?.errors && Array.isArray(error.response.data.errors)) {
+        errorText = error.response.data.errors.map(e => e.msg).join(', ');
+      } else if (error.response?.data?.message) {
+        errorText = error.response.data.message;
+      }
+      setErrorMsg('Error sending message: ' + errorText);
+      setTimeout(() => setErrorMsg(''), 5000);
     }
   };
 
