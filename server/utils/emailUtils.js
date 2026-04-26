@@ -16,6 +16,12 @@ const transporter = nodemailer.createTransport({
   socketTimeout: 10000,
 });
 
+// Log if email credentials are missing
+if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
+  console.warn('⚠️  WARNING: Gmail credentials not configured. Email sending will fail!');
+  console.warn('Set GMAIL_USER and GMAIL_PASSWORD environment variables.');
+}
+
 const sendEmail = async (to, subject, text, html) => {
   try {
     const mailOptions = {
@@ -81,10 +87,30 @@ const sendProjectUpdateReminder = async (email, projectTitle) => {
 
 const testSMTP = async () => {
   try {
-    await transporter.verify();
-    return { success: true, message: 'SMTP connection successful' };
+    // Check if credentials are set
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
+      return {
+        success: false,
+        error: 'Gmail credentials not configured',
+        details: {
+          GMAIL_USER_SET: !!process.env.GMAIL_USER,
+          GMAIL_PASSWORD_SET: !!process.env.GMAIL_PASSWORD
+        }
+      };
+    }
+
+    const result = await transporter.verify();
+    return {
+      success: result,
+      message: 'SMTP connection successful',
+      email: process.env.GMAIL_USER
+    };
   } catch (error) {
-    return { success: false, error: error.message };
+    return {
+      success: false,
+      error: error.message,
+      details: 'Check Gmail credentials and allow less secure apps or use App Password'
+    };
   }
 };
 

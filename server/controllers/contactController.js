@@ -63,9 +63,14 @@ exports.submitContactForm = [
           </div>
         `;
 
-        sendEmail(email, userSubject, userText, userHtml).catch(e => console.warn('User email error:', e.message));
+        const userEmailResult = await sendEmail(email, userSubject, userText, userHtml);
+        if (userEmailResult) {
+          console.log(`✅ Confirmation email sent to user: ${email}`);
+        } else {
+          console.warn(`⚠️ Failed to send confirmation email to user: ${email}`);
+        }
       } catch (emailError) {
-        console.warn('Confirmation email sending setup failed:', emailError.message);
+        console.error('User confirmation email error:', emailError.message);
       }
 
       // Send admin notification email with all details
@@ -96,9 +101,14 @@ exports.submitContactForm = [
           </div>
         `;
 
-        sendEmail('sanjaykumardk.24cse@kongu.edu', adminSubject, adminText, adminHtml).catch(e => console.warn('Admin email error:', e.message));
+        const adminEmailResult = await sendEmail('sanjaykumardk.24cse@kongu.edu', adminSubject, adminText, adminHtml);
+        if (adminEmailResult) {
+          console.log('✅ Admin notification email sent successfully to sanjaykumardk.24cse@kongu.edu');
+        } else {
+          console.error('❌ Failed to send admin notification email');
+        }
       } catch (emailError) {
-        console.warn('Admin notification email setup failed:', emailError.message);
+        console.error('Admin notification email error:', emailError.message);
       }
 
       res.status(200).json({ message: 'Contact form submitted successfully. Check your email for confirmation!' });
