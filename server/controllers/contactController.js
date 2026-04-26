@@ -3,12 +3,25 @@ const ContactMessage = require('../models/ContactMessage');
 const { body, validationResult } = require('express-validator');
 
 exports.testSMTPConfig = async (req, res) => {
+  console.log('🔍 SMTP Test Endpoint Called');
+  console.log('Environment Variables:');
+  console.log('  NODE_ENV:', process.env.NODE_ENV);
+  console.log('  GMAIL_USER:', process.env.GMAIL_USER ? 'Set ✓' : 'NOT SET ❌');
+  console.log('  GMAIL_PASSWORD:', process.env.GMAIL_PASSWORD ? 'Set ✓' : 'NOT SET ❌');
+  console.log('  EMAIL_FROM:', process.env.EMAIL_FROM || 'Not set (using GMAIL_USER)');
+  
   const result = await testSMTP();
+  
   const envStatus = {
     GMAIL_USER_SET: !!process.env.GMAIL_USER,
-    GMAIL_PASSWORD_SET: !!process.env.GMAIL_PASSWORD
+    GMAIL_PASSWORD_SET: !!process.env.GMAIL_PASSWORD,
+    NODE_ENV: process.env.NODE_ENV,
   };
-  res.json({ ...result, env: envStatus });
+  
+  const response = { ...result, env: envStatus };
+  console.log('📤 Test SMTP Response:', JSON.stringify(response, null, 2));
+  
+  res.json(response);
 };
 
 // Submit contact form
@@ -26,6 +39,11 @@ exports.submitContactForm = [
 
     try {
       const { name, email, mobileNumber, city, message } = req.body;
+
+      console.log('📝 Processing contact form submission:');
+      console.log(`   Name: ${name}`);
+      console.log(`   Email: ${email}`);
+      console.log(`   City: ${city}`);
 
       // Save message to database
       const contactMessage = new ContactMessage({
@@ -63,6 +81,7 @@ exports.submitContactForm = [
           </div>
         `;
 
+        console.log('📧 Sending confirmation email to user:', email);
         const userEmailResult = await sendEmail(email, userSubject, userText, userHtml);
         if (userEmailResult) {
           console.log(`✅ Confirmation email sent to user: ${email}`);
@@ -70,7 +89,7 @@ exports.submitContactForm = [
           console.warn(`⚠️ Failed to send confirmation email to user: ${email}`);
         }
       } catch (emailError) {
-        console.error('User confirmation email error:', emailError.message);
+        console.error('❌ User confirmation email error:', emailError.message);
       }
 
       // Send admin notification email with all details
@@ -101,6 +120,7 @@ exports.submitContactForm = [
           </div>
         `;
 
+        console.log('📧 Sending admin notification to: sanjaykumardk.24cse@kongu.edu');
         const adminEmailResult = await sendEmail('sanjaykumardk.24cse@kongu.edu', adminSubject, adminText, adminHtml);
         if (adminEmailResult) {
           console.log('✅ Admin notification email sent successfully to sanjaykumardk.24cse@kongu.edu');
@@ -108,12 +128,12 @@ exports.submitContactForm = [
           console.error('❌ Failed to send admin notification email');
         }
       } catch (emailError) {
-        console.error('Admin notification email error:', emailError.message);
+        console.error('❌ Admin notification email error:', emailError.message);
       }
 
       res.status(200).json({ message: 'Contact form submitted successfully. Check your email for confirmation!' });
     } catch (error) {
-      console.error('Submit contact form error:', error);
+      console.error('❌ Submit contact form error:', error);
       res.status(500).json({ message: 'Error submitting contact form. Please try again.' });
     }
   },

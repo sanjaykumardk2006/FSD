@@ -1,22 +1,28 @@
 // Email utility functions using nodemailer with Gmail
 const nodemailer = require('nodemailer');
 
-// Create transporter for Gmail
-const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 587,
-  secure: false, // true for 465, false for other ports
-  requireTLS: true,
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_PASSWORD,
-  },
-  connectionTimeout: 10000, // 10 seconds
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
-});
+// Create transporter DYNAMICALLY to ensure env vars are loaded
+const getTransporter = () => {
+  console.log('📧 Creating SMTP transporter with:');
+  console.log('   GMAIL_USER:', process.env.GMAIL_USER ? '✓ Set' : '❌ NOT SET');
+  console.log('   GMAIL_PASSWORD:', process.env.GMAIL_PASSWORD ? '✓ Set' : '❌ NOT SET');
+  
+  return nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    requireTLS: true,
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASSWORD,
+    },
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
+  });
+};
 
-// Log if email credentials are missing
+// Check credentials on startup
 if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
   console.warn('⚠️  WARNING: Gmail credentials not configured. Email sending will fail!');
   console.warn('Set GMAIL_USER and GMAIL_PASSWORD environment variables.');
@@ -24,19 +30,40 @@ if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
 
 const sendEmail = async (to, subject, text, html) => {
   try {
+    // Verify credentials are set
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
+      const error = 'Gmail credentials missing! Set GMAIL_USER and GMAIL_PASSWORD env vars';
+      console.error('❌', error);
+      return false;
+    }
+
+    const transporter = getTransporter();
+    
     const mailOptions = {
-      from: process.env.EMAIL_FROM || 'support@freelancerhub.com',
+      from: process.env.EMAIL_FROM || process.env.GMAIL_USER || 'support@freelancerhub.com',
       to,
       subject,
       text,
       html: html || text,
     };
 
+    console.log(`📤 Sending email to: ${to}`);
+    console.log(`   From: ${mailOptions.from}`);
+    console.log(`   Subject: ${subject}`);
+
     const info = await transporter.sendMail(mailOptions);
-    console.log(`Email sent successfully. Message ID: ${info.messageId}`);
+    console.log(`✅ Email sent successfully!`);
+    console.log(`   Message ID: ${info.messageId}`);
+    console.log(`   Response: ${info.response}`);
     return true;
   } catch (error) {
-    console.error('Error sending email:', error.message);
+    console.error('❌ Error sending email:');
+    console.error(`   To: ${to}`);
+    console.error(`   Error: ${error.message}`);
+    console.error(`   Code: ${error.code}`);
+    if (error.response) {
+      console.error(`   Response: ${error.response}`);
+    }
     return false;
   }
 };
@@ -87,8 +114,11 @@ const sendProjectUpdateReminder = async (email, projectTitle) => {
 
 const testSMTP = async () => {
   try {
+    console.log('🧪 Testing SMTP configuration...');
+    
     // Check if credentials are set
     if (!process.env.GMAIL_USER || !process.env.GMAIL_PASSWORD) {
+      console.warn('⚠️  Credentials not set!');
       return {
         success: false,
         error: 'Gmail credentials not configured',
@@ -99,15 +129,32 @@ const testSMTP = async () => {
       };
     }
 
+    const transporter = getTransporter();
+    console.log('📡 Verifying SMTP connection...');
+    
     const result = await transporter.verify();
+    console.log('✅ SMTP connection verified!');
+    
     return {
       success: result,
       message: 'SMTP connection successful',
-      email: process.env.GMAIL_USER
+      email: process.env.GMAIL_USER,
+      timestamp: new Date().toISOString()
     };
   } catch (error) {
+    console.error('❌ SMTP verification failed:');
+    console.error(`   Error: ${error.message}`);
+    console.error(`   Code: ${error.code}`);
+    
     return {
       success: false,
+      error: error.message,
+      code: error.code,
+      details: 'Check Gmail credentials, allow less secure apps, or use App Password',
+      hint: 'Visit: https://myaccount.google.com/apppasswords'
+    };
+  }
+};
       error: error.message,
       details: 'Check Gmail credentials and allow less secure apps or use App Password'
     };
