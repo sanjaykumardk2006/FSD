@@ -11,6 +11,12 @@ export const JobProposals = () => {
   const [loading, setLoading] = useState(true);
   const [rejectReason, setRejectReason] = useState('');
   const [showRejectForm, setShowRejectForm] = useState(null);
+  const [notification, setNotification] = useState({ type: '', text: '' });
+
+  const showNotification = (type, text) => {
+    setNotification({ type, text });
+    setTimeout(() => setNotification({ type: '', text: '' }), 3000);
+  };
 
   useEffect(() => {
     fetchProposals();
@@ -30,9 +36,10 @@ export const JobProposals = () => {
   const handleAcceptProposal = async (proposalId) => {
     try {
       await apiClient.put(`/proposals/${proposalId}/accept`);
+      showNotification('success', 'Proposal accepted!');
       fetchProposals();
     } catch (error) {
-      console.error('Error accepting proposal:', error.response?.data?.message || error.message);
+      showNotification('error', 'Error accepting proposal: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -41,11 +48,12 @@ export const JobProposals = () => {
       await apiClient.put(`/proposals/${proposalId}/reject`, {
         rejectionReason: rejectReason,
       });
+      showNotification('success', 'Proposal rejected!');
       setShowRejectForm(null);
       setRejectReason('');
       fetchProposals();
     } catch (error) {
-      console.error('Error rejecting proposal:', error.response?.data?.message || error.message);
+      showNotification('error', 'Error rejecting proposal: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -59,6 +67,11 @@ export const JobProposals = () => {
           Back to Dashboard
         </button>
         <h1>Proposals for Job</h1>
+        {notification.text && (
+          <div className={`message ${notification.type}`} style={{ marginBottom: '20px' }}>
+            {notification.text}
+          </div>
+        )}
 
         {proposals.length === 0 ? (
           <p>No proposals yet.</p>

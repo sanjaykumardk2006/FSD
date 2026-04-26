@@ -18,6 +18,12 @@ export const ProjectDetail = () => {
     description: '',
   });
   const [loading, setLoading] = useState(true);
+  const [notification, setNotification] = useState({ type: '', text: '' });
+
+  const showNotification = (type, text) => {
+    setNotification({ type, text });
+    setTimeout(() => setNotification({ type: '', text: '' }), 3000);
+  };
 
   useEffect(() => {
     fetchProject();
@@ -73,11 +79,12 @@ export const ProjectDetail = () => {
     e.preventDefault();
     try {
       await apiClient.post(`/projects/${projectId}/progress`, progressData);
+      showNotification('success', 'Progress updated!');
       setShowProgressForm(false);
       setProgressData({ stage: '', description: '' });
       fetchProject();
     } catch (error) {
-      console.error('Error updating progress:', error.response?.data?.message || error.message);
+      showNotification('error', 'Error updating progress: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -95,6 +102,11 @@ export const ProjectDetail = () => {
         </button>
 
         <div className="project-details">
+          {notification.text && (
+            <div className={`message ${notification.type}`} style={{ marginBottom: '20px' }}>
+              {notification.text}
+            </div>
+          )}
           <h1>{project.jobId?.title}</h1>
           <p>Status: {project.status}</p>
           <p>Budget: ${project.jobId?.budget}</p>

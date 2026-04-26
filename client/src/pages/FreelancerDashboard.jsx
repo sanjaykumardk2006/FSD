@@ -21,6 +21,12 @@ export const FreelancerDashboard = () => {
     proposedDeadline: '',
     coverLetter: '',
   });
+  const [notification, setNotification] = useState({ type: '', text: '' });
+
+  const showNotification = (type, text) => {
+    setNotification({ type, text });
+    setTimeout(() => setNotification({ type: '', text: '' }), 3000);
+  };
 
   useEffect(() => {
     fetchJobs();
@@ -66,6 +72,7 @@ export const FreelancerDashboard = () => {
         jobId: selectedJob._id,
         ...proposalData,
       });
+      showNotification('success', 'Proposal submitted successfully!');
       setShowProposalForm(false);
       setSelectedJob(null);
       setProposalData({
@@ -78,7 +85,7 @@ export const FreelancerDashboard = () => {
       fetchProposals();
       fetchJobs();
     } catch (error) {
-      console.error('Error submitting proposal:', error.response?.data?.message || error.message);
+      showNotification('error', 'Error submitting proposal: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -93,9 +100,10 @@ export const FreelancerDashboard = () => {
     }
     try {
       await apiClient.delete(`/proposals/${proposalId}`);
+      showNotification('success', 'Proposal deleted successfully!');
       fetchProposals();
     } catch (error) {
-      console.error('Error deleting proposal:', error.response?.data?.message || error.message);
+      showNotification('error', 'Error deleting proposal: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -131,6 +139,11 @@ export const FreelancerDashboard = () => {
         </div>
 
         <div className="dashboard-content">
+          {notification.text && (
+            <div className={`message ${notification.type}`} style={{ marginBottom: '20px' }}>
+              {notification.text}
+            </div>
+          )}
           {activeTab === 'jobs' && (
             <div className="jobs-section">
               {jobs.length === 0 ? (

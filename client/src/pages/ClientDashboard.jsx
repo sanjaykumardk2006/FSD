@@ -20,6 +20,12 @@ export const ClientDashboard = () => {
     budget: '',
     deadline: '',
   });
+  const [notification, setNotification] = useState({ type: '', text: '' });
+
+  const showNotification = (type, text) => {
+    setNotification({ type, text });
+    setTimeout(() => setNotification({ type: '', text: '' }), 3000);
+  };
 
   useEffect(() => {
     fetchJobs();
@@ -62,6 +68,7 @@ export const ClientDashboard = () => {
     e.preventDefault();
     try {
       await apiClient.post('/jobs/post', formData);
+      showNotification('success', 'Job posted successfully!');
       setShowJobForm(false);
       setFormData({
         title: '',
@@ -72,7 +79,7 @@ export const ClientDashboard = () => {
       });
       fetchJobs();
     } catch (error) {
-      console.error('Error posting job:', error.response?.data?.message || error.message);
+      showNotification('error', 'Error posting job: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -87,9 +94,10 @@ export const ClientDashboard = () => {
     }
     try {
       await apiClient.delete(`/jobs/${jobId}`);
+      showNotification('success', 'Job deleted successfully!');
       fetchJobs();
     } catch (error) {
-      console.error('Error deleting job:', error.response?.data?.message || error.message);
+      showNotification('error', 'Error deleting job: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -119,6 +127,11 @@ export const ClientDashboard = () => {
         </div>
 
         <div className="dashboard-content">
+          {notification.text && (
+            <div className={`message ${notification.type}`} style={{ marginBottom: '20px' }}>
+              {notification.text}
+            </div>
+          )}
           {activeTab === 'jobs' && (
             <div className="jobs-section">
               <div className="job-buttons-container">

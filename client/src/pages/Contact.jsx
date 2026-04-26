@@ -13,6 +13,7 @@ export const Contact = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,7 +30,8 @@ export const Contact = () => {
         setSubmitted(false);
       }, 3000);
     } catch (error) {
-      console.error('Error sending message:', error.response?.data?.message || 'Something went wrong');
+      setErrorMsg('Error sending message: ' + (error.response?.data?.message || 'Something went wrong'));
+      setTimeout(() => setErrorMsg(''), 3000);
     }
   };
 
@@ -70,6 +72,11 @@ export const Contact = () => {
                 {submitted && (
                   <div style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '15px', borderRadius: '8px', marginBottom: '20px', textAlign: 'center', fontWeight: '600' }}>
                     ✓ Thank you! We'll get back to you soon.
+                  </div>
+                )}
+                {errorMsg && (
+                  <div className="message error" style={{ marginBottom: '20px' }}>
+                    {errorMsg}
                   </div>
                 )}
                 <div className="form-group">
