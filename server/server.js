@@ -38,7 +38,9 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/contact', contactRoutes);
-
+app.get('/', (req, res) => {
+  res.send('Server is running successfully');
+});
 // Health check
 app.get('/api/health', (req, res) => {
   res.status(200).json({ message: 'Server is running' });
