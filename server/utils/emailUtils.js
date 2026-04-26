@@ -155,11 +155,6 @@ const testSMTP = async () => {
     };
   }
 };
-      error: error.message,
-      details: 'Check Gmail credentials and allow less secure apps or use App Password'
-    };
-  }
-};
 
 module.exports = {
   sendEmail,
