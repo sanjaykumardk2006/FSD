@@ -21,8 +21,12 @@ app.use(cors());
 app.use(express.json());
 
 // Connect to database
-connectDB();
-
+//connectDB();
+connectDB().then(() => {
+  console.log("MongoDB connected");
+}).catch(err => {
+  console.error("MongoDB connection failed:", err);
+});
 // Schedule cron jobs
 scheduleProjectReminders();
 
