@@ -2,6 +2,9 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
+// Suppress punycode deprecation warning
+process.noDeprecation = true;
+
 const connectDB = require('./config/database');
 const { scheduleProjectReminders } = require('./utils/cronScheduler');
 
@@ -54,18 +57,26 @@ app.use((err, req, res, next) => {
 // 6. Start server FIRST
 const PORT = process.env.PORT || 5000;
 
+// Validate environment variables
+if (!process.env.MONGO_URL) {
+  console.error('ERROR: MONGO_URL environment variable is not set');
+  process.exit(1);
+}
+
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`Server running on port ${PORT}`);
 
   try {
     // Connect DB AFTER server starts
     await connectDB();
-    console.log("MongoDB connected");
+    console.log("MongoDB connected successfully");
 
     // Start cron AFTER DB is ready
     scheduleProjectReminders();
+    console.log("Cron scheduler initialized");
 
   } catch (err) {
-    console.error("Startup failed:", err);
+    console.error("Startup error:", err.message);
+    process.exit(1);
   }
 });
