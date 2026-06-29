@@ -5,8 +5,7 @@ const sgMail = require('@sendgrid/mail');
 const initializeSendGrid = () => {
   const apiKey = process.env.SENDGRID_API_KEY;
   
-  console.log('📧 Initializing SendGrid HTTP API with:');
-  console.log('   SENDGRID_API_KEY:', apiKey ? '✓ Set' : '❌ NOT SET');
+
   
   if (!apiKey) {
     console.error('❌ SENDGRID_API_KEY is not configured!');
@@ -43,15 +42,11 @@ const sendEmail = async (to, subject, text, html) => {
       replyTo: process.env.EMAIL_FROM || 'support@freelancerhub.com',
     };
 
-    console.log(`📤 Sending email via SendGrid HTTP API to: ${to}`);
-    console.log(`   From: ${msg.from}`);
-    console.log(`   Subject: ${subject}`);
+
 
     const response = await sgMail.send(msg);
     
-    console.log(`✅ Email sent successfully via SendGrid!`);
-    console.log(`   Status Code: ${response[0].statusCode}`);
-    console.log(`   Headers:`, response[0].headers['x-message-id']);
+
     return true;
   } catch (error) {
     console.error('❌ Error sending email via SendGrid:');
@@ -113,7 +108,7 @@ const sendProjectUpdateReminder = async (email, projectTitle) => {
 
 const testSMTP = async () => {
   try {
-    console.log('🧪 Testing SendGrid HTTP API configuration...');
+
     
     // Check if API key is set
     if (!process.env.SENDGRID_API_KEY) {
@@ -128,7 +123,7 @@ const testSMTP = async () => {
     }
 
     // Test by sending a simple mail object validation
-    console.log('📡 Verifying SendGrid API connection...');
+
     
     // SendGrid HTTP API doesn't need a connection test
     // The API key is valid if it's set and returns 202 on send

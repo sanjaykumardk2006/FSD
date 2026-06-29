@@ -3,11 +3,7 @@ const ContactMessage = require('../models/ContactMessage');
 const { body, validationResult } = require('express-validator');
 
 exports.testSMTPConfig = async (req, res) => {
-  console.log('🔍 Email Configuration Test Endpoint Called');
-  console.log('Environment Variables:');
-  console.log('  NODE_ENV:', process.env.NODE_ENV);
-  console.log('  SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY ? 'Set ✓' : 'NOT SET ❌');
-  console.log('  EMAIL_FROM:', process.env.EMAIL_FROM || 'Not set');
+
   
   const result = await testSMTP();
   
@@ -18,7 +14,7 @@ exports.testSMTPConfig = async (req, res) => {
   };
   
   const response = { ...result, env: envStatus };
-  console.log('📤 Test Response:', JSON.stringify(response, null, 2));
+
   
   res.json(response);
 };
@@ -39,10 +35,7 @@ exports.submitContactForm = [
     try {
       const { name, email, mobileNumber, city, message } = req.body;
 
-      console.log('📝 Processing contact form submission:');
-      console.log(`   Name: ${name}`);
-      console.log(`   Email: ${email}`);
-      console.log(`   City: ${city}`);
+
 
       // Save message to database
       const contactMessage = new ContactMessage({
@@ -54,7 +47,7 @@ exports.submitContactForm = [
       });
       
       await contactMessage.save();
-      console.log('✅ Contact message saved to database:', contactMessage._id);
+
 
       // Send confirmation email to user's email
       try {
@@ -80,10 +73,10 @@ exports.submitContactForm = [
           </div>
         `;
 
-        console.log('📧 Sending confirmation email to user:', email);
+
         const userEmailResult = await sendEmail(email, userSubject, userText, userHtml);
         if (userEmailResult) {
-          console.log(`✅ Confirmation email sent to user: ${email}`);
+
         } else {
           console.warn(`⚠️ Failed to send confirmation email to user: ${email}`);
         }
@@ -119,10 +112,10 @@ exports.submitContactForm = [
           </div>
         `;
 
-        console.log('📧 Sending admin notification to: sanjaykumardk.24cse@kongu.edu');
+
         const adminEmailResult = await sendEmail('sanjaykumardk.24cse@kongu.edu', adminSubject, adminText, adminHtml);
         if (adminEmailResult) {
-          console.log('✅ Admin notification email sent successfully to sanjaykumardk.24cse@kongu.edu');
+
         } else {
           console.error('❌ Failed to send admin notification email');
         }
