@@ -218,11 +218,11 @@ export const Home = () => {
           </div>
         </section>
 
-        <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1400px', borderRadius: '24px', padding: '100px 20px', width: '95%' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1400px', borderRadius: '24px', padding: '100px 20px', width: '95%', border: '1px solid #e5e7eb', boxShadow: '0 10px 30px rgba(15, 31, 53, 0.05)' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '48px', marginBottom: '30px' }}>Ready to Scale Your Business?</h2>
           <p style={{ fontSize: '20px', marginBottom: '40px', maxWidth: '700px', margin: '0 auto 40px' }}>Join thousands of successful freelancers and clients building their dreams on Freelancer Hub. Start your journey today for free.</p>
           <div className="hero-buttons">
-            <button className="btn" style={{ backgroundColor: 'white', color: 'var(--dark-blue)', padding: '15px 40px', fontSize: '18px', fontWeight: '700', borderRadius: '50px' }} onClick={() => navigate('/signup')}>Get Started Now</button>
+            <button className="btn btn-primary" style={{ padding: '15px 40px', fontSize: '18px', fontWeight: '700', borderRadius: '50px' }} onClick={() => navigate('/signup')}>Get Started Now</button>
           </div>
         </section>
       </main>

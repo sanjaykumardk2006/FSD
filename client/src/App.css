@@ -271,8 +271,8 @@ main {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
-  color: white;
+  background: #ffffff;
+  color: var(--dark-text);
   padding: 160px 20px;
   text-align: center;
   border-radius: 0;
@@ -486,8 +486,8 @@ main {
 }
 
 .slogan-section {
-  background: linear-gradient(135deg, var(--dark-blue) 0%, var(--light-blue) 100%);
-  color: white;
+  background: #ffffff;
+  color: var(--dark-text);
   padding: 80px 20px;
   text-align: center;
   border-radius: 0;
