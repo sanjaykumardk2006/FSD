@@ -146,6 +146,23 @@ export const Home = () => {
           </div>
         </section>
 
+        <section className="content-section" style={{ marginBottom: '80px', textAlign: 'center' }} ref={(el) => sectionRefs.current.push(el)}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px', backgroundColor: 'var(--light-bg)', padding: '60px 40px', borderRadius: '24px', border: '1px solid #e5e7eb' }}>
+            <div>
+              <h3 style={{ fontSize: '48px', color: 'var(--dark-blue)', marginBottom: '10px', fontWeight: '900' }}>10k+</h3>
+              <p style={{ fontSize: '18px', color: '#64748b', fontWeight: '600' }}>Active Freelancers</p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: '48px', color: 'var(--dark-blue)', marginBottom: '10px', fontWeight: '900' }}>$5M+</h3>
+              <p style={{ fontSize: '18px', color: '#64748b', fontWeight: '600' }}>Paid to Talent</p>
+            </div>
+            <div>
+              <h3 style={{ fontSize: '48px', color: 'var(--dark-blue)', marginBottom: '10px', fontWeight: '900' }}>4.9/5</h3>
+              <p style={{ fontSize: '18px', color: '#64748b', fontWeight: '600' }}>Average Rating</p>
+            </div>
+          </div>
+        </section>
+
         <section className="content-section" style={{ marginBottom: '60px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2>Success Stories</h2>
           <div className="testimonial-grid">
@@ -167,9 +184,46 @@ export const Home = () => {
           </div>
         </section>
 
-        <section className="slogan-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2>Your Success is Our Mission</h2>
-          <p>Join thousands of successful freelancers and clients building their dreams on Freelancer Hub</p>
+        <section className="content-section" style={{ marginBottom: '80px' }} ref={(el) => sectionRefs.current.push(el)}>
+          <h2>Top Rated Freelancers</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '30px' }}>
+            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
+              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👨‍💻</div>
+              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>Alex Chen</h3>
+              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>Full Stack Developer</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
+              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
+            </div>
+            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
+              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👩‍🎨</div>
+              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>Sarah Miller</h3>
+              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>UI/UX Designer</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
+              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
+            </div>
+            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
+              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👨‍💼</div>
+              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>David Kim</h3>
+              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>Marketing Expert</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
+              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
+            </div>
+            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
+              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👩‍💻</div>
+              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>Emma Watson</h3>
+              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>Data Scientist</p>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
+              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
+            </div>
+          </div>
+        </section>
+
+        <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1400px', borderRadius: '24px', padding: '100px 20px', width: '95%' }} ref={(el) => sectionRefs.current.push(el)}>
+          <h2 style={{ fontSize: '48px', marginBottom: '30px' }}>Ready to Scale Your Business?</h2>
+          <p style={{ fontSize: '20px', marginBottom: '40px', maxWidth: '700px', margin: '0 auto 40px' }}>Join thousands of successful freelancers and clients building their dreams on Freelancer Hub. Start your journey today for free.</p>
+          <div className="hero-buttons">
+            <button className="btn" style={{ backgroundColor: 'white', color: 'var(--dark-blue)', padding: '15px 40px', fontSize: '18px', fontWeight: '700', borderRadius: '50px' }} onClick={() => navigate('/signup')}>Get Started Now</button>
+          </div>
         </section>
       </main>
       <Footer />
