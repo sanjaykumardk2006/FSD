@@ -84,6 +84,68 @@ export const Home = () => {
           </div>
         </section>
 
+        <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
+          <h2>Popular Categories</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>💻</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Web Development</h3>
+            </div>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>🎨</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Graphic Design</h3>
+            </div>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>✍️</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Digital Marketing</h3>
+            </div>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>📱</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>App Development</h3>
+            </div>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>📊</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Data Analysis</h3>
+            </div>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>🎥</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Video Editing</h3>
+            </div>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>🎵</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Audio Production</h3>
+            </div>
+            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
+              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>📝</div>
+              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Content Writing</h3>
+            </div>
+          </div>
+        </section>
+
+        <section className="content-section zigzag-section" ref={(el) => sectionRefs.current.push(el)}>
+          <h2>How It Works</h2>
+          <div className="zigzag-container">
+            <div className="zigzag-item zigzag-left" style={{ alignItems: 'center', marginBottom: '60px' }}>
+              <div className="zigzag-image">
+                <img src="/images/team_collaboration.png" alt="Team Collaboration" style={{ width: '100%', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} />
+              </div>
+              <div className="zigzag-content" style={{ textAlign: 'left' }}>
+                <h3 style={{ color: 'var(--dark-blue)', fontSize: '28px', marginBottom: '15px' }}>1. Post a Project or Find Work</h3>
+                <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.8' }}>Clients can easily post their project requirements, while freelancers can browse through thousands of active job listings tailored to their skills. Our smart matching system ensures the perfect fit for your specific needs.</p>
+              </div>
+            </div>
+            <div className="zigzag-item zigzag-right" style={{ alignItems: 'center', marginBottom: '60px' }}>
+              <div className="zigzag-content" style={{ textAlign: 'left' }}>
+                <h3 style={{ color: 'var(--dark-blue)', fontSize: '28px', marginBottom: '15px' }}>2. Collaborate Seamlessly</h3>
+                <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.8' }}>Use our built-in workspace to communicate, share files, and track milestones. Work securely from anywhere in the world, whether you're in an office, working from home, or traveling as a digital nomad.</p>
+              </div>
+              <div className="zigzag-image">
+                <img src="/images/freelancer_cafe.png" alt="Freelancer Working" style={{ width: '100%', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} />
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="content-section" style={{ marginBottom: '60px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2>Success Stories</h2>
           <div className="testimonial-grid">

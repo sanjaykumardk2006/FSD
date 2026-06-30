@@ -322,7 +322,7 @@ main {
 
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 30px;
   margin-bottom: 40px;
 }
@@ -343,14 +343,16 @@ main {
   border-color: var(--light-blue);
 }
 
-/* Zigzag positioning for cards */
 @media (min-width: 769px) {
-  .card:nth-child(3n + 2) {
-    transform: translateY(40px);
+  .card:nth-child(odd) {
+    grid-column: 1 / 2;
   }
-  
-  .card:nth-child(3n + 2):hover {
-    transform: translateY(32px);
+  .card:nth-child(even) {
+    grid-column: 2 / 3;
+    transform: translateY(50px);
+  }
+  .card:nth-child(even):hover {
+    transform: translateY(42px);
   }
 }
 
