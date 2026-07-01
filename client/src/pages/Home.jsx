@@ -33,197 +33,155 @@ export const Home = () => {
     <div className="page">
       <Header />
       <main>
-        <section className="hero">
-          <div className="hero-content">
-            <h2>Welcome to Freelancer Hub</h2>
-            <p>Connect talented freelancers with exciting projects worldwide</p>
-            <div className="hero-buttons">
-              <button className="btn btn-primary" onClick={() => navigate('/signup')}>
-                Hire Freelancer
+        {/* Two-Column Hero Section */}
+        <section className="hero-modern" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center', padding: '100px 0', minHeight: '80vh' }}>
+          <div className="hero-left" style={{ textAlign: 'left' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 16px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.2)', borderRadius: '100px', color: 'var(--accent-primary)', fontSize: '14px', fontWeight: '500', marginBottom: '24px' }}>
+              <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-primary)', display: 'block' }}></span>
+              Freelancer Marketplace v2.0
+            </div>
+            <h1 style={{ fontSize: '64px', lineHeight: '1.1', fontWeight: '800', marginBottom: '24px', letterSpacing: '-0.03em' }}>
+              The premium <br/><span style={{ color: 'var(--accent-primary)' }}>talent network</span> for modern teams.
+            </h1>
+            <p style={{ fontSize: '20px', color: 'var(--text-secondary)', marginBottom: '40px', maxWidth: '500px', lineHeight: '1.6' }}>
+              Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
+            </p>
+            <div className="hero-buttons" style={{ justifyContent: 'flex-start' }}>
+              <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
+                Hire Talent
               </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/signup')}>
-                Find Jobs
+              <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
+                Find Work
               </button>
             </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '32px', marginTop: '48px', paddingTop: '48px', borderTop: '1px solid var(--border-color)' }}>
+              <div>
+                <h4 style={{ fontSize: '24px', fontWeight: '700' }}>10k+</h4>
+                <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Active Users</p>
+              </div>
+              <div>
+                <h4 style={{ fontSize: '24px', fontWeight: '700' }}>$5M+</h4>
+                <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Paid to Talent</p>
+              </div>
+              <div>
+                <h4 style={{ fontSize: '24px', fontWeight: '700' }}>4.9/5</h4>
+                <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Client Rating</p>
+              </div>
+            </div>
+          </div>
+          <div className="hero-right" style={{ position: 'relative' }}>
+            <div style={{ width: '100%', paddingBottom: '100%', position: 'relative' }}>
+              {/* Dashboard Preview Mockup */}
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.8)' }}>
+                {/* Mockup Header */}
+                <div style={{ height: '50px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', padding: '0 20px', gap: '8px' }}>
+                  <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#EF4444' }}></div>
+                  <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#F59E0B' }}></div>
+                  <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#22C55E' }}></div>
+                </div>
+                {/* Mockup Body */}
+                <div style={{ padding: '24px', display: 'grid', gridTemplateColumns: '200px 1fr', gap: '24px', height: 'calc(100% - 50px)' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.05)', borderRadius: '6px' }}></div>
+                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px' }}></div>
+                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px' }}></div>
+                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px' }}></div>
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                    <div style={{ display: 'flex', gap: '16px' }}>
+                      <div style={{ height: '100px', flex: 1, background: 'linear-gradient(135deg, rgba(59,130,246,0.1), transparent)', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
+                      <div style={{ height: '100px', flex: 1, background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
+                    </div>
+                    <div style={{ flex: 1, background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Floating Cards */}
+              <div style={{ position: 'absolute', top: '10%', right: '-5%', background: 'var(--bg-card)', border: '1px solid var(--border-color)', padding: '16px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '16px', boxShadow: '0 20px 40px rgba(0,0,0,0.5)', animation: 'fadeInUp 1s ease-out 0.5s backwards' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(34,197,94,0.2)', color: 'var(--success)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px' }}>✓</div>
+                <div>
+                  <p style={{ fontWeight: '600', fontSize: '14px' }}>Project Delivered</p>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '12px' }}>Just now</p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
+        {/* Why Choose Us */}
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2>Why Choose Freelancer Hub?</h2>
-          <div className="cards-grid">
+          <h2>Built for performance and reliability</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
             <div className="card">
-              <div className="card-icon">🔒</div>
-              <h3>Secure Payments</h3>
-              <p>Safe and secure payment system with buyer and seller protection. Your funds are always protected.</p>
+              <div style={{ width: '48px', height: '48px', background: 'rgba(59,130,246,0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: 'var(--accent-primary)', fontSize: '24px' }}>🔒</div>
+              <h3>Secure Escrow</h3>
+              <p>Your funds are held safely until the work is reviewed and approved by you.</p>
             </div>
             <div className="card">
-              <div className="card-icon">💬</div>
-              <h3>Direct Communication</h3>
-              <p>Real-time messaging with project collaborators. Stay connected throughout the entire project lifecycle.</p>
+              <div style={{ width: '48px', height: '48px', background: 'rgba(59,130,246,0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: 'var(--accent-primary)', fontSize: '24px' }}>⚡</div>
+              <h3>Real-time Sync</h3>
+              <p>Communicate instantly with your team. Zero delays, perfect synchronization.</p>
             </div>
             <div className="card">
-              <div className="card-icon">📊</div>
-              <h3>Project Management</h3>
-              <p>Track progress, manage milestones, and stay organized. Complete visibility into every project stage.</p>
-            </div>
-            <div className="card">
-              <div className="card-icon">⭐</div>
-              <h3>Verified Profiles</h3>
-              <p>Work with verified freelancers and clients. Build trust through ratings, reviews, and portfolios.</p>
-            </div>
-            <div className="card">
-              <div className="card-icon">🌍</div>
-              <h3>Global Marketplace</h3>
-              <p>Access talented freelancers from around the world. Find the perfect match for your project needs.</p>
-            </div>
-            <div className="card">
-              <div className="card-icon">🚀</div>
-              <h3>24/7 Support</h3>
-              <p>Dedicated support team ready to help. Get assistance whenever you need it, day or night.</p>
+              <div style={{ width: '48px', height: '48px', background: 'rgba(59,130,246,0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: 'var(--accent-primary)', fontSize: '24px' }}>⭐</div>
+              <h3>Verified Talent</h3>
+              <p>Every freelancer passes a strict vetting process to ensure top-tier quality.</p>
             </div>
           </div>
         </section>
 
+        {/* Top Talent */}
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2>Popular Categories</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>💻</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Web Development</h3>
-            </div>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>🎨</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Graphic Design</h3>
-            </div>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>✍️</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Digital Marketing</h3>
-            </div>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>📱</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>App Development</h3>
-            </div>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>📊</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Data Analysis</h3>
-            </div>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>🎥</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Video Editing</h3>
-            </div>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>🎵</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Audio Production</h3>
-            </div>
-            <div className="card" style={{ padding: '25px 20px', transform: 'none', gridColumn: 'auto' }}>
-              <div className="card-icon" style={{ fontSize: '36px', marginBottom: '10px' }}>📝</div>
-              <h3 style={{ fontSize: '18px', marginBottom: '0' }}>Content Writing</h3>
-            </div>
-          </div>
-        </section>
-
-        <section className="content-section zigzag-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2>How It Works</h2>
-          <div className="zigzag-container">
-            <div className="zigzag-item zigzag-left" style={{ alignItems: 'center', marginBottom: '60px' }}>
-              <div className="zigzag-image">
-                <img src="/images/team_collaboration.png" alt="Team Collaboration" style={{ width: '100%', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} />
-              </div>
-              <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ color: 'var(--dark-blue)', fontSize: '28px', marginBottom: '15px' }}>1. Post a Project or Find Work</h3>
-                <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.8' }}>Clients can easily post their project requirements, while freelancers can browse through thousands of active job listings tailored to their skills. Our smart matching system ensures the perfect fit for your specific needs.</p>
-              </div>
-            </div>
-            <div className="zigzag-item zigzag-right" style={{ alignItems: 'center', marginBottom: '60px' }}>
-              <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ color: 'var(--dark-blue)', fontSize: '28px', marginBottom: '15px' }}>2. Collaborate Seamlessly</h3>
-                <p style={{ color: '#64748b', fontSize: '16px', lineHeight: '1.8' }}>Use our built-in workspace to communicate, share files, and track milestones. Work securely from anywhere in the world, whether you're in an office, working from home, or traveling as a digital nomad.</p>
-              </div>
-              <div className="zigzag-image">
-                <img src="/images/freelancer_cafe.png" alt="Freelancer Working" style={{ width: '100%', borderRadius: '16px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="content-section" style={{ marginBottom: '80px', textAlign: 'center' }} ref={(el) => sectionRefs.current.push(el)}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px', backgroundColor: 'var(--light-bg)', padding: '60px 40px', borderRadius: '24px', border: '1px solid #e5e7eb' }}>
-            <div>
-              <h3 style={{ fontSize: '48px', color: 'var(--dark-blue)', marginBottom: '10px', fontWeight: '900' }}>10k+</h3>
-              <p style={{ fontSize: '18px', color: '#64748b', fontWeight: '600' }}>Active Freelancers</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '48px', color: 'var(--dark-blue)', marginBottom: '10px', fontWeight: '900' }}>$5M+</h3>
-              <p style={{ fontSize: '18px', color: '#64748b', fontWeight: '600' }}>Paid to Talent</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '48px', color: 'var(--dark-blue)', marginBottom: '10px', fontWeight: '900' }}>4.9/5</h3>
-              <p style={{ fontSize: '18px', color: '#64748b', fontWeight: '600' }}>Average Rating</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="content-section" style={{ marginBottom: '60px' }} ref={(el) => sectionRefs.current.push(el)}>
-          <h2>Success Stories</h2>
-          <div className="testimonial-grid">
-            <div className="testimonial-card">
-              <div className="star-rating">⭐⭐⭐⭐⭐</div>
-              <p className="testimonial-text">"Freelancer Hub connected me with the perfect developer for my project. The communication tools made collaboration seamless and the project was delivered on time."</p>
-              <p className="testimonial-author">- Sarah Johnson, CEO at TechStart</p>
-            </div>
-            <div className="testimonial-card">
-              <div className="star-rating">⭐⭐⭐⭐⭐</div>
-              <p className="testimonial-text">"As a freelancer, I've found consistent work through this platform. The secure payment system and professional environment make it my go-to marketplace."</p>
-              <p className="testimonial-author">- Mark Davis, Full Stack Developer</p>
-            </div>
-            <div className="testimonial-card">
-              <div className="star-rating">⭐⭐⭐⭐⭐</div>
-              <p className="testimonial-text">"The platform's support team has been incredible. They helped me navigate the project management features and now I manage multiple projects efficiently."</p>
-              <p className="testimonial-author">- Emily Chen, Project Manager</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="content-section" style={{ marginBottom: '80px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2>Top Rated Freelancers</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '30px' }}>
-            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
-              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👨‍💻</div>
-              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>Alex Chen</h3>
-              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>Full Stack Developer</p>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
-              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+            {['Alex Chen', 'Sarah Miller', 'David Kim', 'Emma Watson'].map((name, i) => (
+              <div className="card" key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', marginBottom: '16px' }}></div>
+                <h3 style={{ marginBottom: '4px' }}>{name}</h3>
+                <p style={{ color: 'var(--accent-primary)', marginBottom: '16px' }}>Expert Developer</p>
+                <button className="btn btn-secondary" style={{ width: '100%' }}>View Profile</button>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* How It Works Zigzag */}
+        <section className="content-section zigzag-section" ref={(el) => sectionRefs.current.push(el)}>
+          <h2 style={{ marginBottom: '80px' }}>Streamlined Workflow</h2>
+          <div className="zigzag-container">
+            <div className="zigzag-item zigzag-left">
+              <div className="zigzag-image">
+                <div style={{ width: '100%', height: '300px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ color: 'var(--text-muted)' }}>Dashboard Preview</span>
+                </div>
+              </div>
+              <div className="zigzag-content">
+                <h3>Post a Project in seconds</h3>
+                <p>Our intuitive job posting flow ensures you capture exactly what you need. Let our AI matching system instantly connect you with the right professionals.</p>
+              </div>
             </div>
-            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
-              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👩‍🎨</div>
-              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>Sarah Miller</h3>
-              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>UI/UX Designer</p>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
-              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
-            </div>
-            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
-              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👨‍💼</div>
-              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>David Kim</h3>
-              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>Marketing Expert</p>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
-              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
-            </div>
-            <div className="card" style={{ transform: 'none', padding: '35px 25px' }}>
-              <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'var(--light-bg)', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '40px', border: '2px solid var(--light-blue)' }}>👩‍💻</div>
-              <h3 style={{ fontSize: '20px', marginBottom: '5px' }}>Emma Watson</h3>
-              <p style={{ color: 'var(--light-blue)', fontWeight: '600', marginBottom: '15px' }}>Data Scientist</p>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: '5px', color: '#f59e0b', marginBottom: '15px' }}>⭐⭐⭐⭐⭐</div>
-              <button className="btn btn-secondary" style={{ width: '100%', padding: '10px' }} onClick={() => navigate('/signup')}>View Profile</button>
+            <div className="zigzag-item zigzag-right">
+              <div className="zigzag-content">
+                <h3>Collaborate seamlessly</h3>
+                <p>Manage everything in one place. Built-in chat, milestone tracking, and secure file sharing make project management effortless.</p>
+              </div>
+              <div className="zigzag-image">
+                <div style={{ width: '100%', height: '300px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <span style={{ color: 'var(--text-muted)' }}>Workspace Preview</span>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1400px', borderRadius: '24px', padding: '100px 20px', width: '95%', border: '1px solid #e5e7eb', boxShadow: '0 10px 30px rgba(15, 31, 53, 0.05)' }} ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '48px', marginBottom: '30px' }}>Ready to Scale Your Business?</h2>
-          <p style={{ fontSize: '20px', marginBottom: '40px', maxWidth: '700px', margin: '0 auto 40px' }}>Join thousands of successful freelancers and clients building their dreams on Freelancer Hub. Start your journey today for free.</p>
-          <div className="hero-buttons">
-            <button className="btn btn-primary" style={{ padding: '15px 40px', fontSize: '18px', fontWeight: '700', borderRadius: '50px' }} onClick={() => navigate('/signup')}>Get Started Now</button>
-          </div>
+        {/* CTA Slogan */}
+        <section className="slogan-section" ref={(el) => sectionRefs.current.push(el)}>
+          <h2>Ready to Scale Your Business?</h2>
+          <p style={{ maxWidth: '600px', margin: '0 auto 40px' }}>Join thousands of modern teams building the future with our premium talent network. No credit card required to start.</p>
+          <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '16px 32px', fontSize: '16px' }}>
+            Get Started Now
+          </button>
         </section>
       </main>
       <Footer />
