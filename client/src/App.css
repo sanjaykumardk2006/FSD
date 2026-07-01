@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap');
 
-/* Premium Dark SaaS Theme Tokens */
+/* Premium Light SaaS Theme Tokens */
 :root {
-  --bg-primary: #0A0A0A;
-  --bg-secondary: #121212;
-  --bg-card: #1A1A1A;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-hover: rgba(255, 255, 255, 0.15);
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F9FAFB;
+  --bg-card: #FFFFFF;
+  --border-color: #E5E7EB;
+  --border-hover: #D1D5DB;
   
   --accent-primary: #3B82F6;
   --accent-hover: #2563EB;
@@ -15,9 +15,9 @@
   --warning: #F59E0B;
   --error: #EF4444;
   
-  --text-primary: #FFFFFF;
-  --text-secondary: #B3B3B3;
-  --text-muted: #808080;
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-muted: #9CA3AF;
 
   /* Overriding old variables so existing classes still somewhat work before we refactor them all */
   --primary-color: var(--bg-primary);
@@ -77,9 +77,9 @@ main {
 
 /* Glassmorphism Header */
 .header {
-  background: rgba(10, 10, 10, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: #FFFFFF;
+  
+  
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
@@ -100,7 +100,7 @@ main {
 .logo h1 {
   font-size: 24px;
   font-weight: 700;
-  background: linear-gradient(to right, #fff, #a1a1aa);
+  background: linear-gradient(to right, #111827, #4B5563);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -173,7 +173,7 @@ main {
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #F3F4F6;
   border-color: var(--border-hover);
 }
 
@@ -194,7 +194,7 @@ main {
   line-height: 1.1;
   font-weight: 800;
   margin-bottom: 24px;
-  background: linear-gradient(to right, #FFFFFF, #9CA3AF);
+  background: linear-gradient(to right, #111827, #4B5563);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -226,7 +226,7 @@ main {
 .card:hover {
   transform: translateY(-4px);
   border-color: var(--border-hover);
-  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
 }
 
 .card h3 {
@@ -354,7 +354,7 @@ main {
   border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 48px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.05);
 }
 
 /* Footer */

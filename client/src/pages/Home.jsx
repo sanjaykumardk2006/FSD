@@ -72,7 +72,7 @@ export const Home = () => {
           <div className="hero-right" style={{ position: 'relative' }}>
             <div style={{ width: '100%', paddingBottom: '100%', position: 'relative' }}>
               {/* Dashboard Preview Mockup */}
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.8)' }}>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.1)' }}>
                 {/* Mockup Header */}
                 <div style={{ height: '50px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', padding: '0 20px', gap: '8px' }}>
                   <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#EF4444' }}></div>
@@ -82,23 +82,23 @@ export const Home = () => {
                 {/* Mockup Body */}
                 <div style={{ padding: '24px', display: 'grid', gridTemplateColumns: '200px 1fr', gap: '24px', height: 'calc(100% - 50px)' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.05)', borderRadius: '6px' }}></div>
-                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px' }}></div>
-                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px' }}></div>
-                    <div style={{ height: '32px', background: 'rgba(255,255,255,0.02)', borderRadius: '6px' }}></div>
+                    <div style={{ height: '32px', background: '#F3F4F6', borderRadius: '6px' }}></div>
+                    <div style={{ height: '32px', background: '#F9FAFB', borderRadius: '6px' }}></div>
+                    <div style={{ height: '32px', background: '#F9FAFB', borderRadius: '6px' }}></div>
+                    <div style={{ height: '32px', background: '#F9FAFB', borderRadius: '6px' }}></div>
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                     <div style={{ display: 'flex', gap: '16px' }}>
                       <div style={{ height: '100px', flex: 1, background: 'linear-gradient(135deg, rgba(59,130,246,0.1), transparent)', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
-                      <div style={{ height: '100px', flex: 1, background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
+                      <div style={{ height: '100px', flex: 1, background: '#F9FAFB', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
                     </div>
-                    <div style={{ flex: 1, background: 'rgba(255,255,255,0.02)', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
+                    <div style={{ flex: 1, background: '#F9FAFB', border: '1px solid var(--border-color)', borderRadius: '12px' }}></div>
                   </div>
                 </div>
               </div>
               
               {/* Floating Cards */}
-              <div style={{ position: 'absolute', top: '10%', right: '-5%', background: 'var(--bg-card)', border: '1px solid var(--border-color)', padding: '16px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '16px', boxShadow: '0 20px 40px rgba(0,0,0,0.5)', animation: 'fadeInUp 1s ease-out 0.5s backwards' }}>
+              <div style={{ position: 'absolute', top: '10%', right: '-5%', background: 'var(--bg-card)', border: '1px solid var(--border-color)', padding: '16px', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '16px', boxShadow: '0 20px 40px rgba(0,0,0,0.05)', animation: 'fadeInUp 1s ease-out 0.5s backwards' }}>
                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(34,197,94,0.2)', color: 'var(--success)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px' }}>✓</div>
                 <div>
                   <p style={{ fontWeight: '600', fontSize: '14px' }}>Project Delivered</p>
@@ -137,7 +137,7 @@ export const Home = () => {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
             {['Alex Chen', 'Sarah Miller', 'David Kim', 'Emma Watson'].map((name, i) => (
               <div className="card" key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)', marginBottom: '16px' }}></div>
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: '#F3F4F6', marginBottom: '16px' }}></div>
                 <h3 style={{ marginBottom: '4px' }}>{name}</h3>
                 <p style={{ color: 'var(--accent-primary)', marginBottom: '16px' }}>Expert Developer</p>
                 <button className="btn btn-secondary" style={{ width: '100%' }}>View Profile</button>
@@ -152,7 +152,7 @@ export const Home = () => {
           <div className="zigzag-container">
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image">
-                <div style={{ width: '100%', height: '300px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '100%', height: '300px', background: '#F9FAFB', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Dashboard Preview</span>
                 </div>
               </div>
@@ -167,7 +167,7 @@ export const Home = () => {
                 <p>Manage everything in one place. Built-in chat, milestone tracking, and secure file sharing make project management effortless.</p>
               </div>
               <div className="zigzag-image">
-                <div style={{ width: '100%', height: '300px', background: 'rgba(255,255,255,0.02)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '100%', height: '300px', background: '#F9FAFB', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <span style={{ color: 'var(--text-muted)' }}>Workspace Preview</span>
                 </div>
               </div>
