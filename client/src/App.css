@@ -415,7 +415,7 @@ main {
   transition: all 0.2s ease;
 }
 .social-links a:hover {
-  background: var(--accent-primary);
+  background: #000000;
   color: white;
 }
 .footer-bottom {

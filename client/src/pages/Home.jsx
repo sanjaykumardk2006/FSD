@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
@@ -7,6 +7,7 @@ import '../App.css';
 export const Home = () => {
   const navigate = useNavigate();
   const sectionRefs = useRef([]);
+  const [openFaq, setOpenFaq] = useState(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -62,39 +63,7 @@ export const Home = () => {
           </div>
         </section>
 
-        {/* 2. Trusted By */}
-        <section className="content-section" style={{ textAlign: 'center', margin: '40px 0 100px' }} ref={(el) => sectionRefs.current.push(el)}>
-          <p style={{ color: 'var(--text-muted)', fontWeight: '600', marginBottom: '30px', textTransform: 'uppercase', letterSpacing: '2px' }}>Trusted by innovative teams worldwide</p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '60px', flexWrap: 'wrap', opacity: 0.6, fontSize: '24px', fontWeight: 'bold' }}>
-            <span>Acme Corp</span>
-            <span>GlobalTech</span>
-            <span>Nova Studio</span>
-            <span>Quantum</span>
-            <span>Horizon</span>
-          </div>
-        </section>
 
-        {/* 3. Platform Statistics */}
-        <section className="content-section" style={{ marginBottom: '100px', textAlign: 'center' }} ref={(el) => sectionRefs.current.push(el)}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px', backgroundColor: 'var(--bg-secondary)', padding: '60px 40px', borderRadius: '24px', border: '1px solid var(--border-color)' }}>
-            <div>
-              <h3 style={{ fontSize: '48px', color: 'var(--text-primary)', marginBottom: '10px', fontWeight: '900' }}>10k+</h3>
-              <p style={{ fontSize: '18px', color: 'var(--text-secondary)', fontWeight: '600' }}>Active Freelancers</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '48px', color: 'var(--text-primary)', marginBottom: '10px', fontWeight: '900' }}>$5M+</h3>
-              <p style={{ fontSize: '18px', color: 'var(--text-secondary)', fontWeight: '600' }}>Paid to Talent</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '48px', color: 'var(--text-primary)', marginBottom: '10px', fontWeight: '900' }}>4.9/5</h3>
-              <p style={{ fontSize: '18px', color: 'var(--text-secondary)', fontWeight: '600' }}>Average Client Rating</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '48px', color: 'var(--text-primary)', marginBottom: '10px', fontWeight: '900' }}>99%</h3>
-              <p style={{ fontSize: '18px', color: 'var(--text-secondary)', fontWeight: '600' }}>Project Success Rate</p>
-            </div>
-          </div>
-        </section>
 
         {/* 4. Popular Categories */}
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
@@ -227,10 +196,34 @@ export const Home = () => {
               { q: 'How are freelancers vetted?', a: 'We use a combination of AI screening, skill assessments, and manual review.' }
             ].map((faq, i) => (
               <div key={i} style={{ padding: '20px', borderBottom: '1px solid var(--border-color)', textAlign: 'left' }}>
-                <h4 style={{ fontSize: '18px', marginBottom: '10px', cursor: 'pointer' }}>{faq.q} <span style={{ float: 'right' }}>+</span></h4>
-                <p style={{ color: 'var(--text-secondary)', display: 'none' }}>{faq.a}</p>
+                <h4 onClick={() => setOpenFaq(openFaq === i ? null : i)} style={{ fontSize: '18px', marginBottom: openFaq === i ? '15px' : '0', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'margin 0.3s ease' }}>
+                  {faq.q} <span style={{ fontSize: '24px', fontWeight: '300', lineHeight: '1' }}>{openFaq === i ? '-' : '+'}</span>
+                </h4>
+                {openFaq === i && <p style={{ color: 'var(--text-secondary)', margin: '0', lineHeight: '1.6' }}>{faq.a}</p>}
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* 13. Platform Statistics */}
+        <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 80px' }} ref={(el) => sectionRefs.current.push(el)}>
+          <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center' }}>
+            <div>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>10k+</h2>
+              <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Active Freelancers</p>
+            </div>
+            <div>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>$5M+</h2>
+              <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Paid to Talent</p>
+            </div>
+            <div>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>4.9/5</h2>
+              <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Average Client Rating</p>
+            </div>
+            <div>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>99%</h2>
+              <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Project Success Rate</p>
+            </div>
           </div>
         </section>
 
