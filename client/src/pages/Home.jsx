@@ -119,21 +119,23 @@ export const Home = () => {
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px' }}>Explore Popular Categories</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Find exactly what you need from our massive talent pool</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
             {[
-              { icon: '💻', title: 'Web Development', desc: 'React, Node, Full Stack' },
-              { icon: '🎨', title: 'Graphic Design', desc: 'Logos, Branding, UI/UX' },
-              { icon: '✍️', title: 'Digital Marketing', desc: 'SEO, Social Media, Ads' },
-              { icon: '📱', title: 'App Development', desc: 'iOS, Android, React Native' },
-              { icon: '📊', title: 'Data Analysis', desc: 'Python, SQL, Machine Learning' },
-              { icon: '🎥', title: 'Video Editing', desc: 'Premiere, After Effects' },
-              { icon: '🎵', title: 'Audio Production', desc: 'Mixing, Voice Over, Podcasts' },
-              { icon: '📝', title: 'Content Writing', desc: 'Blogs, Copywriting, Translation' }
+              { image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80', title: 'Web Development', desc: 'Build scalable, responsive web applications using the latest technologies. Our expert developers are proficient in modern full-stack frameworks to bring your digital vision to life with robust and maintainable code.' },
+              { image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&q=80', title: 'Graphic Design', desc: 'Elevate your brand with stunning visual designs. From captivating logos to comprehensive branding and intuitive UI/UX, our creative professionals deliver aesthetically pleasing assets that resonate with your audience.' },
+              { image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80', title: 'Digital Marketing', desc: 'Drive growth and increase your online presence with targeted digital marketing strategies. We specialize in SEO, social media management, and ad campaigns designed to maximize engagement and conversion rates.' },
+              { image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&q=80', title: 'App Development', desc: 'Create seamless mobile experiences for both iOS and Android platforms. Our skilled mobile developers build high-performance, native and cross-platform applications using modern frameworks like React Native.' },
+              { image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=400&q=80', title: 'Data Analysis', desc: 'Transform raw data into actionable insights to drive informed business decisions. Our data experts utilize advanced analytics, SQL, and Machine Learning techniques to uncover trends and optimize your operations.' },
+              { image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=400&q=80', title: 'Video Editing', desc: 'Tell your story with professional video editing services. Whether it\'s promotional content, vlogs, or cinematic pieces, our editors use advanced tools to produce high-quality, engaging visual media.' },
+              { image: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=400&q=80', title: 'Audio Production', desc: 'Deliver crystal clear sound with top-tier audio production. From podcast editing and voice-overs to professional mixing and mastering, our audio engineers ensure your content sounds flawless and captivating.' },
+              { image: 'https://images.unsplash.com/photo-1455390582262-044cdead2708?auto=format&fit=crop&w=400&q=80', title: 'Content Writing', desc: 'Engage your audience with compelling and well-crafted content. Our experienced writers deliver high-quality blogs, persuasive copywriting, and accurate translations tailored to your brand\'s unique voice.' }
             ].map((cat, i) => (
-              <div className="card" key={i} style={{ padding: '30px 20px', textAlign: 'left' }}>
-                <div style={{ fontSize: '40px', marginBottom: '15px' }}>{cat.icon}</div>
-                <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>{cat.title}</h3>
-                <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>{cat.desc}</p>
+              <div className="card" key={i} style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
+                <div style={{ padding: '24px' }}>
+                  <h3 style={{ fontSize: '20px', marginBottom: '12px' }}>{cat.title}</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6', margin: '0' }}>{cat.desc}</p>
+                </div>
               </div>
             ))}
           </div>
