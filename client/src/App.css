@@ -389,3 +389,22 @@ main {
   color: var(--text-muted);
   font-size: 14px;
 }
+
+.zoom-out-image-container {
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  width: 100%;
+  height: 350px;
+}
+
+.zoom-out-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.zoom-out-image:hover {
+  transform: scale(0.9);
+}

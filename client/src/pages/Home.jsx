@@ -146,30 +146,30 @@ export const Home = () => {
           <h2 style={{ fontSize: '36px', marginBottom: '80px' }}>How it works</h2>
           <div className="zigzag-container">
             <div className="zigzag-item zigzag-left">
-              <div className="zigzag-image">
-                <div style={{ width: '100%', height: '350px', background: '#F3F4F6', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px' }}>📝</div>
+              <div className="zigzag-image zoom-out-image-container">
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Post a Project" className="zoom-out-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
                 <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>1. Post a Project</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>Describe what you need. Our intuitive job posting flow ensures you capture exactly what you need. Let our AI matching system instantly connect you with the right professionals.</p>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Start by providing a comprehensive description of your project requirements, budget, and timeline. Our intuitive job posting flow ensures you capture exactly what you need to attract the best talent. Let our advanced AI matching system instantly connect you with highly qualified professionals whose skills perfectly align with your goals.</p>
               </div>
             </div>
             <div className="zigzag-item zigzag-right">
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
                 <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>2. Hire Top Talent</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>Review proposals, portfolios, and reviews. Interview your favorites and hire the best fit for your project using our secure escrow system.</p>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Carefully review customized proposals, in-depth portfolios, and verified client reviews from our top-tier freelancers. Conduct interviews with your favorite candidates to ensure a perfect cultural and technical fit. Finally, hire the absolute best match for your project with complete confidence using our secure, industry-leading escrow system.</p>
               </div>
-              <div className="zigzag-image">
-                <div style={{ width: '100%', height: '350px', background: '#F3F4F6', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px' }}>🤝</div>
+              <div className="zigzag-image zoom-out-image-container">
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Hire Top Talent" className="zoom-out-image" />
               </div>
             </div>
             <div className="zigzag-item zigzag-left">
-              <div className="zigzag-image">
-                <div style={{ width: '100%', height: '350px', background: '#F3F4F6', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '48px' }}>🚀</div>
+              <div className="zigzag-image zoom-out-image-container">
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Collaborate & Succeed" className="zoom-out-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
                 <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>3. Collaborate & Succeed</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)' }}>Manage everything in one place. Built-in chat, milestone tracking, and secure file sharing make project management effortless.</p>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Manage every aspect of your project in one centralized, easy-to-use workspace. Utilize our built-in real-time chat, structured milestone tracking, and secure file sharing to keep everything organized. This effortless project management approach ensures you can focus entirely on achieving successful outcomes and scaling your business.</p>
               </div>
             </div>
           </div>
@@ -179,16 +179,25 @@ export const Home = () => {
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px' }}>Recently Completed Projects</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>See the amazing work done by our freelancers</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <div className="card" key={item} style={{ padding: '0', overflow: 'hidden' }}>
-                <div style={{ height: '200px', background: '#F3F4F6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>🖼️ Project Preview</div>
-                <div style={{ padding: '24px' }}>
-                  <h3 style={{ fontSize: '20px', marginBottom: '10px' }}>E-Commerce Redesign</h3>
-                  <p style={{ color: 'var(--text-secondary)', marginBottom: '15px' }}>A complete overhaul of a major retail platform using React and Node.js.</p>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <span style={{ fontWeight: 'bold' }}>$4,500</span>
-                    <span style={{ fontSize: '14px', color: 'var(--success)' }}>Completed</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+            {[
+              { image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80', title: 'E-Commerce Redesign', desc: 'A complete overhaul of a major retail platform using React and Node.js for scalable performance.', price: '$4,500' },
+              { image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80', title: 'Fintech Mobile Application', desc: 'A secure, cross-platform mobile app built with React Native for real-time crypto trading.', price: '$8,200' },
+              { image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80', title: 'Corporate Rebranding', desc: 'A comprehensive brand identity overhaul including a new logo, guidelines, and marketing assets.', price: '$2,800' },
+              { image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80', title: 'SaaS Analytics Dashboard', desc: 'An intuitive data visualization dashboard providing real-time insights with D3.js and Python.', price: '$6,100' },
+              { image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80', title: 'Marketing Campaign Video', desc: 'A high-conversion promotional video edited and color-graded using Adobe Premiere Pro.', price: '$1,500' },
+              { image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=600&q=80', title: 'SEO Optimization Strategy', desc: 'A thorough technical SEO audit and implementation resulting in a 150% organic traffic increase.', price: '$3,400' }
+            ].map((project, i) => (
+              <div className="card" key={i} style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <div style={{ height: '220px', overflow: 'hidden' }}>
+                  <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+                </div>
+                <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                  <h3 style={{ fontSize: '20px', marginBottom: '10px' }}>{project.title}</h3>
+                  <p style={{ color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: '1.5', flex: 1 }}>{project.desc}</p>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '15px' }}>
+                    <span style={{ fontWeight: '800', fontSize: '18px', color: 'var(--text-primary)' }}>{project.price}</span>
+                    <span style={{ fontSize: '14px', color: 'var(--success)', fontWeight: '600', backgroundColor: 'rgba(34, 197, 94, 0.1)', padding: '4px 10px', borderRadius: '12px' }}>Completed</span>
                   </div>
                 </div>
               </div>
