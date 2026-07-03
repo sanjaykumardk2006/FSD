@@ -119,7 +119,7 @@ export const About = () => {
               {/* Route shadow/base */}
               <path d="M50,0 C 90,15 90,20 50,33.33 C 10,45 10,55 50,66.66 C 90,75 90,85 50,100" fill="none" stroke="#D1FAE5" strokeWidth="8" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
               {/* Dashed map trail */}
-              <path d="M50,0 C 90,15 90,20 50,33.33 C 10,45 10,55 50,66.66 C 90,75 90,85 50,100" fill="none" stroke="#10B981" strokeWidth="4" strokeDasharray="8 12" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
+              <path className="map-route-active" d="M50,0 C 90,15 90,20 50,33.33 C 10,45 10,55 50,66.66 C 90,75 90,85 50,100" fill="none" stroke="#10B981" strokeWidth="4" strokeDasharray="8 12" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
             </svg>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
@@ -134,7 +134,7 @@ export const About = () => {
                 </div>
                 {/* Map GPS Pin */}
                 <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                  <div className="gps-pin"></div>
                 </div>
               </div>
 
@@ -148,7 +148,7 @@ export const About = () => {
                   <p style={{ color: '#047857', fontSize: '16px' }}>We iterate quickly, learn from mistakes, and continuously improve.</p>
                 </div>
                 <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                  <div className="gps-pin"></div>
                 </div>
               </div>
 
@@ -162,7 +162,7 @@ export const About = () => {
                   <p style={{ color: '#047857', fontSize: '16px' }}>We embrace diversity and build for a borderless world.</p>
                 </div>
                 <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                  <div className="gps-pin"></div>
                 </div>
               </div>
 
@@ -176,7 +176,7 @@ export const About = () => {
                   <p style={{ color: '#047857', fontSize: '16px' }}>We tackle hard problems and aren't afraid to disrupt the status quo.</p>
                 </div>
                 <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                  <div className="gps-pin"></div>
                 </div>
               </div>
             </div>
