@@ -51,47 +51,62 @@ export const About = () => {
           </div>
         </section>
 
-        {/* Timeline */}
-        <section className="content-section">
-          <h2>Our Journey</h2>
-          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-            {[
-              { year: '2018', title: 'The Beginning', desc: 'Founded in a small garage in San Francisco with a vision to change how people work.' },
-              { year: '2019', title: 'Seed Funding', desc: 'Raised $5M in seed funding to build out the core marketplace platform.' },
-              { year: '2021', title: 'Global Expansion', desc: 'Opened offices in London and Singapore, reaching 1M active users.' },
-              { year: '2023', title: 'Enterprise Launch', desc: 'Launched Freelancer Hub Enterprise to support Fortune 500 companies.' },
-              { year: '2026', title: 'AI Integration', desc: 'Introduced smart AI matching, revolutionizing the hiring process.' }
-            ].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: '40px', marginBottom: '40px', paddingBottom: '40px', borderBottom: '1px solid var(--border-color)' }}>
-                <h3 style={{ fontSize: '32px', color: 'var(--accent-primary)', minWidth: '100px' }}>{item.year}</h3>
-                <div>
-                  <h4 style={{ fontSize: '24px', marginBottom: '10px' }}>{item.title}</h4>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '18px' }}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        {/* Project Description */}
+        <section className="content-section" style={{ maxWidth: '800px', margin: '0 auto 80px', padding: '0 20px' }}>
+          <h2 style={{ fontSize: '36px', marginBottom: '30px', textAlign: 'left' }}>About Freelancer Hub</h2>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
+            Freelancer Hub is a state-of-the-art marketplace designed to bridge the gap between world-class talent and ambitious businesses. We provide a seamless, secure, and dynamic environment where professionals can showcase their skills, and clients can easily discover, hire, and collaborate with the perfect match for their projects.
+          </p>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
+            Born from the necessity to adapt to modern remote-first work cultures, our platform is deeply integrated with tools that ensure transparency and fair compensation. Whether you are a small startup trying to launch your MVP or an enterprise company scaling your operations, Freelancer Hub acts as the ultimate catalyst for your goals.
+          </p>
         </section>
 
-        {/* Leadership */}
-        <section className="content-section">
-          <h2>Leadership Team</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
-            {[
-              { name: 'Sarah Jenkins', role: 'Chief Executive Officer' },
-              { name: 'Michael Chang', role: 'Chief Technology Officer' },
-              { name: 'Elena Rodriguez', role: 'Chief Operating Officer' },
-              { name: 'David Smith', role: 'Head of Product' },
-              { name: 'Lisa Wang', role: 'Head of Design' },
-              { name: 'James Wilson', role: 'Head of Engineering' }
-            ].map((leader, i) => (
-              <div className="card" key={i} style={{ textAlign: 'center' }}>
-                <div style={{ width: '120px', height: '120px', borderRadius: '50%', background: '#F3F4F6', margin: '0 auto 20px' }}></div>
-                <h3 style={{ fontSize: '20px' }}>{leader.name}</h3>
-                <p style={{ color: 'var(--text-secondary)' }}>{leader.role}</p>
-              </div>
-            ))}
-          </div>
+        {/* How It Works */}
+        <section className="content-section" style={{ maxWidth: '800px', margin: '0 auto 80px', padding: '0 20px' }}>
+          <h2 style={{ fontSize: '36px', marginBottom: '30px', textAlign: 'left' }}>How It Works</h2>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
+            The process is designed to be as frictionless as possible. Here is a detailed look into the ecosystem that makes it work flawlessly:
+          </p>
+          <ul style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <li><strong>Intelligent Matching:</strong> Our advanced algorithms analyze client requirements and instantly match them with freelancers who possess the exact technical stack and industry experience needed.</li>
+            <li><strong>Comprehensive Discovery:</strong> Clients can browse through categorized, vetted portfolios, while freelancers can proactively bid on high-quality, verified project postings.</li>
+            <li><strong>Secure Communication:</strong> Built-in chat, video conferencing, and file-sharing capabilities mean you never have to leave the platform to collaborate.</li>
+            <li><strong>Escrow Protection:</strong> Funds are safely held in escrow before work begins, giving clients the power to review milestones before release, and guaranteeing freelancers they will be paid.</li>
+            <li><strong>Milestone Tracking:</strong> Large projects can be broken down into manageable milestones with independent deadlines and deliverables.</li>
+            <li><strong>Automated Invoicing:</strong> We handle the boring administrative tasks. Invoices and receipts are generated automatically upon milestone completion.</li>
+          </ul>
+        </section>
+
+        {/* Purpose for Freelancers & Clients */}
+        <section className="content-section" style={{ maxWidth: '800px', margin: '0 auto 100px', padding: '0 20px' }}>
+          <h2 style={{ fontSize: '36px', marginBottom: '30px', textAlign: 'left' }}>Who Is It For?</h2>
+          
+          <h3 style={{ fontSize: '28px', color: 'var(--accent-primary)', marginTop: '40px', marginBottom: '20px' }}>The Freelancer's Advantage</h3>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
+            We believe that talent should not be limited by geography. Our platform empowers independent professionals to build sustainable, scalable careers:
+          </p>
+          <ul style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '40px' }}>
+            <li>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</li>
+            <li>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</li>
+            <li>Utilize sophisticated platform tools to build a professional portfolio, gather client reviews, and establish a stellar reputation.</li>
+            <li>Maintain absolute flexibility to choose your projects, negotiate your timelines, and set your own hourly or fixed rates.</li>
+            <li>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</li>
+            <li>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</li>
+          </ul>
+
+          <h3 style={{ fontSize: '28px', color: 'var(--accent-primary)', marginTop: '40px', marginBottom: '20px' }}>The Client's Edge</h3>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
+            Finding the right talent quickly can make or break a project. Freelancer Hub provides businesses with the agility to scale their workforce on demand:
+          </p>
+          <ul style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <li>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</li>
+            <li>Experience a streamlined, AI-driven hiring process that drastically reduces time-to-hire and administrative overhead.</li>
+            <li>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</li>
+            <li>Leverage scalable workforce solutions, allowing you to hire a single expert or assemble an entire remote team in days.</li>
+            <li>Monitor project progress transparently with built-in time tracking, daily work diaries, and integrated communication tools.</li>
+            <li>Rest easy with enterprise-grade security and compliance tools designed specifically to protect your intellectual property.</li>
+          </ul>
         </section>
 
         {/* Values Map */}
