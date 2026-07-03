@@ -16,11 +16,12 @@ export const About = () => {
         {/* Our Mission & Vision */}
         <section className="content-section">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px' }}>
-            <div>
-              <h2 style={{ textAlign: 'left', fontSize: '32px', marginBottom: '20px' }}>Our Mission</h2>
-              <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8' }}>To empower freelancers and businesses by creating a transparent, efficient, and fair marketplace where skills meet opportunities. We believe that talent is equally distributed globally, but opportunity is not. Our goal is to bridge that gap.</p>
+            <div style={{ background: 'var(--accent-primary)', color: 'white', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
+              <h2 style={{ textAlign: 'left', fontSize: '32px', marginBottom: '20px', color: 'white' }}>Our Mission</h2>
+              <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)', lineHeight: '1.8' }}>To empower freelancers and businesses by creating a transparent, efficient, and fair marketplace where skills meet opportunities. We believe that talent is equally distributed globally, but opportunity is not. Our goal is to bridge that gap.</p>
             </div>
-            <div>
+            <div style={{ background: 'white', border: '2px dashed var(--accent-primary)', padding: '40px', borderRadius: '24px', position: 'relative' }}>
+              <div style={{ position: 'absolute', top: '-20px', right: '-20px', background: 'var(--accent-primary)', color: 'white', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>✨</div>
               <h2 style={{ textAlign: 'left', fontSize: '32px', marginBottom: '20px' }}>Our Vision</h2>
               <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8' }}>To be the world's leading platform connecting talented professionals with meaningful projects. We envision a world where anyone, anywhere, can build a successful career on their own terms, and companies can scale infinitely.</p>
             </div>
@@ -93,29 +94,76 @@ export const About = () => {
           </div>
         </section>
 
-        {/* Values */}
-        <section className="content-section">
-          <h2>Our Core Values</h2>
-          <div className="cards-grid">
-            <div className="card">
-              <div style={{ fontSize: '40px', marginBottom: '20px' }}>🤝</div>
-              <h3>Trust First</h3>
-              <p>We build everything on a foundation of trust, transparency, and integrity.</p>
-            </div>
-            <div className="card">
-              <div style={{ fontSize: '40px', marginBottom: '20px' }}>🚀</div>
-              <h3>Move Fast</h3>
-              <p>We iterate quickly, learn from mistakes, and continuously improve.</p>
-            </div>
-            <div className="card">
-              <div style={{ fontSize: '40px', marginBottom: '20px' }}>🌍</div>
-              <h3>Global Mindset</h3>
-              <p>We embrace diversity and build for a borderless world.</p>
-            </div>
-            <div className="card">
-              <div style={{ fontSize: '40px', marginBottom: '20px' }}>💡</div>
-              <h3>Think Big</h3>
-              <p>We tackle hard problems and aren't afraid to disrupt the status quo.</p>
+        {/* Values Map */}
+        <section className="content-section" style={{ padding: '60px 20px', marginTop: '60px' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '80px', color: '#065F46', fontSize: '36px' }}>Our Core Values</h2>
+          
+          <div style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
+            {/* Map Path Line - Realistic Route */}
+            <svg style={{ position: 'absolute', top: '50px', bottom: '50px', left: '50%', transform: 'translateX(-50%)', width: '300px', height: 'calc(100% - 100px)', zIndex: -1 }} className="hide-on-mobile" preserveAspectRatio="none" viewBox="0 0 100 100">
+              {/* Route shadow/base */}
+              <path d="M50,0 C 90,15 90,20 50,33.33 C 10,45 10,55 50,66.66 C 90,75 90,85 50,100" fill="none" stroke="#D1FAE5" strokeWidth="8" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
+              {/* Dashed map trail */}
+              <path d="M50,0 C 90,15 90,20 50,33.33 C 10,45 10,55 50,66.66 C 90,75 90,85 50,100" fill="none" stroke="#10B981" strokeWidth="4" strokeDasharray="8 12" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
+            </svg>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
+              {/* Value 1: Left */}
+              <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', position: 'relative' }}>
+                <div style={{ width: '45%', textAlign: 'right', paddingRight: '40px' }}>
+                  <div style={{ color: '#10B981', marginBottom: '16px', display: 'flex', justifyContent: 'flex-end' }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                  </div>
+                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Trust First</h3>
+                  <p style={{ color: '#047857', fontSize: '16px' }}>We build everything on a foundation of trust, transparency, and integrity.</p>
+                </div>
+                {/* Map GPS Pin */}
+                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
+                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                </div>
+              </div>
+
+              {/* Value 2: Right */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', position: 'relative' }}>
+                <div style={{ width: '45%', textAlign: 'left', paddingLeft: '40px' }}>
+                  <div style={{ color: '#10B981', marginBottom: '16px' }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L13.5 2Z"></path><path d="M13 2v7h7"></path><path d="m10 13 4 4"></path><path d="m14 13-4 4"></path></svg>
+                  </div>
+                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Move Fast</h3>
+                  <p style={{ color: '#047857', fontSize: '16px' }}>We iterate quickly, learn from mistakes, and continuously improve.</p>
+                </div>
+                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
+                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                </div>
+              </div>
+
+              {/* Value 3: Left */}
+              <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', position: 'relative' }}>
+                <div style={{ width: '45%', textAlign: 'right', paddingRight: '40px' }}>
+                  <div style={{ color: '#10B981', marginBottom: '16px', display: 'flex', justifyContent: 'flex-end' }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                  </div>
+                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Global Mindset</h3>
+                  <p style={{ color: '#047857', fontSize: '16px' }}>We embrace diversity and build for a borderless world.</p>
+                </div>
+                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
+                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                </div>
+              </div>
+
+              {/* Value 4: Right */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', position: 'relative' }}>
+                <div style={{ width: '45%', textAlign: 'left', paddingLeft: '40px' }}>
+                  <div style={{ color: '#10B981', marginBottom: '16px' }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                  </div>
+                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Think Big</h3>
+                  <p style={{ color: '#047857', fontSize: '16px' }}>We tackle hard problems and aren't afraid to disrupt the status quo.</p>
+                </div>
+                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
+                  <div style={{ width: '24px', height: '24px', background: '#10B981', borderRadius: '50%', border: '4px solid white', boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}></div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
