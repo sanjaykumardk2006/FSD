@@ -7,209 +7,88 @@ export const About = () => {
     <div className="page">
       <Header />
       <main>
-        {/* Hero */}
-        <section className="hero-modern" style={{ padding: '120px 20px', textAlign: 'center', background: '#F9FAFB', borderRadius: '24px', margin: '40px 0' }}>
-          <h1 style={{ fontSize: '56px', fontWeight: '800', marginBottom: '24px' }}>Building the <span style={{ color: 'var(--accent-primary)' }}>Future of Work</span></h1>
-          <p style={{ fontSize: '20px', color: 'var(--text-secondary)', maxWidth: '600px', margin: '0 auto' }}>We are on a mission to connect the world's most ambitious companies with the best talent, anywhere.</p>
-        </section>
-
-        {/* Our Mission & Vision */}
-        <section className="content-section">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px' }}>
-            <div style={{ background: 'var(--accent-primary)', color: 'white', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
-              <h2 style={{ textAlign: 'left', fontSize: '32px', marginBottom: '20px', color: 'white' }}>Our Mission</h2>
-              <p style={{ fontSize: '18px', color: 'rgba(255,255,255,0.9)', lineHeight: '1.8' }}>To empower freelancers and businesses by creating a transparent, efficient, and fair marketplace where skills meet opportunities. We believe that talent is equally distributed globally, but opportunity is not. Our goal is to bridge that gap.</p>
-            </div>
-            <div style={{ background: 'white', border: '2px dashed var(--accent-primary)', padding: '40px', borderRadius: '24px', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '-20px', right: '-20px', background: 'var(--accent-primary)', color: 'white', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>✨</div>
-              <h2 style={{ textAlign: 'left', fontSize: '32px', marginBottom: '20px' }}>Our Vision</h2>
-              <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8' }}>To be the world's leading platform connecting talented professionals with meaningful projects. We envision a world where anyone, anywhere, can build a successful career on their own terms, and companies can scale infinitely.</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Stats */}
-        <section className="content-section" style={{ background: '#F3F4F6', padding: '80px', borderRadius: '24px', textAlign: 'center' }}>
-          <h2 style={{ marginBottom: '40px' }}>Our Impact</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px' }}>
-            <div>
-              <h3 style={{ fontSize: '40px', color: 'var(--accent-primary)' }}>2018</h3>
-              <p style={{ fontWeight: 'bold' }}>Founded</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '40px', color: 'var(--accent-primary)' }}>150+</h3>
-              <p style={{ fontWeight: 'bold' }}>Countries</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '40px', color: 'var(--accent-primary)' }}>500</h3>
-              <p style={{ fontWeight: 'bold' }}>Employees</p>
-            </div>
-            <div>
-              <h3 style={{ fontSize: '40px', color: 'var(--accent-primary)' }}>$1B+</h3>
-              <p style={{ fontWeight: 'bold' }}>Earnings</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Project Description */}
-        <section className="content-section" style={{ maxWidth: '800px', margin: '0 auto 80px', padding: '0 20px' }}>
-          <h2 style={{ fontSize: '36px', marginBottom: '30px', textAlign: 'left' }}>About Freelancer Hub</h2>
-          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
-            Freelancer Hub is a state-of-the-art marketplace designed to bridge the gap between world-class talent and ambitious businesses. We provide a seamless, secure, and dynamic environment where professionals can showcase their skills, and clients can easily discover, hire, and collaborate with the perfect match for their projects.
-          </p>
-          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
-            Born from the necessity to adapt to modern remote-first work cultures, our platform is deeply integrated with tools that ensure transparency and fair compensation. Whether you are a small startup trying to launch your MVP or an enterprise company scaling your operations, Freelancer Hub acts as the ultimate catalyst for your goals.
+        {/* Vision Section */}
+        <section className="hero-modern" style={{ padding: '100px 20px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '24px', margin: '40px 0', border: '1px solid var(--border-color)' }}>
+          <h1 style={{ fontSize: '56px', fontWeight: '800', marginBottom: '30px', color: 'var(--text-primary)' }}>
+            Redefining the Future of <span style={{ color: 'var(--accent-primary)' }}>Remote Work</span>
+          </h1>
+          <p style={{ fontSize: '20px', color: 'var(--text-secondary)', maxWidth: '800px', margin: '0 auto', lineHeight: '1.8' }}>
+            We believe the freelance economy is broken. We are here to fix it by eliminating exorbitant platform fees, cutting through administrative bloat, and putting an end to the race-to-the-bottom bidding wars. We empower true professionals to connect with companies that value quality and transparency above all else.
           </p>
         </section>
 
-        {/* How It Works */}
-        <section className="content-section" style={{ maxWidth: '800px', margin: '0 auto 80px', padding: '0 20px' }}>
-          <h2 style={{ fontSize: '36px', marginBottom: '30px', textAlign: 'left' }}>How It Works</h2>
-          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
-            The process is designed to be as frictionless as possible. Here is a detailed look into the ecosystem that makes it work flawlessly:
-          </p>
-          <ul style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <li><strong>Intelligent Matching:</strong> Our advanced algorithms analyze client requirements and instantly match them with freelancers who possess the exact technical stack and industry experience needed.</li>
-            <li><strong>Comprehensive Discovery:</strong> Clients can browse through categorized, vetted portfolios, while freelancers can proactively bid on high-quality, verified project postings.</li>
-            <li><strong>Secure Communication:</strong> Built-in chat, video conferencing, and file-sharing capabilities mean you never have to leave the platform to collaborate.</li>
-            <li><strong>Escrow Protection:</strong> Funds are safely held in escrow before work begins, giving clients the power to review milestones before release, and guaranteeing freelancers they will be paid.</li>
-            <li><strong>Milestone Tracking:</strong> Large projects can be broken down into manageable milestones with independent deadlines and deliverables.</li>
-            <li><strong>Automated Invoicing:</strong> We handle the boring administrative tasks. Invoices and receipts are generated automatically upon milestone completion.</li>
-          </ul>
-        </section>
-
-        {/* Purpose for Freelancers & Clients */}
-        <section className="content-section" style={{ maxWidth: '800px', margin: '0 auto 100px', padding: '0 20px' }}>
-          <h2 style={{ fontSize: '36px', marginBottom: '30px', textAlign: 'left' }}>Who Is It For?</h2>
-          
-          <h3 style={{ fontSize: '28px', color: 'var(--accent-primary)', marginTop: '40px', marginBottom: '20px' }}>The Freelancer's Advantage</h3>
-          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
-            We believe that talent should not be limited by geography. Our platform empowers independent professionals to build sustainable, scalable careers:
-          </p>
-          <ul style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '40px' }}>
-            <li>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</li>
-            <li>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</li>
-            <li>Utilize sophisticated platform tools to build a professional portfolio, gather client reviews, and establish a stellar reputation.</li>
-            <li>Maintain absolute flexibility to choose your projects, negotiate your timelines, and set your own hourly or fixed rates.</li>
-            <li>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</li>
-            <li>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</li>
-          </ul>
-
-          <h3 style={{ fontSize: '28px', color: 'var(--accent-primary)', marginTop: '40px', marginBottom: '20px' }}>The Client's Edge</h3>
-          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', marginBottom: '20px' }}>
-            Finding the right talent quickly can make or break a project. Freelancer Hub provides businesses with the agility to scale their workforce on demand:
-          </p>
-          <ul style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', paddingLeft: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <li>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</li>
-            <li>Experience a streamlined, AI-driven hiring process that drastically reduces time-to-hire and administrative overhead.</li>
-            <li>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</li>
-            <li>Leverage scalable workforce solutions, allowing you to hire a single expert or assemble an entire remote team in days.</li>
-            <li>Monitor project progress transparently with built-in time tracking, daily work diaries, and integrated communication tools.</li>
-            <li>Rest easy with enterprise-grade security and compliance tools designed specifically to protect your intellectual property.</li>
-          </ul>
-        </section>
-
-        {/* Values Map */}
-        <section className="content-section" style={{ padding: '60px 20px', marginTop: '60px' }}>
-          <h2 style={{ textAlign: 'center', marginBottom: '80px', color: '#065F46', fontSize: '36px' }}>Our Core Values</h2>
-          
-          <div style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
-            {/* Map Path Line - Realistic Route */}
-            <svg style={{ position: 'absolute', top: '50px', bottom: '50px', left: '50%', transform: 'translateX(-50%)', width: '300px', height: 'calc(100% - 100px)', zIndex: -1 }} className="hide-on-mobile" preserveAspectRatio="none" viewBox="0 0 100 100">
-              {/* Route shadow/base */}
-              <path d="M50,0 C 90,15 90,20 50,33.33 C 10,45 10,55 50,66.66 C 90,75 90,85 50,100" fill="none" stroke="#D1FAE5" strokeWidth="8" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
-              {/* Dashed map trail */}
-              <path className="map-route-active" d="M50,0 C 90,15 90,20 50,33.33 C 10,45 10,55 50,66.66 C 90,75 90,85 50,100" fill="none" stroke="#10B981" strokeWidth="4" strokeDasharray="8 12" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
-            </svg>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
-              {/* Value 1: Left */}
-              <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', position: 'relative' }}>
-                <div style={{ width: '45%', textAlign: 'right', paddingRight: '40px' }}>
-                  <div style={{ color: '#10B981', marginBottom: '16px', display: 'flex', justifyContent: 'flex-end' }}>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                  </div>
-                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Trust First</h3>
-                  <p style={{ color: '#047857', fontSize: '16px' }}>We build everything on a foundation of trust, transparency, and integrity.</p>
-                </div>
-                {/* Map GPS Pin */}
-                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div className="gps-pin"></div>
-                </div>
-              </div>
-
-              {/* Value 2: Right */}
-              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', position: 'relative' }}>
-                <div style={{ width: '45%', textAlign: 'left', paddingLeft: '40px' }}>
-                  <div style={{ color: '#10B981', marginBottom: '16px' }}>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L13.5 2Z"></path><path d="M13 2v7h7"></path><path d="m10 13 4 4"></path><path d="m14 13-4 4"></path></svg>
-                  </div>
-                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Move Fast</h3>
-                  <p style={{ color: '#047857', fontSize: '16px' }}>We iterate quickly, learn from mistakes, and continuously improve.</p>
-                </div>
-                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div className="gps-pin"></div>
-                </div>
-              </div>
-
-              {/* Value 3: Left */}
-              <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', position: 'relative' }}>
-                <div style={{ width: '45%', textAlign: 'right', paddingRight: '40px' }}>
-                  <div style={{ color: '#10B981', marginBottom: '16px', display: 'flex', justifyContent: 'flex-end' }}>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
-                  </div>
-                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Global Mindset</h3>
-                  <p style={{ color: '#047857', fontSize: '16px' }}>We embrace diversity and build for a borderless world.</p>
-                </div>
-                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div className="gps-pin"></div>
-                </div>
-              </div>
-
-              {/* Value 4: Right */}
-              <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', position: 'relative' }}>
-                <div style={{ width: '45%', textAlign: 'left', paddingLeft: '40px' }}>
-                  <div style={{ color: '#10B981', marginBottom: '16px' }}>
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
-                  </div>
-                  <h3 style={{ color: '#064E3B', fontSize: '24px', marginBottom: '12px' }}>Think Big</h3>
-                  <p style={{ color: '#047857', fontSize: '16px' }}>We tackle hard problems and aren't afraid to disrupt the status quo.</p>
-                </div>
-                <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', zIndex: 2 }}>
-                  <div className="gps-pin"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Global Offices */}
-        <section className="content-section" style={{ background: '#F9FAFB', padding: '80px 40px', borderRadius: '24px' }}>
-          <h2>Our Offices</h2>
+        {/* Core Pillars */}
+        <section className="content-section" style={{ padding: '60px 0' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '60px', fontSize: '36px' }}>Our Core Pillars</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-              <h3>San Francisco</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>Global Headquarters</p>
+            <div style={{ background: 'var(--bg-card)', padding: '40px 30px', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+              <div style={{ width: '64px', height: '64px', background: 'rgba(59, 130, 246, 0.1)', color: 'var(--accent-primary)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <h3 style={{ fontSize: '22px', marginBottom: '16px' }}>Integrity & Security</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>We prioritize the safety of our users with robust escrow systems, transparent contracts, and strict data protection policies.</p>
             </div>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-              <h3>London</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>European Hub</p>
+            
+            <div style={{ background: 'var(--bg-card)', padding: '40px 30px', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+              <div style={{ width: '64px', height: '64px', background: 'rgba(34, 197, 94, 0.1)', color: '#22c55e', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+              </div>
+              <h3 style={{ fontSize: '22px', marginBottom: '16px' }}>Quality Over Quantity</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>We curate our talent pool and client base carefully. We would rather have 100 excellent matches than 10,000 mediocre ones.</p>
             </div>
-            <div style={{ background: 'white', padding: '30px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-              <h3>Singapore</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>APAC Hub</p>
+
+            <div style={{ background: 'var(--bg-card)', padding: '40px 30px', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+              <div style={{ width: '64px', height: '64px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              </div>
+              <h3 style={{ fontSize: '22px', marginBottom: '16px' }}>Global Collaboration</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>Great ideas have no borders. We build the tools necessary for seamless collaboration across any timezone and culture.</p>
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="slogan-section" style={{ margin: '80px auto 40px' }}>
-          <h2>Join Our Team</h2>
-          <p style={{ maxWidth: '600px', margin: '0 auto 40px' }}>We are always looking for talented individuals to join our mission. Check out our open roles.</p>
-          <button className="btn btn-primary" style={{ padding: '16px 32px', fontSize: '16px', borderRadius: '50px' }}>
-            View Careers
-          </button>
+        {/* Company Profile & Team */}
+        <section className="content-section" style={{ padding: '80px 0', borderTop: '1px solid var(--border-color)' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', marginBottom: '60px' }}>
+            <h2 style={{ fontSize: '36px', marginBottom: '24px' }}>Who We Are</h2>
+            <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
+              Founded in 2023, Freelancer Hub is a specialized technology brand built by engineers, for engineers and visionary businesses. We are a small, highly technical team obsessed with creating the perfect remote work ecosystem.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px', maxWidth: '1000px', margin: '0 auto' }}>
+            {/* Team Member 1 */}
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 20px', border: '4px solid var(--bg-secondary)' }}>
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" alt="Founder 1" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>Alex Chen</h3>
+              <p style={{ color: 'var(--accent-primary)', fontWeight: '600', marginBottom: '12px' }}>Co-Founder & CEO</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6' }}>Former Senior Engineering Manager with 10+ years scaling distributed systems and managing remote teams.</p>
+            </div>
+
+            {/* Team Member 2 */}
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 20px', border: '4px solid var(--bg-secondary)' }}>
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" alt="Founder 2" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>Sarah Jenkins</h3>
+              <p style={{ color: 'var(--accent-primary)', fontWeight: '600', marginBottom: '12px' }}>Co-Founder & CTO</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6' }}>Systems architect passionate about blockchain escrow solutions and AI-driven matching algorithms.</p>
+            </div>
+
+            {/* Team Member 3 */}
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ width: '150px', height: '150px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 20px', border: '4px solid var(--bg-secondary)' }}>
+                <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80" alt="Founder 3" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>David Okoye</h3>
+              <p style={{ color: 'var(--accent-primary)', fontWeight: '600', marginBottom: '12px' }}>Head of Product</p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6' }}>UX expert dedicated to creating frictionless workflows for both clients and freelancers.</p>
+            </div>
+          </div>
         </section>
+
       </main>
       <Footer />
     </div>
