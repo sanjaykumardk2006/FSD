@@ -57,13 +57,11 @@ export const Home = () => {
           </div>
           <div className="hero-right" style={{ position: 'relative' }}>
             <div style={{ width: '100%', position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.15)' }}>
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" alt="Team Collaboration" style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover', aspectRatio: '1/1' }} />
-              <div style={{ position: 'absolute', inset: '0', background: 'linear-gradient(to top right, rgba(59,130,246,0.15), transparent)' }}></div>
+               <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Dashboard Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} className="zoom-in-image" />
+               <div style={{ position: 'absolute', inset: '0', background: 'linear-gradient(to top right, rgba(59,130,246,0.2), transparent)', pointerEvents: 'none' }}></div>
             </div>
           </div>
         </section>
-
-
 
         {/* 4. Popular Categories */}
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
@@ -81,7 +79,7 @@ export const Home = () => {
               { image: 'https://images.unsplash.com/photo-1455390582262-044cdead2708?auto=format&fit=crop&w=400&q=80', title: 'Content Writing', desc: 'Engage your audience with compelling and well-crafted content. Our experienced writers deliver high-quality blogs, persuasive copywriting, and accurate translations tailored to your brand\'s unique voice.' }
             ].map((cat, i) => (
               <div className="card" key={i} style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '180px', objectFit: 'cover' }} />
+                <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '180px', objectFit: 'cover' }} className="zoom-in-image" />
                 <div style={{ padding: '24px' }}>
                   <h3 style={{ fontSize: '20px', marginBottom: '12px' }}>{cat.title}</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6', margin: '0' }}>{cat.desc}</p>
@@ -97,7 +95,7 @@ export const Home = () => {
           <div className="zigzag-container">
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Post a Project" className="zoom-out-image" />
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Post a Project" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
                 <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>1. Post a Project</h3>
@@ -110,12 +108,12 @@ export const Home = () => {
                 <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Carefully review customized proposals, in-depth portfolios, and verified client reviews from our top-tier freelancers. Conduct interviews with your favorite candidates to ensure a perfect cultural and technical fit. Finally, hire the absolute best match for your project with complete confidence using our secure, industry-leading escrow system.</p>
               </div>
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Hire Top Talent" className="zoom-out-image" />
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Hire Top Talent" className="zoom-in-image" />
               </div>
             </div>
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Collaborate & Succeed" className="zoom-out-image" />
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Collaborate & Succeed" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
                 <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>3. Collaborate & Succeed</h3>
@@ -140,7 +138,7 @@ export const Home = () => {
             ].map((project, i) => (
               <div className="card" key={i} style={{ padding: '0', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 <div style={{ height: '220px', overflow: 'hidden' }}>
-                  <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+                  <img src={project.image} alt={project.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} className="zoom-in-image" />
                 </div>
                 <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
                   <h3 style={{ fontSize: '20px', marginBottom: '10px' }}>{project.title}</h3>

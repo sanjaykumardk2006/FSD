@@ -446,6 +446,14 @@ main {
   transform: scale(0.9);
 }
 
+.zoom-in-image {
+  transition: transform 0.8s ease;
+}
+
+.zoom-in-image:hover {
+  transform: scale(1.1);
+}
+
 @media (max-width: 768px) {
   .hide-on-mobile {
     display: none !important;

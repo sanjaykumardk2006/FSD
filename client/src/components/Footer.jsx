@@ -6,15 +6,14 @@ export const Footer = () => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>Freelancer Hub</h3>
-            <div className="footer-contact-item">
-              <strong>Email</strong>
-              <p><a href="mailto:sanjaykumardk.24cse@kongu.edu">sanjaykumardk.24cse@kongu.edu</a></p>
-            </div>
-            <div className="footer-contact-item">
-              <strong>Phone</strong>
-              <p><a href="tel:7397544021">7397544021</a></p>
-            </div>
+            <h3 style={{ position: 'relative', paddingBottom: '12px', marginBottom: '16px' }}>
+              About us
+              <span style={{ position: 'absolute', bottom: 0, left: 0, width: '40px', height: '2px', backgroundColor: '#10B981' }}></span>
+            </h3>
+            <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '16px', marginBottom: '20px' }}>
+              Freelancer Hub is a premium digital marketplace connecting ambitious businesses with top-tier global talent. We empower professionals to build scalable careers while helping teams seamlessly achieve their digital goals.
+            </p>
+
             <div className="footer-contact-item">
               <strong>Address</strong>
               <p>Kongu Engineering College, Perundurai, Erode - 638060</p>
