@@ -16,12 +16,12 @@ export const About = () => {
         {/* Our Mission & Vision */}
         <section className="content-section">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px' }}>
-            <div style={{ background: 'var(--accent-primary)', color: 'var(--bg-primary)', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(255,255,255,0.05)' }}>
+            <div style={{ background: 'var(--accent-primary)', color: 'var(--bg-primary)', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
               <h2 style={{ textAlign: 'left', fontSize: '32px', marginBottom: '20px', color: 'var(--bg-primary)', animation: 'none', filter: 'none' }}>Our Mission</h2>
               <p style={{ fontSize: '18px', color: 'var(--bg-secondary)', lineHeight: '1.8' }}>To empower freelancers and businesses by creating a transparent, efficient, and fair marketplace where skills meet opportunities. We believe that talent is equally distributed globally, but opportunity is not. Our goal is to bridge that gap.</p>
             </div>
             <div style={{ background: 'var(--bg-card)', border: '2px dashed var(--accent-primary)', padding: '40px', borderRadius: '24px', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '-20px', right: '-20px', background: 'var(--accent-primary)', color: 'var(--bg-primary)', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', boxShadow: '0 10px 20px rgba(255,255,255,0.1)' }}>✨</div>
+              <div style={{ position: 'absolute', top: '-20px', right: '-20px', background: 'var(--accent-primary)', color: 'var(--bg-primary)', width: '50px', height: '50px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', boxShadow: '0 10px 20px rgba(0,0,0,0.1)' }}>✨</div>
               <h2 style={{ textAlign: 'left', fontSize: '32px', marginBottom: '20px' }}>Our Vision</h2>
               <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8' }}>To be the world's leading platform connecting talented professionals with meaningful projects. We envision a world where anyone, anywhere, can build a successful career on their own terms, and companies can scale infinitely.</p>
             </div>
