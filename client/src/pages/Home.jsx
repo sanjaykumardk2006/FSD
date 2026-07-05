@@ -62,6 +62,14 @@ export const Home = () => {
           </div>
         </section>
 
+        {/* Who We Are */}
+        <section className="content-section" style={{ maxWidth: '1000px', margin: '0 auto 80px', padding: '0 20px', textAlign: 'center' }} ref={(el) => sectionRefs.current.push(el)}>
+          <h2 style={{ fontSize: '36px', marginBottom: '30px' }}>Who We Are</h2>
+          <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', textAlign: 'center' }}>
+            At Freelancer Hub, we are redefining the modern workforce by creating a seamless, transparent marketplace that connects ambitious companies with elite global talent. Born from the shift to remote-first cultures, our platform is deeply integrated with tools ensuring fair compensation, secure transactions, and real-time collaboration. By leveraging advanced AI matching algorithms and rigorous vetting, we empower independent professionals to build sustainable careers while giving businesses the agility to scale on demand. We are a dedicated partner in your growth journey, committed to fostering a community built on trust, excellence, and relentless innovation.
+          </p>
+        </section>
+
         {/* 2. Statistics */}
         <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 80px' }} ref={(el) => sectionRefs.current.push(el)}>
           <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center' }}>
