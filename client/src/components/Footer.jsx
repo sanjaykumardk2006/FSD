@@ -14,22 +14,20 @@ export const Footer = () => {
               Freelancer Hub is a premium digital marketplace connecting ambitious businesses with top-tier global talent. We empower professionals to build scalable careers while helping teams seamlessly achieve their digital goals.
             </p>
 
-            <div className="footer-contact-item">
-              <strong>Address</strong>
-              <p>Kongu Engineering College, Perundurai, Erode - 638060</p>
-            </div>
-
           </div>
           <div className="footer-section">
             <h3>Quick Links</h3>
             <a href="/">Home</a>
             <a href="/about">About</a>
             <a href="/contact">Contact</a>
-          </div>
-          <div className="footer-section">
-            <h3>Get Started</h3>
             <a href="/login">Login</a>
             <a href="/signup">Sign Up</a>
+          </div>
+          <div className="footer-section">
+            <h3>Contact Us</h3>
+            <div className="footer-contact-item">
+              <p>Kongu Engineering College, Perundurai, Erode - 638060</p>
+            </div>
             <div className="social-links" style={{ marginTop: '20px' }}>
               <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" title="Twitter">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
