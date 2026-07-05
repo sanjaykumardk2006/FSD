@@ -63,8 +63,9 @@ export const Home = () => {
         </section>
 
         {/* Who We Are */}
-        <section className="content-section" style={{ maxWidth: '1000px', margin: '0 auto 80px', padding: '0 20px', textAlign: 'center' }} ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '30px' }}>Who We Are</h2>
+        <section className="content-section" style={{ maxWidth: '1000px', margin: '0 auto 80px', padding: '60px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
+          <h2 style={{ fontSize: '36px', marginBottom: '10px' }}>Who We Are</h2>
+          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '18px' }}>Empowering the future of digital work</p>
           <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', textAlign: 'center' }}>
             At Freelancer Hub, we are redefining the modern workforce by creating a seamless, transparent marketplace that connects ambitious companies with elite global talent. Born from the shift to remote-first cultures, our platform is deeply integrated with tools ensuring fair compensation, secure transactions, and real-time collaboration. By leveraging advanced AI matching algorithms and rigorous vetting, we empower independent professionals to build sustainable careers while giving businesses the agility to scale on demand. We are a dedicated partner in your growth journey, committed to fostering a community built on trust, excellence, and relentless innovation.
           </p>
@@ -72,7 +73,8 @@ export const Home = () => {
 
         {/* Our Services */}
         <section className="content-section zigzag-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '80px', textAlign: 'center' }}>Our Services</h2>
+          <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Our Services</h2>
+          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '80px', fontSize: '18px' }}>Comprehensive solutions to scale your team efficiently</p>
           <div className="zigzag-container">
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
@@ -124,6 +126,8 @@ export const Home = () => {
 
         {/* 2. Statistics */}
         <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 80px' }} ref={(el) => sectionRefs.current.push(el)}>
+          <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Platform Impact</h2>
+          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>The numbers behind our global talent network</p>
           <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center' }}>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>10k+</h2>
@@ -166,34 +170,10 @@ export const Home = () => {
           </div>
         </section>
 
-        {/* 5. Featured Freelancers */}
-        <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Featured Freelancers</h2>
-          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Work with the top 1% of talent on our platform</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
-            {[
-              { name: 'Alex M.', role: 'Senior Full Stack Developer', rate: '$85/hr', rating: '5.0', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80' },
-              { name: 'Sarah T.', role: 'UI/UX Designer', rate: '$65/hr', rating: '4.9', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80' },
-              { name: 'James W.', role: 'Data Scientist', rate: '$95/hr', rating: '4.9', img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&q=80' },
-              { name: 'Elena R.', role: 'Digital Marketer', rate: '$50/hr', rating: '5.0', img: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=300&q=80' }
-            ].map((freelancer, i) => (
-              <div className="card" key={i} style={{ textAlign: 'center', padding: '30px' }}>
-                <div style={{ width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 20px' }}>
-                  <img src={freelancer.img} alt={freelancer.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} className="zoom-in-image" />
-                </div>
-                <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>{freelancer.name}</h3>
-                <p style={{ color: 'var(--accent-primary)', fontWeight: '500', marginBottom: '15px' }}>{freelancer.role}</p>
-                <div style={{ display: 'flex', justifyContent: 'center', gap: '15px', color: 'var(--text-secondary)', fontSize: '14px' }}>
-                  <span>⭐ {freelancer.rating}</span>
-                  <span>💰 {freelancer.rate}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
         {/* 6. Featured Jobs */}
-        <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 80px', padding: '60px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Featured Jobs</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>High-quality projects looking for experts right now</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
@@ -204,11 +184,7 @@ export const Home = () => {
             ].map((job, i) => (
               <div className="card" key={i} style={{ padding: '30px', display: 'flex', flexDirection: 'column' }}>
                 <h3 style={{ fontSize: '20px', marginBottom: '10px' }}>{job.title}</h3>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: '1.5', flex: 1 }}>{job.desc}</p>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '15px' }}>
-                  <span style={{ fontWeight: '800', fontSize: '18px', color: 'var(--text-primary)' }}>{job.budget}</span>
-                  <button className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '14px' }}>Apply Now</button>
-                </div>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '0', lineHeight: '1.5', flex: 1 }}>{job.desc}</p>
               </div>
             ))}
           </div>
@@ -216,7 +192,8 @@ export const Home = () => {
 
         {/* 7. Why Choose Us */}
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '50px', textAlign: 'center' }}>Built for performance and reliability</h2>
+          <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Built for performance and reliability</h2>
+          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Why top enterprises choose Freelancer Hub for their critical projects</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
             <div className="card">
               <div style={{ width: '48px', height: '48px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
@@ -242,24 +219,7 @@ export const Home = () => {
           </div>
         </section>
 
-        {/* 8. Testimonials */}
-        <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '50px', textAlign: 'center' }}>What Our Users Say</h2>
-          <div className="testimonial-grid">
-            <div className="testimonial-card">
-              <p className="testimonial-text">"Freelancer Hub completely transformed how we hire. The quality of talent is unmatched, and the escrow system gives us complete peace of mind."</p>
-              <div className="testimonial-author">— Michael T., Startup Founder</div>
-            </div>
-            <div className="testimonial-card">
-              <p className="testimonial-text">"As a freelancer, this platform is a game-changer. I get access to premium clients without the race-to-the-bottom bidding wars."</p>
-              <div className="testimonial-author">— Sarah J., Senior Designer</div>
-            </div>
-            <div className="testimonial-card">
-              <p className="testimonial-text">"The real-time sync and built-in project management tools save us hours every week. It's truly a production-ready environment."</p>
-              <div className="testimonial-author">— David L., Product Manager</div>
-            </div>
-          </div>
-        </section>
+
 
         {/* 9. Call to Action */}
         <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1200px' }} ref={(el) => sectionRefs.current.push(el)}>
