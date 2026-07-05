@@ -70,35 +70,53 @@ export const Home = () => {
           </p>
         </section>
 
-        {/* 4. How It Works */}
+        {/* Our Services */}
         <section className="content-section zigzag-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '80px', textAlign: 'center' }}>How it works</h2>
+          <h2 style={{ fontSize: '36px', marginBottom: '80px', textAlign: 'center' }}>Our Services</h2>
           <div className="zigzag-container">
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Post a Project" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Talent Sourcing" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>1. Post a Project</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Start by providing a comprehensive description of your project requirements, budget, and timeline. Our intuitive job posting flow ensures you capture exactly what you need to attract the best talent. Let our advanced AI matching system instantly connect you with highly qualified professionals whose skills perfectly align with your goals.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Talent Sourcing & Vetting</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>We provide end-to-end talent acquisition. Our proprietary AI matching system instantly connects your specific project requirements with highly qualified, pre-vetted professionals. Skip the endless searching and connect directly with experts ready to deliver.</p>
               </div>
             </div>
             <div className="zigzag-item zigzag-right">
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>2. Hire Top Talent</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Carefully review customized proposals, in-depth portfolios, and verified client reviews from our top-tier freelancers. Conduct interviews with your favorite candidates to ensure a perfect cultural and technical fit. Finally, hire the absolute best match for your project with complete confidence using our secure, industry-leading escrow system.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Secure Escrow Payments</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Experience complete financial peace of mind. Our industry-leading escrow service securely holds funds until project milestones are explicitly approved by you. We handle all international transactions, automated invoicing, and compliance, ensuring a frictionless payment process.</p>
               </div>
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Hire Top Talent" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Secure Escrow" className="zoom-in-image" />
               </div>
             </div>
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Collaborate & Succeed" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Managed Workspaces" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>3. Collaborate & Succeed</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Manage every aspect of your project in one centralized, easy-to-use workspace. Utilize our built-in real-time chat, structured milestone tracking, and secure file sharing to keep everything organized. This effortless project management approach ensures you can focus entirely on achieving successful outcomes and scaling your business.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Managed Project Workspaces</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>We provide a centralized, highly structured ecosystem for your teams to thrive. Utilize our built-in real-time chat, detailed milestone tracking, and secure file sharing to manage every aspect of your project without ever needing external software.</p>
+              </div>
+            </div>
+            <div className="zigzag-item zigzag-right">
+              <div className="zigzag-content" style={{ textAlign: 'left' }}>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Global Compliance & Contracts</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Navigate international hiring without the legal overhead. We automatically generate compliant contracts, handle global tax documentation, and ensure you meet local labor laws when hiring talent from anywhere in the world.</p>
+              </div>
+              <div className="zigzag-image zoom-out-image-container">
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="Global Compliance" className="zoom-in-image" />
+              </div>
+            </div>
+            <div className="zigzag-item zigzag-left">
+              <div className="zigzag-image zoom-out-image-container">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="24/7 Dedicated Support" className="zoom-in-image" />
+              </div>
+              <div className="zigzag-content" style={{ textAlign: 'left' }}>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>24/7 Dedicated Support & Mediation</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Get immediate assistance whenever you need it. Our dedicated account managers and support teams are available around the clock. In the rare event of a disagreement, our fair and rapid mediation system ensures your projects stay completely on track.</p>
               </div>
             </div>
           </div>
