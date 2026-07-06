@@ -11,7 +11,7 @@ export const Footer = () => {
               <span style={{ position: 'absolute', bottom: 0, left: 0, width: '40px', height: '2px', backgroundColor: '#10B981' }}></span>
             </h3>
             <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6', fontSize: '16px', marginBottom: '20px' }}>
-              Freelancer Hub is a premium digital marketplace connecting ambitious businesses with top-tier global talent. We empower professionals to build scalable careers while helping teams seamlessly achieve their digital goals.
+              Freelancer Hub is a premium digital marketplace connecting ambitious businesses with top-tier global talent.
             </p>
 
           </div>
