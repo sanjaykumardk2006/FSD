@@ -33,28 +33,19 @@ export const Home = () => {
       <Header />
       <main>
         {/* 1. Hero Section */}
-        <section className="hero-modern" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center', padding: '100px 0', minHeight: '80vh' }}>
-          <div className="hero-left" style={{ textAlign: 'left' }}>
-
-            <h1 style={{ fontSize: '64px', lineHeight: '1.1', fontWeight: '800', marginBottom: '24px', letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>
-              The premium <br /><span style={{ color: 'var(--accent-primary)' }}>talent network</span> for modern teams.
-            </h1>
-            <p style={{ fontSize: '20px', color: 'var(--text-secondary)', marginBottom: '40px', maxWidth: '500px', lineHeight: '1.6' }}>
+        <section className="hero">
+          <div className="hero-content">
+            <h2>The Premium Talent Network</h2>
+            <p>
               Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
             </p>
-            <div className="hero-buttons" style={{ justifyContent: 'flex-start' }}>
+            <div className="hero-buttons" style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
               <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
                 Hire Talent
               </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
+              <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px', backgroundColor: 'transparent', border: '1px solid white', color: 'white' }}>
                 Find Work
               </button>
-            </div>
-          </div>
-          <div className="hero-right" style={{ position: 'relative' }}>
-            <div style={{ width: '100%', position: 'relative', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 24px 80px rgba(0,0,0,0.15)' }}>
-               <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Dashboard Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} className="zoom-in-image" />
-               <div style={{ position: 'absolute', inset: '0', background: 'linear-gradient(to top right, rgba(0,0,0,0.1), transparent)', pointerEvents: 'none' }}></div>
             </div>
           </div>
         </section>

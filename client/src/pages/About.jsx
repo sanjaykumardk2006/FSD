@@ -1,8 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 
 export const About = () => {
+  const navigate = useNavigate();
   return (
     <div className="page">
       <style>{`
@@ -128,23 +130,28 @@ export const About = () => {
           font-weight: 600;
         }
 
-        .values-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 32px;
+        .marquee-container {
+          overflow: hidden;
+          width: 100%;
           margin: 60px 0 120px;
+          padding: 20px 0;
+          position: relative;
         }
 
-        @media (max-width: 1024px) {
-          .values-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
+        .marquee-track {
+          display: flex;
+          gap: 32px;
+          width: max-content;
+          animation: scrollLeft 20s linear infinite;
         }
 
-        @media (max-width: 640px) {
-          .values-grid {
-            grid-template-columns: 1fr;
-          }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+
+        @keyframes scrollLeft {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-50% - 16px)); }
         }
 
         .value-card {
@@ -153,6 +160,8 @@ export const About = () => {
           border-radius: 20px;
           padding: 40px;
           transition: all 0.3s ease;
+          width: 350px;
+          flex-shrink: 0;
         }
         
         .value-card:hover {
@@ -250,9 +259,13 @@ export const About = () => {
       
       <main className="about-main">
         {/* Hero Section */}
-        <section className="premium-hero">
-          <h1>Building the <span>Future of Work</span></h1>
-          <p>We are on a mission to connect the world's most ambitious companies with the best talent, anywhere.</p>
+        <section className="hero">
+          <div className="hero-content">
+            <h2>About Freelancer Hub</h2>
+            <p>
+              We are building the infrastructure for the future of digital work. A premium marketplace connecting ambitious businesses with elite global talent.
+            </p>
+          </div>
         </section>
 
         {/* Mission & Vision */}
@@ -407,56 +420,109 @@ export const About = () => {
         {/* Core Values */}
         <section>
           <h2 className="section-header" style={{ textAlign: 'center', marginBottom: '20px' }}>Our Core Values</h2>
-          <div className="values-grid">
-            <div className="value-card">
-              <div className="value-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <div className="marquee-container">
+            <div className="marquee-track">
+              {/* Original 4 Cards */}
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Trust First</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We build everything on a foundation of trust, transparency, and integrity.</p>
               </div>
-              <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Trust First</h3>
-              <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We build everything on a foundation of trust, transparency, and integrity.</p>
-            </div>
-            
-            <div className="value-card">
-              <div className="value-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L13.5 2Z"></path><path d="M13 2v7h7"></path><path d="m10 13 4 4"></path><path d="m14 13-4 4"></path></svg>
+              
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L13.5 2Z"></path><path d="M13 2v7h7"></path><path d="m10 13 4 4"></path><path d="m14 13-4 4"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Move Fast</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We iterate quickly, learn from mistakes, and continuously improve.</p>
               </div>
-              <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Move Fast</h3>
-              <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We iterate quickly, learn from mistakes, and continuously improve.</p>
-            </div>
 
-            <div className="value-card">
-              <div className="value-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Global Mindset</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We embrace diversity and build for a borderless world.</p>
               </div>
-              <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Global Mindset</h3>
-              <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We embrace diversity and build for a borderless world.</p>
-            </div>
 
-            <div className="value-card">
-              <div className="value-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--text-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Think Big</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We tackle hard problems and aren't afraid to disrupt the status quo.</p>
               </div>
-              <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Think Big</h3>
-              <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We tackle hard problems and aren't afraid to disrupt the status quo.</p>
+
+              {/* Duplicated 4 Cards for Infinite Scroll */}
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Trust First</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We build everything on a foundation of trust, transparency, and integrity.</p>
+              </div>
+              
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.5L13.5 2Z"></path><path d="M13 2v7h7"></path><path d="m10 13 4 4"></path><path d="m14 13-4 4"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Move Fast</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We iterate quickly, learn from mistakes, and continuously improve.</p>
+              </div>
+
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366F1" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Global Mindset</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We embrace diversity and build for a borderless world.</p>
+              </div>
+
+              <div className="value-card">
+                <div className="value-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EC4899" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                </div>
+                <h3 style={{ fontSize: '24px', marginBottom: '16px', fontWeight: '600' }}>Think Big</h3>
+                <p className="text-content" style={{ marginBottom: 0, fontSize: '16px' }}>We tackle hard problems and aren't afraid to disrupt the status quo.</p>
+              </div>
             </div>
           </div>
         </section>
 
         {/* Global Offices */}
         <section>
-          <h2 className="section-header" style={{ textAlign: 'center' }}>Our Offices</h2>
-          <div className="office-grid">
-            <div className="premium-card" style={{ padding: '32px' }}>
-              <h3 style={{ fontSize: '24px', marginBottom: '8px' }}>San Francisco</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>Global Headquarters</p>
-            </div>
-            <div className="premium-card" style={{ padding: '32px' }}>
-              <h3 style={{ fontSize: '24px', marginBottom: '8px' }}>London</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>European Hub</p>
-            </div>
-            <div className="premium-card" style={{ padding: '32px' }}>
-              <h3 style={{ fontSize: '24px', marginBottom: '8px' }}>Singapore</h3>
-              <p style={{ color: 'var(--text-secondary)' }}>APAC Hub</p>
+          <h2 className="section-header" style={{ textAlign: 'center', marginBottom: '20px' }}>Our Offices</h2>
+          <div className="marquee-container">
+            <div className="marquee-track" style={{ animationDirection: 'reverse' }}>
+              {/* Original 4 Cards */}
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>India</h3>
+              </div>
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>Singapore</h3>
+              </div>
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>London</h3>
+              </div>
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>San Francisco</h3>
+              </div>
+
+              {/* Duplicated 4 Cards */}
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>India</h3>
+              </div>
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>Singapore</h3>
+              </div>
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>London</h3>
+              </div>
+              <div className="premium-card" style={{ padding: '32px', width: '350px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <h3 style={{ fontSize: '28px', margin: 0 }}>San Francisco</h3>
+              </div>
             </div>
           </div>
         </section>

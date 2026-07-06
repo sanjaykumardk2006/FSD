@@ -57,16 +57,9 @@ export const Contact = () => {
             <div>
               <h2>Contact Information</h2>
               <div className="cards-grid" style={{ gridTemplateColumns: '1fr', marginTop: '30px' }}>
+
                 <div className="card" style={{ textAlign: 'left' }}>
-                  <h3>📧 Email</h3>
-                  <p><a href="mailto:sanjaykumardk.24cse@kongu.edu" style={{ color: '#3b82f6', textDecoration: 'none' }}>sanjaykumardk.24cse@kongu.edu</a></p>
-                </div>
-                <div className="card" style={{ textAlign: 'left' }}>
-                  <h3>📞 Phone</h3>
-                  <p><a href="tel:7397544021" style={{ color: '#3b82f6', textDecoration: 'none' }}>7397544021</a></p>
-                </div>
-                <div className="card" style={{ textAlign: 'left' }}>
-                  <h3>📍 Address</h3>
+                  <h3>Address</h3>
                   <p>Kongu Engineering College<br />Perundurai<br />Erode - 638060</p>
                 </div>
               </div>
