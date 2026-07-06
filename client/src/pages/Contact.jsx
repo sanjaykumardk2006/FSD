@@ -54,20 +54,23 @@ export const Contact = () => {
 
         <section className="content-section">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'start', marginBottom: '80px' }}>
-            <div>
-              <h2>Contact Information</h2>
-              <div className="cards-grid" style={{ gridTemplateColumns: '1fr', marginTop: '30px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <h2 style={{ marginBottom: '10px' }}>Contact Information</h2>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Find our physical office and mailing details here.</p>
+              <div className="cards-grid" style={{ gridTemplateColumns: '1fr' }}>
 
-                <div className="card" style={{ textAlign: 'left' }}>
+                <div className="card" style={{ textAlign: 'left', maxWidth: '350px', margin: '0 auto', width: '100%' }}>
                   <h3>Address</h3>
                   <p>Kongu Engineering College<br />Perundurai<br />Erode - 638060</p>
                 </div>
               </div>
             </div>
 
-            <div>
-              <h2>Send us a Message</h2>
-              <form onSubmit={handleSubmit} className="contact-form" style={{ marginTop: '30px' }}>
+            <div style={{ textAlign: 'center' }}>
+              <h2 style={{ marginBottom: '10px' }}>Send us a Message</h2>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Drop us a line and we will get back to you within 24 hours.</p>
+              <div className="card" style={{ maxWidth: '500px', width: '100%', margin: '0 auto 0 0', padding: '40px', boxSizing: 'border-box', textAlign: 'left' }}>
+                <form onSubmit={handleSubmit} className="contact-form">
                 {submitted && (
                   <div style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '15px', borderRadius: '8px', marginBottom: '20px', textAlign: 'center', fontWeight: '600' }}>
                     ✓ Thank you! We'll get back to you soon.
@@ -78,8 +81,8 @@ export const Contact = () => {
                     {errorMsg}
                   </div>
                 )}
-                <div className="form-group">
-                  <label htmlFor="name">Full Name *</label>
+                <div className="form-group" style={{ marginBottom: '16px' }}>
+                  <label htmlFor="name" style={{ marginBottom: '4px', display: 'block' }}>Full Name <span style={{ color: '#ef4444' }}>*</span></label>
                   <input
                     type="text"
                     id="name"
@@ -90,8 +93,8 @@ export const Contact = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="mobileNumber">Mobile Number *</label>
+                <div className="form-group" style={{ marginBottom: '16px' }}>
+                  <label htmlFor="mobileNumber" style={{ marginBottom: '4px', display: 'block' }}>Mobile Number <span style={{ color: '#ef4444' }}>*</span></label>
                   <input
                     type="tel"
                     id="mobileNumber"
@@ -102,8 +105,8 @@ export const Contact = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="email">Email Address *</label>
+                <div className="form-group" style={{ marginBottom: '16px' }}>
+                  <label htmlFor="email" style={{ marginBottom: '4px', display: 'block' }}>Email Address <span style={{ color: '#ef4444' }}>*</span></label>
                   <input
                     type="email"
                     id="email"
@@ -114,8 +117,8 @@ export const Contact = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="city">City *</label>
+                <div className="form-group" style={{ marginBottom: '16px' }}>
+                  <label htmlFor="city" style={{ marginBottom: '4px', display: 'block' }}>City <span style={{ color: '#ef4444' }}>*</span></label>
                   <input
                     type="text"
                     id="city"
@@ -126,22 +129,23 @@ export const Contact = () => {
                     required
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="message">Message *</label>
+                <div className="form-group" style={{ marginBottom: '20px' }}>
+                  <label htmlFor="message" style={{ marginBottom: '4px', display: 'block' }}>Message <span style={{ color: '#ef4444' }}>*</span></label>
                   <textarea
                     id="message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Your message..."
-                    rows="6"
+                    rows="4"
                     required
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '12px', fontWeight: '700' }}>
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '14px', fontWeight: '700' }}>
                   CONNECT
                 </button>
               </form>
+              </div>
             </div>
           </div>
         </section>
