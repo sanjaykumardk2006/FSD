@@ -48,16 +48,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
   letter-spacing: -0.02em;
   color: var(--text-primary);
-  animation: monochrome-glow 5s linear infinite alternate;
-}
-
-@keyframes monochrome-glow {
-  0% {
-    filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.1));
-  }
-  100% {
-    filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.3));
-  }
 }
 
 a {
