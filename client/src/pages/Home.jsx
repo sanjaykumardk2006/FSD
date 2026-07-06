@@ -70,43 +70,43 @@ export const Home = () => {
 
         {/* Our Services */}
         <section className="content-section zigzag-section" ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Our Services</h2>
-          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '80px', fontSize: '18px' }}>Comprehensive solutions to scale your team efficiently</p>
+          <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Freelancer Hub Services</h2>
+          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '80px', fontSize: '18px' }}>Everything you need to hire, manage, and pay top freelancers</p>
           <div className="zigzag-container">
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Talent Sourcing" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Hire Top Freelancers" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Talent Sourcing & Vetting</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>We provide end-to-end talent acquisition. Our proprietary AI matching system instantly connects your specific project requirements with highly qualified, pre-vetted professionals. Skip the endless searching and connect directly with experts ready to deliver.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Hire Top Freelancers</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Browse thousands of skilled freelancers across web development, design, digital marketing, and more. Our platform makes it easy to find the perfect independent professional for your specific project needs.</p>
               </div>
             </div>
             <div className="zigzag-item zigzag-right">
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Secure Escrow Payments</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Experience complete financial peace of mind. Our industry-leading escrow service securely holds funds until project milestones are explicitly approved by you. We handle all international transactions, automated invoicing, and compliance, ensuring a frictionless payment process.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Seamless Collaboration</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Work directly with freelancers in our centralized project workspaces. Chat in real-time, share files securely, and track project milestones effortlessly from start to finish.</p>
               </div>
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Secure Escrow" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80" alt="Seamless Collaboration" className="zoom-in-image" />
               </div>
             </div>
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80" alt="Managed Workspaces" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="Secure Milestone Payments" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Managed Project Workspaces</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>We provide a centralized, highly structured ecosystem for your teams to thrive. Utilize our built-in real-time chat, detailed milestone tracking, and secure file sharing to manage every aspect of your project without ever needing external software.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Secure Milestone Payments</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Pay only for approved work. Our escrow system protects both clients and freelancers by holding funds securely until project milestones are explicitly approved by you.</p>
               </div>
             </div>
             <div className="zigzag-item zigzag-right">
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Global Compliance & Contracts</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Navigate international hiring without the legal overhead. We automatically generate compliant contracts, handle global tax documentation, and ensure you meet local labor laws when hiring talent from anywhere in the world.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>24/7 Dedicated Support</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Get help whenever you need it. Our dedicated support team is available around the clock to assist you with everything from finding talent to resolving project disputes.</p>
               </div>
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="Global Compliance" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80" alt="24/7 Dedicated Support" className="zoom-in-image" />
               </div>
             </div>
 
