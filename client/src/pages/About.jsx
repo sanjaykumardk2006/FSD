@@ -1,9 +1,29 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { motion } from 'framer-motion';
+import { motion, animate, useInView } from 'framer-motion';
 import { Brain, Search, ShieldCheck, Briefcase, FileText, Target, CheckCircle2, Globe, Banknote, Shield, BriefcaseBusiness, UserCheck, MessageSquare, Clock, ShieldAlert, Users, BookOpen, Heart, TrendingUp } from 'lucide-react';
+
+const AnimatedNumber = ({ from, to, duration = 2, prefix = "", suffix = "" }) => {
+  const nodeRef = useRef(null);
+  const inView = useInView(nodeRef, { once: true, margin: "-50px" });
+
+  useEffect(() => {
+    if (inView) {
+      const node = nodeRef.current;
+      const controls = animate(from, to, {
+        duration,
+        onUpdate(value) {
+          node.textContent = `${prefix}${Math.round(value)}${suffix}`;
+        },
+      });
+      return () => controls.stop();
+    }
+  }, [from, to, inView, prefix, suffix, duration]);
+
+  return <span ref={nodeRef}>{prefix}{from}{suffix}</span>;
+};
 
 export const About = () => {
   const navigate = useNavigate();
@@ -13,7 +33,7 @@ export const About = () => {
         .about-main {
           max-width: 1200px;
           margin: 0 auto;
-          padding: 0 24px 120px;
+          padding: 0 24px 160px;
         }
 
         .bento-grid {
@@ -183,7 +203,7 @@ export const About = () => {
           border: 1px solid var(--border-color);
           border-radius: 24px;
           padding: 60px 40px;
-          margin: 120px 0;
+          margin: 160px 0;
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 24px;
@@ -260,7 +280,7 @@ export const About = () => {
         .marquee-container {
           overflow: hidden;
           width: 100%;
-          margin: 60px 0 120px;
+          margin: 80px 0 160px;
           padding: 20px 0;
           position: relative;
         }
@@ -282,7 +302,7 @@ export const About = () => {
         }
 
         .core-values-section {
-          margin: 120px auto;
+          margin: 160px auto;
           max-width: 1000px;
         }
         
@@ -431,7 +451,7 @@ export const About = () => {
           background: linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 100%);
           border: 1px solid var(--border-color);
           border-radius: 24px;
-          margin: 120px auto 0;
+          margin: 160px auto 0;
           max-width: 1000px;
         }
 
@@ -455,7 +475,7 @@ export const About = () => {
         </section>
 
         {/* Mission & Vision */}
-        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '32px', marginBottom: '120px' }}>
+        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '32px', marginBottom: '160px' }}>
           <div className="premium-card" style={{ borderColor: '#000000' }}>
             <h2 style={{ fontSize: '32px', marginBottom: '24px', fontWeight: '600' }}>Our Mission</h2>
             <p className="text-content" style={{ marginBottom: 0 }}>
@@ -477,21 +497,21 @@ export const About = () => {
             <p>Founded</p>
           </div>
           <div>
-            <h3>150+</h3>
+            <h3><AnimatedNumber from={0} to={150} suffix="+" duration={1} /></h3>
             <p>Countries</p>
           </div>
           <div>
-            <h3>500</h3>
+            <h3><AnimatedNumber from={0} to={500} suffix="+" duration={1} /></h3>
             <p>Employees</p>
           </div>
           <div>
-            <h3>$1B+</h3>
+            <h3><AnimatedNumber from={0} to={1} prefix="$" suffix="B+" duration={1} /></h3>
             <p>Earnings</p>
           </div>
         </section>
 
         {/* About Project */}
-        <section style={{ maxWidth: '840px', margin: '0 auto 120px', textAlign: 'center' }}>
+        <section style={{ maxWidth: '840px', margin: '0 auto 160px', textAlign: 'center' }}>
           <h2 className="section-header" style={{ textAlign: 'center' }}>About Freelancer Hub</h2>
           <p className="text-content" style={{ textAlign: 'center' }}>
             Freelancer Hub is a state-of-the-art marketplace designed to bridge the gap between world-class talent and ambitious businesses. We provide a seamless, secure, and dynamic environment where professionals can showcase their skills, and clients can easily discover, hire, and collaborate with the perfect match for their projects.
@@ -499,7 +519,7 @@ export const About = () => {
         </section>
 
         {/* How It Works */}
-        <section style={{ maxWidth: '1000px', margin: '0 auto 120px' }}>
+        <section style={{ maxWidth: '1000px', margin: '0 auto 160px' }}>
           <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111' }}>How It Works</h2>
           <p className="text-content" style={{ marginBottom: '60px', textAlign: 'center', color: '#555555', fontSize: '20px' }}>
             The process is designed to be as frictionless as possible. Here is a detailed look into the ecosystem that makes it work flawlessly:
@@ -559,7 +579,7 @@ export const About = () => {
         </section>
 
         {/* Who Is It For */}
-        <section style={{ maxWidth: '1200px', margin: '0 auto 120px' }}>
+        <section style={{ maxWidth: '1200px', margin: '0 auto 160px' }}>
           <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '16px' }}>Who Is It For?</h2>
           <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 60px' }}>
             Built for those who demand excellence. Whether you are scaling a startup or building an independent career, we provide the tools you need.
@@ -729,8 +749,8 @@ export const About = () => {
           <p className="text-content" style={{ maxWidth: '600px', margin: '0 auto 40px' }}>
             We are always looking for talented individuals to join our mission. Check out our open roles.
           </p>
-          <button className="btn-premium">
-            View Careers
+          <button className="btn-premium" onClick={() => navigate('/login')}>
+            Join Our Team
           </button>
         </section>
       </main>
