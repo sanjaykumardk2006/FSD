@@ -54,17 +54,15 @@ export const Login = () => {
     <div className="page">
       <Header />
       <main>
-        <section className="hero">
-          <div className="hero-content">
-            <h2>Welcome Back</h2>
-            <p>Log in to your Freelancer Hub account and continue your journey</p>
+        <section className="content-section" style={{ padding: '0 24px', margin: '0 auto 80px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+            <h2 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>Welcome Back</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>Log in to your Freelancer Hub account and continue your journey</p>
           </div>
-        </section>
 
-        <section className="content-section" style={{ marginBottom: '80px' }}>
           <div style={{ maxWidth: '500px', margin: '0 auto' }}>
-            <div className="auth-form" style={{ marginTop: '30px' }}>
-              <div className="login-type-selector">
+            <div className="auth-form">
+              <div className="login-type-selector" style={{ marginBottom: '24px' }}>
                 <button
                   className={`type-btn ${loginType === 'Client' ? 'active' : ''}`}
                   onClick={() => setLoginType('Client')}

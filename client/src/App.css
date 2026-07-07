@@ -327,6 +327,33 @@ main {
 }
 
 /* Forms */
+.login-type-selector {
+  display: flex;
+  gap: 8px;
+  background-color: var(--bg-secondary);
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+.type-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.type-btn.active {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.form-group {
+  margin-bottom: 24px;
+}
 .form-group label {
   color: var(--text-secondary);
   font-size: 14px;

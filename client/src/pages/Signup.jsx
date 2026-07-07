@@ -43,16 +43,14 @@ export const Signup = () => {
     <div className="page">
       <Header />
       <main>
-        <section className="hero">
-          <div className="hero-content">
-            <h2>Join Freelancer Hub</h2>
-            <p>Start your journey by creating an account today</p>
+        <section className="content-section" style={{ padding: '0 24px', margin: '0 auto 80px' }}>
+          <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+            <h2 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>Join Freelancer Hub</h2>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>Start your journey by creating an account today</p>
           </div>
-        </section>
-
-        <section className="content-section" style={{ marginBottom: '80px' }}>
+          
           <div style={{ maxWidth: '500px', margin: '0 auto' }}>
-            <div className="auth-form" style={{ marginTop: '30px' }}>
+            <div className="auth-form">
               {message && <div className="message success">{message}</div>}
               {error && <div className="message error">{error}</div>}
               
@@ -94,7 +92,7 @@ export const Signup = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="role">I'm signing up as</label>
+                  <label htmlFor="role">Sign up as</label>
                   <select
                     id="role"
                     name="role"
