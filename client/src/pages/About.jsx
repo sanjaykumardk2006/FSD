@@ -14,8 +14,6 @@ export const About = () => {
           max-width: 1200px;
           margin: 0 auto;
           padding: 0 24px 120px;
-          background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
-          background-size: 24px 24px;
         }
 
         .bento-grid {
@@ -429,12 +427,12 @@ export const About = () => {
 
         .cta-section {
           text-align: center;
-          padding: 80px 40px;
+          padding: 100px 40px;
           background: linear-gradient(135deg, rgba(0, 0, 0, 0.03) 0%, rgba(0, 0, 0, 0.01) 100%);
           border: 1px solid var(--border-color);
           border-radius: 24px;
           margin: 120px auto 0;
-          max-width: 800px;
+          max-width: 1000px;
         }
 
         @keyframes fadeUp {
@@ -562,7 +560,10 @@ export const About = () => {
 
         {/* Who Is It For */}
         <section style={{ maxWidth: '1200px', margin: '0 auto 120px' }}>
-          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '60px' }}>Who Is It For?</h2>
+          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '16px' }}>Who Is It For?</h2>
+          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 60px' }}>
+            Built for those who demand excellence. Whether you are scaling a startup or building an independent career, we provide the tools you need.
+          </p>
 
           <div className="premium-panels-container">
             <motion.div 
@@ -644,7 +645,10 @@ export const About = () => {
         </section>
 
         <section className="core-values-section">
-          <h2 className="core-values-header" style={{ textAlign: 'center' }}>Our Core Values</h2>
+          <h2 className="core-values-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Core Values</h2>
+          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 60px' }}>
+            The guiding principles that shape our culture, drive our decisions, and define how we serve our community.
+          </p>
           <div className="core-values-grid">
             <div className="core-value-card">
               <div className="core-value-icon" style={{ backgroundColor: '#eff6ff', color: '#3b82f6' }}>
@@ -682,7 +686,10 @@ export const About = () => {
 
         {/* Global Offices */}
         <section>
-          <h2 className="section-header" style={{ textAlign: 'center', marginBottom: '20px' }}>Our Offices</h2>
+          <h2 className="section-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Offices</h2>
+          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
+            We operate globally with a remote-first culture, anchored by strategic hubs in major tech capitals around the world.
+          </p>
           <div className="marquee-container">
             <div className="marquee-track" style={{ animationDirection: 'reverse' }}>
               {/* Original 4 Cards */}
