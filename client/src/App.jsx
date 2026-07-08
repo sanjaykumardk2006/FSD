@@ -9,6 +9,7 @@ import { About } from './pages/About';
 import { Contact } from './pages/Contact';
 import { Signup } from './pages/Signup';
 import { Login } from './pages/Login';
+import { Search } from './pages/Search';
 import { ClientDashboard } from './pages/ClientDashboard';
 import { FreelancerDashboard } from './pages/FreelancerDashboard';
 import { JobProposals } from './pages/JobProposals';
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/search" element={<Search />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
