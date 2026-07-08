@@ -1,8 +1,48 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import '../App.css';
+
+const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
+  const [count, setCount] = useState(0);
+  const countRef = useRef(null);
+
+  useEffect(() => {
+    let startTimestamp = null;
+    const duration = 1500; // slightly faster overall
+    const step = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+      // easeOutCubic for a smoother finish without dragging too long
+      const easeProgress = 1 - Math.pow(1 - progress, 3);
+      setCount(easeProgress * value);
+      if (progress < 1) {
+        window.requestAnimationFrame(step);
+      } else {
+        setCount(value);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          window.requestAnimationFrame(step);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (countRef.current) {
+      observer.observe(countRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [value]);
+
+  return <span ref={countRef}>{prefix}{count.toFixed(decimals)}{suffix}</span>;
+};
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -108,19 +148,27 @@ export const Home = () => {
         <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 140px' }} ref={(el) => sectionRefs.current.push(el)}>
           <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center' }}>
             <div>
-              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>10k+</h2>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
+                <AnimatedNumber value={10} suffix="k+" />
+              </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Active Freelancers</p>
             </div>
             <div>
-              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>$5M+</h2>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
+                <AnimatedNumber value={5} prefix="$" suffix="M+" />
+              </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Paid to Talent</p>
             </div>
             <div>
-              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>4.9/5</h2>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
+                <AnimatedNumber value={4.8} decimals={1} suffix="/5" />
+              </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Average Client Rating</p>
             </div>
             <div>
-              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>99%</h2>
+              <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
+                <AnimatedNumber value={99} suffix="%" />
+              </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Project Success Rate</p>
             </div>
           </div>
