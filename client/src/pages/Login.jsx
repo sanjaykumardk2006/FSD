@@ -100,47 +100,51 @@ export const Login = () => {
                 </div>
               </div>
             ) : (
-              <div className="auth-form" style={{ animation: 'fadeInUp 0.4s ease-out' }}>
-                <button 
-                  onClick={() => setStep(1)} 
-                  style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', padding: '0', marginBottom: '24px', fontSize: '14px' }}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                  Back to role selection
-                </button>
-
-                {message && <div className="message success">{message}</div>}
-                {error && <div className="message error">{error}</div>}
-
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      placeholder="Enter your password"
-                      required
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px', marginTop: '10px' }}>
-                    {loading ? 'Logging in...' : 'LOGIN'}
+              <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
+                <div className="auth-form" style={{ position: 'relative' }}>
+                  <button 
+                    onClick={() => setStep(1)} 
+                    style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 12px', marginBottom: '24px', borderRadius: '8px', transition: 'all 0.2s ease', marginLeft: '-12px', fontSize: '15px', fontWeight: '500' }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(0,0,0,0.05)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                  >
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Back
                   </button>
-                </form>
+
+                  {message && <div className="message success">{message}</div>}
+                  {error && <div className="message error">{error}</div>}
+
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="email">Email Address</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="your.email@example.com"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="password">Password</label>
+                      <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Enter your password"
+                        required
+                      />
+                    </div>
+                    <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px', marginTop: '10px' }}>
+                      {loading ? 'Logging in...' : 'LOGIN'}
+                    </button>
+                  </form>
+                </div>
               </div>
             )}
 
