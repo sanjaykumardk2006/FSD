@@ -71,10 +71,14 @@ a:hover {
 
 main {
   flex: 1;
-  width: 100%;
-  max-width: 1200px;
+  width: 85%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 0;
+}
+
+main > :first-child {
+  margin-top: 0 !important;
 }
 
 /* Glassmorphism Header */
@@ -91,9 +95,10 @@ main {
 }
 
 .header-container {
-  max-width: 1200px;
+  width: 85%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -182,8 +187,12 @@ main {
 /* Hero Section Modernized */
 .hero {
   background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.05) 0%, transparent 50%);
-  padding: 120px 20px 80px;
+  padding: 80px 20px;
   text-align: center;
+  min-height: calc(100vh - 75px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-content {
@@ -252,9 +261,14 @@ main {
 }
 .zigzag-item {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
+  gap: 60px;
   align-items: center;
+}
+.zigzag-left {
+  grid-template-columns: 1.4fr 1fr;
+}
+.zigzag-right {
+  grid-template-columns: 1fr 1.4fr;
 }
 .zigzag-right .zigzag-image {
   order: 2;
@@ -277,7 +291,7 @@ main {
 
 /* Content Sections */
 .content-section {
-  margin: 140px 0;
+  margin: 60px 0;
 }
 .content-section h2 {
   font-size: 32px;
@@ -393,9 +407,10 @@ main {
   padding: 80px 0 20px;
 }
 .footer-container {
-  max-width: 1200px;
+  width: 85%;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0;
 }
 .footer-content {
   display: grid;
@@ -478,7 +493,7 @@ main {
   border-radius: 16px;
   border: 1px solid var(--border-color);
   width: 100%;
-  height: 350px;
+  height: 450px;
 }
 
 .zoom-out-image {
@@ -501,6 +516,10 @@ main {
 }
 
 @media (max-width: 768px) {
+  main, .header-container, .footer-container {
+    width: 95%;
+  }
+  
   .hide-on-mobile {
     display: none !important;
   }

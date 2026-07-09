@@ -31,9 +31,9 @@ export const About = () => {
     <div className="page">
       <style>{`
         .about-main {
-          max-width: 1200px;
+          max-width: 1440px;
           margin: 0 auto;
-          padding: 0 24px 160px;
+          padding: 0 0 160px;
         }
 
         .bento-grid {
@@ -511,7 +511,7 @@ export const About = () => {
         </section>
 
         {/* About Project */}
-        <section style={{ maxWidth: '840px', margin: '0 auto 160px', textAlign: 'center' }}>
+        <section style={{ maxWidth: '1200px', margin: '0 auto 160px', textAlign: 'center' }}>
           <h2 className="section-header" style={{ textAlign: 'center' }}>About Freelancer Hub</h2>
           <p className="text-content" style={{ textAlign: 'center' }}>
             Freelancer Hub is a state-of-the-art marketplace designed to bridge the gap between world-class talent and ambitious businesses. We provide a seamless, secure, and dynamic environment where professionals can showcase their skills, and clients can easily discover, hire, and collaborate with the perfect match for their projects.
@@ -519,7 +519,7 @@ export const About = () => {
         </section>
 
         {/* How It Works */}
-        <section style={{ maxWidth: '1000px', margin: '0 auto 160px' }}>
+        <section style={{ maxWidth: '1400px', margin: '0 auto 160px' }}>
           <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111' }}>How It Works</h2>
           <p className="text-content" style={{ marginBottom: '60px', textAlign: 'center', color: '#555555', fontSize: '20px' }}>
             The process is designed to be as frictionless as possible. Here is a detailed look into the ecosystem that makes it work flawlessly:
@@ -579,9 +579,9 @@ export const About = () => {
         </section>
 
         {/* Who Is It For */}
-        <section style={{ maxWidth: '1200px', margin: '0 auto 160px' }}>
+        <section style={{ maxWidth: '1440px', margin: '0 auto 160px' }}>
           <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '16px' }}>Who Is It For?</h2>
-          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 60px' }}>
+          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 60px' }}>
             Built for those who demand excellence. Whether you are scaling a startup or building an independent career, we provide the tools you need.
           </p>
 
@@ -666,7 +666,7 @@ export const About = () => {
 
         <section className="core-values-section">
           <h2 className="core-values-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Core Values</h2>
-          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 60px' }}>
+          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 60px' }}>
             The guiding principles that shape our culture, drive our decisions, and define how we serve our community.
           </p>
           <div className="core-values-grid">
@@ -707,7 +707,7 @@ export const About = () => {
         {/* Global Offices */}
         <section>
           <h2 className="section-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Offices</h2>
-          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
+          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 40px' }}>
             We operate globally with a remote-first culture, anchored by strategic hubs in major tech capitals around the world.
           </p>
           <div className="marquee-container">
@@ -746,7 +746,7 @@ export const About = () => {
         {/* CTA */}
         <section className="cta-section">
           <h2 style={{ fontSize: '48px', fontWeight: '600', marginBottom: '24px', letterSpacing: '-0.02em' }}>Join Our Team</h2>
-          <p className="text-content" style={{ maxWidth: '600px', margin: '0 auto 40px' }}>
+          <p className="text-content" style={{ maxWidth: '800px', margin: '0 auto 40px' }}>
             We are always looking for talented individuals to join our mission. Check out our open roles.
           </p>
           <button className="btn-premium" onClick={() => navigate('/login')}>

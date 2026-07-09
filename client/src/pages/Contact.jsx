@@ -59,7 +59,7 @@ export const Contact = () => {
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Find our physical office and mailing details here.</p>
               <div className="cards-grid" style={{ gridTemplateColumns: '1fr' }}>
 
-                <div className="card" style={{ textAlign: 'left', maxWidth: '350px', margin: '0 auto', width: '100%' }}>
+                <div className="card" style={{ textAlign: 'left', maxWidth: '450px', margin: '0 auto', width: '100%' }}>
                   <h3>Address</h3>
                   <p>Kongu Engineering College<br />Perundurai<br />Erode - 638060</p>
                 </div>
@@ -69,7 +69,7 @@ export const Contact = () => {
             <div style={{ textAlign: 'center' }}>
               <h2 style={{ marginBottom: '10px' }}>Send us a Message</h2>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Drop us a line and we will get back to you within 24 hours.</p>
-              <div className="card" style={{ maxWidth: '500px', width: '100%', margin: '0 auto 0 0', padding: '40px', boxSizing: 'border-box', textAlign: 'left' }}>
+              <div className="card" style={{ maxWidth: '700px', width: '100%', margin: '0 auto 0 0', padding: '40px', boxSizing: 'border-box', textAlign: 'left' }}>
                 <form onSubmit={handleSubmit} className="contact-form">
                 {submitted && (
                   <div style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '15px', borderRadius: '8px', marginBottom: '20px', textAlign: 'center', fontWeight: '600' }}>

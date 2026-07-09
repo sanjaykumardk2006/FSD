@@ -71,27 +71,33 @@ export const Home = () => {
   return (
     <div className="page">
       <Header />
-      <main>
-        {/* 1. Hero Section */}
-        <section className="hero">
-          <div className="hero-content">
-            <h2>The Premium Talent Network</h2>
-            <p>
-              Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
-            </p>
-            <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
-              <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
-                Hire Talent
-              </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
-                Find Work
-              </button>
-            </div>
+      {/* 1. Hero Section */}
+      <section className="hero" style={{ 
+        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.7)), url("/hero_bg.png")', 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundRepeat: 'no-repeat',
+        marginBottom: '80px'
+      }}>
+        <div className="hero-content">
+          <h2>The Premium Talent Network</h2>
+          <p>
+            Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
+          </p>
+          <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
+            <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
+              Hire Talent
+            </button>
+            <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
+              Find Work
+            </button>
           </div>
-        </section>
+        </div>
+      </section>
+      <main>
 
         {/* Who We Are */}
-        <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 140px', padding: '60px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 60px', padding: '60px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '10px' }}>Who We Are</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '18px' }}>Empowering the future of digital work</p>
           <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', textAlign: 'center' }}>
@@ -145,7 +151,7 @@ export const Home = () => {
         </section>
 
         {/* 2. Statistics */}
-        <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 140px' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 60px' }} ref={(el) => sectionRefs.current.push(el)}>
           <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', textAlign: 'center' }}>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
@@ -178,7 +184,7 @@ export const Home = () => {
         <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Explore Popular Categories</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Find exactly what you need from our massive talent pool</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '32px' }}>
             {[
               { image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80', title: 'Web Development', desc: 'Build scalable, responsive web applications using the latest technologies.' },
               { image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&q=80', title: 'Graphic Design', desc: 'Elevate your brand with stunning visual designs and intuitive UI/UX.' },
@@ -188,7 +194,7 @@ export const Home = () => {
               { image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=400&q=80', title: 'Video & Animation', desc: 'Bring your ideas to life with high-quality video production and motion graphics.' }
             ].map((cat, i) => (
               <div className="card" key={i} style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '180px', objectFit: 'cover' }} className="zoom-in-image" />
+                <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '260px', objectFit: 'cover' }} className="zoom-in-image" />
                 <div style={{ padding: '24px' }}>
                   <h3 style={{ fontSize: '20px', marginBottom: '12px' }}>{cat.title}</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6', margin: '0' }}>{cat.desc}</p>
@@ -201,7 +207,7 @@ export const Home = () => {
 
 
         {/* 6. Featured Jobs */}
-        <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 140px', padding: '60px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 60px', padding: '60px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Featured Jobs</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>High-quality projects looking for experts right now</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
@@ -250,9 +256,9 @@ export const Home = () => {
 
 
         {/* 9. Call to Action */}
-        <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1200px' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1440px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '48px', marginBottom: '30px' }}>Ready to Scale Your Business?</h2>
-          <p style={{ maxWidth: '600px', margin: '0 auto 40px' }}>Join thousands of modern teams building the future with our premium talent network. No credit card required to start.</p>
+          <p style={{ maxWidth: '800px', margin: '0 auto 40px', fontSize: '20px' }}>Join thousands of modern teams building the future with our premium talent network. No credit card required to start.</p>
           <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '16px 32px', fontSize: '16px', borderRadius: '50px' }}>
             Get Started Now
           </button>

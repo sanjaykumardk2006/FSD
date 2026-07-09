@@ -70,7 +70,7 @@ export const Login = () => {
             </p>
           </div>
 
-          <div style={{ maxWidth: step === 1 ? '700px' : '500px', margin: '0 auto' }}>
+          <div style={{ maxWidth: step === 1 ? '900px' : '600px', margin: '0 auto' }}>
             {step === 1 ? (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
                 <div 

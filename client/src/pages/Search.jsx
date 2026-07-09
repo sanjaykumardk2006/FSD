@@ -35,13 +35,13 @@ export const Search = () => {
     <div className="page">
       <Header />
       <main>
-        <section className="content-section" style={{ padding: '40px 24px', margin: '0 auto', maxWidth: '1200px' }}>
+        <section className="content-section" style={{ padding: '40px 24px', margin: '0 auto', maxWidth: '1440px' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <h2 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>Find Work</h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>Browse and apply to the latest projects posted by clients</p>
           </div>
 
-          <div style={{ marginBottom: '40px', maxWidth: '600px', margin: '0 auto 40px' }}>
+          <div style={{ marginBottom: '40px', maxWidth: '800px', margin: '0 auto 40px' }}>
             <input 
               type="text" 
               placeholder="Search projects by title or description..." 
