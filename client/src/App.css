@@ -42,6 +42,8 @@ html, body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -501,6 +503,18 @@ main {
 @media (max-width: 768px) {
   .hide-on-mobile {
     display: none !important;
+  }
+  
+  /* Header adjustments for mobile */
+  .header-container {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  
+  .nav {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 16px !important;
   }
   
   /* Responsive Typography Overrides for inline styles */

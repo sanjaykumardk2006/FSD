@@ -79,11 +79,11 @@ export const Home = () => {
             <p>
               Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
             </p>
-            <div className="hero-buttons" style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
+            <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
               <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
                 Hire Talent
               </button>
-              <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px', backgroundColor: 'transparent', border: '1px solid white', color: 'white' }}>
+              <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
                 Find Work
               </button>
             </div>
@@ -146,7 +146,7 @@ export const Home = () => {
 
         {/* 2. Statistics */}
         <section className="content-section" style={{ maxWidth: '1200px', margin: '0 auto 140px' }} ref={(el) => sectionRefs.current.push(el)}>
-          <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', textAlign: 'center' }}>
+          <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', textAlign: 'center' }}>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
                 <AnimatedNumber value={10} suffix="k+" />

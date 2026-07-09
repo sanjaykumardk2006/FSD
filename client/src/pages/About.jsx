@@ -229,7 +229,7 @@ export const About = () => {
 
         @media (max-width: 768px) {
           .stat-single-card {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 40px 24px;
           }
         }
