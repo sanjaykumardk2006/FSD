@@ -98,7 +98,7 @@ export const Home = () => {
       <main>
 
         {/* Who We Are */}
-        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 60px', padding: '60px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 120px', padding: '60px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '10px' }}>Who We Are</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '18px' }}>Empowering the future of digital work</p>
           <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', textAlign: 'center' }}>
@@ -107,7 +107,7 @@ export const Home = () => {
         </section>
 
         {/* Our Services */}
-        <section className="content-section zigzag-section" ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section zigzag-section" style={{ marginBottom: '120px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Freelancer Hub Services</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '80px', fontSize: '18px' }}>Everything you need to hire, manage, and pay top freelancers</p>
           <div className="zigzag-container">
@@ -152,7 +152,7 @@ export const Home = () => {
         </section>
 
         {/* 2. Statistics */}
-        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 60px' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 120px' }} ref={(el) => sectionRefs.current.push(el)}>
           <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', textAlign: 'center' }}>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
@@ -182,7 +182,7 @@ export const Home = () => {
         </section>
 
         {/* 3. Categories */}
-        <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ marginBottom: '120px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Explore Popular Categories</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Find exactly what you need from our massive talent pool</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px' }}>
@@ -219,7 +219,7 @@ export const Home = () => {
 
 
         {/* 6. Featured Jobs */}
-        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 60px', padding: '60px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 120px', padding: '60px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Featured Jobs</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>High-quality projects looking for experts right now</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
@@ -237,7 +237,7 @@ export const Home = () => {
         </section>
 
         {/* 7. Why Choose Us */}
-        <section className="content-section" ref={(el) => sectionRefs.current.push(el)}>
+        <section className="content-section" style={{ marginBottom: '120px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Built for performance and reliability</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Why top enterprises choose Freelancer Hub for their critical projects</p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>

@@ -218,9 +218,6 @@ main> :first-child {
   line-height: 1.1;
   font-weight: 800;
   margin-bottom: 24px;
-  background: linear-gradient(to right, #000000, #555555);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .hero-content p {
