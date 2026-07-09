@@ -229,7 +229,7 @@ main > :first-child {
 .card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 24px;
   padding: 24px;
   transition: all 0.3s ease;
 }
@@ -261,14 +261,14 @@ main > :first-child {
 }
 .zigzag-item {
   display: grid;
-  gap: 60px;
+  gap: 120px;
   align-items: center;
 }
 .zigzag-left {
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 .zigzag-right {
-  grid-template-columns: 1fr 1.4fr;
+  grid-template-columns: 1fr 1fr;
 }
 .zigzag-right .zigzag-image {
   order: 2;
@@ -490,7 +490,7 @@ main > :first-child {
 
 .zoom-out-image-container {
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 24px;
   border: 1px solid var(--border-color);
   width: 100%;
   height: 450px;
