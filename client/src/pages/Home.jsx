@@ -47,6 +47,7 @@ const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
 export const Home = () => {
   const navigate = useNavigate();
   const sectionRefs = useRef([]);
+  const [showAllCategories, setShowAllCategories] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -73,15 +74,15 @@ export const Home = () => {
       <Header />
       {/* 1. Hero Section */}
       <section className="hero" style={{ 
-        backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.7)), url("/hero_bg.png")', 
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("/hero_bg.png")', 
         backgroundSize: 'cover', 
         backgroundPosition: 'center', 
         backgroundRepeat: 'no-repeat',
         marginBottom: '80px'
       }}>
-        <div className="hero-content">
-          <h2>The Premium Talent Network</h2>
-          <p>
+        <div className="hero-content" style={{ color: '#ffffff' }}>
+          <h2 style={{ color: '#ffffff' }}>The Premium Talent Network</h2>
+          <p style={{ color: '#ffffff', opacity: 0.9 }}>
             Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
           </p>
           <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
@@ -191,8 +192,14 @@ export const Home = () => {
               { image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=400&q=80', title: 'Digital Marketing', desc: 'Drive growth and increase your online presence with targeted strategies.' },
               { image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=400&q=80', title: 'App Development', desc: 'Create seamless mobile experiences for both iOS and Android platforms.' },
               { image: 'https://images.unsplash.com/photo-1518186285589-2f7649de83e0?auto=format&fit=crop&w=400&q=80', title: 'Data Science & AI', desc: 'Harness the power of machine learning and data analytics for actionable insights.' },
-              { image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=400&q=80', title: 'Video & Animation', desc: 'Bring your ideas to life with high-quality video production and motion graphics.' }
-            ].map((cat, i) => (
+              { image: 'https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=400&q=80', title: 'Video & Animation', desc: 'Bring your ideas to life with high-quality video production and motion graphics.' },
+              { image: '/cat_writing.png', title: 'Writing & Translation', desc: 'Engage your audience with compelling copy and professional translation services.' },
+              { image: '/cat_va.png', title: 'Virtual Assistance', desc: 'Streamline your operations with reliable remote administrative support.' },
+              { image: '/cat_finance.png', title: 'Finance & Accounting', desc: 'Manage your business finances with expert bookkeepers and financial analysts.' },
+              { image: '/cat_arch.png', title: 'Architecture & 3D', desc: 'Transform your concepts into reality with breathtaking 3D modeling.' },
+              { image: '/cat_legal.png', title: 'Legal Consulting', desc: 'Protect your business with expert advice from experienced legal professionals.' },
+              { image: '/cat_audio.png', title: 'Audio & Music', desc: 'Enhance your projects with professional voiceovers, mixing, and sound design.' }
+            ].slice(0, showAllCategories ? 12 : 4).map((cat, i) => (
               <div className="card" key={i} style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '260px', objectFit: 'cover' }} className="zoom-in-image" />
                 <div style={{ padding: '24px' }}>
@@ -201,6 +208,11 @@ export const Home = () => {
                 </div>
               </div>
             ))}
+          </div>
+          <div style={{ marginTop: '60px', textAlign: 'center' }}>
+            <button className="btn btn-secondary" onClick={() => setShowAllCategories(!showAllCategories)} style={{ padding: '16px 40px', fontSize: '16px', borderRadius: '50px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              {showAllCategories ? 'Explore Less ↑' : 'Explore More ↓'}
+            </button>
           </div>
         </section>
 
