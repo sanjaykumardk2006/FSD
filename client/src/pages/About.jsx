@@ -142,23 +142,21 @@ export const About = () => {
           border-color: #111111;
         }
 
-        .checklist-item {
+        .feature-card {
+          background: #FFFFFF;
+          border: 1px solid #E5E7EB;
+          border-radius: 16px;
+          padding: 24px 32px;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+          transition: all 0.3s ease;
           display: flex;
-          align-items: flex-start;
-          gap: 16px;
-          padding: 20px 0;
-          border-bottom: 1px solid #F3F4F6;
+          align-items: center;
         }
 
-        .checklist-item:last-child {
-          border-bottom: none;
-          padding-bottom: 0;
-        }
-
-        .checklist-icon {
-          flex-shrink: 0;
-          color: #111111;
-          margin-top: 2px;
+        .feature-card:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+          border-color: #111111;
         }
 
         .premium-hero {
@@ -621,29 +619,23 @@ export const About = () => {
                 <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   We believe that talent should not be limited by geography. Our platform empowers independent professionals to build sustainable, scalable careers:
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
-                  <div className="checklist-item">
-                    <Globe size={24} className="checklist-icon" />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</span>
                   </div>
-                  <div className="checklist-item">
-                    <Banknote size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</span>
                   </div>
-                  <div className="checklist-item">
-                    <Briefcase size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Utilize sophisticated platform tools to build a professional portfolio, gather client reviews, and establish a stellar reputation.</span>
                   </div>
-                  <div className="checklist-item">
-                    <Clock size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Maintain absolute flexibility to choose your projects, negotiate your timelines, and set your own hourly or fixed rates.</span>
                   </div>
-                  <div className="checklist-item">
-                    <CheckCircle2 size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</span>
                   </div>
-                  <div className="checklist-item">
-                    <Shield size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</span>
                   </div>
                 </div>
@@ -670,29 +662,23 @@ export const About = () => {
                 <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   Finding the right talent quickly can make or break a project. Freelancer Hub provides businesses with the agility to scale their workforce on demand:
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
-                  <div className="checklist-item">
-                    <UserCheck size={24} className="checklist-icon" />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</span>
                   </div>
-                  <div className="checklist-item">
-                    <Brain size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Experience a streamlined, AI-driven hiring process that drastically reduces time-to-hire and administrative overhead.</span>
                   </div>
-                  <div className="checklist-item">
-                    <ShieldCheck size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</span>
                   </div>
-                  <div className="checklist-item">
-                    <BriefcaseBusiness size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Leverage scalable workforce solutions, allowing you to hire a single expert or assemble an entire remote team in days.</span>
                   </div>
-                  <div className="checklist-item">
-                    <Target size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Monitor project progress transparently with built-in time tracking, daily work diaries, and integrated communication tools.</span>
                   </div>
-                  <div className="checklist-item">
-                    <ShieldAlert size={24} className="checklist-icon" />
+                  <div className="feature-card">
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Rest easy with enterprise-grade security and compliance tools designed specifically to protect your intellectual property.</span>
                   </div>
                 </div>
