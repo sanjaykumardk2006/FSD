@@ -610,7 +610,7 @@ export const About = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Freelancer's Advantage</h3>
+              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Freelancer's Edge</h3>
               <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
                 Empowering independent professionals to take control of their careers with the tools, clients, and security they deserve.
               </p>
@@ -655,14 +655,14 @@ export const About = () => {
             {/* Divider */}
             <div style={{ height: '1px', background: 'var(--border-color)', margin: '40px auto', width: '80%' }}></div>
 
-            {/* Client Section */}
+            {/* Customer Section */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Client's Edge</h3>
+              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Customer's Edge</h3>
               <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
                 Giving businesses the agility to build world-class teams on demand, with zero compromise on quality or security.
               </p>
