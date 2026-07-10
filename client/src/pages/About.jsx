@@ -289,7 +289,7 @@ export const About = () => {
           display: flex;
           gap: 32px;
           width: max-content;
-          animation: scrollLeft 20s linear infinite;
+          animation: scrollLeft 40s linear infinite;
         }
 
         .marquee-track:hover {
@@ -317,12 +317,24 @@ export const About = () => {
         .core-values-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 60px 80px;
+          gap: 32px;
         }
 
         .core-value-card {
           display: flex;
           flex-direction: column;
+          background: #FFFFFF;
+          border: 1px solid #E5E7EB;
+          border-radius: 20px;
+          padding: 40px;
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+          transition: all 0.3s ease;
+        }
+        
+        .core-value-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
+          border-color: #111111;
         }
 
         .core-value-icon {
@@ -609,7 +621,7 @@ export const About = () => {
                 <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   We believe that talent should not be limited by geography. Our platform empowers independent professionals to build sustainable, scalable careers:
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
                   <div className="checklist-item">
                     <Globe size={24} className="checklist-icon" />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</span>
@@ -658,7 +670,7 @@ export const About = () => {
                 <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   Finding the right talent quickly can make or break a project. Freelancer Hub provides businesses with the agility to scale their workforce on demand:
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '30px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>
                   <div className="checklist-item">
                     <UserCheck size={24} className="checklist-icon" />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</span>
