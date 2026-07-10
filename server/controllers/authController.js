@@ -3,7 +3,7 @@ const { generateToken } = require('../utils/tokenUtils');
 const { body, validationResult } = require('express-validator');
 
 exports.signup = [
-  body('username').trim().notEmpty().withMessage('Username is required'),
+  // username validation is moved inside the controller since it's auto-generated for Freelancers
   body('email').isEmail().withMessage('Valid email is required'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   body('role').isIn(['Client', 'Freelancer']).withMessage('Role must be Client or Freelancer'),
@@ -14,7 +14,25 @@ exports.signup = [
     }
 
     try {
-      const { username, email, password, role } = req.body;
+      let { username, email, password, role, firstName, lastName, companyName, country, mobileNumber, service, entityType } = req.body;
+
+      if (role === 'Freelancer') {
+        if (entityType === 'Company') {
+          if (!companyName) {
+            return res.status(400).json({ message: 'Company name is required' });
+          }
+          username = `${companyName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
+        } else {
+          if (!firstName || !lastName) {
+            return res.status(400).json({ message: 'First name and last name are required for freelancers' });
+          }
+          username = `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
+        }
+      } else {
+        if (!username || username.trim() === '') {
+          return res.status(400).json({ message: 'Full name is required' });
+        }
+      }
 
       // Check if user already exists
       const existingUser = await User.findOne({ $or: [{ email }, { username }] });
@@ -28,6 +46,13 @@ exports.signup = [
         email,
         password,
         role,
+        firstName,
+        lastName,
+        companyName,
+        country,
+        mobileNumber,
+        entityType: entityType || 'Self-employed',
+        profile: role === 'Freelancer' && service ? { skills: [service] } : undefined
       });
 
       await user.save();

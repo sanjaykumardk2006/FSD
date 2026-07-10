@@ -59,8 +59,8 @@ export const Login = () => {
   return (
     <div className="page">
       <Header />
-      <main>
-        <section className="content-section" style={{ padding: '0 24px', margin: '0 auto 80px' }}>
+      <main style={{ minHeight: 'calc(100vh - 150px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 0' }}>
+        <section className="content-section" style={{ padding: '0 24px', width: '100%', margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: '40px' }}>
             <h2 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>
               {step === 1 ? 'Welcome Back' : `Log in as a ${loginType}`}
@@ -101,16 +101,16 @@ export const Login = () => {
               </div>
             ) : (
               <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
+                <button 
+                  onClick={() => setStep(1)} 
+                  style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 12px', marginBottom: '16px', borderRadius: '8px', transition: 'all 0.2s ease', marginLeft: '0', fontSize: '15px', fontWeight: '500' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(0,0,0,0.05)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                  Back
+                </button>
                 <div className="auth-form" style={{ position: 'relative' }}>
-                  <button 
-                    onClick={() => setStep(1)} 
-                    style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 12px', marginBottom: '24px', borderRadius: '8px', transition: 'all 0.2s ease', marginLeft: '-12px', fontSize: '15px', fontWeight: '500' }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(0,0,0,0.05)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = 'none'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                    Back
-                  </button>
 
                   {message && <div className="message success">{message}</div>}
                   {error && <div className="message error">{error}</div>}

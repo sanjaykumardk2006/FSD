@@ -9,6 +9,31 @@ const userSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    firstName: {
+      type: String,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      trim: true,
+    },
+    companyName: {
+      type: String,
+      trim: true,
+    },
+    country: {
+      type: String,
+      trim: true,
+    },
+    mobileNumber: {
+      type: String,
+      trim: true,
+    },
+    entityType: {
+      type: String,
+      enum: ['Self-employed', 'Company'],
+      default: 'Self-employed'
+    },
     email: {
       type: String,
       required: true,
