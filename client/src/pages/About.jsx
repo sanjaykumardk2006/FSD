@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { motion, animate, useInView } from 'framer-motion';
-import { Brain, Search, ShieldCheck, Briefcase, FileText, Target, CheckCircle2, Globe, Banknote, Shield, BriefcaseBusiness, UserCheck, MessageSquare, Clock, ShieldAlert, Users, BookOpen, Heart, TrendingUp } from 'lucide-react';
+import { ArrowRight, Brain, Search, ShieldCheck, Briefcase, FileText, Target, CheckCircle2, Globe, Banknote, Shield, BriefcaseBusiness, UserCheck, MessageSquare, Clock, ShieldAlert, Users, BookOpen, Heart, TrendingUp } from 'lucide-react';
 
 const AnimatedNumber = ({ from, to, duration = 2, prefix = "", suffix = "" }) => {
   const nodeRef = useRef(null);
@@ -597,11 +597,11 @@ export const About = () => {
         {/* Who Is It For */}
         <section style={{ maxWidth: '1440px', margin: '0 auto 160px' }}>
           <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '16px' }}>Who Is It For?</h2>
-          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 60px' }}>
+          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 140px' }}>
             Built for those who demand excellence. Whether you are scaling a startup or building an independent career, we provide the tools you need.
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '160px' }}>
             {/* Freelancer Section */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -609,10 +609,13 @@ export const About = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '40px', color: '#111111', textAlign: 'center' }}>The Freelancer's Advantage</h3>
+              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Freelancer's Advantage</h3>
+              <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
+                Empowering independent professionals to take control of their careers with the tools, clients, and security they deserve.
+              </p>
               
               <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Freelancer working remotely" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '450px' }} />
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Freelancer working remotely" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px' }} />
               </div>
 
               <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
@@ -621,21 +624,27 @@ export const About = () => {
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Utilize sophisticated platform tools to build a professional portfolio, gather client reviews, and establish a stellar reputation.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Maintain absolute flexibility to choose your projects, negotiate your timelines, and set your own hourly or fixed rates.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</span>
                   </div>
                 </div>
@@ -643,7 +652,7 @@ export const About = () => {
             </motion.div>
 
             {/* Divider */}
-            <div style={{ height: '1px', background: 'var(--border-color)', margin: '40px auto', width: '80%' }}></div>
+            <div style={{ height: '1px', background: 'var(--border-color)', margin: '120px auto', width: '80%' }}></div>
 
             {/* Client Section */}
             <motion.div 
@@ -652,10 +661,13 @@ export const About = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '40px', color: '#111111', textAlign: 'center' }}>The Client's Edge</h3>
+              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Client's Edge</h3>
+              <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
+                Giving businesses the agility to build world-class teams on demand, with zero compromise on quality or security.
+              </p>
               
               <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" alt="Corporate client meeting" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '450px' }} />
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" alt="Corporate client meeting" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px' }} />
               </div>
 
               <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
@@ -664,21 +676,27 @@ export const About = () => {
                 </p>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Experience a streamlined, AI-driven hiring process that drastically reduces time-to-hire and administrative overhead.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Leverage scalable workforce solutions, allowing you to hire a single expert or assemble an entire remote team in days.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Monitor project progress transparently with built-in time tracking, daily work diaries, and integrated communication tools.</span>
                   </div>
                   <div className="feature-card">
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Rest easy with enterprise-grade security and compliance tools designed specifically to protect your intellectual property.</span>
                   </div>
                 </div>
