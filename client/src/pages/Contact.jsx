@@ -45,7 +45,7 @@ export const Contact = () => {
     <div className="page">
       <Header />
       <main>
-        <section className="hero">
+        <section className="hero" style={{ minHeight: 'auto', padding: '100px 24px 60px', marginBottom: '40px' }}>
           <div className="hero-content">
             <h2>Get in Touch</h2>
             <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible</p>
@@ -53,23 +53,23 @@ export const Contact = () => {
         </section>
 
         <section className="content-section">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'start', marginBottom: '80px' }}>
-            <div style={{ textAlign: 'center' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', alignItems: 'flex-start', marginBottom: '80px', padding: '0 24px' }}>
+            <div style={{ textAlign: 'left', flex: '1 1 350px', maxWidth: '450px' }}>
               <h2 style={{ marginBottom: '10px' }}>Contact Information</h2>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Find our physical office and mailing details here.</p>
               <div className="cards-grid" style={{ gridTemplateColumns: '1fr' }}>
 
-                <div className="card" style={{ textAlign: 'left', maxWidth: '450px', margin: '0 auto', width: '100%' }}>
+                <div className="card" style={{ textAlign: 'left', maxWidth: '450px', margin: '0', width: '100%' }}>
                   <h3>Address</h3>
                   <p>Kongu Engineering College<br />Perundurai<br />Erode - 638060</p>
                 </div>
               </div>
             </div>
 
-            <div style={{ textAlign: 'center' }}>
+            <div style={{ textAlign: 'left', flex: '1 1 400px', maxWidth: '500px' }}>
               <h2 style={{ marginBottom: '10px' }}>Send us a Message</h2>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Drop us a line and we will get back to you within 24 hours.</p>
-              <div className="card" style={{ maxWidth: '700px', width: '100%', margin: '0 auto 0 0', padding: '40px', boxSizing: 'border-box', textAlign: 'left' }}>
+              <div className="card" style={{ maxWidth: '500px', width: '100%', margin: '0', padding: '40px', boxSizing: 'border-box', textAlign: 'left' }}>
                 <form onSubmit={handleSubmit} className="contact-form">
                 {submitted && (
                   <div style={{ backgroundColor: '#d1fae5', color: '#065f46', padding: '15px', borderRadius: '8px', marginBottom: '20px', textAlign: 'center', fontWeight: '600' }}>

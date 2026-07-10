@@ -475,11 +475,12 @@ export const About = () => {
       
       {/* Hero Section */}
       <section className="hero" style={{ 
-          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80")', 
+          backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.4)), url("https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1920&q=80")', 
           backgroundSize: 'cover', 
           backgroundPosition: 'center', 
           backgroundRepeat: 'no-repeat',
-          marginBottom: '120px'
+          marginBottom: '120px',
+          padding: '160px 0'
         }}>
           <div className="hero-content" style={{ color: '#ffffff' }}>
             <h2 style={{ color: '#ffffff' }}>About Freelancer Hub</h2>
@@ -601,7 +602,7 @@ export const About = () => {
             Built for those who demand excellence. Whether you are scaling a startup or building an independent career, we provide the tools you need.
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '160px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
             {/* Freelancer Section */}
             <motion.div 
               initial={{ opacity: 0, y: 30 }}
@@ -644,7 +645,7 @@ export const About = () => {
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</span>
                   </div>
                   <div className="feature-card">
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</span>
                   </div>
                 </div>
@@ -652,7 +653,7 @@ export const About = () => {
             </motion.div>
 
             {/* Divider */}
-            <div style={{ height: '1px', background: 'var(--border-color)', margin: '120px auto', width: '80%' }}></div>
+            <div style={{ height: '1px', background: 'var(--border-color)', margin: '40px auto', width: '80%' }}></div>
 
             {/* Client Section */}
             <motion.div 

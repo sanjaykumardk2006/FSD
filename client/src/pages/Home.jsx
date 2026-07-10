@@ -74,7 +74,7 @@ export const Home = () => {
       <Header />
       {/* 1. Hero Section */}
       <section className="hero" style={{ 
-        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url("/hero_bg.png")', 
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.4)), url("/hero_bg.png")', 
         backgroundSize: 'cover', 
         backgroundPosition: 'center', 
         backgroundRepeat: 'no-repeat',
