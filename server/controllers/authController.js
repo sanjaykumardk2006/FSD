@@ -16,22 +16,16 @@ exports.signup = [
     try {
       let { username, email, password, role, firstName, lastName, companyName, country, mobileNumber, service, entityType } = req.body;
 
-      if (role === 'Freelancer') {
-        if (entityType === 'Company') {
-          if (!companyName) {
-            return res.status(400).json({ message: 'Company name is required' });
-          }
-          username = `${companyName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
-        } else {
-          if (!firstName || !lastName) {
-            return res.status(400).json({ message: 'First name and last name are required for freelancers' });
-          }
-          username = `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
+      if (entityType === 'Company') {
+        if (!companyName) {
+          return res.status(400).json({ message: 'Company name is required' });
         }
+        username = `${companyName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
       } else {
-        if (!username || username.trim() === '') {
-          return res.status(400).json({ message: 'Full name is required' });
+        if (!firstName || !lastName) {
+          return res.status(400).json({ message: 'First name and last name are required' });
         }
+        username = `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
       }
 
       // Check if user already exists

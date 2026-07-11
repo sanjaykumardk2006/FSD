@@ -43,7 +43,7 @@ export const Signup = () => {
     setMessage('');
     setError('');
 
-    if (formData.role === 'Freelancer' && formData.password !== formData.passwordConfirmation) {
+    if (formData.password !== formData.passwordConfirmation) {
       setError('Passwords do not match');
       setLoading(false);
       return;
@@ -51,9 +51,7 @@ export const Signup = () => {
 
     try {
       const submissionData = { ...formData };
-      if (formData.role === 'Freelancer') {
-        submissionData.mobileNumber = `${formData.countryCode}${formData.mobileNumber}`;
-      }
+      submissionData.mobileNumber = `${formData.countryCode}${formData.mobileNumber}`;
       const response = await apiClient.post('/auth/signup', submissionData);
       setMessage(response.data.message);
       setTimeout(() => navigate('/login'), 2000);
@@ -124,7 +122,6 @@ export const Signup = () => {
                   {error && <div className="message error">{error}</div>}
                   
                   <form onSubmit={handleSubmit}>
-                    {formData.role === 'Freelancer' ? (
                       <>
                         <div style={{ marginBottom: '24px' }}>
                           <p style={{ fontSize: '18px', fontWeight: '500', marginBottom: '16px', color: 'var(--text-primary)' }}>You are</p>
@@ -231,18 +228,20 @@ export const Signup = () => {
                             required
                           />
                         </div>
-                        <div className="form-group">
-                          <label htmlFor="service">Service</label>
-                          <input
-                            type="text"
-                            id="service"
-                            name="service"
-                            value={formData.service}
-                            onChange={handleChange}
-                            placeholder="ex: web developer, editor, etc"
-                            required
-                          />
-                        </div>
+                        {formData.role === 'Freelancer' && (
+                          <div className="form-group">
+                            <label htmlFor="service">Service</label>
+                            <input
+                              type="text"
+                              id="service"
+                              name="service"
+                              value={formData.service}
+                              onChange={handleChange}
+                              placeholder="ex: web developer, editor, etc"
+                              required
+                            />
+                          </div>
+                        )}
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
                           <div className="form-group">
                             <label htmlFor="password">Password</label>
@@ -270,46 +269,6 @@ export const Signup = () => {
                           </div>
                         </div>
                       </>
-                    ) : (
-                      <>
-                        <div className="form-group">
-                          <label htmlFor="username">Full Name</label>
-                          <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            placeholder="Enter your full name"
-                            required
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="email">Email Address</label>
-                          <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder="your.email@example.com"
-                            required
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label htmlFor="password">Password</label>
-                          <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            placeholder="Create a strong password (min 6 characters)"
-                            required
-                          />
-                        </div>
-                      </>
-                    )}
                     <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px', marginTop: '10px' }}>
                       {loading ? 'Creating account...' : 'CREATE ACCOUNT'}
                     </button>
