@@ -155,8 +155,13 @@ main> :first-child {
   transition: width 0.3s ease;
 }
 
-.nav a:hover::after {
+.nav a:hover::after,
+.nav a.active::after {
   width: 100%;
+}
+
+.nav a.active {
+  color: var(--text-primary);
 }
 
 /* Modern Buttons */

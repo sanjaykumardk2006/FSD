@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import '../App.css';
 
 export const Header = () => {
@@ -9,12 +10,12 @@ export const Header = () => {
           <h1><span className="freelancer-text">Freelancer</span> <span className="hub-text">Hub</span></h1>
         </div>
         <nav className="nav">
-          <a href="/">Home</a>
-          <a href="/about">About</a>
-          <a href="/search">Jobs</a>
-          <a href="/contact">Contact</a>
-          <a href="/login">Login</a>
-          <a href="/signup">Sign Up</a>
+          <NavLink to="/" end>Home</NavLink>
+          <NavLink to="/about">About</NavLink>
+          <NavLink to="/search">Jobs</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/login">Login</NavLink>
+          <NavLink to="/signup">Sign Up</NavLink>
         </nav>
       </div>
     </header>

@@ -531,7 +531,10 @@ export const About = () => {
         <section style={{ maxWidth: '1200px', margin: '0 auto 160px', textAlign: 'center' }}>
           <h2 className="section-header" style={{ textAlign: 'center' }}>About Freelancer Hub</h2>
           <p className="text-content" style={{ textAlign: 'center' }}>
-            Freelancer Hub is a state-of-the-art marketplace designed to bridge the gap between world-class talent and ambitious businesses. We provide a seamless, secure, and dynamic environment where professionals can showcase their skills, and clients can easily discover, hire, and collaborate with the perfect match for their projects.
+            Freelancer Hub is a state-of-the-art marketplace designed to bridge the gap between world-class talent and ambitious businesses. We provide a seamless, secure, and dynamic environment where professionals can showcase their skills, and clients can easily discover, hire, and collaborate with the perfect match for their projects. By combining advanced AI-driven matching algorithms with an intuitive project management suite, we eliminate the friction traditionally associated with remote hiring. At our core, we believe that talent is universally distributed, but opportunity is not, and we exist to break down those geographical barriers.
+          </p>
+          <p className="text-content" style={{ textAlign: 'center' }}>
+            We prioritize security, trust, and transparency in every interaction. From our robust escrow payment system to our dedicated 24/7 support team, we are committed to providing an ecosystem where your ideas are protected and your investments yield maximum value. More than just a platform, Freelancer Hub is a thriving community where lifelong partnerships are forged. Whether you are an independent expert looking to scale your career, or a fast-growing startup seeking specialized skills, we provide the foundation for mutual success, continuous growth, and unparalleled digital innovation.
           </p>
         </section>
 
@@ -597,20 +600,40 @@ export const About = () => {
 
         {/* Who Is It For */}
         <section style={{ maxWidth: '1440px', margin: '0 auto 160px' }}>
-          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '16px' }}>Who Is It For?</h2>
-          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 140px' }}>
-            Built for those who demand excellence. Whether you are scaling a startup or building an independent career, we provide the tools you need.
-          </p>
+          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '40px' }}>Who Is It For?</h2>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '80px', flexWrap: 'wrap', padding: '0 24px' }}>
+            <div className="premium-card" onClick={() => document.getElementById('freelancer-edge')?.scrollIntoView({ behavior: 'smooth' })} style={{ flex: '1 1 300px', maxWidth: '400px', padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+              <div style={{ width: '64px', height: '64px', background: '#eff6ff', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: '#3b82f6' }}>
+                <UserCheck size={32} />
+              </div>
+              <h3 style={{ fontSize: '24px', marginBottom: '12px', fontWeight: '600' }}>For Freelancers</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
+                Build a sustainable career with guaranteed payments, high-quality clients, and total flexibility.
+              </p>
+            </div>
+            
+            <div className="premium-card" onClick={() => document.getElementById('customer-edge')?.scrollIntoView({ behavior: 'smooth' })} style={{ flex: '1 1 300px', maxWidth: '400px', padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
+              <div style={{ width: '64px', height: '64px', background: '#f0fdf4', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: '#22c55e' }}>
+                <BriefcaseBusiness size={32} />
+              </div>
+              <h3 style={{ fontSize: '24px', marginBottom: '12px', fontWeight: '600' }}>For Customers</h3>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
+                Scale your team on-demand with highly vetted global talent, secure escrow, and AI matching.
+              </p>
+            </div>
+          </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '60px' }}>
             {/* Freelancer Section */}
             <motion.div 
+              id="freelancer-edge"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Freelancer's Edge</h3>
+              <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Freelancer's Edge</h3>
               <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
                 Empowering independent professionals to take control of their careers with the tools, clients, and security they deserve.
               </p>
@@ -657,12 +680,13 @@ export const About = () => {
 
             {/* Customer Section */}
             <motion.div 
+              id="customer-edge"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '40px', fontWeight: '700', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Customer's Edge</h3>
+              <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Customer's Edge</h3>
               <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
                 Giving businesses the agility to build world-class teams on demand, with zero compromise on quality or security.
               </p>
