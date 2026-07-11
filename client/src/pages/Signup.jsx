@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
@@ -279,12 +279,12 @@ export const Signup = () => {
             
             {step === 1 && (
               <p className="auth-link" style={{ marginTop: '40px', textAlign: 'center' }}>
-                Already have an account? <a href="/login">Login here</a>
+                Already have an account? <Link to="/login">Login here</Link>
               </p>
             )}
             {step === 2 && (
               <p className="auth-link" style={{ marginTop: '20px', textAlign: 'center' }}>
-                Already have an account? <a href="/login">Login here</a>
+                Already have an account? <Link to="/login">Login here</Link>
               </p>
             )}
           </div>
