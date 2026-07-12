@@ -82,6 +82,7 @@ main {
   max-width: 1440px;
   margin: 0 auto;
   padding: 40px 0;
+  animation: pageFadeIn 0.4s ease-out forwards;
 }
 
 main> :first-child {
@@ -710,4 +711,20 @@ main> :first-child {
 
 .map-route-active {
   animation: map-trail 1.5s linear infinite;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
