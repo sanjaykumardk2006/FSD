@@ -115,18 +115,24 @@ main> :first-child {
 .logo h1 {
   font-size: 24px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+}
+
+.freelancer-text {
   background: linear-gradient(to right, #000000, #555555);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.freelancer-text {
-  color: inherit;
-}
-
 .logo h1 .hub-text {
-  color: var(--accent-primary);
-  -webkit-text-fill-color: var(--accent-primary);
+  background-color: #000000;
+  color: #FFFFFF;
+  -webkit-text-fill-color: #FFFFFF;
+  padding: 0px 8px;
+  line-height: 1.2;
+  border-radius: 6px;
+  margin-left: 2px;
 }
 
 .nav {
