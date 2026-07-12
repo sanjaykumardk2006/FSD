@@ -112,9 +112,6 @@ export const Login = () => {
                 </button>
                 <div className="auth-form" style={{ position: 'relative' }}>
 
-                  {message && <div className="message success">{message}</div>}
-                  {error && <div className="message error">{error}</div>}
-
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
                       <label htmlFor="email">Email Address</label>
@@ -140,6 +137,8 @@ export const Login = () => {
                         required
                       />
                     </div>
+                    {message && <div className="message success">{message}</div>}
+                    {error && <div className="message error">{error}</div>}
                     <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px', marginTop: '10px' }}>
                       {loading ? 'Logging in...' : 'LOGIN'}
                     </button>

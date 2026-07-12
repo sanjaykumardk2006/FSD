@@ -118,9 +118,6 @@ export const Signup = () => {
                 </button>
                 <div className="auth-form" style={{ position: 'relative' }}>
 
-                  {message && <div className="message success">{message}</div>}
-                  {error && <div className="message error">{error}</div>}
-                  
                   <form onSubmit={handleSubmit}>
                       <>
                         <div style={{ marginBottom: '24px' }}>
@@ -269,6 +266,8 @@ export const Signup = () => {
                           </div>
                         </div>
                       </>
+                    {message && <div className="message success">{message}</div>}
+                    {error && <div className="message error">{error}</div>}
                     <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', padding: '12px', fontSize: '16px', marginTop: '10px' }}>
                       {loading ? 'Creating account...' : 'CREATE ACCOUNT'}
                     </button>
