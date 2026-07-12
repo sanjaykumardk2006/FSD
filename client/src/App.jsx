@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { PrivateRoute } from './utils/PrivateRoute';
+import { ScrollToTop } from './components/ScrollToTop';
 
 // Pages
 import { Home } from './pages/Home';
@@ -20,6 +21,7 @@ import './App.css';
 const App = () => {
   return (
     <Router>
+      <ScrollToTop />
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Home />} />
