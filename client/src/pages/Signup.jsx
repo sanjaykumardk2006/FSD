@@ -120,6 +120,18 @@ export const Signup = () => {
 
                   <form onSubmit={handleSubmit}>
                       <>
+                        <div className="form-group">
+                          <label htmlFor="username">Username</label>
+                          <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            placeholder="Username"
+                            required
+                          />
+                        </div>
                         <div style={{ marginBottom: '24px' }}>
                           <p style={{ fontSize: '18px', fontWeight: '500', marginBottom: '16px', color: 'var(--text-primary)' }}>You are</p>
                           <div style={{ display: 'flex', gap: '24px' }}>
