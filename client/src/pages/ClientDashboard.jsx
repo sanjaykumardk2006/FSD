@@ -101,7 +101,7 @@ export const ClientDashboard = () => {
       <main className="dashboard-container">
         <div className="dashboard-header">
           <div className="dashboard-title-section">
-            <h1>Client Dashboard</h1>
+            <h1>Customer Dashboard</h1>
             <span className="welcome-message">Welcome, {user?.username}!</span>
           </div>
           <div className="dashboard-actions">
@@ -111,14 +111,7 @@ export const ClientDashboard = () => {
           </div>
         </div>
 
-        <div className="dashboard-tabs">
-          <button
-            className={`tab-btn ${activeTab === 'jobs' ? 'active' : ''}`}
-            onClick={() => setActiveTab('jobs')}
-          >
-            My Jobs ({jobs.length})
-          </button>
-        </div>
+
 
         <div className="dashboard-content">
           {activeTab === 'jobs' && (
@@ -239,7 +232,6 @@ export const ClientDashboard = () => {
           )}
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
