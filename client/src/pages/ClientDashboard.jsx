@@ -126,76 +126,81 @@ export const ClientDashboard = () => {
               </div>
 
               {showJobForm && (
-                <form onSubmit={handlePostJob} className="job-form">
-                  <div className="form-group">
-                    <label htmlFor="title">Job Title</label>
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      value={formData.title}
-                      onChange={handleFormChange}
-                      required
-                    />
+                <div className="modal-overlay">
+                  <div className="modal">
+                    <h2>Post a New Job</h2>
+                    <form onSubmit={handlePostJob} className="job-form" style={{ boxShadow: 'none', padding: '0', border: 'none', marginBottom: '0' }}>
+                      <div className="form-group">
+                        <label htmlFor="title">Job Title</label>
+                        <input
+                          type="text"
+                          id="title"
+                          name="title"
+                          value={formData.title}
+                          onChange={handleFormChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                          id="description"
+                          name="description"
+                          value={formData.description}
+                          onChange={handleFormChange}
+                          rows="5"
+                          required
+                        ></textarea>
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="requiredSkills">Required Skills (comma-separated)</label>
+                        <input
+                          type="text"
+                          id="requiredSkills"
+                          value={formData.requiredSkills.join(', ')}
+                          onChange={handleSkillsChange}
+                          required
+                        />
+                      </div>
+                      <div className="form-row">
+                        <div className="form-group">
+                          <label htmlFor="budget">Budget ($)</label>
+                          <input
+                            type="number"
+                            id="budget"
+                            name="budget"
+                            value={formData.budget}
+                            onChange={handleFormChange}
+                            required
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label htmlFor="deadline">Deadline</label>
+                          <input
+                            type="date"
+                            id="deadline"
+                            name="deadline"
+                            value={formData.deadline}
+                            onChange={handleFormChange}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="modal-buttons">
+                        <button type="submit" className="btn btn-primary">
+                          Post Job
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={() => setShowJobForm(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <textarea
-                      id="description"
-                      name="description"
-                      value={formData.description}
-                      onChange={handleFormChange}
-                      rows="5"
-                      required
-                    ></textarea>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="requiredSkills">Required Skills (comma-separated)</label>
-                    <input
-                      type="text"
-                      id="requiredSkills"
-                      value={formData.requiredSkills.join(', ')}
-                      onChange={handleSkillsChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-row">
-                    <div className="form-group">
-                      <label htmlFor="budget">Budget ($)</label>
-                      <input
-                        type="number"
-                        id="budget"
-                        name="budget"
-                        value={formData.budget}
-                        onChange={handleFormChange}
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="deadline">Deadline</label>
-                      <input
-                        type="date"
-                        id="deadline"
-                        name="deadline"
-                        value={formData.deadline}
-                        onChange={handleFormChange}
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="form-buttons-group">
-                    <button type="submit" className="btn btn-primary">
-                      Post Job
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      onClick={() => setShowJobForm(!showJobForm)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
+                </div>
               )}
 
               <div className="jobs-list">
