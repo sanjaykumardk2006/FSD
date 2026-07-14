@@ -59,12 +59,12 @@ exports.signup = [
 ];
 
 exports.login = [
-  body('email').isEmail().withMessage('Valid email is required'),
+  body('email').trim().isEmail().withMessage('Valid email is required'),
   body('password').notEmpty().withMessage('Password is required'),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array()[0].msg, errors: errors.array() });
     }
 
     try {

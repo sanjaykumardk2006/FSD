@@ -332,32 +332,6 @@ main> :first-child {
   text-align: center;
 }
 
-/* Testimonial */
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.testimonial-card {
-  background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 32px;
-}
-
-.testimonial-text {
-  color: var(--text-secondary);
-  font-size: 15px;
-  margin-bottom: 24px;
-  font-style: italic;
-}
-
-.testimonial-author {
-  color: var(--text-primary);
-  font-weight: 500;
-  font-size: 14px;
-}
 
 /* Slogan CTA */
 .slogan-section {
@@ -381,32 +355,6 @@ main> :first-child {
 }
 
 /* Forms */
-.login-type-selector {
-  display: flex;
-  gap: 8px;
-  background-color: var(--bg-secondary);
-  padding: 6px;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-}
-
-.type-btn {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  border-radius: 8px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.type-btn.active {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
 
 .form-group {
   margin-bottom: 24px;
@@ -692,9 +640,6 @@ main> :first-child {
     width: 95%;
   }
 
-  .hide-on-mobile {
-    display: none !important;
-  }
 
   /* Header adjustments for mobile */
   .header-container {
@@ -787,43 +732,6 @@ main> :first-child {
   .testimonial-grid {
     grid-template-columns: 1fr !important;
   }
-}
-
-@keyframes gps-pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  }
-
-  70% {
-    box-shadow: 0 0 0 20px rgba(16, 185, 129, 0);
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-  }
-}
-
-.gps-pin {
-  width: 24px;
-  height: 24px;
-  background: #10B981;
-  border-radius: 50%;
-  border: 4px solid white;
-  animation: gps-pulse 2s infinite cubic-bezier(0.66, 0, 0, 1);
-}
-
-@keyframes map-trail {
-  from {
-    stroke-dashoffset: 40;
-  }
-
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-.map-route-active {
-  animation: map-trail 1.5s linear infinite;
 }
 
 @keyframes pageFadeIn {

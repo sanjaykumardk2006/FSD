@@ -17,7 +17,7 @@ export const Search = () => {
         const response = await apiClient.get('/jobs/all');
         // response.data contains { jobs: [...] }
         setJobs(response.data.jobs || []);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch jobs. Please try again later.');
       } finally {
         setLoading(false);

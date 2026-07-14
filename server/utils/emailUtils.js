@@ -44,7 +44,7 @@ const sendEmail = async (to, subject, text, html) => {
 
 
 
-    const response = await sgMail.send(msg);
+    await sgMail.send(msg);
     
 
     return true;
