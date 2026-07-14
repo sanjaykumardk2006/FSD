@@ -4,13 +4,13 @@ const { body, validationResult } = require('express-validator');
 
 exports.signup = [
   // username validation is moved inside the controller since it's auto-generated for Freelancers
-  body('email').isEmail().withMessage('Valid email is required'),
+  body('email').trim().isEmail().withMessage('Valid email is required'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   body('role').isIn(['Client', 'Freelancer']).withMessage('Role must be Client or Freelancer'),
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ message: errors.array()[0].msg, errors: errors.array() });
     }
 
     try {
