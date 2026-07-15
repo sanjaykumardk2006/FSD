@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { motion } from 'framer-motion';
 
 export const JobProposals = () => {
   const { jobId } = useParams();
@@ -76,56 +77,62 @@ export const JobProposals = () => {
         {proposals.length === 0 ? (
           <p>No proposals yet.</p>
         ) : (
-          proposals.map((proposal) => (
-            <div key={proposal._id} className="proposal-card">
-              <h3>{proposal.freelancerId?.username}</h3>
-              <p>Email: {proposal.freelancerId?.email}</p>
-              <p>Skills: {proposal.skills.join(', ')}</p>
-              <p>Experience: {proposal.experience}</p>
-              <p>Proposed Cost: ${proposal.proposedCost}</p>
-              <p>Status: {proposal.status}</p>
+          <motion.div 
+            initial="hidden"
+            animate="visible"
+            variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+          >
+            {proposals.map((proposal) => (
+              <motion.div key={proposal._id} className="proposal-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}>
+                <h3>{proposal.freelancerId?.username}</h3>
+                <p>Email: {proposal.freelancerId?.email}</p>
+                <p>Skills: {proposal.skills.join(', ')}</p>
+                <p>Experience: {proposal.experience}</p>
+                <p>Proposed Cost: ${proposal.proposedCost}</p>
+                <p>Status: {proposal.status}</p>
 
-              {proposal.status === 'Pending' && (
-                <div className="proposal-actions">
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleAcceptProposal(proposal._id)}
-                  >
-                    Accept
-                  </button>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => setShowRejectForm(proposal._id)}
-                  >
-                    Reject
-                  </button>
-                </div>
-              )}
+                {proposal.status === 'Pending' && (
+                  <div className="proposal-actions">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handleAcceptProposal(proposal._id)}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => setShowRejectForm(proposal._id)}
+                    >
+                      Reject
+                    </button>
+                  </div>
+                )}
 
-              {showRejectForm === proposal._id && (
-                <div className="reject-form">
-                  <textarea
-                    value={rejectReason}
-                    onChange={(e) => setRejectReason(e.target.value)}
-                    placeholder="Reason for rejection..."
-                    rows="3"
-                  ></textarea>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleRejectProposal(proposal._id)}
-                  >
-                    Send Rejection
-                  </button>
-                  <button
-                    className="btn btn-secondary"
-                    onClick={() => setShowRejectForm(null)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              )}
-            </div>
-          ))
+                {showRejectForm === proposal._id && (
+                  <div className="reject-form">
+                    <textarea
+                      value={rejectReason}
+                      onChange={(e) => setRejectReason(e.target.value)}
+                      placeholder="Reason for rejection..."
+                      rows="3"
+                    ></textarea>
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handleRejectProposal(proposal._id)}
+                    >
+                      Send Rejection
+                    </button>
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => setShowRejectForm(null)}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
         )}
       </main>
       <Footer />

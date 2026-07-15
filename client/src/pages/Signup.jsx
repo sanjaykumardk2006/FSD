@@ -165,7 +165,7 @@ export const Signup = () => {
                             />
                           </div>
                         ) : (
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '24px' }}>
                             <div className="form-group">
                               <label htmlFor="firstName">First Name</label>
                               <input
@@ -256,7 +256,7 @@ export const Signup = () => {
                             />
                           </div>
                         )}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 250px), 1fr))', gap: '24px' }}>
                           <div className="form-group">
                             <label htmlFor="password">Password</label>
                             <input

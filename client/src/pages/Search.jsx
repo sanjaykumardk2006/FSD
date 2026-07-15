@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import apiClient from '../utils/apiClient';
+import { motion } from 'framer-motion';
 
 export const Search = () => {
   const navigate = useNavigate();
@@ -58,9 +59,14 @@ export const Search = () => {
           ) : filteredJobs.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>No projects found matching your search.</div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '24px' }}>
+            <motion.div 
+              style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '24px' }}
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+            >
               {filteredJobs.map(job => (
-                <div key={job._id} className="card" style={{ display: 'flex', flexDirection: 'column', padding: '24px', transition: 'all 0.2s ease', cursor: 'pointer' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-4px)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}>
+                <motion.div key={job._id} className="job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }} style={{ display: 'flex', flexDirection: 'column', padding: '24px', cursor: 'pointer', margin: 0 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
                     <h3 style={{ fontSize: '20px', margin: '0', color: 'var(--text-primary)', flex: 1 }}>{job.title}</h3>
                   </div>
@@ -75,9 +81,9 @@ export const Search = () => {
                   <button className="btn btn-primary" style={{ width: '100%', padding: '12px', borderRadius: '8px', fontSize: '15px' }} onClick={() => navigate('/login')}>
                     View Details
                   </button>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
         </section>
       </main>

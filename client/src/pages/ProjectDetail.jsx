@@ -4,6 +4,7 @@ import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { motion } from 'framer-motion';
 
 export const ProjectDetail = () => {
   const { projectId } = useParams();
@@ -101,7 +102,12 @@ export const ProjectDetail = () => {
           Back
         </button>
 
-        <div className="project-details">
+        <motion.div 
+          className="project-details"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           {notification.text && (
             <div className={`message ${notification.type}`} style={{ marginBottom: '20px' }}>
               {notification.text}
@@ -177,9 +183,14 @@ export const ProjectDetail = () => {
               </div>
             </div>
           )}
-        </div>
+        </motion.div>
 
-        <div className="chat-section">
+        <motion.div 
+          className="chat-section"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <h3>Messages</h3>
           <div className="messages-container">
             {messages.map((msg) => (
@@ -206,7 +217,7 @@ export const ProjectDetail = () => {
               Send
             </button>
           </form>
-        </div>
+        </motion.div>
       </main>
       <Footer />
     </div>

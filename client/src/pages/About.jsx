@@ -54,7 +54,7 @@ export const About = () => {
         }
 
         .bento-card:hover {
-          transform: translateY(-6px);
+          transform: scale(1.02);
           box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
           border-color: #111111;
         }
@@ -137,7 +137,7 @@ export const About = () => {
         }
 
         .premium-panel:hover {
-          transform: translateY(-8px);
+          transform: scale(1.02);
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
           border-color: #111111;
         }
@@ -154,7 +154,7 @@ export const About = () => {
         }
 
         .feature-card:hover {
-          transform: translateY(-2px);
+          transform: scale(1.02);
           box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
           border-color: #111111;
         }
@@ -191,7 +191,7 @@ export const About = () => {
         }
 
         .premium-card:hover {
-          transform: translateY(-4px);
+          transform: scale(1.02);
           border-color: var(--border-hover);
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
@@ -422,7 +422,7 @@ export const About = () => {
         }
 
         .interactive-card:hover {
-          transform: translateY(-4px);
+          transform: scale(1.02);
           border-color: var(--border-hover);
           box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
           background-color: var(--bg-secondary);
@@ -492,7 +492,13 @@ export const About = () => {
 
       <main className="about-main">
         {/* Mission & Vision */}
-        <section style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '32px', marginBottom: '160px' }}>
+        <motion.section 
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '32px', marginBottom: '160px' }}
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div className="premium-card" style={{ borderColor: '#000000' }}>
             <h2 style={{ fontSize: '32px', marginBottom: '24px', fontWeight: '600' }}>Our Mission</h2>
             <p className="text-content" style={{ marginBottom: 0 }}>
@@ -505,10 +511,16 @@ export const About = () => {
               To be the world's leading platform connecting talented professionals with meaningful projects. We envision a world where anyone, anywhere, can build a successful career on their own terms, and companies can scale infinitely.
             </p>
           </div>
-        </section>
+        </motion.section>
 
         {/* Stats */}
-        <section className="stat-single-card">
+        <motion.section 
+          className="stat-single-card"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 }}
+        >
           <div>
             <h3>2026</h3>
             <p>Founded</p>
@@ -525,10 +537,16 @@ export const About = () => {
             <h3><AnimatedNumber from={0} to={1} prefix="$" suffix="B+" duration={1} /></h3>
             <p>Earnings</p>
           </div>
-        </section>
+        </motion.section>
 
         {/* About Project */}
-        <section style={{ maxWidth: '1200px', margin: '0 auto 160px', textAlign: 'center' }}>
+        <motion.section 
+          style={{ maxWidth: '1200px', margin: '0 auto 160px', textAlign: 'center' }}
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+        >
           <h2 className="section-header" style={{ textAlign: 'center' }}>About Freelancer Hub</h2>
           <p className="text-content" style={{ textAlign: 'center' }}>
             Freelancer Hub is a state-of-the-art marketplace designed to bridge the gap between world-class talent and ambitious businesses. We provide a seamless, secure, and dynamic environment where professionals can showcase their skills, and clients can easily discover, hire, and collaborate with the perfect match for their projects. By combining advanced AI-driven matching algorithms with an intuitive project management suite, we eliminate the friction traditionally associated with remote hiring. At our core, we believe that talent is universally distributed, but opportunity is not, and we exist to break down those geographical barriers.
@@ -536,7 +554,7 @@ export const About = () => {
           <p className="text-content" style={{ textAlign: 'center' }}>
             We prioritize security, trust, and transparency in every interaction. From our robust escrow payment system to our dedicated 24/7 support team, we are committed to providing an ecosystem where your ideas are protected and your investments yield maximum value. More than just a platform, Freelancer Hub is a thriving community where lifelong partnerships are forged. Whether you are an independent expert looking to scale your career, or a fast-growing startup seeking specialized skills, we provide the foundation for mutual success, continuous growth, and unparalleled digital innovation.
           </p>
-        </section>
+        </motion.section>
 
         {/* How It Works */}
         <section style={{ maxWidth: '1400px', margin: '0 auto 160px' }}>
@@ -599,7 +617,13 @@ export const About = () => {
         </section>
 
         {/* Who Is It For */}
-        <section style={{ maxWidth: '1440px', margin: '0 auto 160px' }}>
+        <motion.section 
+          style={{ maxWidth: '1440px', margin: '0 auto 160px' }}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '40px' }}>Who Is It For?</h2>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '80px', flexWrap: 'wrap', padding: '0 24px' }}>
@@ -639,7 +663,7 @@ export const About = () => {
               </p>
               
               <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Freelancer working remotely" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px' }} />
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Freelancer working remotely" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px', transition: 'transform 0.4s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
               </div>
 
               <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
@@ -701,7 +725,7 @@ export const About = () => {
               </p>
               
               <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" alt="Corporate client meeting" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px' }} />
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" alt="Corporate client meeting" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px', transition: 'transform 0.4s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
               </div>
 
               <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
@@ -746,9 +770,15 @@ export const About = () => {
               </div>
             </motion.div>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="core-values-section">
+        <motion.section 
+          className="core-values-section"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="core-values-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Core Values</h2>
           <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 60px' }}>
             The guiding principles that shape our culture, drive our decisions, and define how we serve our community.
@@ -786,10 +816,15 @@ export const About = () => {
               <p className="core-value-desc">Pursuing spiritual maturity and personal development through discipleship.</p>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Global Offices */}
-        <section>
+        <motion.section
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="section-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Offices</h2>
           <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 40px' }}>
             We operate globally with a remote-first culture, anchored by strategic hubs in major tech capitals around the world.
@@ -825,10 +860,16 @@ export const About = () => {
               </div>
             </div>
           </div>
-        </section>
+        </motion.section>
 
         {/* CTA */}
-        <section className="cta-section">
+        <motion.section 
+          className="cta-section"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 style={{ fontSize: '48px', fontWeight: '600', marginBottom: '24px', letterSpacing: '-0.02em' }}>Join Our Team</h2>
           <p className="text-content" style={{ maxWidth: '800px', margin: '0 auto 40px' }}>
             We are always looking for talented individuals to join our mission. Check out our open roles.
@@ -836,7 +877,7 @@ export const About = () => {
           <button className="btn-premium" onClick={() => navigate('/login')}>
             Join Our Team
           </button>
-        </section>
+        </motion.section>
       </main>
       
       <Footer />
