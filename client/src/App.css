@@ -211,6 +211,19 @@ main> :first-child {
 }
 
 /* Hero Section Modernized */
+@keyframes heroEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.97) translateY(20px);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0px);
+  }
+}
+
 .hero {
   background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.05) 0%, transparent 50%);
   padding: 80px 20px;
@@ -219,6 +232,7 @@ main> :first-child {
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: heroEntrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 .hero-content {
