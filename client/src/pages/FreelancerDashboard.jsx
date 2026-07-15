@@ -199,87 +199,88 @@ export const FreelancerDashboard = () => {
           )}
         </div>
 
-        {/* Proposal Form Modal */}
-        {showProposalForm && selectedJob && (
-          <div className="modal-overlay">
-            <div className="modal">
-              <h2>Submit Proposal for: {selectedJob.title}</h2>
-              <form onSubmit={handleSubmitProposal} className="proposal-form">
+
+      </main>
+      {/* Proposal Form Modal */}
+      {showProposalForm && selectedJob && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>Submit Proposal for: {selectedJob.title}</h2>
+            <form onSubmit={handleSubmitProposal} className="proposal-form">
+              <div className="form-group">
+                <label htmlFor="skills">Your Skills (comma-separated)</label>
+                <input
+                  type="text"
+                  id="skills"
+                  value={proposalData.skills.join(', ')}
+                  onChange={handleSkillsChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="experience">Your Experience</label>
+                <textarea
+                  id="experience"
+                  name="experience"
+                  value={proposalData.experience}
+                  onChange={handleProposalChange}
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="skills">Your Skills (comma-separated)</label>
+                  <label htmlFor="proposedCost">Proposed Cost ($)</label>
                   <input
-                    type="text"
-                    id="skills"
-                    value={proposalData.skills.join(', ')}
-                    onChange={handleSkillsChange}
+                    type="number"
+                    id="proposedCost"
+                    name="proposedCost"
+                    value={proposalData.proposedCost}
+                    onChange={handleProposalChange}
                     required
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="experience">Your Experience</label>
-                  <textarea
-                    id="experience"
-                    name="experience"
-                    value={proposalData.experience}
+                  <label htmlFor="proposedDeadline">Delivery Date</label>
+                  <input
+                    type="date"
+                    id="proposedDeadline"
+                    name="proposedDeadline"
+                    value={proposalData.proposedDeadline}
                     onChange={handleProposalChange}
-                    rows="3"
                     required
-                  ></textarea>
+                  />
                 </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="proposedCost">Proposed Cost ($)</label>
-                    <input
-                      type="number"
-                      id="proposedCost"
-                      name="proposedCost"
-                      value={proposalData.proposedCost}
-                      onChange={handleProposalChange}
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="proposedDeadline">Delivery Date</label>
-                    <input
-                      type="date"
-                      id="proposedDeadline"
-                      name="proposedDeadline"
-                      value={proposalData.proposedDeadline}
-                      onChange={handleProposalChange}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="coverLetter">Cover Letter</label>
-                  <textarea
-                    id="coverLetter"
-                    name="coverLetter"
-                    value={proposalData.coverLetter}
-                    onChange={handleProposalChange}
-                    rows="4"
-                  ></textarea>
-                </div>
-                <div className="modal-buttons">
-                  <button type="submit" className="btn btn-primary">
-                    Submit Proposal
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={() => {
-                      setShowProposalForm(false);
-                      setSelectedJob(null);
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="coverLetter">Cover Letter</label>
+                <textarea
+                  id="coverLetter"
+                  name="coverLetter"
+                  value={proposalData.coverLetter}
+                  onChange={handleProposalChange}
+                  rows="4"
+                ></textarea>
+              </div>
+              <div className="modal-buttons">
+                <button type="submit" className="btn btn-primary">
+                  Submit Proposal
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    setShowProposalForm(false);
+                    setSelectedJob(null);
+                  }}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
-        )}
-      </main>
+        </div>
+      )}
       <Footer />
     </div>
   );
