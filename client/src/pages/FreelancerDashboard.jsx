@@ -4,6 +4,7 @@ import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { motion } from 'framer-motion';
 
 export const FreelancerDashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -145,12 +146,17 @@ export const FreelancerDashboard = () => {
             </div>
           )}
           {activeTab === 'jobs' && (
-            <div className="jobs-section">
+            <motion.div 
+              className="jobs-section"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+            >
               {jobs.length === 0 ? (
                 <p>No available jobs at this moment.</p>
               ) : (
                 jobs.map((job) => (
-                  <div key={job._id} className="job-card">
+                  <motion.div key={job._id} className="job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}>
                     <h3>{job.title}</h3>
                     <p>{job.description}</p>
                     <p className="job-meta">
@@ -165,19 +171,24 @@ export const FreelancerDashboard = () => {
                     >
                       Submit Proposal
                     </button>
-                  </div>
+                  </motion.div>
                 ))
               )}
-            </div>
+            </motion.div>
           )}
 
           {activeTab === 'proposals' && (
-            <div className="proposals-section">
+            <motion.div 
+              className="proposals-section"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+            >
               {proposals.length === 0 ? (
                 <p>You haven't submitted any proposals yet.</p>
               ) : (
                 proposals.map((proposal) => (
-                  <div key={proposal._id} className="proposal-card">
+                  <motion.div key={proposal._id} className="proposal-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}>
                     <h3>Job: {proposal.jobId?.title}</h3>
                     <p>Status: {proposal.status}</p>
                     <p>Proposed Cost: ${proposal.proposedCost}</p>
@@ -192,10 +203,10 @@ export const FreelancerDashboard = () => {
                         Delete
                       </button>
                     </div>
-                  </div>
+                  </motion.div>
                 ))
               )}
-            </div>
+            </motion.div>
           )}
         </div>
 

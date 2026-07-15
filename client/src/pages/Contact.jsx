@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import apiClient from '../utils/apiClient';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { motion } from 'framer-motion';
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -54,7 +55,13 @@ export const Contact = () => {
 
         <section className="content-section">
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', alignItems: 'flex-start', marginBottom: '80px', padding: '0 24px' }}>
-            <div style={{ textAlign: 'left', flex: '1 1 350px', maxWidth: '450px' }}>
+            <motion.div 
+              style={{ textAlign: 'left', flex: '1 1 350px', maxWidth: '450px' }}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
               <h2 style={{ marginBottom: '10px' }}>Contact Information</h2>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Find our physical office and mailing details here.</p>
               <div className="cards-grid" style={{ gridTemplateColumns: '1fr' }}>
@@ -64,9 +71,15 @@ export const Contact = () => {
                   <p>Kongu Engineering College<br />Perundurai<br />Erode - 638060</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div style={{ textAlign: 'left', flex: '1 1 400px', maxWidth: '500px' }}>
+            <motion.div 
+              style={{ textAlign: 'left', flex: '1 1 400px', maxWidth: '500px' }}
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+            >
               <h2 style={{ marginBottom: '10px' }}>Send us a Message</h2>
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Drop us a line and we will get back to you within 24 hours.</p>
               <div className="card" style={{ maxWidth: '500px', width: '100%', margin: '0', padding: '40px', boxSizing: 'border-box', textAlign: 'left' }}>
@@ -146,7 +159,7 @@ export const Contact = () => {
                 </button>
               </form>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 

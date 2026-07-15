@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { motion } from 'framer-motion';
 import '../App.css';
 
 const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
@@ -185,7 +186,16 @@ export const Home = () => {
         <section className="content-section" style={{ marginBottom: '120px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Explore Popular Categories</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Find exactly what you need from our massive talent pool</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px' }}>
+          <motion.div 
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px' }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{
+              visible: { transition: { staggerChildren: 0.1 } },
+              hidden: {}
+            }}
+          >
             {[
               { image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80', title: 'Web Development', desc: 'Build scalable, responsive web applications using the latest technologies.' },
               { image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&q=80', title: 'Graphic Design', desc: 'Elevate your brand with stunning visual designs and intuitive UI/UX.' },
@@ -200,15 +210,15 @@ export const Home = () => {
               { image: '/cat_legal.png', title: 'Legal Consulting', desc: 'Protect your business with expert advice from experienced legal professionals.' },
               { image: '/cat_audio.png', title: 'Audio & Music', desc: 'Enhance your projects with professional voiceovers, mixing, and sound design.' }
             ].slice(0, showAllCategories ? 12 : 4).map((cat, i) => (
-              <div className="card" key={i} style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <motion.div className="card" key={i} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }} style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
                 <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '260px', objectFit: 'cover' }} className="zoom-in-image" />
                 <div style={{ padding: '24px' }}>
                   <h3 style={{ fontSize: '20px', marginBottom: '12px' }}>{cat.title}</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6', margin: '0' }}>{cat.desc}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
           <div style={{ marginTop: '60px', textAlign: 'center' }}>
             <button className="btn btn-secondary" onClick={() => setShowAllCategories(!showAllCategories)} style={{ padding: '16px 40px', fontSize: '16px', borderRadius: '50px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
               {showAllCategories ? 'Explore Less ↑' : 'Explore More ↓'}
@@ -222,47 +232,65 @@ export const Home = () => {
         <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 120px', padding: '60px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Featured Jobs</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>High-quality projects looking for experts right now</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+          <motion.div 
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{
+              visible: { transition: { staggerChildren: 0.15 } },
+              hidden: {}
+            }}
+          >
             {[
               { title: 'E-Commerce Redesign', desc: 'Seeking a senior React developer to completely overhaul our frontend architecture.', budget: '$4,500' },
               { title: 'Fintech Mobile Application', desc: 'Need a React Native expert to build a secure cross-platform crypto wallet.', budget: '$8,200' },
               { title: 'Corporate Rebranding', desc: 'Looking for a senior designer to create a new brand identity and marketing assets.', budget: '$2,800' }
             ].map((job, i) => (
-              <div className="card" key={i} style={{ padding: '30px', display: 'flex', flexDirection: 'column' }}>
+              <motion.div className="card" key={i} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } } }} style={{ padding: '30px', display: 'flex', flexDirection: 'column' }}>
                 <h3 style={{ fontSize: '20px', marginBottom: '10px' }}>{job.title}</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '0', lineHeight: '1.5', flex: 1 }}>{job.desc}</p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </section>
 
         {/* 7. Why Choose Us */}
         <section className="content-section" style={{ marginBottom: '120px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '10px', textAlign: 'center' }}>Built for performance and reliability</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Why top enterprises choose Freelancer Hub for their critical projects</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
-            <div className="card">
+          <motion.div 
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={{
+              visible: { transition: { staggerChildren: 0.2 } },
+              hidden: {}
+            }}
+          >
+            <motion.div className="card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}>
               <div style={{ width: '48px', height: '48px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
               </div>
               <h3 style={{ marginBottom: '10px' }}>Secure Escrow</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>We guarantee complete peace of mind for both parties. Your funds are held safely and securely until the work is fully reviewed and explicitly approved by you.</p>
-            </div>
-            <div className="card">
+            </motion.div>
+            <motion.div className="card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}>
               <div style={{ width: '48px', height: '48px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
               </div>
               <h3 style={{ marginBottom: '10px' }}>Real-time Sync</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>Communicate instantly with your team. Zero delays and perfect synchronization across all your devices ensures your project moves forward seamlessly without blockers.</p>
-            </div>
-            <div className="card">
+            </motion.div>
+            <motion.div className="card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}>
               <div style={{ width: '48px', height: '48px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
               </div>
               <h3 style={{ marginBottom: '10px' }}>Verified Talent</h3>
               <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>Every freelancer passes a strict vetting process to ensure top-tier quality. We carefully review their portfolios and past work to guarantee excellence on every project.</p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
 

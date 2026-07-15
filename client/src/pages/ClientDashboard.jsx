@@ -4,6 +4,7 @@ import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { motion } from 'framer-motion';
 
 export const ClientDashboard = () => {
   const { user, logout } = useContext(AuthContext);
@@ -125,12 +126,17 @@ export const ClientDashboard = () => {
                 </button>
               </div>
 
-              <div className="jobs-list">
+              <motion.div 
+                className="jobs-list"
+                initial="hidden"
+                animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+              >
                 {jobs.length === 0 ? (
                   <p>No jobs posted yet. Create one to get started!</p>
                 ) : (
                   jobs.map((job) => (
-                    <div key={job._id} className="job-card">
+                    <motion.div key={job._id} className="job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}>
                       <h3>{job.title}</h3>
                       <p>{job.description}</p>
                       <p className="job-meta">
@@ -151,10 +157,10 @@ export const ClientDashboard = () => {
                           Delete
                         </button>
                       </div>
-                    </div>
+                    </motion.div>
                   ))
                 )}
-              </div>
+              </motion.div>
             </div>
           )}
         </div>

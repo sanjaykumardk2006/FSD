@@ -4,6 +4,7 @@ import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
+import { motion } from 'framer-motion';
 
 export const Login = () => {
   const [step, setStep] = useState(1);
@@ -59,24 +60,35 @@ export const Login = () => {
   return (
     <div className="page">
       <Header />
-      <main style={{ minHeight: 'calc(100vh - 150px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 0' }}>
+      <main style={{ minHeight: 'calc(100vh - 150px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 0', background: 'radial-gradient(circle at top right, rgba(59, 130, 246, 0.08) 0%, transparent 50%), radial-gradient(circle at bottom left, rgba(0, 0, 0, 0.03) 0%, transparent 50%)' }}>
         <section className="content-section" style={{ padding: '0 24px', width: '100%', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <motion.div 
+            style={{ textAlign: 'center', marginBottom: '40px' }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 style={{ fontSize: '36px', fontWeight: '700', marginBottom: '12px', color: 'var(--text-primary)' }}>
               {step === 1 ? 'Welcome Back' : `Log in as a ${loginType === 'Client' ? 'Customer' : loginType}`}
             </h2>
             <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>
               {step === 1 ? 'Choose how you want to log in' : 'Enter your credentials to access your account'}
             </p>
-          </div>
+          </motion.div>
 
           <div style={{ maxWidth: step === 1 ? '700px' : '500px', margin: '0 auto' }}>
             {step === 1 ? (
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-                <div 
+              <motion.div 
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}
+                initial="hidden"
+                animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.15 } }, hidden: {} }}
+              >
+                <motion.div 
+                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
                   onClick={() => handleRoleSelection('Client')}
-                  style={{ padding: '40px 30px', border: '2px solid var(--border-color)', borderRadius: '24px', cursor: 'pointer', textAlign: 'center', transition: 'all 0.3s ease', background: 'var(--bg-secondary)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--primary-color)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.06)'; }}
+                  style={{ padding: '40px 30px', border: '2px solid var(--border-color)', borderRadius: '24px', cursor: 'pointer', textAlign: 'center', transition: 'all 0.3s ease', background: 'var(--bg-card)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent-primary)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.08)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                 >
                   <div style={{ width: '64px', height: '64px', background: 'rgba(0,0,0,0.05)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
@@ -84,12 +96,13 @@ export const Login = () => {
                   </div>
                   <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>Login as a Customer</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6' }}>Log in to hire talent and manage projects.</p>
-                </div>
+                </motion.div>
 
-                <div 
+                <motion.div 
+                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
                   onClick={() => handleRoleSelection('Freelancer')}
-                  style={{ padding: '40px 30px', border: '2px solid var(--border-color)', borderRadius: '24px', cursor: 'pointer', textAlign: 'center', transition: 'all 0.3s ease', background: 'var(--bg-secondary)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
-                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--primary-color)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 24px rgba(0,0,0,0.06)'; }}
+                  style={{ padding: '40px 30px', border: '2px solid var(--border-color)', borderRadius: '24px', cursor: 'pointer', textAlign: 'center', transition: 'all 0.3s ease', background: 'var(--bg-card)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--accent-primary)'; e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.08)'; }}
                   onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
                 >
                   <div style={{ width: '64px', height: '64px', background: 'rgba(0,0,0,0.05)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
@@ -97,10 +110,14 @@ export const Login = () => {
                   </div>
                   <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>Login as a Freelancer</h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6' }}>Log in to find work and manage earnings.</p>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             ) : (
-              <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4 }}
+              >
                 <button 
                   onClick={() => setStep(1)} 
                   style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '8px 12px', marginBottom: '16px', borderRadius: '8px', transition: 'all 0.2s ease', marginLeft: '0', fontSize: '15px', fontWeight: '500' }}
@@ -144,7 +161,7 @@ export const Login = () => {
                     </button>
                   </form>
                 </div>
-              </div>
+              </motion.div>
             )}
 
             {step === 1 && (
