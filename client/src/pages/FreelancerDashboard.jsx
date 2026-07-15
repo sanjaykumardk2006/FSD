@@ -280,6 +280,7 @@ export const FreelancerDashboard = () => {
           </div>
         )}
       </main>
+      <Footer />
     </div>
   );
 };
