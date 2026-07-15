@@ -646,32 +646,41 @@ export const About = () => {
                 <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   We believe that talent should not be limited by geography. Our platform empowers independent professionals to build sustainable, scalable careers:
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
-                  <div className="feature-card">
+                <motion.div 
+                  style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  variants={{
+                    visible: { transition: { staggerChildren: 0.1 } },
+                    hidden: {}
+                  }}
+                >
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Utilize sophisticated platform tools to build a professional portfolio, gather client reviews, and establish a stellar reputation.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Maintain absolute flexibility to choose your projects, negotiate your timelines, and set your own hourly or fixed rates.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</span>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
             </motion.div>
 
@@ -699,32 +708,41 @@ export const About = () => {
                 <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   Finding the right talent quickly can make or break a project. Freelancer Hub provides businesses with the agility to scale their workforce on demand:
                 </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
-                  <div className="feature-card">
+                <motion.div 
+                  style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  variants={{
+                    visible: { transition: { staggerChildren: 0.1 } },
+                    hidden: {}
+                  }}
+                >
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Experience a streamlined, AI-driven hiring process that drastically reduces time-to-hire and administrative overhead.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Leverage scalable workforce solutions, allowing you to hire a single expert or assemble an entire remote team in days.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Monitor project progress transparently with built-in time tracking, daily work diaries, and integrated communication tools.</span>
-                  </div>
-                  <div className="feature-card">
+                  </motion.div>
+                  <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
                     <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Rest easy with enterprise-grade security and compliance tools designed specifically to protect your intellectual property.</span>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
