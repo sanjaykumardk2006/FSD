@@ -270,7 +270,7 @@ main> :first-child {
   background-color: #FFFFFF;
   color: #000000;
   border: 1px solid #FFFFFF;
-  border-radius: 50px;
+  border-radius: 24px;
   font-weight: 600;
   padding: 14px 32px !important;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
@@ -287,7 +287,7 @@ main> :first-child {
   background-color: #000000;
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50px;
+  border-radius: 24px;
   font-weight: 600;
   padding: 14px 32px !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
