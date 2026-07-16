@@ -302,8 +302,9 @@ export const Home = () => {
         <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1440px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '48px', marginBottom: '30px' }}>Ready to Scale Your Business?</h2>
           <p style={{ maxWidth: '800px', margin: '0 auto 40px', fontSize: '20px' }}>Join thousands of modern teams building the future with our premium talent network. No credit card required to start.</p>
-          <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '16px 32px', fontSize: '16px', borderRadius: '50px' }}>
+          <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '16px 32px', fontSize: '16px', borderRadius: '50px', gap: '8px' }}>
             Get Started Now
+            <svg className="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>
         </section>
       </main>
