@@ -547,6 +547,10 @@ main> :first-child {
   transition: all 0.2s ease;
 }
 
+.social-links a::after {
+  display: none;
+}
+
 .social-links a:hover {
   background: #000000;
   color: white;
