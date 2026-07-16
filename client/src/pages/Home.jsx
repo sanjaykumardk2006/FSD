@@ -88,10 +88,10 @@ export const Home = () => {
           </p>
           <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'center', marginTop: '32px' }}>
             <button className="btn btn-primary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
-              Hire Talent
+              Hire Talent →
             </button>
             <button className="btn btn-secondary" onClick={() => navigate('/signup')} style={{ padding: '14px 28px', fontSize: '16px' }}>
-              Find Work
+              Find Work →
             </button>
           </div>
         </div>

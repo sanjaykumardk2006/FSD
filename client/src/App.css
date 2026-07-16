@@ -269,7 +269,10 @@ main> :first-child {
 .hero-buttons .btn-primary {
   background-color: #FFFFFF;
   color: #000000;
-  border: 2px solid #FFFFFF;
+  border: 1px solid #FFFFFF;
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 14px 32px !important;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
@@ -281,19 +284,21 @@ main> :first-child {
 }
 
 .hero-buttons .btn-secondary {
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background-color: #000000;
   color: #FFFFFF;
-  border: 2px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  font-weight: 600;
+  padding: 14px 32px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .hero-buttons .btn-secondary:hover {
-  background-color: #FFFFFF;
-  color: #000000;
-  border-color: #FFFFFF;
+  background-color: #222222;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.4);
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 /* Cards Modernized */
