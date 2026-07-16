@@ -266,6 +266,36 @@ main> :first-child {
   justify-content: center;
 }
 
+.hero-buttons .btn-primary {
+  background-color: #FFFFFF;
+  color: #000000;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+}
+
+.hero-buttons .btn-primary:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+}
+
+.hero-buttons .btn-secondary {
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #FFFFFF;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+
+.hero-buttons .btn-secondary:hover {
+  background-color: #FFFFFF;
+  color: #000000;
+  border-color: #FFFFFF;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+}
+
 /* Cards Modernized */
 .card {
   background-color: var(--bg-card);
