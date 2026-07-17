@@ -188,16 +188,7 @@ export const Home = () => {
         <section className="content-section" style={{ marginBottom: '120px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '36px', marginBottom: '20px', textAlign: 'center' }}>Explore Popular Categories</h2>
           <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '50px', fontSize: '18px' }}>Find exactly what you need from our massive talent pool</p>
-          <motion.div 
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px' }}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-50px" }}
-            variants={{
-              visible: { transition: { staggerChildren: 0.1 } },
-              hidden: {}
-            }}
-          >
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '64px' }}>
             {[
               { image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80', title: 'Web Development', desc: 'Build scalable, responsive web applications using the latest technologies.' },
               { image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=400&q=80', title: 'Graphic Design', desc: 'Elevate your brand with stunning visual designs and intuitive UI/UX.' },
@@ -212,7 +203,15 @@ export const Home = () => {
               { image: '/cat_legal.png', title: 'Legal Consulting', desc: 'Protect your business with expert advice from experienced legal professionals.' },
               { image: '/cat_audio.png', title: 'Audio & Music', desc: 'Enhance your projects with professional voiceovers, mixing, and sound design.' }
             ].slice(0, showAllCategories ? 12 : 4).map((cat, i) => (
-              <motion.div className="card" key={i} variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }} style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+              <motion.div 
+                className="card" 
+                key={cat.title} 
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.6, delay: (i % 4) * 0.1 }}
+                style={{ padding: '0', textAlign: 'left', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+              >
                 <img src={cat.image} alt={cat.title} style={{ width: '100%', height: '260px', objectFit: 'cover' }} className="zoom-in-image" />
                 <div style={{ padding: '24px' }}>
                   <h3 style={{ fontSize: '20px', marginBottom: '12px' }}>{cat.title}</h3>
@@ -220,7 +219,7 @@ export const Home = () => {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
           <div style={{ marginTop: '60px', textAlign: 'center' }}>
             <button className="btn btn-secondary" onClick={() => setShowAllCategories(!showAllCategories)} style={{ padding: '16px 40px', fontSize: '16px', borderRadius: '50px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
               {showAllCategories ? 'Explore Less ↑' : 'Explore More ↓'}
