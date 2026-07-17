@@ -166,12 +166,12 @@ export const Login = () => {
 
             {step === 1 && (
               <p className="auth-link" style={{ marginTop: '40px', textAlign: 'center' }}>
-                Don't have an account? <Link to="/signup">Create one here</Link>
+                New to Freelancer Hub? <Link to="/signup">Sign up now</Link>
               </p>
             )}
             {step === 2 && (
               <p className="auth-link" style={{ marginTop: '20px', textAlign: 'center' }}>
-                Don't have an account? <Link to="/signup">Create one here</Link>
+                New to Freelancer Hub? <Link to="/signup">Sign up now</Link>
               </p>
             )}
           </div>

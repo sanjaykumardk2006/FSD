@@ -471,6 +471,22 @@ main> :first-child {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
 }
 
+.auth-link {
+  color: var(--text-secondary);
+}
+
+.auth-link a {
+  color: #6366f1; /* Premium Indigo */
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.auth-link a:hover {
+  color: #4f46e5; /* Darker Indigo on hover */
+  text-decoration: underline;
+}
+
 /* Footer */
 .footer {
   border-top: 1px solid var(--border-color);
