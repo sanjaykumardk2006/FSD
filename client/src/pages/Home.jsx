@@ -7,12 +7,13 @@ import '../App.css';
 
 const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
   const countRef = useRef(null);
-  const [displayValue, setDisplayValue] = useState(0);
+  const startValue = value * 0.75;
+  const [displayValue, setDisplayValue] = useState(startValue);
   const isInView = useInView(countRef, { amount: 0.5 });
 
   useEffect(() => {
     if (isInView) {
-      const controls = animate(0, value, {
+      const controls = animate(startValue, value, {
         duration: 2.5,
         ease: "easeOut",
         onUpdate(v) {
@@ -21,9 +22,9 @@ const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
       });
       return controls.stop;
     } else {
-      setDisplayValue(0);
+      setDisplayValue(startValue);
     }
-  }, [isInView, value]);
+  }, [isInView, value, startValue]);
 
   return <span ref={countRef}>{prefix}{displayValue.toFixed(decimals)}{suffix}</span>;
 };
