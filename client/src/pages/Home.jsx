@@ -177,7 +177,7 @@ export const Home = () => {
             </div>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
-                <AnimatedNumber value={99} suffix="%" />
+                <AnimatedNumber value={100} suffix="%" />
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Project Success Rate</p>
             </div>
