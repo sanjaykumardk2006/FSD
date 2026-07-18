@@ -14,7 +14,7 @@ const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
   useEffect(() => {
     if (isInView) {
       const controls = animate(startValue, value, {
-        duration: 2.5,
+        duration: 1.0,
         ease: "easeOut",
         onUpdate(v) {
           setDisplayValue(v);
