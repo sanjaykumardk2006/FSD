@@ -1,28 +1,32 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { motion, animate, useInView } from 'framer-motion';
 import { ArrowRight, Brain, Search, ShieldCheck, Briefcase, FileText, Target, CheckCircle2, Globe, Banknote, Shield, BriefcaseBusiness, UserCheck, MessageSquare, Clock, ShieldAlert, Users, BookOpen, Heart, TrendingUp } from 'lucide-react';
 
-const AnimatedNumber = ({ from, to, duration = 2, prefix = "", suffix = "" }) => {
-  const nodeRef = useRef(null);
-  const inView = useInView(nodeRef, { once: true, margin: "-50px" });
+const AnimatedNumber = ({ to, duration = 1.0, prefix = "", suffix = "" }) => {
+  const countRef = useRef(null);
+  const startValue = to * 0.75;
+  const [displayValue, setDisplayValue] = useState(startValue);
+  const isInView = useInView(countRef, { amount: 0.5 });
 
   useEffect(() => {
-    if (inView) {
-      const node = nodeRef.current;
-      const controls = animate(from, to, {
-        duration,
-        onUpdate(value) {
-          node.textContent = `${prefix}${Math.round(value)}${suffix}`;
-        },
+    if (isInView) {
+      const controls = animate(startValue, to, {
+        duration: duration,
+        ease: "easeOut",
+        onUpdate(v) {
+          setDisplayValue(v);
+        }
       });
-      return () => controls.stop();
+      return controls.stop;
+    } else {
+      setDisplayValue(startValue);
     }
-  }, [from, to, inView, prefix, suffix, duration]);
+  }, [isInView, to, startValue, duration]);
 
-  return <span ref={nodeRef}>{prefix}{from}{suffix}</span>;
+  return <span ref={countRef}>{prefix}{Math.round(displayValue)}{suffix}</span>;
 };
 
 export const About = () => {
