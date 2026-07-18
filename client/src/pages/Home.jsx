@@ -2,47 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { motion } from 'framer-motion';
+import { motion, useInView, animate } from 'framer-motion';
 import '../App.css';
 
 const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
-  const [count, setCount] = useState(0);
   const countRef = useRef(null);
+  const [displayValue, setDisplayValue] = useState(0);
+  const isInView = useInView(countRef, { amount: 0.5 });
 
   useEffect(() => {
-    let startTimestamp = null;
-    const duration = 1500; // slightly faster overall
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      // easeOutCubic for a smoother finish without dragging too long
-      const easeProgress = 1 - Math.pow(1 - progress, 3);
-      setCount(easeProgress * value);
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      } else {
-        setCount(value);
-      }
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          window.requestAnimationFrame(step);
-          observer.disconnect();
+    if (isInView) {
+      const controls = animate(0, value, {
+        duration: 2.5,
+        ease: "easeOut",
+        onUpdate(v) {
+          setDisplayValue(v);
         }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (countRef.current) {
-      observer.observe(countRef.current);
+      });
+      return controls.stop;
+    } else {
+      setDisplayValue(0);
     }
+  }, [isInView, value]);
 
-    return () => observer.disconnect();
-  }, [value]);
-
-  return <span ref={countRef}>{prefix}{count.toFixed(decimals)}{suffix}</span>;
+  return <span ref={countRef}>{prefix}{displayValue.toFixed(decimals)}{suffix}</span>;
 };
 
 export const Home = () => {
