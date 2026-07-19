@@ -58,7 +58,7 @@ export const About = () => {
         }
 
         .bento-card:hover {
-          transform: scale(1.02);
+          transform: scale(1.05);
           box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
           border-color: #111111;
         }
@@ -141,7 +141,7 @@ export const About = () => {
         }
 
         .premium-panel:hover {
-          transform: scale(1.02);
+          transform: scale(1.05);
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
           border-color: #111111;
         }
@@ -158,7 +158,7 @@ export const About = () => {
         }
 
         .feature-card:hover {
-          transform: scale(1.02);
+          transform: scale(1.05);
           box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
           border-color: #111111;
         }
@@ -195,7 +195,7 @@ export const About = () => {
         }
 
         .premium-card:hover {
-          transform: scale(1.02);
+          transform: scale(1.05);
           border-color: var(--border-hover);
           box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
@@ -334,7 +334,7 @@ export const About = () => {
         }
         
         .core-value-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-4px) scale(1.05);
           box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
           border-color: #111111;
         }
@@ -384,6 +384,7 @@ export const About = () => {
         }
         
         .value-card:hover {
+          transform: scale(1.05);
           background-color: var(--bg-card);
           border-color: var(--border-hover);
           box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
@@ -426,7 +427,7 @@ export const About = () => {
         }
 
         .interactive-card:hover {
-          transform: scale(1.02);
+          transform: scale(1.05);
           border-color: var(--border-hover);
           box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
           background-color: var(--bg-secondary);
