@@ -1,5 +1,5 @@
 const express = require('express');
-const { sendMessage, getProjectMessages, markAsRead, getUnreadCount } = require('../controllers/messageController');
+const { sendMessage, getProjectMessages, markAsRead, getUnreadCount, editMessage, deleteMessage } = require('../controllers/messageController');
 const { authMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -12,6 +12,12 @@ router.get('/:projectId', authMiddleware, getProjectMessages);
 
 // Mark message as read
 router.put('/:messageId/read', authMiddleware, markAsRead);
+
+// Edit message
+router.put('/:messageId', authMiddleware, editMessage);
+
+// Delete message
+router.delete('/:messageId', authMiddleware, deleteMessage);
 
 // Get unread count
 router.get('/unread/count', authMiddleware, getUnreadCount);

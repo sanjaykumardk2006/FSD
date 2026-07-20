@@ -81,3 +81,69 @@ exports.getUnreadCount = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Edit message
+exports.editMessage = [
+  body('message').trim().notEmpty().withMessage('Message cannot be empty'),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array()[0].msg, errors: errors.array() });
+    }
+
+    try {
+      const message = await Message.findById(req.params.messageId);
+      
+      if (!message) {
+        return res.status(404).json({ message: 'Message not found' });
+      }
+
+      // Verify the user is the sender
+      if (message.senderId.toString() !== req.user.userId) {
+        return res.status(403).json({ message: 'Unauthorized to edit this message' });
+      }
+
+      message.message = req.body.message;
+      message.isEdited = true;
+      await message.save();
+
+      await message.populate('senderId', 'username email profile');
+
+      if (req.io) {
+        req.io.to(message.projectId.toString()).emit('edit_message', message);
+      }
+
+      res.status(200).json({ message: 'Message updated', data: message });
+    } catch (error) {
+      console.error('Edit message error:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  }
+];
+
+// Delete message
+exports.deleteMessage = async (req, res) => {
+  try {
+    const message = await Message.findById(req.params.messageId);
+    
+    if (!message) {
+      return res.status(404).json({ message: 'Message not found' });
+    }
+
+    // Verify the user is the sender
+    if (message.senderId.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Unauthorized to delete this message' });
+    }
+
+    await Message.findByIdAndDelete(req.params.messageId);
+
+    if (req.io) {
+      req.io.to(message.projectId.toString()).emit('delete_message', { messageId: req.params.messageId });
+    }
+
+    res.status(200).json({ message: 'Message deleted successfully' });
+  } catch (error) {
+    console.error('Delete message error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

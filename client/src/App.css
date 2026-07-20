@@ -1070,3 +1070,92 @@ main> :first-child {
   background-color: #00796B;
   transform: scale(1.05);
 }
+
+/* Edit and Delete Message Actions */
+.chat-bubble-wrapper {
+  position: relative;
+}
+
+.message-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: absolute;
+  left: -32px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.chat-bubble-wrapper:hover .message-actions {
+  opacity: 1;
+}
+
+.message-actions button {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.1s ease;
+}
+
+.message-actions button:hover {
+  transform: scale(1.1);
+  background: var(--bg-secondary);
+}
+
+.edited-tag {
+  font-style: italic;
+  margin-right: 4px;
+}
+
+/* Edit Message Form */
+.edit-message-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #DCF8C6;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.edit-chat-input {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid #00897B;
+  background: transparent;
+  padding: 4px 8px;
+  font-size: 15px;
+  outline: none;
+}
+
+.btn-save-edit, .btn-cancel-edit {
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-save-edit {
+  background-color: #00897B;
+  color: white;
+}
+
+.btn-cancel-edit {
+  background-color: #e0e0e0;
+  color: #333;
+}

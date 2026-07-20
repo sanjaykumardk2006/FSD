@@ -19,6 +19,8 @@ export const ProjectDetail = () => {
     stage: '',
     description: '',
   });
+  const [editingMessageId, setEditingMessageId] = useState(null);
+  const [editMessageText, setEditMessageText] = useState('');
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState({ type: '', text: '' });
   const messagesEndRef = useRef(null);
@@ -42,6 +44,16 @@ export const ProjectDetail = () => {
 
     socketRef.current.on('receive_message', (message) => {
       setMessages((prev) => [...prev, message]);
+    });
+
+    socketRef.current.on('edit_message', (updatedMessage) => {
+      setMessages((prev) => 
+        prev.map(msg => msg._id === updatedMessage._id ? updatedMessage : msg)
+      );
+    });
+
+    socketRef.current.on('delete_message', ({ messageId }) => {
+      setMessages((prev) => prev.filter(msg => msg._id !== messageId));
     });
 
     return () => {
@@ -96,6 +108,33 @@ export const ProjectDetail = () => {
       setNewMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
+    }
+  };
+
+  const handleEditMessage = async (e) => {
+    e.preventDefault();
+    if (!editMessageText.trim()) return;
+    
+    try {
+      await apiClient.put(`/messages/${editingMessageId}`, {
+        message: editMessageText
+      });
+      setEditingMessageId(null);
+      setEditMessageText('');
+    } catch (error) {
+      console.error('Error editing message:', error);
+      showNotification('error', 'Failed to edit message');
+    }
+  };
+
+  const handleDeleteMessage = async (messageId) => {
+    if (!window.confirm('Are you sure you want to delete this message?')) return;
+    
+    try {
+      await apiClient.delete(`/messages/${messageId}`);
+    } catch (error) {
+      console.error('Error deleting message:', error);
+      showNotification('error', 'Failed to delete message');
     }
   };
 
@@ -224,15 +263,44 @@ export const ProjectDetail = () => {
                 key={msg._id}
                 className={`chat-bubble-wrapper ${msg.senderId._id === user.id ? 'sent' : 'received'}`}
               >
-                <div className="chat-bubble">
-                  {msg.senderId._id !== user.id && (
-                    <strong className="sender-name">{msg.senderId?.username}</strong>
-                  )}
-                  <p>{msg.message}</p>
-                  <span className="timestamp">
-                    {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                  </span>
-                </div>
+                {msg.senderId._id === user.id && editingMessageId !== msg._id && (
+                  <div className="message-actions">
+                    <button onClick={() => {
+                      setEditingMessageId(msg._id);
+                      setEditMessageText(msg.message);
+                    }} title="Edit Message">
+                      ✏️
+                    </button>
+                    <button onClick={() => handleDeleteMessage(msg._id)} title="Delete Message">
+                      🗑️
+                    </button>
+                  </div>
+                )}
+                
+                {editingMessageId === msg._id ? (
+                  <form onSubmit={handleEditMessage} className="edit-message-form">
+                    <input 
+                      type="text" 
+                      value={editMessageText} 
+                      onChange={(e) => setEditMessageText(e.target.value)}
+                      className="edit-chat-input"
+                      autoFocus
+                    />
+                    <button type="submit" className="btn-save-edit">✓</button>
+                    <button type="button" className="btn-cancel-edit" onClick={() => setEditingMessageId(null)}>✕</button>
+                  </form>
+                ) : (
+                  <div className="chat-bubble">
+                    {msg.senderId._id !== user.id && (
+                      <strong className="sender-name">{msg.senderId?.username}</strong>
+                    )}
+                    <p>{msg.message}</p>
+                    <span className="timestamp">
+                      {msg.isEdited && <span className="edited-tag">(edited)</span>}
+                      {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
             <div ref={messagesEndRef} />
