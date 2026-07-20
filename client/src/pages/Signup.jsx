@@ -35,6 +35,15 @@ export const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    
+    if (name === 'mobileNumber') {
+      const onlyNums = value.replace(/[^0-9]/g, '');
+      if (onlyNums.length <= 10) {
+        setFormData({ ...formData, [name]: onlyNums });
+      }
+      return;
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -46,6 +55,12 @@ export const Signup = () => {
 
     if (formData.password !== formData.passwordConfirmation) {
       setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    if (formData.mobileNumber.length !== 10) {
+      setError('Mobile number must be exactly 10 digits');
       setLoading(false);
       return;
     }
@@ -224,8 +239,12 @@ export const Signup = () => {
                               name="mobileNumber"
                               value={formData.mobileNumber}
                               onChange={handleChange}
-                              placeholder="xxxxxxxxxx"
+                              placeholder="10-digit mobile number"
                               required
+                              maxLength="10"
+                              minLength="10"
+                              pattern="[0-9]{10}"
+                              title="Please enter a valid 10-digit mobile number"
                               style={{ flex: 1, width: '100%', minWidth: 0 }}
                             />
                           </div>
