@@ -1,5 +1,6 @@
 const Proposal = require('../models/Proposal');
 const Job = require('../models/Job');
+const Project = require('../models/Project');
 const Notification = require('../models/Notification');
 const { sendProposalRejectionEmail } = require('../utils/emailUtils');
 const { body, validationResult } = require('express-validator');
@@ -102,6 +103,19 @@ exports.acceptProposal = async (req, res) => {
     job.assignedFreelancerId = proposal.freelancerId;
     job.status = 'In Progress';
     await job.save();
+
+    // Create the Project
+    const project = await Project.create({
+      jobId: job._id,
+      clientId: job.clientId,
+      freelancerId: proposal.freelancerId,
+      status: 'Active',
+      progress: [{
+        stage: 'Project Started',
+        description: 'Proposal accepted and project initiated.',
+        updatedAt: new Date()
+      }]
+    });
 
     // Create notification for freelancer
     await Notification.create({

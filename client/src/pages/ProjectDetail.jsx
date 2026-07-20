@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { motion } from 'framer-motion';
+import { io } from 'socket.io-client';
 
 export const ProjectDetail = () => {
   const { projectId } = useParams();
@@ -20,6 +21,8 @@ export const ProjectDetail = () => {
   });
   const [loading, setLoading] = useState(true);
   const [notification, setNotification] = useState({ type: '', text: '' });
+  const messagesEndRef = useRef(null);
+  const socketRef = useRef(null);
 
   const showNotification = (type, text) => {
     setNotification({ type, text });
@@ -29,9 +32,29 @@ export const ProjectDetail = () => {
   useEffect(() => {
     fetchProject();
     fetchMessages();
-    const interval = setInterval(fetchMessages, 3000);
-    return () => clearInterval(interval);
+
+    // Setup Socket.io connection
+    let SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    SOCKET_URL = SOCKET_URL.replace('/api', '');
+    
+    socketRef.current = io(SOCKET_URL);
+    socketRef.current.emit('join_project', projectId);
+
+    socketRef.current.on('receive_message', (message) => {
+      setMessages((prev) => [...prev, message]);
+    });
+
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+      }
+    };
   }, [projectId]);
+
+  useEffect(() => {
+    // Auto-scroll to bottom of chat
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const fetchProject = async () => {
     try {
@@ -69,8 +92,8 @@ export const ProjectDetail = () => {
         message: newMessage,
       });
 
+      // The backend emits 'receive_message' which we listen to, so we don't need to fetchMessages() manually
       setNewMessage('');
-      fetchMessages();
     } catch (error) {
       console.error('Error sending message:', error);
     }
@@ -186,23 +209,33 @@ export const ProjectDetail = () => {
         </motion.div>
 
         <motion.div 
-          className="chat-section"
+          className="chat-section whatsapp-style-chat"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h3>Messages</h3>
+          <div className="chat-header">
+            <h3>Project Chat</h3>
+            <span className="online-indicator">Real-time</span>
+          </div>
           <div className="messages-container">
             {messages.map((msg) => (
               <div
                 key={msg._id}
-                className={`message ${msg.senderId._id === user.id ? 'sent' : 'received'}`}
+                className={`chat-bubble-wrapper ${msg.senderId._id === user.id ? 'sent' : 'received'}`}
               >
-                <strong>{msg.senderId?.username}:</strong>
-                <p>{msg.message}</p>
-                <small>{new Date(msg.createdAt).toLocaleString()}</small>
+                <div className="chat-bubble">
+                  {msg.senderId._id !== user.id && (
+                    <strong className="sender-name">{msg.senderId?.username}</strong>
+                  )}
+                  <p>{msg.message}</p>
+                  <span className="timestamp">
+                    {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </span>
+                </div>
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
 
           <form onSubmit={handleSendMessage} className="message-form">
@@ -212,9 +245,13 @@ export const ProjectDetail = () => {
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder="Type a message..."
               required
+              className="chat-input"
             />
-            <button type="submit" className="btn btn-primary">
-              Send
+            <button type="submit" className="btn-send">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
             </button>
           </form>
         </motion.div>

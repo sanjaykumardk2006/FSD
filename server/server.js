@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const http = require('http');
+const { Server } = require('socket.io');
 require('dotenv').config();
 
 // Suppress punycode deprecation warning
@@ -18,6 +20,7 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 
 const app = express();
+const server = http.createServer(app);
 
 
 // 1. Middleware
@@ -51,6 +54,37 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Socket.io configuration
+const io = new Server(server, {
+  cors: corsOptions
+});
+
+io.on('connection', (socket) => {
+  console.log('A user connected:', socket.id);
+
+  // Join a project room
+  socket.on('join_project', (projectId) => {
+    socket.join(projectId);
+    console.log(`User ${socket.id} joined project room: ${projectId}`);
+  });
+
+  // Handle new messages
+  socket.on('send_message', (data) => {
+    // Broadcast to everyone in the project room (including sender if needed, but we can emit to others)
+    io.to(data.projectId).emit('receive_message', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
+
+// Pass io to request object so controllers can use it if needed
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 
 
 // 2. Root route (IMPORTANT for Railway)
@@ -91,7 +125,7 @@ if (!process.env.MONGO_URL) {
   process.exit(1);
 }
 
-app.listen(PORT, '0.0.0.0', async () => {
+server.listen(PORT, '0.0.0.0', async () => {
   console.log(`Server running on port ${PORT}`);
 
   try {

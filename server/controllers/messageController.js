@@ -23,6 +23,15 @@ exports.sendMessage = [
       });
 
       await newMessage.save();
+
+      // Populate sender information so frontend has what it needs immediately
+      await newMessage.populate('senderId', 'username email profile');
+
+      // Emit the message in real-time to the project room
+      if (req.io) {
+        req.io.to(projectId).emit('receive_message', newMessage);
+      }
+
       res.status(201).json({ message: 'Message sent', data: newMessage });
     } catch (error) {
       console.error('Send message error:', error);
