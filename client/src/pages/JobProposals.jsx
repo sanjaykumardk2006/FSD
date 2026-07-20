@@ -94,7 +94,7 @@ export const JobProposals = () => {
                 {proposal.status === 'Pending' && (
                   <div className="proposal-actions">
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-accept"
                       onClick={() => handleAcceptProposal(proposal._id)}
                     >
                       Accept
