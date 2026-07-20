@@ -10,18 +10,22 @@ const messageSchema = new mongoose.Schema(
     senderId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: function() { return !this.isSystemMessage; },
     },
     receiverId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: function() { return !this.isSystemMessage; },
     },
     message: {
       type: String,
       required: true,
     },
     isRead: {
+      type: Boolean,
+      default: false,
+    },
+    isSystemMessage: {
       type: Boolean,
       default: false,
     },

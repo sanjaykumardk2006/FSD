@@ -259,49 +259,59 @@ export const ProjectDetail = () => {
           </div>
           <div className="messages-container">
             {messages.map((msg) => (
-              <div
-                key={msg._id}
-                className={`chat-bubble-wrapper ${msg.senderId._id === user.id ? 'sent' : 'received'}`}
-              >
-                {msg.senderId._id === user.id && editingMessageId !== msg._id && (
-                  <div className="message-actions">
-                    <button onClick={() => {
-                      setEditingMessageId(msg._id);
-                      setEditMessageText(msg.message);
-                    }} title="Edit Message">
-                      ✏️
-                    </button>
-                    <button onClick={() => handleDeleteMessage(msg._id)} title="Delete Message">
-                      🗑️
-                    </button>
-                  </div>
-                )}
-                
-                {editingMessageId === msg._id ? (
-                  <form onSubmit={handleEditMessage} className="edit-message-form">
-                    <input 
-                      type="text" 
-                      value={editMessageText} 
-                      onChange={(e) => setEditMessageText(e.target.value)}
-                      className="edit-chat-input"
-                      autoFocus
-                    />
-                    <button type="submit" className="btn-save-edit">✓</button>
-                    <button type="button" className="btn-cancel-edit" onClick={() => setEditingMessageId(null)}>✕</button>
-                  </form>
-                ) : (
-                  <div className="chat-bubble">
-                    {msg.senderId._id !== user.id && (
-                      <strong className="sender-name">{msg.senderId?.username}</strong>
-                    )}
+              <React.Fragment key={msg._id}>
+                {msg.isSystemMessage ? (
+                  <div className="system-message-bubble">
                     <p>{msg.message}</p>
                     <span className="timestamp">
-                      {msg.isEdited && <span className="edited-tag">(edited)</span>}
                       {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </span>
                   </div>
+                ) : (
+                  <div
+                    className={`chat-bubble-wrapper ${msg.senderId?._id === user.id ? 'sent' : 'received'}`}
+                  >
+                    {msg.senderId?._id === user.id && editingMessageId !== msg._id && (
+                      <div className="message-actions">
+                        <button onClick={() => {
+                          setEditingMessageId(msg._id);
+                          setEditMessageText(msg.message);
+                        }} title="Edit Message">
+                          ✏️
+                        </button>
+                        <button onClick={() => handleDeleteMessage(msg._id)} title="Delete Message">
+                          🗑️
+                        </button>
+                      </div>
+                    )}
+                    
+                    {editingMessageId === msg._id ? (
+                      <form onSubmit={handleEditMessage} className="edit-message-form">
+                        <input 
+                          type="text" 
+                          value={editMessageText} 
+                          onChange={(e) => setEditMessageText(e.target.value)}
+                          className="edit-chat-input"
+                          autoFocus
+                        />
+                        <button type="submit" className="btn-save-edit">✓</button>
+                        <button type="button" className="btn-cancel-edit" onClick={() => setEditingMessageId(null)}>✕</button>
+                      </form>
+                    ) : (
+                      <div className="chat-bubble">
+                        {msg.senderId?._id !== user.id && (
+                          <strong className="sender-name">{msg.senderId?.username}</strong>
+                        )}
+                        <p>{msg.message}</p>
+                        <span className="timestamp">
+                          {msg.isEdited && <span className="edited-tag">(edited)</span>}
+                          {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 )}
-              </div>
+              </React.Fragment>
             ))}
             <div ref={messagesEndRef} />
           </div>

@@ -1159,3 +1159,25 @@ main> :first-child {
   background-color: #e0e0e0;
   color: #333;
 }
+
+/* System Message Bubble */
+.system-message-bubble {
+  background-color: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 13px;
+  text-align: center;
+  padding: 8px 16px;
+  border-radius: 16px;
+  margin: 16px auto;
+  width: fit-content;
+  max-width: 80%;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.system-message-bubble .timestamp {
+  font-size: 11px;
+  opacity: 0.7;
+}

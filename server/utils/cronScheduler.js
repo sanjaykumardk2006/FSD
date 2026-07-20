@@ -1,19 +1,17 @@
 const cron = require('node-cron');
 const Project = require('../models/Project');
 const User = require('../models/User');
+const Message = require('../models/Message');
 const Notification = require('../models/Notification');
 const { sendProjectUpdateReminder } = require('../utils/emailUtils');
 
-// Run every 24 hours (at 8 AM)
+// Run at 8:00 AM on Monday and Thursday
 const scheduleProjectReminders = () => {
-  cron.schedule('0 8 * * *', async () => {
+  cron.schedule('0 8 * * 1,4', async () => {
     try {
-      const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
-
-      // Find projects with no updates in 2 days
+      // Find all active projects
       const projects = await Project.find({
         status: 'Active',
-        lastUpdateDate: { $lt: twoDaysAgo },
       }).populate('freelancerId', 'email username');
 
       for (const project of projects) {
@@ -25,12 +23,20 @@ const scheduleProjectReminders = () => {
           userId: project.freelancerId._id,
           type: 'reminder',
           title: 'Project Update Reminder',
-          message: 'Please update your project status. No update in 2 days.',
+          message: 'Please update your project status.',
           relatedId: project._id,
         });
+
+        // Send System Message in the chat
+        const sysMsg = new Message({
+          projectId: project._id,
+          message: 'System Reminder: Please provide a status update for this project.',
+          isSystemMessage: true,
+        });
+        await sysMsg.save();
       }
 
-      console.log(`Project reminder cron: Sent reminders to ${projects.length} freelancers`);
+      console.log(`Project reminder cron: Sent reminders to ${projects.length} active projects`);
     } catch (error) {
       console.error('Error in project reminder cron:', error);
     }
