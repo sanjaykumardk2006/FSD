@@ -111,7 +111,20 @@ export const ClientDashboard = () => {
           </div>
         </div>
 
-
+        <div className="dashboard-tabs">
+          <button
+            className={`tab-btn ${activeTab === 'jobs' ? 'active' : ''}`}
+            onClick={() => setActiveTab('jobs')}
+          >
+            My Jobs ({jobs.length})
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'projects' ? 'active' : ''}`}
+            onClick={() => setActiveTab('projects')}
+          >
+            Active Projects ({projects.length})
+          </button>
+        </div>
 
         <div className="dashboard-content">
           {activeTab === 'jobs' && (
@@ -161,6 +174,36 @@ export const ClientDashboard = () => {
                 )}
               </motion.div>
             </div>
+          )}
+
+          {activeTab === 'projects' && (
+            <motion.div 
+              className="projects-section"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+            >
+              {projects.length === 0 ? (
+                <p>No active projects at this moment.</p>
+              ) : (
+                projects.map((project) => (
+                  <motion.div key={project._id} className="job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}>
+                    <h3>Project for: {project.jobId?.title}</h3>
+                    <p>Freelancer: {project.freelancerId?.username}</p>
+                    <p className="job-meta">
+                      Status: {project.status} | Last Update: {new Date(project.lastUpdateDate).toLocaleDateString()}
+                    </p>
+                    <button
+                      className="btn btn-accept"
+                      onClick={() => navigate(`/project/${project._id}`)}
+                      style={{ marginTop: '10px' }}
+                    >
+                      Open Chat / Workspace
+                    </button>
+                  </motion.div>
+                ))
+              )}
+            </motion.div>
           )}
         </div>
       </main>

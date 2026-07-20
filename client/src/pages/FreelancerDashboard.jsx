@@ -11,6 +11,7 @@ export const FreelancerDashboard = () => {
   const [activeTab, setActiveTab] = useState('jobs');
   const [jobs, setJobs] = useState([]);
   const [proposals, setProposals] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedJob, setSelectedJob] = useState(null);
   const [showProposalForm, setShowProposalForm] = useState(false);
@@ -31,6 +32,7 @@ export const FreelancerDashboard = () => {
   useEffect(() => {
     fetchJobs();
     fetchProposals();
+    fetchProjects();
   }, []);
 
   const fetchJobs = async () => {
@@ -48,6 +50,15 @@ export const FreelancerDashboard = () => {
       setProposals(response.data.proposals || []);
     } catch (error) {
       console.error('Error fetching proposals:', error);
+    }
+  };
+
+  const fetchProjects = async () => {
+    try {
+      const response = await apiClient.get('/projects/freelancer/projects');
+      setProjects(response.data.projects || []);
+    } catch (error) {
+      console.error('Error fetching projects:', error);
     } finally {
       setLoading(false);
     }
@@ -136,6 +147,12 @@ export const FreelancerDashboard = () => {
           >
             My Proposals ({proposals.length})
           </button>
+          <button
+            className={`tab-btn ${activeTab === 'projects' ? 'active' : ''}`}
+            onClick={() => setActiveTab('projects')}
+          >
+            Active Projects ({projects.length})
+          </button>
         </div>
 
         <div className="dashboard-content">
@@ -202,6 +219,36 @@ export const FreelancerDashboard = () => {
                         Delete
                       </button>
                     </div>
+                  </motion.div>
+                ))
+              )}
+            </motion.div>
+          )}
+
+          {activeTab === 'projects' && (
+            <motion.div 
+              className="projects-section"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+            >
+              {projects.length === 0 ? (
+                <p>No active projects at this moment.</p>
+              ) : (
+                projects.map((project) => (
+                  <motion.div key={project._id} className="job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}>
+                    <h3>Project for: {project.jobId?.title}</h3>
+                    <p>Client: {project.clientId?.username}</p>
+                    <p className="job-meta">
+                      Status: {project.status} | Last Update: {new Date(project.lastUpdateDate).toLocaleDateString()}
+                    </p>
+                    <button
+                      className="btn btn-accept"
+                      onClick={() => navigate(`/project/${project._id}`)}
+                      style={{ marginTop: '10px' }}
+                    >
+                      Open Chat / Workspace
+                    </button>
                   </motion.div>
                 ))
               )}
