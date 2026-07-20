@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
 import { motion } from 'framer-motion';
 
 export const FreelancerDashboard = () => {
@@ -292,7 +291,6 @@ export const FreelancerDashboard = () => {
           </div>
         </div>
       )}
-      <Footer />
     </div>
   );
 };
