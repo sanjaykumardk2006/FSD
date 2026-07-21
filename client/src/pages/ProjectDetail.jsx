@@ -159,16 +159,17 @@ export const ProjectDetail = () => {
     <div className="page">
       <Header />
       <main className="content-container">
+        <button className="btn btn-secondary" onClick={() => navigate(-1)} style={{ marginBottom: '16px' }}>
+          ← Back
+        </button>
+
         <motion.div 
           className="project-header-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="header-card-top">
-            <button className="btn-back-icon" onClick={() => navigate(-1)} title="Go Back">
-              ← Back
-            </button>
+          <div className="header-card-top" style={{ justifyContent: 'flex-end' }}>
             <span className={`status-badge ${project.status.toLowerCase()}`}>
               {project.status}
             </span>

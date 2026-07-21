@@ -1012,11 +1012,14 @@ main> :first-child {
 
 .chat-bubble {
   max-width: 75%;
-  padding: 8px 12px 20px;
+  padding: 6px 10px 8px;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 1px 2px rgba(0,0,0,0.1);
   word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  min-width: 80px;
 }
 
 .chat-bubble-wrapper.sent .chat-bubble {
@@ -1038,18 +1041,17 @@ main> :first-child {
 }
 
 .chat-bubble p {
-  margin: 0;
+  margin: 0 0 2px 0;
   font-size: 15px;
   color: #303030;
   line-height: 1.4;
 }
 
 .chat-bubble .timestamp {
-  position: absolute;
-  bottom: 4px;
-  right: 8px;
+  align-self: flex-end;
   font-size: 10px;
   color: rgba(0, 0, 0, 0.45);
+  margin-top: auto;
 }
 
 .message-form {
