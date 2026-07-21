@@ -261,6 +261,17 @@ export const Signup = () => {
                             required
                           />
                         </div>
+                        <div className="form-group">
+                          <label htmlFor="username">Username (Optional)</label>
+                          <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            placeholder="Leave blank to auto-generate"
+                          />
+                        </div>
                         {formData.role === 'Freelancer' && (
                           <div className="form-group">
                             <label htmlFor="service">Service</label>

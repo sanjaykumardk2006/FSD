@@ -16,22 +16,29 @@ exports.signup = [
     try {
       let { username, email, password, role, firstName, lastName, companyName, country, mobileNumber, service, entityType } = req.body;
 
-      if (entityType === 'Company') {
-        if (!companyName) {
-          return res.status(400).json({ message: 'Company name is required' });
+      if (!username) {
+        if (entityType === 'Company') {
+          if (!companyName) {
+            return res.status(400).json({ message: 'Company name is required' });
+          }
+          username = `${companyName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
+        } else {
+          if (!firstName || !lastName) {
+            return res.status(400).json({ message: 'First name and last name are required' });
+          }
+          username = `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
         }
-        username = `${companyName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
-      } else {
-        if (!firstName || !lastName) {
-          return res.status(400).json({ message: 'First name and last name are required' });
-        }
-        username = `${firstName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${lastName.toLowerCase().replace(/[^a-z0-9]/g, '')}_${Math.floor(Math.random() * 10000)}`;
       }
 
       // Check if user already exists
-      const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-      if (existingUser) {
-        return res.status(400).json({ message: 'User already exists' });
+      const existingEmail = await User.findOne({ email });
+      if (existingEmail) {
+        return res.status(400).json({ message: 'Email already exists' });
+      }
+
+      const existingUsername = await User.findOne({ username });
+      if (existingUsername) {
+        return res.status(400).json({ message: 'username exist' });
       }
 
       // Create new user
