@@ -159,92 +159,119 @@ export const ProjectDetail = () => {
     <div className="page">
       <Header />
       <main className="content-container">
-        <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-          Back
-        </button>
-
         <motion.div 
-          className="project-details"
+          className="project-header-card"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <div className="header-card-top">
+            <button className="btn-back-icon" onClick={() => navigate(-1)} title="Go Back">
+              ← Back
+            </button>
+            <span className={`status-badge ${project.status.toLowerCase()}`}>
+              {project.status}
+            </span>
+          </div>
+
           {notification.text && (
-            <div className={`message ${notification.type}`} style={{ marginBottom: '20px' }}>
+            <div className={`message ${notification.type}`} style={{ marginBottom: '16px' }}>
               {notification.text}
             </div>
           )}
-          <h1>{project.jobId?.title}</h1>
-          <p>Status: {project.status}</p>
-          <p>Budget: ${project.jobId?.budget}</p>
-
-          <div className="project-team">
-            <div>
-              <h3>Client</h3>
-              <p>{project.clientId?.username}</p>
+          
+          <div className="header-card-main">
+            <div className="header-info">
+              <h1>{project.jobId?.title}</h1>
+              <p className="budget-text">Budget: <strong>${project.jobId?.budget}</strong></p>
             </div>
-            <div>
-              <h3>Freelancer</h3>
-              <p>{project.freelancerId?.username}</p>
-            </div>
-          </div>
 
-          {isFreelancer && (
-            <div className="progress-section">
-              <h3>Project Progress</h3>
-              <button
-                className="btn btn-primary"
-                onClick={() => setShowProgressForm(!showProgressForm)}
-              >
-                {showProgressForm ? 'Cancel' : 'Add Progress Update'}
-              </button>
-
-              {showProgressForm && (
-                <form onSubmit={handleAddProgress} className="progress-form">
-                  <div className="form-group">
-                    <label htmlFor="stage">Stage</label>
-                    <input
-                      type="text"
-                      id="stage"
-                      name="stage"
-                      value={progressData.stage}
-                      onChange={(e) =>
-                        setProgressData({ ...progressData, stage: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <textarea
-                      id="description"
-                      name="description"
-                      value={progressData.description}
-                      onChange={(e) =>
-                        setProgressData({ ...progressData, description: e.target.value })
-                      }
-                      rows="4"
-                      required
-                    ></textarea>
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Update Progress
-                  </button>
-                </form>
-              )}
-
-              <div className="progress-list">
-                {project.progress.map((prog, index) => (
-                  <div key={index} className="progress-item">
-                    <h4>{prog.stage}</h4>
-                    <p>{prog.description}</p>
-                    <small>{new Date(prog.updatedAt).toLocaleDateString()}</small>
-                  </div>
-                ))}
+            <div className="header-team">
+              <div className="team-member">
+                <span className="team-role">Client</span>
+                <span className="team-name">{project.clientId?.username}</span>
+              </div>
+              <div className="team-member">
+                <span className="team-role">Freelancer</span>
+                <span className="team-name">{project.freelancerId?.username}</span>
               </div>
             </div>
-          )}
+
+            <div className="header-actions">
+              <button
+                className="btn btn-secondary"
+                onClick={() => setShowProgressForm(true)}
+              >
+                View / Update Progress
+              </button>
+            </div>
+          </div>
         </motion.div>
+
+        {/* Progress Modal */}
+        {showProgressForm && (
+          <div className="modal-overlay">
+            <div className="modal progress-modal">
+              <div className="modal-header">
+                <h2>Project Progress</h2>
+                <button className="btn-close" onClick={() => setShowProgressForm(false)}>✕</button>
+              </div>
+
+              <div className="progress-list">
+                {project.progress.length === 0 ? (
+                  <p className="no-progress">No progress updates yet.</p>
+                ) : (
+                  project.progress.map((prog, index) => (
+                    <div key={index} className="progress-item">
+                      <div className="progress-item-header">
+                        <h4>{prog.stage}</h4>
+                        <small>{new Date(prog.updatedAt).toLocaleDateString()}</small>
+                      </div>
+                      <p>{prog.description}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              {isFreelancer && (
+                <div className="add-progress-section">
+                  <h3>Add Update</h3>
+                  <form onSubmit={handleAddProgress} className="progress-form">
+                    <div className="form-group">
+                      <label htmlFor="stage">Stage / Title</label>
+                      <input
+                        type="text"
+                        id="stage"
+                        name="stage"
+                        value={progressData.stage}
+                        onChange={(e) =>
+                          setProgressData({ ...progressData, stage: e.target.value })
+                        }
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="description">Description</label>
+                      <textarea
+                        id="description"
+                        name="description"
+                        value={progressData.description}
+                        onChange={(e) =>
+                          setProgressData({ ...progressData, description: e.target.value })
+                        }
+                        rows="3"
+                        required
+                      ></textarea>
+                    </div>
+                    <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+                      Submit Update
+                    </button>
+                  </form>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         <motion.div 
           className="chat-section whatsapp-style-chat"

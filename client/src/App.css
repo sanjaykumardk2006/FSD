@@ -1239,3 +1239,203 @@ main> :first-child {
   display: inline-block;
   margin-right: 12px;
 }
+
+/* Project Header Card */
+.project-header-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.header-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.btn-back-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.2s;
+}
+
+.btn-back-icon:hover {
+  color: var(--accent-primary);
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-badge.active {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.status-badge.completed {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-badge.cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.header-card-main {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+.header-info h1 {
+  font-size: 24px;
+  margin: 0 0 4px 0;
+  color: var(--text-primary);
+}
+
+.budget-text {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.header-team {
+  display: flex;
+  gap: 32px;
+}
+
+.team-member {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-role {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.team-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Progress Modal Overrides */
+.progress-modal {
+  max-width: 500px;
+  width: 100%;
+}
+
+.progress-modal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.progress-modal .modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.btn-close:hover {
+  color: var(--text-primary);
+}
+
+.progress-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.progress-item {
+  background: var(--bg-secondary);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.progress-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+
+.progress-item-header h4 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.progress-item p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.no-progress {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 20px 0;
+}
+
+.add-progress-section {
+  border-top: 1px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.add-progress-section h3 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .header-card-main {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .header-actions {
+    justify-content: flex-start;
+  }
+}
