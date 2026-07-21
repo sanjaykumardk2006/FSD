@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
 import { motion } from 'framer-motion';
 
 export const JobProposals = () => {
@@ -135,7 +134,6 @@ export const JobProposals = () => {
           </motion.div>
         )}
       </main>
-      <Footer />
     </div>
   );
 };

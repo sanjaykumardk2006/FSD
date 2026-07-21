@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 import { Header } from '../components/Header';
-import { Footer } from '../components/Footer';
 import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
 
@@ -334,7 +333,6 @@ export const ProjectDetail = () => {
           </form>
         </motion.div>
       </main>
-      <Footer />
     </div>
   );
 };
