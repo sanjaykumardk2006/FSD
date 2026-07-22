@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { X, User, MapPin, Mail, Phone, Globe, Linkedin, Github, Star, Award, Briefcase, GraduationCap } from 'lucide-react';
+import { X, User, MapPin, Mail, Phone, Globe, Link, Star, Award, Briefcase, GraduationCap } from 'lucide-react';
 
 export const FreelancerProfile = ({ freelancerId, onClose }) => {
   // In a real app, you would fetch the full profile using freelancerId
@@ -116,8 +116,8 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
                 <h3 style={{ fontSize: '18px', marginBottom: '16px' }}>Contact & Links</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Globe size={18} color="var(--primary-action)" /> portfolio-alex.dev</a>
-                  <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Github size={18} color="var(--primary-action)" /> github.com/alexdev</a>
-                  <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Linkedin size={18} color="var(--primary-action)" /> linkedin.com/in/alexdev</a>
+                  <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Link size={18} color="var(--primary-action)" /> github.com/alexdev</a>
+                  <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Link size={18} color="var(--primary-action)" /> linkedin.com/in/alexdev</a>
                 </div>
               </div>
             </div>
