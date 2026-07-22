@@ -1196,7 +1196,6 @@ main> :first-child {
   background: rgba(255, 255, 255, 0.95);
   color: #000000;
 }
-}
 
 .btn-save-edit, .btn-cancel-edit {
   border: none;
