@@ -1,15 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, AuthContext } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import { PrivateRoute } from './utils/PrivateRoute';
 import { ScrollToTop } from './components/ScrollToTop';
+import { DashboardLayout } from './components/DashboardLayout';
 
 // Pages
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Contact } from './pages/Contact';
-import { Signup } from './pages/Signup';
-import { Login } from './pages/Login';
 import { Search } from './pages/Search';
 import { ClientDashboard } from './pages/ClientDashboard';
 import { FreelancerDashboard } from './pages/FreelancerDashboard';
@@ -28,31 +27,38 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
 
-          {/* Protected Routes */}
+          {/* Protected Routes wrapped with DashboardLayout */}
           <Route
-            path="/client-dashboard"
+            path="/client-dashboard/*"
             element={
               <PrivateRoute>
-                <ClientDashboard />
+                <DashboardLayout role="Client">
+                  <ClientDashboard />
+                </DashboardLayout>
               </PrivateRoute>
             }
           />
           <Route
-            path="/freelancer-dashboard"
+            path="/freelancer-dashboard/*"
             element={
               <PrivateRoute>
-                <FreelancerDashboard />
+                <DashboardLayout role="Freelancer">
+                  <FreelancerDashboard />
+                </DashboardLayout>
               </PrivateRoute>
             }
           />
+          
+          {/* Note: JobProposals and ProjectDetail will be accessed from within Dashboards, 
+              or they can have their own routes wrapped in DashboardLayout too. */}
           <Route
             path="/job/:jobId/proposals"
             element={
               <PrivateRoute>
-                <JobProposals />
+                <DashboardLayout role="Client">
+                  <JobProposals />
+                </DashboardLayout>
               </PrivateRoute>
             }
           />
@@ -60,6 +66,11 @@ const App = () => {
             path="/project/:projectId"
             element={
               <PrivateRoute>
+                {/* We'll pass the role dynamically in ProjectDetail or just render the layout there if needed,
+                    but wrapping here requires knowing the role. For now, since both access it, we'll let ProjectDetail handle layout or wrap it based on user context. 
+                    Actually, we need AuthContext to know the role here, which is tricky outside of components.
+                    Let's just remove DashboardLayout wrapper here and let the page itself render DashboardLayout so it can access user.role.
+                */}
                 <ProjectDetail />
               </PrivateRoute>
             }

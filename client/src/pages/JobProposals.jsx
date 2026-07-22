@@ -1,139 +1,206 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
-import { Header } from '../components/Header';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowLeft, Check, X as XIcon, FileText, User, Star, Calendar } from 'lucide-react';
+import { ProposalDetail } from './ProposalDetail';
+import { FreelancerProfile } from './FreelancerProfile';
 
 export const JobProposals = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
   const [proposals, setProposals] = useState([]);
+  const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [rejectReason, setRejectReason] = useState('');
-  const [showRejectForm, setShowRejectForm] = useState(null);
-  const [notification, setNotification] = useState({ type: '', text: '' });
-
-  const showNotification = (type, text) => {
-    setNotification({ type, text });
-    setTimeout(() => setNotification({ type: '', text: '' }), 3000);
-  };
+  const [error, setError] = useState('');
+  
+  // Modals state
+  const [selectedProposal, setSelectedProposal] = useState(null);
+  const [showProposalDetail, setShowProposalDetail] = useState(false);
+  const [selectedFreelancer, setSelectedFreelancer] = useState(null);
+  const [showFreelancerProfile, setShowFreelancerProfile] = useState(false);
 
   useEffect(() => {
-    fetchProposals();
+    fetchJobAndProposals();
   }, [jobId]);
 
-  const fetchProposals = async () => {
+  const fetchJobAndProposals = async () => {
     try {
-      const response = await apiClient.get(`/jobs/${jobId}/proposals`);
-      setProposals(response.data.proposals || []);
-    } catch (error) {
-      console.error('Error fetching proposals:', error);
+      const jobResponse = await apiClient.get(`/jobs/${jobId}`);
+      setJob(jobResponse.data.job);
+
+      const proposalsResponse = await apiClient.get(`/proposals/job/${jobId}`);
+      setProposals(proposalsResponse.data.proposals || []);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Failed to load data');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleAcceptProposal = async (proposalId) => {
+  const handleUpdateStatus = async (proposalId, status) => {
+    if (!window.confirm(`Are you sure you want to ${status.toLowerCase()} this proposal?`)) return;
     try {
-      await apiClient.put(`/proposals/${proposalId}/accept`);
-      showNotification('success', 'Proposal accepted!');
-      fetchProposals();
-    } catch (error) {
-      showNotification('error', 'Error accepting proposal: ' + (error.response?.data?.message || error.message));
+      await apiClient.put(`/proposals/${proposalId}/status`, { status });
+      // If accepted, we should probably redirect to active projects or reload
+      if (status === 'Accepted') {
+        alert('Proposal accepted! A new project workspace has been created.');
+        navigate('/client-dashboard?tab=projects');
+      } else {
+        fetchJobAndProposals(); // Refresh to show rejected status
+        if (showProposalDetail) setShowProposalDetail(false);
+      }
+    } catch (err) {
+      alert('Error updating proposal status: ' + err.response?.data?.message);
     }
   };
 
-  const handleRejectProposal = async (proposalId) => {
-    try {
-      await apiClient.put(`/proposals/${proposalId}/reject`, {
-        rejectionReason: rejectReason,
-      });
-      showNotification('success', 'Proposal rejected!');
-      setShowRejectForm(null);
-      setRejectReason('');
-      fetchProposals();
-    } catch (error) {
-      showNotification('error', 'Error rejecting proposal: ' + (error.response?.data?.message || error.message));
-    }
+  const openProposalDetail = (proposal) => {
+    setSelectedProposal(proposal);
+    setShowProposalDetail(true);
   };
 
-  if (loading) return <div>Loading...</div>;
+  const openFreelancerProfile = (freelancerId) => {
+    // In a real app, you'd fetch full profile details. We'll pass the ID and let the modal handle it or just pass mocked data
+    setSelectedFreelancer({ _id: freelancerId });
+    setShowFreelancerProfile(true);
+  };
+
+  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading proposals...</div>;
+  if (error) return <div style={{ padding: '40px', textAlign: 'center', color: 'var(--danger)' }}>{error}</div>;
 
   return (
-    <div className="page">
-      <Header />
-      <main className="content-container">
-        <button className="btn btn-secondary" onClick={() => navigate('/client-dashboard')}>
-          Back to Dashboard
+    <div className="proposals-page-wrapper">
+      <div style={{ marginBottom: '24px' }}>
+        <button 
+          onClick={() => navigate('/client-dashboard')} 
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '15px', fontWeight: '500', padding: '8px 0', transition: 'color 0.2s' }}
+          onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'}
+          onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}
+        >
+          <ArrowLeft size={18} /> Back to Dashboard
         </button>
-        <h1>Proposals for Job</h1>
-        {notification.text && (
-          <div className={`message ${notification.type}`} style={{ marginBottom: '20px' }}>
-            {notification.text}
-          </div>
-        )}
+      </div>
 
+      <div style={{ background: 'var(--bg-card)', padding: '32px', borderRadius: '16px', border: '1px solid var(--border-color)', marginBottom: '32px' }}>
+        <h2 style={{ fontSize: '24px', marginBottom: '8px' }}>Proposals for: {job?.title}</h2>
+        <div style={{ display: 'flex', gap: '16px', color: 'var(--text-secondary)', fontSize: '14px' }}>
+          <span>Budget: ${job?.budget}</span>
+          <span>•</span>
+          <span>Status: {job?.status}</span>
+          <span>•</span>
+          <span>Total Proposals: {proposals.length}</span>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {proposals.length === 0 ? (
-          <p>No proposals yet.</p>
+          <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+            <FileText size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
+            <h3>No proposals yet</h3>
+            <p style={{ color: 'var(--text-secondary)' }}>Freelancers haven't submitted any proposals for this job.</p>
+          </div>
         ) : (
-          <motion.div 
-            initial="hidden"
-            animate="visible"
-            variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
-          >
-            {proposals.map((proposal) => (
-              <motion.div key={proposal._id} className="proposal-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}>
-                <h3>{proposal.freelancerId?.username}</h3>
-                <p>Email: {proposal.freelancerId?.email}</p>
-                <p>Skills: {proposal.skills.join(', ')}</p>
-                <p>Experience: {proposal.experience}</p>
-                <p>Proposed Cost: ${proposal.proposedCost}</p>
-                <p>Status: {proposal.status}</p>
+          proposals.map((proposal) => (
+            <motion.div 
+              key={proposal._id} 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              style={{ background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}
+            >
+              {/* Proposal Header */}
+              <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
+                <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                  <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', color: 'var(--text-muted)' }}>
+                    <User size={32} />
+                  </div>
+                  <div>
+                    <h3 style={{ fontSize: '18px', marginBottom: '4px' }}>{proposal.freelancerId?.username}</h3>
+                    <p style={{ color: 'var(--text-secondary)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Star size={14} style={{ color: 'var(--pending)' }} fill="var(--pending)" /> 4.9 (12 reviews) • {proposal.experience || '3 years exp.'}
+                    </p>
+                  </div>
+                </div>
 
-                {proposal.status === 'Pending' && (
-                  <div className="proposal-actions">
-                    <button
-                      className="btn btn-accept"
-                      onClick={() => handleAcceptProposal(proposal._id)}
+                <div style={{ textAlign: 'right' }}>
+                  <h3 style={{ fontSize: '24px', color: 'var(--primary-action)', marginBottom: '4px' }}>${proposal.proposedCost}</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end' }}>
+                    <Calendar size={14} /> in {new Date(proposal.proposedDeadline).toLocaleDateString() || '2 weeks'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Proposal Body (Excerpt) */}
+              <div style={{ padding: '24px', flex: 1 }}>
+                <h4 style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Cover Letter</h4>
+                <p style={{ color: 'var(--text-primary)', fontSize: '15px', lineHeight: '1.6', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                  {proposal.coverLetter || "I am very interested in this project and have the required skills to deliver high quality work."}
+                </p>
+                
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '16px' }}>
+                  {(proposal.skills || ['React', 'Node.js']).map((skill, i) => (
+                    <span key={i} style={{ background: 'var(--bg-secondary)', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>{skill}</span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Proposal Actions */}
+              <div style={{ padding: '16px 24px', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <button className="btn btn-secondary" onClick={() => openProposalDetail(proposal)}>Read Full Proposal</button>
+                  <button className="btn btn-secondary" onClick={() => openFreelancerProfile(proposal.freelancerId?._id)}>View Profile</button>
+                </div>
+                
+                {proposal.status === 'Pending' ? (
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    <button 
+                      className="btn" 
+                      onClick={() => handleUpdateStatus(proposal._id, 'Rejected')}
+                      style={{ background: 'var(--bg-card)', color: 'var(--danger)', border: '1px solid var(--danger)', display: 'flex', alignItems: 'center', gap: '6px' }}
                     >
-                      Accept
+                      <XIcon size={16} /> Decline
                     </button>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => setShowRejectForm(proposal._id)}
+                    <button 
+                      className="btn btn-primary" 
+                      onClick={() => handleUpdateStatus(proposal._id, 'Accepted')}
+                      style={{ background: 'var(--success)', color: 'white', display: 'flex', alignItems: 'center', gap: '6px', border: 'none' }}
                     >
-                      Reject
+                      <Check size={16} /> Accept Proposal
                     </button>
                   </div>
+                ) : (
+                  <span className={`status-badge ${proposal.status.toLowerCase()}`} style={{ padding: '6px 16px', borderRadius: '20px', fontSize: '14px', fontWeight: '600', background: proposal.status === 'Accepted' ? 'var(--success-bg)' : 'var(--danger-bg)', color: proposal.status === 'Accepted' ? 'var(--success)' : 'var(--danger)' }}>
+                    {proposal.status}
+                  </span>
                 )}
-
-                {showRejectForm === proposal._id && (
-                  <div className="reject-form">
-                    <textarea
-                      value={rejectReason}
-                      onChange={(e) => setRejectReason(e.target.value)}
-                      placeholder="Reason for rejection..."
-                      rows="3"
-                    ></textarea>
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => handleRejectProposal(proposal._id)}
-                    >
-                      Send Rejection
-                    </button>
-                    <button
-                      className="btn btn-secondary"
-                      onClick={() => setShowRejectForm(null)}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </motion.div>
+              </div>
+            </motion.div>
+          ))
         )}
-      </main>
+      </div>
+
+      {/* Modals */}
+      <AnimatePresence>
+        {showProposalDetail && selectedProposal && (
+          <ProposalDetail 
+            proposal={selectedProposal} 
+            onClose={() => setShowProposalDetail(false)} 
+            onAccept={() => handleUpdateStatus(selectedProposal._id, 'Accepted')}
+            onReject={() => handleUpdateStatus(selectedProposal._id, 'Rejected')}
+            onViewProfile={() => {
+              setShowProposalDetail(false);
+              openFreelancerProfile(selectedProposal.freelancerId?._id);
+            }}
+          />
+        )}
+
+        {showFreelancerProfile && selectedFreelancer && (
+          <FreelancerProfile 
+            freelancerId={selectedFreelancer._id} 
+            onClose={() => setShowFreelancerProfile(false)} 
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };

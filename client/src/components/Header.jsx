@@ -1,41 +1,106 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { AuthModal } from './AuthModal';
+import { ChevronDown, User, Briefcase } from 'lucide-react';
 import '../App.css';
 
 export const Header = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState('login');
+  const [authRole, setAuthRole] = useState('Client');
+  
+  // Dropdown states
+  const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
+  const [signupDropdownOpen, setSignupDropdownOpen] = useState(false);
+
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
+  };
+
+  const openAuth = (mode, role) => {
+    setAuthMode(mode);
+    setAuthRole(role);
+    setIsAuthModalOpen(true);
+    setLoginDropdownOpen(false);
+    setSignupDropdownOpen(false);
   };
 
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="logo">
-          <h1><span className="freelancer-text">Freelancer</span> <span className="hub-text">Hub</span></h1>
+    <>
+      <header className="header">
+        <div className="header-container">
+          <div className="logo" onClick={() => navigate('/')} style={{cursor: 'pointer'}}>
+            <h1><span className="freelancer-text">Freelancer</span> <span className="hub-text">Hub</span></h1>
+          </div>
+          <nav className="nav">
+            <NavLink to="/" end>Home</NavLink>
+            <NavLink to="/about">About</NavLink>
+            <NavLink to="/search">Jobs</NavLink>
+            <NavLink to="/contact">Contact</NavLink>
+            
+            {user ? (
+              <>
+                <NavLink to={user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard'} className="btn btn-primary" style={{color: 'white'}}>Dashboard</NavLink>
+                <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px', fontWeight: '500', fontFamily: 'inherit' }} onMouseEnter={(e) => e.target.style.color = 'var(--danger)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Logout</button>
+              </>
+            ) : (
+              <div className="auth-nav-group">
+                <div 
+                  className="dropdown-container" 
+                  onMouseEnter={() => setLoginDropdownOpen(true)}
+                  onMouseLeave={() => setLoginDropdownOpen(false)}
+                >
+                  <button className="nav-dropdown-btn">
+                    Login <ChevronDown size={14} />
+                  </button>
+                  {loginDropdownOpen && (
+                    <div className="dropdown-menu">
+                      <button onClick={() => openAuth('login', 'Freelancer')}>
+                        <User size={16} /> As Freelancer
+                      </button>
+                      <button onClick={() => openAuth('login', 'Client')}>
+                        <Briefcase size={16} /> As Customer
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                <div 
+                  className="dropdown-container"
+                  onMouseEnter={() => setSignupDropdownOpen(true)}
+                  onMouseLeave={() => setSignupDropdownOpen(false)}
+                >
+                  <button className="btn btn-primary nav-dropdown-btn" style={{color: 'white', padding: '8px 16px'}}>
+                    Sign Up <ChevronDown size={14} />
+                  </button>
+                  {signupDropdownOpen && (
+                    <div className="dropdown-menu right">
+                      <button onClick={() => openAuth('signup', 'Freelancer')}>
+                        <User size={16} /> As Freelancer
+                      </button>
+                      <button onClick={() => openAuth('signup', 'Client')}>
+                        <Briefcase size={16} /> As Customer
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </nav>
         </div>
-        <nav className="nav">
-          <NavLink to="/" end>Home</NavLink>
-          <NavLink to="/about">About</NavLink>
-          <NavLink to="/search">Jobs</NavLink>
-          <NavLink to="/contact">Contact</NavLink>
-          {user ? (
-            <>
-              <NavLink to={user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard'}>Dashboard</NavLink>
-              <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px', fontWeight: '500', fontFamily: 'inherit' }} onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Logout</button>
-            </>
-          ) : (
-            <>
-              <NavLink to="/login">Login</NavLink>
-              <NavLink to="/signup">Sign Up</NavLink>
-            </>
-          )}
-        </nav>
-      </div>
-    </header>
+      </header>
+
+      <AuthModal 
+        isOpen={isAuthModalOpen} 
+        onClose={() => setIsAuthModalOpen(false)} 
+        initialMode={authMode}
+        initialRole={authRole}
+      />
+    </>
   );
 };

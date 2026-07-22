@@ -2,9 +2,10 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
-import { Header } from '../components/Header';
+import { DashboardLayout } from '../components/DashboardLayout';
 import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
+import { Send, Edit2, Trash2, Check, X, Clock, MapPin, DollarSign, Briefcase } from 'lucide-react';
 
 export const ProjectDetail = () => {
   const { projectId } = useParams();
@@ -21,14 +22,8 @@ export const ProjectDetail = () => {
   const [editingMessageId, setEditingMessageId] = useState(null);
   const [editMessageText, setEditMessageText] = useState('');
   const [loading, setLoading] = useState(true);
-  const [notification, setNotification] = useState({ type: '', text: '' });
   const messagesEndRef = useRef(null);
   const socketRef = useRef(null);
-
-  const showNotification = (type, text) => {
-    setNotification({ type, text });
-    setTimeout(() => setNotification({ type: '', text: '' }), 3000);
-  };
 
   useEffect(() => {
     fetchProject();
@@ -103,7 +98,6 @@ export const ProjectDetail = () => {
         message: newMessage,
       });
 
-      // The backend emits 'receive_message' which we listen to, so we don't need to fetchMessages() manually
       setNewMessage('');
     } catch (error) {
       console.error('Error sending message:', error);
@@ -122,7 +116,6 @@ export const ProjectDetail = () => {
       setEditMessageText('');
     } catch (error) {
       console.error('Error editing message:', error);
-      showNotification('error', 'Failed to edit message');
     }
   };
 
@@ -133,7 +126,6 @@ export const ProjectDetail = () => {
       await apiClient.delete(`/messages/${messageId}`);
     } catch (error) {
       console.error('Error deleting message:', error);
-      showNotification('error', 'Failed to delete message');
     }
   };
 
@@ -141,226 +133,217 @@ export const ProjectDetail = () => {
     e.preventDefault();
     try {
       await apiClient.post(`/projects/${projectId}/progress`, progressData);
-      showNotification('success', 'Progress updated!');
       setShowProgressForm(false);
       setProgressData({ stage: '', description: '' });
       fetchProject();
     } catch (error) {
-      showNotification('error', 'Error updating progress: ' + (error.response?.data?.message || error.message));
+      alert('Error updating progress: ' + (error.response?.data?.message || error.message));
     }
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (!project) return <div>Project not found</div>;
+  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading Workspace...</div>;
+  if (!project) return <div style={{ padding: '40px', textAlign: 'center' }}>Project not found</div>;
 
   const isFreelancer = user.id === project.freelancerId._id;
+  const otherUser = isFreelancer ? project.clientId : project.freelancerId;
 
   return (
-    <div className="page">
-      <Header />
-      <main className="content-container">
-        <button className="btn btn-secondary" onClick={() => navigate(-1)} style={{ marginBottom: '16px' }}>
-          ← Back
-        </button>
+    <DashboardLayout role={user.role}>
+      <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 80px)', gap: '24px' }}>
+        
+        {/* Workspace Header */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)', flexShrink: 0 }}>
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--primary-action-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: 'var(--primary-action)', fontWeight: 'bold' }}>
+              {otherUser.username.charAt(0).toUpperCase()}
+            </div>
+            <div>
+              <h2 style={{ fontSize: '20px', marginBottom: '4px' }}>{project.jobId?.title}</h2>
+              <div style={{ display: 'flex', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', alignItems: 'center' }}>
+                <span>{otherUser.username}</span>
+                <span>•</span>
+                <span className="status-badge" style={{ padding: '2px 10px', borderRadius: '12px', fontSize: '11px', background: project.status === 'Completed' ? 'var(--success-bg)' : 'var(--primary-action-bg)', color: project.status === 'Completed' ? 'var(--success)' : 'var(--primary-action)' }}>
+                  {project.status}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <button className="btn btn-secondary" onClick={() => setShowProgressForm(true)}>Project Milestones</button>
+            <button className="btn btn-primary" onClick={() => navigate(-1)}>Back</button>
+          </div>
+        </div>
 
-        <motion.div 
-          className="project-header-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="header-card-top" style={{ justifyContent: 'flex-end' }}>
-            <span className={`status-badge ${project.status.toLowerCase()}`}>
-              {project.status}
+        {/* Chat Interface */}
+        <div style={{ flex: 1, background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+          
+          <div style={{ padding: '16px 24px', borderBottom: '1px solid var(--border-color)', background: 'var(--bg-secondary)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ fontSize: '16px' }}>Project Discussion</h3>
+            <span style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '12px', color: 'var(--success)' }}>
+              <div style={{ width: '8px', height: '8px', background: 'var(--success)', borderRadius: '50%' }}></div> Real-time connection
             </span>
           </div>
 
-          {notification.text && (
-            <div className={`message ${notification.type}`} style={{ marginBottom: '16px' }}>
-              {notification.text}
-            </div>
-          )}
-          
-          <div className="header-card-main">
-            <div className="header-info">
-              <h1>{project.jobId?.title}</h1>
-              <p className="budget-text">Budget: <strong>${project.jobId?.budget}</strong></p>
-            </div>
-
-            <div className="header-team">
-              <div className="team-member">
-                <span className="team-role">Client</span>
-                <span className="team-name">{project.clientId?.username}</span>
+          <div style={{ flex: 1, padding: '24px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '16px', background: 'var(--bg-primary)' }}>
+            {messages.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>
+                Start the conversation with {otherUser.username}!
               </div>
-              <div className="team-member">
-                <span className="team-role">Freelancer</span>
-                <span className="team-name">{project.freelancerId?.username}</span>
-              </div>
-            </div>
-
-            <div className="header-actions">
-              <button
-                className="btn btn-secondary"
-                onClick={() => setShowProgressForm(true)}
-              >
-                View / Update Progress
-              </button>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Progress Modal */}
-        {showProgressForm && (
-          <div className="modal-overlay">
-            <div className="modal progress-modal">
-              <div className="modal-header">
-                <h2>Project Progress</h2>
-                <button className="btn-close" onClick={() => setShowProgressForm(false)}>✕</button>
-              </div>
-
-              <div className="progress-list">
-                {project.progress.length === 0 ? (
-                  <p className="no-progress">No progress updates yet.</p>
-                ) : (
-                  project.progress.map((prog, index) => (
-                    <div key={index} className="progress-item">
-                      <div className="progress-item-header">
-                        <h4>{prog.stage}</h4>
-                        <small>{new Date(prog.updatedAt).toLocaleDateString()}</small>
-                      </div>
-                      <p>{prog.description}</p>
+            ) : (
+              messages.map((msg) => {
+                const isMine = msg.senderId?._id === user.id;
+                
+                if (msg.isSystemMessage) {
+                  return (
+                    <div key={msg._id} style={{ display: 'flex', justifyContent: 'center', margin: '16px 0' }}>
+                      <span style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)', padding: '6px 16px', borderRadius: '20px', fontSize: '12px' }}>
+                        {msg.message} • {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                      </span>
                     </div>
-                  ))
-                )}
-              </div>
+                  );
+                }
 
-              {isFreelancer && (
-                <div className="add-progress-section">
-                  <h3>Add Update</h3>
-                  <form onSubmit={handleAddProgress} className="progress-form">
-                    <div className="form-group">
-                      <label htmlFor="stage">Stage / Title</label>
-                      <input
-                        type="text"
-                        id="stage"
-                        name="stage"
-                        value={progressData.stage}
-                        onChange={(e) =>
-                          setProgressData({ ...progressData, stage: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="description">Description</label>
-                      <textarea
-                        id="description"
-                        name="description"
-                        value={progressData.description}
-                        onChange={(e) =>
-                          setProgressData({ ...progressData, description: e.target.value })
-                        }
-                        rows="3"
-                        required
-                      ></textarea>
-                    </div>
-                    <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-                      Submit Update
-                    </button>
-                  </form>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+                return (
+                  <div key={msg._id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMine ? 'flex-end' : 'flex-start', margin: '4px 0' }}>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', flexDirection: isMine ? 'row-reverse' : 'row', maxWidth: '75%' }}>
+                      
+                      {!isMine && (
+                        <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary-action-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: 'var(--primary-action)', flexShrink: 0 }}>
+                          {msg.senderId?.username.charAt(0).toUpperCase()}
+                        </div>
+                      )}
 
-        <motion.div 
-          className="chat-section whatsapp-style-chat"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <div className="chat-header">
-            <h3>Project Chat</h3>
-            <span className="online-indicator">Real-time</span>
-          </div>
-          <div className="messages-container">
-            {messages.map((msg) => (
-              <React.Fragment key={msg._id}>
-                {msg.isSystemMessage ? (
-                  <div className="system-message-bubble">
-                    <p>{msg.message}</p>
-                    <span className="timestamp">
-                      {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </span>
-                  </div>
-                ) : (
-                  <div
-                    className={`chat-bubble-wrapper ${msg.senderId?._id === user.id ? 'sent' : 'received'}`}
-                  >
-                    {msg.senderId?._id === user.id && editingMessageId !== msg._id && (
-                      <div className="message-actions">
-                        <button onClick={() => {
-                          setEditingMessageId(msg._id);
-                          setEditMessageText(msg.message);
-                        }} title="Edit Message">
-                          ✏️
-                        </button>
-                        <button onClick={() => handleDeleteMessage(msg._id)} title="Delete Message">
-                          🗑️
-                        </button>
-                      </div>
-                    )}
-                    
-                    {editingMessageId === msg._id ? (
-                      <form onSubmit={handleEditMessage} className="edit-message-form">
-                        <input 
-                          type="text" 
-                          value={editMessageText} 
-                          onChange={(e) => setEditMessageText(e.target.value)}
-                          className="edit-chat-input"
-                          autoFocus
-                        />
-                        <button type="submit" className="btn-save-edit">✓</button>
-                        <button type="button" className="btn-cancel-edit" onClick={() => setEditingMessageId(null)}>✕</button>
-                      </form>
-                    ) : (
-                      <div className="chat-bubble">
-                        {msg.senderId?._id !== user.id && (
-                          <strong className="sender-name">{msg.senderId?.username}</strong>
+                      <div style={{ 
+                        background: isMine ? 'var(--primary-action)' : 'var(--bg-card)', 
+                        color: isMine ? '#FFF' : 'var(--text-primary)',
+                        padding: '12px 16px',
+                        borderRadius: '16px',
+                        borderBottomRightRadius: isMine ? '4px' : '16px',
+                        borderBottomLeftRadius: !isMine ? '4px' : '16px',
+                        border: isMine ? 'none' : '1px solid var(--border-color)',
+                        boxShadow: 'var(--shadow-sm)',
+                        position: 'relative',
+                        group: 'true' // for hover targeting
+                      }}
+                      onMouseEnter={(e) => {
+                        const actions = e.currentTarget.querySelector('.msg-actions');
+                        if(actions) actions.style.opacity = '1';
+                      }}
+                      onMouseLeave={(e) => {
+                        const actions = e.currentTarget.querySelector('.msg-actions');
+                        if(actions) actions.style.opacity = '0';
+                      }}
+                      >
+                        {editingMessageId === msg._id ? (
+                          <form onSubmit={handleEditMessage} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <input 
+                              type="text" 
+                              value={editMessageText} 
+                              onChange={(e) => setEditMessageText(e.target.value)}
+                              autoFocus
+                              style={{ padding: '4px 8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.1)', color: 'white', outline: 'none' }}
+                            />
+                            <button type="submit" style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><Check size={16} /></button>
+                            <button type="button" onClick={() => setEditingMessageId(null)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><X size={16} /></button>
+                          </form>
+                        ) : (
+                          <>
+                            <p style={{ margin: 0, fontSize: '15px', lineHeight: '1.5' }}>{msg.message}</p>
+                            
+                            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '6px', alignItems: 'center', marginTop: '4px' }}>
+                              <span style={{ fontSize: '11px', color: isMine ? 'rgba(255,255,255,0.7)' : 'var(--text-muted)' }}>
+                                {msg.isEdited && <span style={{ fontStyle: 'italic', marginRight: '4px' }}>(edited)</span>}
+                                {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </div>
+
+                            {isMine && editingMessageId !== msg._id && (
+                              <div className="msg-actions" style={{ position: 'absolute', top: '50%', left: '-60px', transform: 'translateY(-50%)', display: 'flex', gap: '4px', opacity: 0, transition: 'opacity 0.2s', background: 'var(--bg-card)', padding: '4px', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+                                <button onClick={() => { setEditingMessageId(msg._id); setEditMessageText(msg.message); }} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--text-secondary)' }}><Edit2 size={14} /></button>
+                                <button onClick={() => handleDeleteMessage(msg._id)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--danger)' }}><Trash2 size={14} /></button>
+                              </div>
+                            )}
+                          </>
                         )}
-                        <p>{msg.message}</p>
-                        <span className="timestamp">
-                          {msg.isEdited && <span className="edited-tag">(edited)</span>}
-                          {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                        </span>
                       </div>
-                    )}
+                    </div>
                   </div>
-                )}
-              </React.Fragment>
-            ))}
+                );
+              })
+            )}
             <div ref={messagesEndRef} />
           </div>
 
-          <form onSubmit={handleSendMessage} className="message-form">
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type a message..."
-              required
-              className="chat-input"
-            />
-            <button type="submit" className="btn-send">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
-            </button>
-          </form>
-        </motion.div>
-      </main>
-    </div>
+          <div style={{ padding: '20px 24px', background: 'var(--bg-card)', borderTop: '1px solid var(--border-color)' }}>
+            <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="Type your message here..."
+                required
+                style={{ flex: 1, padding: '16px 20px', borderRadius: '30px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', fontSize: '15px', outline: 'none', transition: 'border-color 0.2s' }}
+                onFocus={(e) => e.target.style.borderColor = 'var(--primary-action)'}
+                onBlur={(e) => e.target.style.borderColor = 'var(--border-color)'}
+              />
+              <button type="submit" className="btn btn-primary" style={{ padding: '14px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px' }}>
+                <Send size={20} />
+              </button>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+      {/* Progress/Milestones Modal */}
+      {showProgressForm && (
+        <div className="modal-overlay" style={{ zIndex: 10000 }}>
+          <div className="modal" style={{ maxWidth: '600px', width: '95%' }}>
+            <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ fontSize: '20px', margin: 0 }}>Project Milestones</h2>
+              <button className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={() => setShowProgressForm(false)}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <div style={{ padding: '24px', maxHeight: '50vh', overflowY: 'auto' }}>
+              {project.progress.length === 0 ? (
+                <div style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '20px 0' }}>No milestones recorded yet.</div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {project.progress.map((prog, index) => (
+                    <div key={index} style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px', borderLeft: '4px solid var(--primary-action)' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                        <h4 style={{ fontSize: '16px', margin: 0 }}>{prog.stage}</h4>
+                        <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{new Date(prog.updatedAt).toLocaleDateString()}</span>
+                      </div>
+                      <p style={{ color: 'var(--text-secondary)', fontSize: '14px', margin: 0 }}>{prog.description}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {isFreelancer && (
+              <div style={{ padding: '24px', borderTop: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
+                <h3 style={{ fontSize: '16px', marginBottom: '16px' }}>Add New Milestone</h3>
+                <form onSubmit={handleAddProgress}>
+                  <div className="form-group floating-label">
+                    <input type="text" placeholder=" " value={progressData.stage} onChange={(e) => setProgressData({ ...progressData, stage: e.target.value })} required style={{ background: 'var(--bg-card)' }} />
+                    <label>Milestone Title</label>
+                  </div>
+                  <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
+                    <textarea placeholder=" " value={progressData.description} onChange={(e) => setProgressData({ ...progressData, description: e.target.value })} rows="3" required style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-card)', fontSize: '15px' }}></textarea>
+                    <label style={{ top: '24px' }}>Description</label>
+                  </div>
+                  <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>Save Milestone</button>
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </DashboardLayout>
   );
 };
