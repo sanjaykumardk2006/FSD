@@ -54,16 +54,17 @@ export const Header = () => {
                   className="dropdown-container" 
                   onMouseEnter={() => setLoginDropdownOpen(true)}
                   onMouseLeave={() => setLoginDropdownOpen(false)}
+                  onClick={() => setLoginDropdownOpen(!loginDropdownOpen)}
                 >
                   <button className="nav-dropdown-btn">
                     Login <ChevronDown size={14} />
                   </button>
                   {loginDropdownOpen && (
                     <div className="dropdown-menu">
-                      <button onClick={() => openAuth('login', 'Freelancer')}>
+                      <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Freelancer'); }}>
                         <User size={16} /> As Freelancer
                       </button>
-                      <button onClick={() => openAuth('login', 'Client')}>
+                      <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Client'); }}>
                         <Briefcase size={16} /> As Customer
                       </button>
                     </div>
@@ -74,16 +75,17 @@ export const Header = () => {
                   className="dropdown-container"
                   onMouseEnter={() => setSignupDropdownOpen(true)}
                   onMouseLeave={() => setSignupDropdownOpen(false)}
+                  onClick={() => setSignupDropdownOpen(!signupDropdownOpen)}
                 >
-                  <button className="btn btn-primary nav-dropdown-btn" style={{color: 'white', padding: '8px 16px'}}>
+                  <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '10px 20px', color: 'white' }}>
                     Sign Up <ChevronDown size={14} />
                   </button>
                   {signupDropdownOpen && (
                     <div className="dropdown-menu right">
-                      <button onClick={() => openAuth('signup', 'Freelancer')}>
+                      <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Freelancer'); }}>
                         <User size={16} /> As Freelancer
                       </button>
-                      <button onClick={() => openAuth('signup', 'Client')}>
+                      <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Client'); }}>
                         <Briefcase size={16} /> As Customer
                       </button>
                     </div>

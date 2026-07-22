@@ -1767,7 +1767,7 @@ main> :first-child {
   display: flex;
   flex-direction: column;
   padding: 8px 0;
-  margin-top: 8px;
+  margin-top: 0;
   animation: fadeIn 0.2s ease;
 }
 
