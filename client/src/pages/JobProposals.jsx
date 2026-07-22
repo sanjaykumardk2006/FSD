@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Check, X as XIcon, FileText, User, Star, Calendar } from 'lucide-react';
-import { ProposalDetail } from './ProposalDetail';
-import { FreelancerProfile } from './FreelancerProfile';
+import { ProposalDetail } from '../components/ProposalDetail';
+import { FreelancerProfile } from '../components/FreelancerProfile';
 
 export const JobProposals = () => {
   const { jobId } = useParams();
