@@ -35,15 +35,6 @@ export const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
-    if (name === 'mobileNumber') {
-      const onlyNums = value.replace(/[^0-9]/g, '');
-      if (onlyNums.length <= 10) {
-        setFormData({ ...formData, [name]: onlyNums });
-      }
-      return;
-    }
-
     setFormData({ ...formData, [name]: value });
   };
 
@@ -59,16 +50,8 @@ export const Signup = () => {
       return;
     }
 
-    if (formData.mobileNumber.length !== 10) {
-      setError('Mobile number must be exactly 10 digits');
-      setLoading(false);
-      return;
-    }
-
     try {
-      const submissionData = { ...formData };
-      submissionData.mobileNumber = `${formData.countryCode}${formData.mobileNumber}`;
-      const response = await apiClient.post('/auth/signup', submissionData);
+      const response = await apiClient.post('/auth/signup', formData);
       setMessage(response.data.message);
       setTimeout(() => navigate('/login'), 2000);
     } catch (err) {
@@ -221,33 +204,16 @@ export const Signup = () => {
                         </div>
                         <div className="form-group">
                           <label htmlFor="mobileNumber">Mobile Number</label>
-                          <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
-                            <select
-                              name="countryCode"
-                              value={formData.countryCode}
-                              onChange={handleChange}
-                              style={{ padding: '12px', borderRadius: '8px', border: '1px solid var(--border-color)', outline: 'none', background: 'var(--bg-secondary)', color: 'var(--text-primary)', width: '110px', flexShrink: 0 }}
-                            >
-                              <option value="+91">+91 (IN)</option>
-                              <option value="+1">+1 (US)</option>
-                              <option value="+44">+44 (UK)</option>
-                              <option value="+61">+61 (AU)</option>
-                            </select>
-                            <input
-                              type="tel"
-                              id="mobileNumber"
-                              name="mobileNumber"
-                              value={formData.mobileNumber}
-                              onChange={handleChange}
-                              placeholder="10-digit mobile number"
-                              required
-                              maxLength="10"
-                              minLength="10"
-                              pattern="[0-9]{10}"
-                              title="Please enter a valid 10-digit mobile number"
-                              style={{ flex: 1, width: '100%', minWidth: 0 }}
-                            />
-                          </div>
+                          <input
+                            type="tel"
+                            id="mobileNumber"
+                            name="mobileNumber"
+                            value={formData.mobileNumber}
+                            onChange={handleChange}
+                            placeholder="xxxxxxxxxx"
+                            required
+                            style={{ flex: 1, width: '100%', minWidth: 0 }}
+                          />
                         </div>
                         <div className="form-group">
                           <label htmlFor="email">Email Address</label>
@@ -261,17 +227,7 @@ export const Signup = () => {
                             required
                           />
                         </div>
-                        <div className="form-group">
-                          <label htmlFor="username">Username (Optional)</label>
-                          <input
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            placeholder="Leave blank to auto-generate"
-                          />
-                        </div>
+
                         {formData.role === 'Freelancer' && (
                           <div className="form-group">
                             <label htmlFor="service">Service</label>

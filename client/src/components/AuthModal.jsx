@@ -13,6 +13,13 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
     email: '',
     password: '',
     confirmPassword: '',
+    firstName: '',
+    lastName: '',
+    companyName: '',
+    country: '',
+    mobileNumber: '',
+    entityType: 'Self-employed',
+    service: '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -29,13 +36,28 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
       email: '',
       password: '',
       confirmPassword: '',
+      firstName: '',
+      lastName: '',
+      companyName: '',
+      country: '',
+      mobileNumber: '',
+      entityType: 'Self-employed',
+      service: '',
     });
   }, [isOpen, initialMode, initialRole]);
 
   if (!isOpen) return null;
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'mobileNumber') {
+      const onlyNums = value.replace(/[^0-9]/g, '');
+      if (onlyNums.length <= 10) {
+        setFormData({ ...formData, [name]: onlyNums });
+      }
+      return;
+    }
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
@@ -45,6 +67,12 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
 
     if (mode === 'signup' && formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
+    if (mode === 'signup' && formData.mobileNumber && formData.mobileNumber.length !== 10) {
+      setError('Mobile number must be exactly 10 digits');
       setLoading(false);
       return;
     }
@@ -95,7 +123,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="auth-form-content">
+            <form onSubmit={handleSubmit} className="auth-form-content" style={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: '8px' }}>
               {error && (
                 <div className="message error" style={{ padding: '12px', borderRadius: '8px', marginBottom: '20px' }}>
                   {error}
@@ -103,18 +131,71 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
               )}
 
               {mode === 'signup' && (
-                <div className="form-group floating-label">
-                  <User size={18} className="input-icon" />
-                  <input
-                    type="text"
-                    name="username"
-                    placeholder=" "
-                    value={formData.username}
-                    onChange={handleChange}
-                    required
-                  />
-                  <label>Username</label>
-                </div>
+                <>
+                  <div style={{ marginBottom: '16px', display: 'flex', gap: '16px' }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: 'var(--text-secondary)' }}>
+                      <input type="radio" name="entityType" value="Self-employed" checked={formData.entityType === 'Self-employed'} onChange={handleChange} />
+                      Self-employed
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: 'var(--text-secondary)' }}>
+                      <input type="radio" name="entityType" value="Company" checked={formData.entityType === 'Company'} onChange={handleChange} />
+                      Company
+                    </label>
+                  </div>
+
+                  {formData.entityType === 'Company' ? (
+                    <div className="form-group floating-label">
+                      <Briefcase size={18} className="input-icon" />
+                      <input type="text" name="companyName" placeholder=" " value={formData.companyName} onChange={handleChange} required />
+                      <label>Company Name</label>
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', gap: '12px' }}>
+                      <div className="form-group floating-label" style={{ flex: 1, marginBottom: 0 }}>
+                        <User size={18} className="input-icon" />
+                        <input type="text" name="firstName" placeholder=" " value={formData.firstName} onChange={handleChange} required />
+                        <label>First Name</label>
+                      </div>
+                      <div className="form-group floating-label" style={{ flex: 1, marginBottom: 0 }}>
+                        <User size={18} className="input-icon" />
+                        <input type="text" name="lastName" placeholder=" " value={formData.lastName} onChange={handleChange} required />
+                        <label>Last Name</label>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="form-group floating-label" style={{ marginTop: '20px' }}>
+                    <User size={18} className="input-icon" />
+                    <input type="text" name="country" placeholder=" " value={formData.country} onChange={handleChange} required />
+                    <label>Country</label>
+                  </div>
+                  
+                  <div className="form-group floating-label">
+                    <User size={18} className="input-icon" />
+                    <input type="tel" name="mobileNumber" placeholder=" " value={formData.mobileNumber} onChange={handleChange} required />
+                    <label>Mobile Number</label>
+                  </div>
+
+                  {role === 'Freelancer' && (
+                    <div className="form-group floating-label">
+                      <Briefcase size={18} className="input-icon" />
+                      <input type="text" name="service" placeholder=" " value={formData.service} onChange={handleChange} required />
+                      <label>Service (ex: web developer)</label>
+                    </div>
+                  )}
+
+                  <div className="form-group floating-label">
+                    <User size={18} className="input-icon" />
+                    <input
+                      type="text"
+                      name="username"
+                      placeholder=" "
+                      value={formData.username}
+                      onChange={handleChange}
+                    />
+                    <label>Username (Optional)</label>
+                  </div>
+                </>
               )}
 
               <div className="form-group floating-label">
