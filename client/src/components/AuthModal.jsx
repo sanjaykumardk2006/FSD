@@ -108,13 +108,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
             </button>
 
             <div className="auth-header">
-              <h2>{mode === 'login' ? 'Welcome Back' : 'Create an Account'}</h2>
-              <p>
-                {mode === 'login' 
-                  ? `Sign in as a ${role === 'Client' ? 'Customer' : role}`
-                  : `Join as a ${role === 'Client' ? 'Customer' : role}`
-                }
-              </p>
+              <h2>{mode === 'login' ? 'Welcome Back' : `Join as ${role === 'Client' ? 'Customer' : role}`}</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form-content" style={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: '8px' }}>
