@@ -879,7 +879,7 @@ export const About = () => {
           <p className="text-content" style={{ maxWidth: '800px', margin: '0 auto 40px' }}>
             We are always looking for talented individuals to join our mission. Check out our open roles.
           </p>
-          <button className="btn-premium" onClick={() => navigate('/login')} style={{ gap: '8px' }}>
+          <button className="btn-premium" onClick={() => navigate('/contact')} style={{ gap: '8px' }}>
             Join Our Team
             <svg className="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </button>

@@ -8,14 +8,14 @@
   --border-color: #E5E7EB;
   --border-hover: #D1D5DB;
 
-  --accent-primary: #10B981; /* Emerald Green */
-  --accent-hover: #059669;
+  --accent-primary: #059669; /* Darker Emerald Green */
+  --accent-hover: #047857;
 
   /* Functional Colors */
-  --success: #10B981; /* Green */
-  --success-bg: rgba(16, 185, 129, 0.15);
-  --primary-action: #10B981; /* Changed from Blue to Green */
-  --primary-action-bg: rgba(16, 185, 129, 0.15);
+  --success: #059669; /* Green */
+  --success-bg: rgba(5, 150, 105, 0.15);
+  --primary-action: #059669; /* Changed from Blue to Green */
+  --primary-action-bg: rgba(5, 150, 105, 0.15);
   --danger: #EF4444; /* Red */
   --danger-bg: rgba(239, 68, 68, 0.15);
   --pending: #F59E0B; /* Orange */

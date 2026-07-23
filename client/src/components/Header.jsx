@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
@@ -29,6 +29,16 @@ export const Header = () => {
     setLoginDropdownOpen(false);
     setSignupDropdownOpen(false);
   };
+
+  useEffect(() => {
+    const handleOpenAuth = (e) => {
+      if (e.detail) {
+        openAuth(e.detail.mode, e.detail.role);
+      }
+    };
+    window.addEventListener('open-auth-modal', handleOpenAuth);
+    return () => window.removeEventListener('open-auth-modal', handleOpenAuth);
+  }, []);
 
   return (
     <>
