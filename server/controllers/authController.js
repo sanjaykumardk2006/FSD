@@ -82,7 +82,7 @@ exports.login = [
 
       // Check if user exists and password matches
       if (!user || !(await user.comparePassword(password))) {
-        return res.status(401).json({ message: 'Invalid email or password' });
+        return res.status(401).json({ message: 'invalid email and password' });
       }
 
       // Generate token

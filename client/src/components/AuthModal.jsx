@@ -13,9 +13,6 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
     email: '',
     password: '',
     confirmPassword: '',
-    firstName: '',
-    lastName: '',
-    companyName: '',
     country: '',
     mobileNumber: '',
     entityType: 'Self-employed',
@@ -36,9 +33,6 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
       email: '',
       password: '',
       confirmPassword: '',
-      firstName: '',
-      lastName: '',
-      companyName: '',
       country: '',
       mobileNumber: '',
       entityType: 'Self-employed',
@@ -117,8 +111,8 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
               <h2>{mode === 'login' ? 'Welcome Back' : 'Create an Account'}</h2>
               <p>
                 {mode === 'login' 
-                  ? `Sign in as a ${role}`
-                  : `Join as a ${role}`
+                  ? `Sign in as a ${role === 'Client' ? 'Customer' : role}`
+                  : `Join as a ${role === 'Client' ? 'Customer' : role}`
                 }
               </p>
             </div>
@@ -142,27 +136,19 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
                       Company
                     </label>
                   </div>
-
-                  {formData.entityType === 'Company' ? (
-                    <div className="form-group floating-label">
-                      <Briefcase size={18} className="input-icon" />
-                      <input type="text" name="companyName" placeholder=" " value={formData.companyName} onChange={handleChange} required />
-                      <label>Company Name</label>
-                    </div>
-                  ) : (
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <div className="form-group floating-label" style={{ flex: 1, marginBottom: 0 }}>
-                        <User size={18} className="input-icon" />
-                        <input type="text" name="firstName" placeholder=" " value={formData.firstName} onChange={handleChange} required />
-                        <label>First Name</label>
-                      </div>
-                      <div className="form-group floating-label" style={{ flex: 1, marginBottom: 0 }}>
-                        <User size={18} className="input-icon" />
-                        <input type="text" name="lastName" placeholder=" " value={formData.lastName} onChange={handleChange} required />
-                        <label>Last Name</label>
-                      </div>
-                    </div>
-                  )}
+                  
+                  <div className="form-group floating-label">
+                    <User size={18} className="input-icon" />
+                    <input
+                      type="text"
+                      name="username"
+                      placeholder=" "
+                      value={formData.username}
+                      onChange={handleChange}
+                      required
+                    />
+                    <label>Username</label>
+                  </div>
 
                   <div className="form-group floating-label" style={{ marginTop: '20px' }}>
                     <User size={18} className="input-icon" />
@@ -183,18 +169,6 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
                       <label>Service (ex: web developer)</label>
                     </div>
                   )}
-
-                  <div className="form-group floating-label">
-                    <User size={18} className="input-icon" />
-                    <input
-                      type="text"
-                      name="username"
-                      placeholder=" "
-                      value={formData.username}
-                      onChange={handleChange}
-                    />
-                    <label>Username (Optional)</label>
-                  </div>
                 </>
               )}
 
