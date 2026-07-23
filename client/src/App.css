@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@500;600;700;800&display=swap');
 
-/* Premium Dark Theme Tokens (Black, Green, Blue) */
+/* Premium Light Theme Tokens (White, Green) */
 :root {
-  --bg-primary: #050505; /* Deep Black */
-  --bg-secondary: #121212; /* Dark Gray for slight contrast */
-  --bg-card: #1A1A1A; /* Lighter black for cards */
-  --border-color: #2A2A2A;
-  --border-hover: #3A3A3A;
+  --bg-primary: #FFFFFF; /* Pure White */
+  --bg-secondary: #F3F4F6; /* Light Gray for slight contrast */
+  --bg-card: #FFFFFF; /* White for cards */
+  --border-color: #E5E7EB;
+  --border-hover: #D1D5DB;
 
   --accent-primary: #10B981; /* Emerald Green */
   --accent-hover: #059669;
@@ -14,16 +14,16 @@
   /* Functional Colors */
   --success: #10B981; /* Green */
   --success-bg: rgba(16, 185, 129, 0.15);
-  --primary-action: #3B82F6; /* Blue */
-  --primary-action-bg: rgba(59, 130, 246, 0.15);
+  --primary-action: #10B981; /* Changed from Blue to Green */
+  --primary-action-bg: rgba(16, 185, 129, 0.15);
   --danger: #EF4444; /* Red */
   --danger-bg: rgba(239, 68, 68, 0.15);
   --pending: #F59E0B; /* Orange */
   --pending-bg: rgba(245, 158, 11, 0.15);
   --inactive: #4B5563; /* Gray */
   
-  --text-primary: #F9FAFB; /* Off-white for readability */
-  --text-secondary: #9CA3AF;
+  --text-primary: #111827; /* Dark text for readability */
+  --text-secondary: #4B5563;
   --text-muted: #6B7280;
 
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -95,7 +95,7 @@ main> :first-child {
 
 /* Glassmorphism Header */
 .header {
-  background: rgba(5, 5, 5, 0.85);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   position: fixed;
@@ -774,6 +774,11 @@ main> :first-child {
     gap: 16px !important;
   }
 
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   /* Responsive Typography Overrides for inline styles */
   h1,
   .premium-hero h1 {
@@ -1184,7 +1189,7 @@ main> :first-child {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #000000;
+  background: var(--bg-secondary);
   padding: 8px;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);

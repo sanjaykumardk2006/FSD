@@ -60,7 +60,7 @@ export const Login = () => {
   return (
     <div className="page">
       <Header />
-      <main style={{ minHeight: 'calc(100vh - 150px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 0', background: 'radial-gradient(circle at top right, rgba(59, 130, 246, 0.08) 0%, transparent 50%), radial-gradient(circle at bottom left, rgba(0, 0, 0, 0.03) 0%, transparent 50%)' }}>
+      <main style={{ minHeight: 'calc(100vh - 150px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 0', background: 'radial-gradient(circle at top right, rgba(16, 185, 129, 0.08) 0%, transparent 50%), radial-gradient(circle at bottom left, rgba(0, 0, 0, 0.03) 0%, transparent 50%)' }}>
         <section className="content-section" style={{ padding: '0 24px', width: '100%', margin: '0 auto' }}>
           <motion.div 
             style={{ textAlign: 'center', marginBottom: '40px' }}

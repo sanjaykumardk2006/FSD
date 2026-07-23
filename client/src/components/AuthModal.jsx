@@ -120,15 +120,45 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
 
               {mode === 'signup' && (
                 <>
-                  <div style={{ marginBottom: '16px', display: 'flex', gap: '16px' }}>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: 'var(--text-secondary)' }}>
-                      <input type="radio" name="entityType" value="Self-employed" checked={formData.entityType === 'Self-employed'} onChange={handleChange} />
+                  <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', background: 'var(--bg-secondary)', padding: '4px', borderRadius: '12px' }}>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, entityType: 'Self-employed' })}
+                      style={{
+                        flex: 1,
+                        padding: '10px',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        transition: 'all 0.2s ease',
+                        background: formData.entityType === 'Self-employed' ? 'var(--bg-card)' : 'transparent',
+                        color: formData.entityType === 'Self-employed' ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                        boxShadow: formData.entityType === 'Self-employed' ? '0 2px 8px rgba(0,0,0,0.05)' : 'none'
+                      }}
+                    >
                       Self-employed
-                    </label>
-                    <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: 'var(--text-secondary)' }}>
-                      <input type="radio" name="entityType" value="Company" checked={formData.entityType === 'Company'} onChange={handleChange} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, entityType: 'Company' })}
+                      style={{
+                        flex: 1,
+                        padding: '10px',
+                        border: 'none',
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        transition: 'all 0.2s ease',
+                        background: formData.entityType === 'Company' ? 'var(--bg-card)' : 'transparent',
+                        color: formData.entityType === 'Company' ? 'var(--accent-primary)' : 'var(--text-secondary)',
+                        boxShadow: formData.entityType === 'Company' ? '0 2px 8px rgba(0,0,0,0.05)' : 'none'
+                      }}
+                    >
                       Company
-                    </label>
+                    </button>
                   </div>
                   
                   <div className="form-group floating-label">
