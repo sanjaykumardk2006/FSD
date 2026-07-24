@@ -111,7 +111,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
               <h2>{mode === 'login' ? 'Welcome Back' : `Join as ${role === 'Client' ? 'Customer' : role}`}</h2>
             </div>
 
-            <form onSubmit={handleSubmit} className="auth-form-content" style={{ maxHeight: '70vh', overflowY: 'auto', paddingRight: '8px' }}>
+            <form onSubmit={handleSubmit} className="auth-form-content" style={{ maxHeight: '65vh', overflowY: 'auto', paddingRight: '8px' }}>
               {error && (
                 <div className="message error" style={{ padding: '12px', borderRadius: '8px', marginBottom: '20px' }}>
                   {error}
@@ -241,15 +241,15 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
                 {loading ? 'Processing...' : (mode === 'login' ? 'Sign In' : 'Create Account')}
                 {!loading && <ChevronRight size={18} />}
               </button>
-            </form>
 
-            <div className="auth-footer">
-              {mode === 'login' ? (
-                <p>Don't have an account? <button className="text-btn" onClick={() => setMode('signup')}>Sign up</button></p>
-              ) : (
-                <p>Already have an account? <button className="text-btn" onClick={() => setMode('login')}>Log in</button></p>
-              )}
-            </div>
+              <div className="auth-footer" style={{ marginTop: '20px' }}>
+                {mode === 'login' ? (
+                  <p>Don't have an account? <button type="button" className="text-btn" onClick={() => setMode('signup')}>Sign up</button></p>
+                ) : (
+                  <p>Already have an account? <button type="button" className="text-btn" onClick={() => setMode('login')}>Log in</button></p>
+                )}
+              </div>
+            </form>
           </motion.div>
         </div>
       )}

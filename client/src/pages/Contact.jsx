@@ -54,7 +54,7 @@ export const Contact = () => {
         </section>
 
         <section className="content-section">
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', alignItems: 'flex-start', marginBottom: '80px', padding: '0 24px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', alignItems: 'stretch', marginBottom: '80px', padding: '0 24px' }}>
             <motion.div 
               style={{ textAlign: 'left', flex: '1 1 350px', maxWidth: '450px' }}
               initial={{ opacity: 0, x: -50 }}
@@ -66,8 +66,8 @@ export const Contact = () => {
               <p style={{ color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '16px' }}>Find our physical office and mailing details here.</p>
               <div className="cards-grid" style={{ gridTemplateColumns: '1fr' }}>
 
-                <div className="card" style={{ textAlign: 'left', maxWidth: '450px', margin: '0', width: '100%' }}>
-                  <h3>Address</h3>
+                <div className="card" style={{ textAlign: 'left', maxWidth: '450px', margin: '0', width: '100%', height: '100%', padding: '40px', boxSizing: 'border-box' }}>
+                  <h3 style={{ marginTop: 0 }}>Address</h3>
                   <p>Kongu Engineering College<br />Perundurai<br />Erode - 638060</p>
                 </div>
               </div>

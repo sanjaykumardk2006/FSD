@@ -504,7 +504,7 @@ export const About = () => {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <div className="premium-card" style={{ borderColor: '#000000' }}>
+          <div className="premium-card" style={{ backgroundColor: 'var(--bg-secondary)' }}>
             <h2 style={{ fontSize: '32px', marginBottom: '24px', fontWeight: '600' }}>Our Mission</h2>
             <p className="text-content" style={{ marginBottom: 0 }}>
               To empower freelancers and businesses by creating a transparent, efficient, and fair marketplace where skills meet opportunities. We believe that talent is equally distributed globally, but opportunity is not. Our goal is to bridge that gap.

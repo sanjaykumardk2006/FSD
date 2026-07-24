@@ -536,6 +536,7 @@ main> :first-child {
   flex-direction: column;
   gap: 16px;
   text-align: left;
+  align-items: flex-start;
 }
 
 .footer-section h3 {

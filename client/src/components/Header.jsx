@@ -70,7 +70,7 @@ export const Header = () => {
                     Login <ChevronDown size={14} />
                   </button>
                   {loginDropdownOpen && (
-                    <div className="dropdown-menu">
+                    <div className="dropdown-menu right">
                       <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Freelancer'); }}>
                         <User size={16} /> As Freelancer
                       </button>
