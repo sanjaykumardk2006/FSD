@@ -242,7 +242,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
                 {!loading && <ChevronRight size={18} />}
               </button>
 
-              <div className="auth-footer" style={{ marginTop: '20px' }}>
+              <div className="auth-footer" style={{ marginTop: '20px', paddingBottom: '30px' }}>
                 {mode === 'login' ? (
                   <p>Don't have an account? <button type="button" className="text-btn" onClick={() => setMode('signup')}>Sign up</button></p>
                 ) : (

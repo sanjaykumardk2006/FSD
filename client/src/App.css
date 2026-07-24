@@ -96,7 +96,7 @@ main> :first-child {
 
 /* Glassmorphism Header */
 .header {
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-color);
   position: fixed;
@@ -490,6 +490,11 @@ main> :first-child {
   box-shadow: 0 0 0 3px var(--success-bg);
 }
 
+::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
 .auth-form {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -791,8 +796,8 @@ main> :first-child {
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
+    background: #FFFFFF;
+    backdrop-filter: none;
     padding: 24px 5%;
     border-bottom: 1px solid var(--border-color);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
