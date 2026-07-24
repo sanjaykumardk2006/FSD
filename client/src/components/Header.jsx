@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
-import { ChevronDown, User, Briefcase, Menu, X } from 'lucide-react';
+import { ChevronDown, User, Briefcase, Menu, X, Sun, Moon } from 'lucide-react';
 import '../App.css';
 
 export const Header = () => {
@@ -17,6 +17,16 @@ export const Header = () => {
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
   const [signupDropdownOpen, setSignupDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   const handleLogout = () => {
     logout();
@@ -107,6 +117,13 @@ export const Header = () => {
                 </div>
               </div>
             )}
+            <button 
+              onClick={toggleTheme} 
+              style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '8px', marginLeft: 'auto' }}
+              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            >
+              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+            </button>
           </nav>
         </div>
       </header>
