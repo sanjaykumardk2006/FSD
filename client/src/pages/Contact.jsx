@@ -44,6 +44,24 @@ export const Contact = () => {
 
   return (
     <div className="page">
+      <style>{`
+        .contact-layout {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 80px;
+          align-items: stretch;
+          margin-bottom: 80px;
+          padding: 0 24px;
+        }
+        @media (max-width: 768px) {
+          .contact-layout {
+            gap: 40px;
+            flex-direction: column;
+            align-items: center;
+          }
+        }
+      `}</style>
       <Header />
       <main>
         <section className="hero" style={{ minHeight: 'auto', padding: '100px 24px 60px', marginBottom: '40px' }}>
@@ -54,7 +72,7 @@ export const Contact = () => {
         </section>
 
         <section className="content-section">
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '80px', alignItems: 'stretch', marginBottom: '80px', padding: '0 24px' }}>
+          <div className="contact-layout">
             <motion.div 
               style={{ textAlign: 'left', flex: '1 1 350px', maxWidth: '450px' }}
               initial={{ opacity: 0, x: -50 }}

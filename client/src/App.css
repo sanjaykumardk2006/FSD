@@ -49,6 +49,7 @@ body {
   scroll-behavior: smooth;
   overflow-x: hidden;
   max-width: 100%;
+  scroll-padding-top: 100px;
 }
 
 h1,
@@ -125,9 +126,7 @@ main> :first-child {
 }
 
 .freelancer-text {
-  background: linear-gradient(to right, var(--accent-primary), var(--primary-action));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #111111;
 }
 
 .logo h1 .hub-text {
@@ -144,6 +143,10 @@ main> :first-child {
   display: flex;
   gap: 32px;
   align-items: center;
+}
+
+.mobile-menu-btn {
+  display: none;
 }
 
 .nav a {
@@ -765,14 +768,57 @@ main> :first-child {
 
   /* Header adjustments for mobile */
   .header-container {
-    flex-direction: column !important;
-    gap: 16px !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 0 !important;
+  }
+
+  .mobile-menu-btn {
+    display: flex !important;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 8px;
+    margin-right: -8px;
   }
 
   .nav {
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 16px !important;
+    display: none;
+    flex-direction: column !important;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    padding: 24px 5%;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    align-items: flex-start !important;
+    gap: 24px !important;
+    z-index: 999;
+  }
+
+  .nav.mobile-open {
+    display: flex;
+  }
+  
+  .auth-nav-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .dropdown-menu {
+    position: static !important;
+    box-shadow: none;
+    border: none;
+    background: transparent;
+    padding: 0 0 0 16px;
+    min-width: 100%;
   }
 
   .btn {

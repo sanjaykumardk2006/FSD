@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
-import { ChevronDown, User, Briefcase } from 'lucide-react';
+import { ChevronDown, User, Briefcase, Menu, X } from 'lucide-react';
 import '../App.css';
 
 export const Header = () => {
@@ -16,6 +16,7 @@ export const Header = () => {
   // Dropdown states
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
   const [signupDropdownOpen, setSignupDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -47,11 +48,14 @@ export const Header = () => {
           <div className="logo" onClick={() => navigate('/')} style={{cursor: 'pointer'}}>
             <h1><span className="freelancer-text">Freelancer</span> <span className="hub-text">Hub</span></h1>
           </div>
-          <nav className="nav">
-            <NavLink to="/" end>Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/search">Jobs</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
+          <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+          <nav className={`nav ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+            <NavLink to="/" end onClick={() => setIsMobileMenuOpen(false)}>Home</NavLink>
+            <NavLink to="/about" onClick={() => setIsMobileMenuOpen(false)}>About</NavLink>
+            <NavLink to="/search" onClick={() => setIsMobileMenuOpen(false)}>Jobs</NavLink>
+            <NavLink to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</NavLink>
             
             {user ? (
               <>

@@ -229,10 +229,15 @@ export const About = () => {
           letter-spacing: 0.05em;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .stat-single-card {
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 40px 24px;
+          }
+        }
+        @media (max-width: 480px) {
+          .stat-single-card {
+            grid-template-columns: 1fr;
           }
         }
 
