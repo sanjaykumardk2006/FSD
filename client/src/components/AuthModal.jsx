@@ -72,7 +72,7 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
     }
 
     try {
-      const endpoint = mode === 'login' ? '/auth/login' : '/auth/register';
+      const endpoint = mode === 'login' ? '/auth/login' : '/auth/signup';
       const payload = mode === 'login' 
         ? { email: formData.email, password: formData.password }
         : { ...formData, role };
