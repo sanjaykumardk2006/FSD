@@ -119,7 +119,7 @@ export const Header = () => {
             )}
             <button 
               onClick={toggleTheme} 
-              style={{ background: 'none', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '8px', marginLeft: 'auto' }}
+              style={{ background: 'none', border: 'none', outline: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '8px', marginLeft: 'auto' }}
               title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             >
               {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
