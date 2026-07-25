@@ -79,11 +79,16 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
 
       const response = await apiClient.post(endpoint, payload);
       
-      login(response.data.token, response.data.user);
-      onClose();
-      
-      const userRole = response.data.user.role;
-      navigate(userRole === 'Client' ? '/client-dashboard' : '/freelancer-dashboard');
+      if (mode === 'login') {
+        login(response.data.token, response.data.user);
+        onClose();
+        
+        const userRole = response.data.user.role;
+        navigate(userRole === 'Client' ? '/client-dashboard' : '/freelancer-dashboard');
+      } else {
+        setMode('login');
+        setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
+      }
       
     } catch (err) {
       setError(err.response?.data?.message || `${mode === 'login' ? 'Login' : 'Signup'} failed`);

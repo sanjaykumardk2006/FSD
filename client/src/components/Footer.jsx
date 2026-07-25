@@ -33,11 +33,7 @@ export const Footer = () => {
                   sanjaykumardk2006@gmail.com
                 </a>
               </p>
-              <p>
-                <strong style={{ display: 'block', marginBottom: '4px', color: 'var(--text-primary)' }}>Address</strong>
-                Kongu Engineering College, Perundurai,<br />
-                Erode - 638060
-              </p>
+
             </div>
             <div className="social-links" style={{ marginTop: '20px' }}>
               <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" title="LinkedIn">
