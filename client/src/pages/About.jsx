@@ -20,7 +20,7 @@ const AnimatedNumber = ({ to, duration = 1.0, prefix = "", suffix = "" }) => {
           setDisplayValue(v);
         }
       });
-      return controls.stop;
+      return () => controls.stop();
     } else {
       setDisplayValue(startValue);
     }
