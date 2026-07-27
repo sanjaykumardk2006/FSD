@@ -14,7 +14,11 @@ export const ProfileSection = ({ role }) => {
     skills: '',
     experience: '',
     hourlyRate: '',
-    profileImage: ''
+    profileImage: '',
+    companyName: '',
+    entityType: 'Self-employed',
+    country: '',
+    mobileNumber: ''
   });
   const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -27,15 +31,17 @@ export const ProfileSection = ({ role }) => {
       const response = await apiClient.get('/auth/profile');
       const userData = response.data.user;
       setProfile(userData);
-      if (userData.profile) {
         setFormData({
-          bio: userData.profile.bio || '',
-          skills: userData.profile.skills ? userData.profile.skills.join(', ') : '',
-          experience: userData.profile.experience || '',
-          hourlyRate: userData.profile.hourlyRate || '',
-          profileImage: userData.profile.profileImage || ''
+          bio: userData.profile?.bio || '',
+          skills: userData.profile?.skills ? userData.profile.skills.join(', ') : '',
+          experience: userData.profile?.experience || '',
+          hourlyRate: userData.profile?.hourlyRate || '',
+          profileImage: userData.profile?.profileImage || '',
+          companyName: userData.companyName || '',
+          entityType: userData.entityType || 'Self-employed',
+          country: userData.country || '',
+          mobileNumber: userData.mobileNumber || ''
         });
-      }
     } catch (error) {
       console.error('Error fetching profile:', error);
       showMessage('error', 'Failed to load profile.');
@@ -77,7 +83,11 @@ export const ProfileSection = ({ role }) => {
         skills: formData.skills.split(',').map(s => s.trim()).filter(Boolean),
         experience: formData.experience,
         hourlyRate: formData.hourlyRate ? Number(formData.hourlyRate) : undefined,
-        profileImage: formData.profileImage
+        profileImage: formData.profileImage,
+        companyName: formData.companyName,
+        entityType: formData.entityType,
+        country: formData.country,
+        mobileNumber: formData.mobileNumber
       };
       
       const response = await apiClient.put('/auth/profile', payload);
@@ -150,6 +160,30 @@ export const ProfileSection = ({ role }) => {
                 <label style={{ top: '24px' }}>About Me (Bio)</label>
               </div>
 
+              {role === 'Client' && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+                  <div className="form-group floating-label">
+                    <input type="text" name="companyName" placeholder=" " value={formData.companyName} onChange={handleInputChange} />
+                    <label>Company Name</label>
+                  </div>
+                  <div className="form-group floating-label" style={{ position: 'relative' }}>
+                    <select name="entityType" value={formData.entityType} onChange={handleInputChange} style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px', color: 'var(--text-primary)', outline: 'none' }}>
+                      <option value="Self-employed">Self-employed</option>
+                      <option value="Company">Company</option>
+                    </select>
+                    <label style={{ position: 'absolute', top: '-10px', left: '12px', background: 'var(--bg-card)', padding: '0 4px', fontSize: '12px', color: 'var(--text-secondary)' }}>Entity Type</label>
+                  </div>
+                  <div className="form-group floating-label">
+                    <input type="text" name="country" placeholder=" " value={formData.country} onChange={handleInputChange} />
+                    <label>Country</label>
+                  </div>
+                  <div className="form-group floating-label">
+                    <input type="text" name="mobileNumber" placeholder=" " value={formData.mobileNumber} onChange={handleInputChange} />
+                    <label>Mobile Number</label>
+                  </div>
+                </div>
+              )}
+
               {role === 'Freelancer' && (
                 <>
                   <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
@@ -188,6 +222,27 @@ export const ProfileSection = ({ role }) => {
                 <h3 style={{ fontSize: '16px', color: 'var(--text-secondary)', marginBottom: '8px' }}>About Me</h3>
                 <p style={{ color: 'var(--text-primary)', lineHeight: '1.6' }}>{profile?.profile?.bio || 'No bio provided.'}</p>
               </div>
+              
+              {role === 'Client' && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Company Name</div>
+                    <div style={{ fontSize: '16px', fontWeight: '500' }}>{profile?.companyName || 'Not specified'}</div>
+                  </div>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Entity Type</div>
+                    <div style={{ fontSize: '16px', fontWeight: '500' }}>{profile?.entityType || 'Self-employed'}</div>
+                  </div>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Country</div>
+                    <div style={{ fontSize: '16px', fontWeight: '500' }}>{profile?.country || 'Not specified'}</div>
+                  </div>
+                  <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
+                    <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Mobile Number</div>
+                    <div style={{ fontSize: '16px', fontWeight: '500' }}>{profile?.mobileNumber || 'Not specified'}</div>
+                  </div>
+                </div>
+              )}
               
               {role === 'Freelancer' && (
                 <>

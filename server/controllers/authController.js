@@ -119,7 +119,7 @@ exports.getUserProfile = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { bio, skills, experience, hourlyRate, profileImage } = req.body;
+    const { bio, skills, experience, hourlyRate, profileImage, companyName, entityType, country, mobileNumber } = req.body;
 
     const updateData = {
       'profile.bio': bio,
@@ -127,6 +127,12 @@ exports.updateUserProfile = async (req, res) => {
       'profile.experience': experience,
       'profile.hourlyRate': hourlyRate,
     };
+    
+    // Client specific fields on the root document
+    if (companyName !== undefined) updateData.companyName = companyName;
+    if (entityType !== undefined) updateData.entityType = entityType;
+    if (country !== undefined) updateData.country = country;
+    if (mobileNumber !== undefined) updateData.mobileNumber = mobileNumber;
 
     if (profileImage !== undefined) {
       updateData['profile.profileImage'] = profileImage;
