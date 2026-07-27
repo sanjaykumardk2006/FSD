@@ -100,7 +100,7 @@ export const DashboardLayout = ({ children, role }) => {
           <div className="profile-info">
             <h3>{user?.username || 'User'}</h3>
             <span className={`role-badge ${role.toLowerCase()}`}>
-              {role}
+              {role === 'Client' ? 'Customer' : role}
             </span>
             <span className="profile-email">{user?.email}</span>
           </div>

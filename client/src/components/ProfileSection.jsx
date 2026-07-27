@@ -130,7 +130,7 @@ export const ProfileSection = ({ role }) => {
             <h2 style={{ fontSize: '24px', marginBottom: '4px' }}>{profile?.username}</h2>
             <div style={{ display: 'flex', gap: '16px', color: 'var(--text-secondary)', fontSize: '14px' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Mail size={16} /> {profile?.email}</span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px', textTransform: 'capitalize' }}><User size={16} /> {profile?.role}</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '4px', textTransform: 'capitalize' }}><User size={16} /> {profile?.role === 'Client' ? 'Customer' : profile?.role}</span>
             </div>
           </div>
           
