@@ -5,7 +5,7 @@ import { User, Mail, Briefcase, Clock, DollarSign, Edit2, Save, X } from 'lucide
 import { motion } from 'framer-motion';
 
 export const ProfileSection = ({ role }) => {
-  const { user } = useContext(AuthContext);
+  const { user, updateUser } = useContext(AuthContext);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -13,7 +13,8 @@ export const ProfileSection = ({ role }) => {
     bio: '',
     skills: '',
     experience: '',
-    hourlyRate: ''
+    hourlyRate: '',
+    profileImage: ''
   });
   const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -31,7 +32,8 @@ export const ProfileSection = ({ role }) => {
           bio: userData.profile.bio || '',
           skills: userData.profile.skills ? userData.profile.skills.join(', ') : '',
           experience: userData.profile.experience || '',
-          hourlyRate: userData.profile.hourlyRate || ''
+          hourlyRate: userData.profile.hourlyRate || '',
+          profileImage: userData.profile.profileImage || ''
         });
       }
     } catch (error) {
@@ -52,6 +54,21 @@ export const ProfileSection = ({ role }) => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) { // 2MB limit
+        showMessage('error', 'Image size must be less than 2MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, profileImage: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -59,11 +76,13 @@ export const ProfileSection = ({ role }) => {
         bio: formData.bio,
         skills: formData.skills.split(',').map(s => s.trim()).filter(Boolean),
         experience: formData.experience,
-        hourlyRate: formData.hourlyRate ? Number(formData.hourlyRate) : undefined
+        hourlyRate: formData.hourlyRate ? Number(formData.hourlyRate) : undefined,
+        profileImage: formData.profileImage
       };
       
       const response = await apiClient.put('/auth/profile', payload);
       setProfile(response.data.user);
+      updateUser(response.data.user);
       setIsEditing(false);
       showMessage('success', 'Profile updated successfully!');
     } catch (error) {
@@ -92,8 +111,20 @@ export const ProfileSection = ({ role }) => {
       <div style={{ background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)', overflow: 'hidden' }}>
         {/* Profile Header */}
         <div style={{ padding: '32px', borderBottom: '1px solid var(--border-color)', display: 'flex', alignItems: 'center', gap: '24px', position: 'relative' }}>
-          <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent-primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontWeight: 'bold' }}>
-            {getInitials(profile?.username)}
+          <div style={{ position: 'relative' }}>
+            <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--accent-primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '32px', fontWeight: 'bold', overflow: 'hidden' }}>
+              {(isEditing ? formData.profileImage : profile?.profile?.profileImage) ? (
+                <img src={isEditing ? formData.profileImage : profile?.profile?.profileImage} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                getInitials(profile?.username)
+              )}
+            </div>
+            {isEditing && (
+              <label style={{ position: 'absolute', bottom: '-4px', right: '-4px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: '50%', padding: '6px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-sm)' }}>
+                <Edit2 size={12} color="var(--text-primary)" />
+                <input type="file" accept="image/*" onChange={handleImageChange} style={{ display: 'none' }} />
+              </label>
+            )}
           </div>
           <div>
             <h2 style={{ fontSize: '24px', marginBottom: '4px' }}>{profile?.username}</h2>

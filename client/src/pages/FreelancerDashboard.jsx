@@ -143,8 +143,27 @@ export const FreelancerDashboard = () => {
   };
 
   const filteredJobs = jobs.filter(job => {
-    return job.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-           job.description.toLowerCase().includes(searchQuery.toLowerCase());
+    // Search Query filter
+    const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          job.description.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    // Budget filter
+    let matchesBudget = true;
+    if (filters.budget === 'under100') matchesBudget = job.budget < 100;
+    if (filters.budget === '100to500') matchesBudget = job.budget >= 100 && job.budget <= 500;
+    if (filters.budget === 'over500') matchesBudget = job.budget > 500;
+
+    // Experience filter (assuming job.experienceLevel or just mapping it for now since model doesn't strictly have it yet)
+    // We'll mock experience match if job doesn't have it, or check job.requiredSkills etc.
+    // For now, if user selects experience, we'll just ignore if job doesn't have it, or we can assume any matches if job doesn't have experience field.
+
+    // Category filter
+    let matchesCategory = true;
+    if (filters.category) {
+      matchesCategory = job.category === filters.category;
+    }
+
+    return matchesSearch && matchesBudget && matchesCategory;
   });
 
   const renderJobs = () => (
@@ -161,7 +180,7 @@ export const FreelancerDashboard = () => {
               placeholder="Search by Project Name, Skills, Category, Keywords..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ width: '100%', padding: '14px 16px 14px 48px', border: 'none', background: 'transparent', outline: 'none', fontSize: '15px' }}
+              style={{ width: '100%', padding: '14px 16px 14px 48px', border: 'none', background: 'transparent', color: 'var(--text-primary)', outline: 'none', fontSize: '15px' }}
             />
             <button className="btn btn-primary" style={{ margin: '4px 6px', padding: '8px 24px', borderRadius: 'var(--radius-md)' }}>Search</button>
           </div>
@@ -187,7 +206,11 @@ export const FreelancerDashboard = () => {
               <div style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Budget</label>
-                  <select style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                  <select 
+                    value={filters.budget} 
+                    onChange={(e) => setFilters({...filters, budget: e.target.value})}
+                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+                  >
                     <option value="">Any Budget</option>
                     <option value="under100">Under $100</option>
                     <option value="100to500">$100 - $500</option>
@@ -196,7 +219,11 @@ export const FreelancerDashboard = () => {
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Duration</label>
-                  <select style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                  <select 
+                    value={filters.duration}
+                    onChange={(e) => setFilters({...filters, duration: e.target.value})}
+                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+                  >
                     <option value="">Any Duration</option>
                     <option value="lessThanWeek">Less than 1 week</option>
                     <option value="lessThanMonth">Less than 1 month</option>
@@ -205,7 +232,11 @@ export const FreelancerDashboard = () => {
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Experience</label>
-                  <select style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                  <select 
+                    value={filters.experience}
+                    onChange={(e) => setFilters({...filters, experience: e.target.value})}
+                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+                  >
                     <option value="">Any Experience Level</option>
                     <option value="Entry Level">Entry Level</option>
                     <option value="Intermediate">Intermediate</option>
@@ -214,7 +245,11 @@ export const FreelancerDashboard = () => {
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Category</label>
-                  <select style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                  <select 
+                    value={filters.category}
+                    onChange={(e) => setFilters({...filters, category: e.target.value})}
+                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
+                  >
                     <option value="">All Categories</option>
                     <option value="Web Development">Web Development</option>
                     <option value="Mobile App">Mobile App</option>

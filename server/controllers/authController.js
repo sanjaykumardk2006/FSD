@@ -119,15 +119,22 @@ exports.getUserProfile = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { bio, skills, experience, hourlyRate } = req.body;
+    const { bio, skills, experience, hourlyRate, profileImage } = req.body;
+
+    const updateData = {
+      'profile.bio': bio,
+      'profile.skills': skills,
+      'profile.experience': experience,
+      'profile.hourlyRate': hourlyRate,
+    };
+
+    if (profileImage !== undefined) {
+      updateData['profile.profileImage'] = profileImage;
+    }
+
     const user = await User.findByIdAndUpdate(
       req.user.userId,
-      {
-        'profile.bio': bio,
-        'profile.skills': skills,
-        'profile.experience': experience,
-        'profile.hourlyRate': hourlyRate,
-      },
+      updateData,
       { new: true }
     ).select('-password');
 

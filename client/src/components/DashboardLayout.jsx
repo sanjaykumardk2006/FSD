@@ -90,8 +90,12 @@ export const DashboardLayout = ({ children, role }) => {
         </div>
 
         <div className="sidebar-profile">
-          <div className="profile-avatar">
-            {getInitials(user?.username)}
+          <div className="profile-avatar" style={{ overflow: 'hidden' }}>
+            {user?.profile?.profileImage ? (
+              <img src={user.profile.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              getInitials(user?.username)
+            )}
           </div>
           <div className="profile-info">
             <h3>{user?.username || 'User'}</h3>
