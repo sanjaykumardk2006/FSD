@@ -4,6 +4,7 @@ import apiClient from '../utils/apiClient';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
+import { ProfileSection } from '../components/ProfileSection';
 
 export const ClientDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -221,7 +222,7 @@ export const ClientDashboard = () => {
       {activeTab === 'messages' && renderPlaceholder('Messages')}
       {activeTab === 'notifications' && renderPlaceholder('Notifications')}
       {activeTab === 'payments' && renderPlaceholder('Payment History')}
-      {activeTab === 'profile' && renderPlaceholder('My Profile')}
+      {activeTab === 'profile' && <ProfileSection role="Client" />}
 
       {/* Redesigned Job Post Modal */}
       <AnimatePresence>

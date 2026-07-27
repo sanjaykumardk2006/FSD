@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { ThemeContext } from '../context/ThemeContext';
 import { 
   LayoutDashboard, 
   Briefcase, 
@@ -13,12 +14,15 @@ import {
   LogOut,
   Search,
   Menu,
-  X
+  X,
+  Moon,
+  Sun
 } from 'lucide-react';
 import '../App.css'; // Make sure styles are available
 
 export const DashboardLayout = ({ children, role }) => {
   const { user, logout } = useContext(AuthContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -132,7 +136,11 @@ export const DashboardLayout = ({ children, role }) => {
           </ul>
         </nav>
 
-        <div className="sidebar-footer">
+        <div className="sidebar-footer" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <button className="logout-btn" onClick={toggleTheme} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'transparent', color: 'var(--text-secondary)', border: 'none', padding: '12px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '15px', fontWeight: '500', transition: 'all 0.2s ease', width: '100%' }}>
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+          </button>
           <button className="logout-btn" onClick={handleLogout}>
             <LogOut size={20} />
             <span>Logout</span>

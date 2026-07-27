@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, MapPin, Clock, DollarSign, Calendar, FileText, CheckCircle, Briefcase, Filter, X } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { JobDetails } from '../components/JobDetails';
+import { ProfileSection } from '../components/ProfileSection';
 
 export const FreelancerDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -368,7 +369,7 @@ export const FreelancerDashboard = () => {
       {activeTab === 'messages' && renderPlaceholder('Messages')}
       {activeTab === 'notifications' && renderPlaceholder('Notifications')}
       {activeTab === 'earnings' && renderPlaceholder('Earnings')}
-      {activeTab === 'profile' && renderPlaceholder('My Profile')}
+      {activeTab === 'profile' && <ProfileSection role="Freelancer" />}
 
       {/* Redesigned Proposal Form Modal */}
       <AnimatePresence>
