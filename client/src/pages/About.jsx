@@ -48,8 +48,8 @@ export const About = () => {
         }
 
         .bento-card {
-          background: #FFFFFF;
-          border: 1px solid #E5E7EB;
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 18px;
           padding: 32px;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
@@ -60,7 +60,7 @@ export const About = () => {
         .bento-card:hover {
           transform: scale(1.05);
           box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
-          border-color: #111111;
+          border-color: var(--text-primary);
         }
 
         .bento-card-large {
@@ -74,26 +74,26 @@ export const About = () => {
         .bento-icon-wrapper {
           width: 48px;
           height: 48px;
-          background: #F9FAFB;
-          border: 1px solid #E5E7EB;
+          background: var(--bg-secondary);
+          border: 1px solid var(--border-color);
           border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
           margin-bottom: 24px;
-          color: #111111;
+          color: var(--text-primary);
         }
         
         .bento-title {
           font-size: 20px;
           font-weight: 600;
-          color: #111111;
+          color: var(--text-primary);
           margin-bottom: 12px;
         }
         
         .bento-desc {
           font-size: 16px;
-          color: #555555;
+          color: var(--text-secondary);
           line-height: 1.6;
           margin: 0;
         }
@@ -132,8 +132,8 @@ export const About = () => {
         }
 
         .premium-panel {
-          background: #FFFFFF;
-          border: 1px solid #E5E7EB;
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 22px;
           padding: 48px;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -143,12 +143,12 @@ export const About = () => {
         .premium-panel:hover {
           transform: scale(1.05);
           box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-          border-color: #111111;
+          border-color: var(--text-primary);
         }
 
         .feature-card {
-          background: #FFFFFF;
-          border: 1px solid #E5E7EB;
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 16px;
           padding: 24px 32px;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -160,7 +160,7 @@ export const About = () => {
         .feature-card:hover {
           transform: scale(1.05);
           box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
-          border-color: #111111;
+          border-color: var(--text-primary);
         }
 
         .premium-hero {
@@ -315,7 +315,7 @@ export const About = () => {
         
         .core-values-header {
           font-family: Georgia, serif;
-          color: #0c2b45;
+          color: var(--text-primary);
           font-size: 40px;
           font-weight: 600;
           margin-bottom: 60px;
@@ -330,8 +330,8 @@ export const About = () => {
         .core-value-card {
           display: flex;
           flex-direction: column;
-          background: #FFFFFF;
-          border: 1px solid #E5E7EB;
+          background: var(--bg-card);
+          border: 1px solid var(--border-color);
           border-radius: 20px;
           padding: 40px;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
@@ -341,7 +341,7 @@ export const About = () => {
         .core-value-card:hover {
           transform: translateY(-4px) scale(1.05);
           box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.08);
-          border-color: #111111;
+          border-color: var(--text-primary);
         }
 
         .core-value-icon {
@@ -358,13 +358,13 @@ export const About = () => {
           font-family: Georgia, serif;
           font-size: 24px;
           font-weight: 600;
-          color: #0c2b45;
+          color: var(--text-primary);
           margin-bottom: 16px;
         }
 
         .core-value-desc {
           font-size: 18px;
-          color: #4b5563;
+          color: var(--text-secondary);
           line-height: 1.6;
           margin: 0;
         }
@@ -450,7 +450,7 @@ export const About = () => {
           align-items: center;
           justify-content: center;
           background-color: var(--accent-primary);
-          color: #FFFFFF;
+          color: var(--bg-card);
           padding: 16px 36px;
           border-radius: 100px;
           font-weight: 500;
@@ -565,8 +565,8 @@ export const About = () => {
 
         {/* How It Works */}
         <section style={{ maxWidth: '1400px', margin: '0 auto 160px' }}>
-          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111' }}>How It Works</h2>
-          <p className="text-content" style={{ marginBottom: '60px', textAlign: 'center', color: '#555555', fontSize: '20px' }}>
+          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: 'var(--text-primary)' }}>How It Works</h2>
+          <p className="text-content" style={{ marginBottom: '60px', textAlign: 'center', color: 'var(--text-secondary)', fontSize: '20px' }}>
             The process is designed to be as frictionless as possible. Here is a detailed look into the ecosystem that makes it work flawlessly:
           </p>
           <motion.div 
@@ -631,11 +631,11 @@ export const About = () => {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: '#111111', marginBottom: '40px' }}>Who Is It For?</h2>
+          <h2 className="section-header" style={{ textAlign: 'center', fontSize: '48px', color: 'var(--text-primary)', marginBottom: '40px' }}>Who Is It For?</h2>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '80px', flexWrap: 'wrap', padding: '0 24px' }}>
             <div className="premium-card" onClick={() => document.getElementById('freelancer-edge')?.scrollIntoView({ behavior: 'smooth' })} style={{ flex: '1 1 300px', maxWidth: '400px', padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-              <div style={{ width: '64px', height: '64px', background: '#eff6ff', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: '#3b82f6' }}>
+              <div style={{ width: '64px', height: '64px', background: 'var(--primary-action-bg)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: 'var(--primary-action)' }}>
                 <UserCheck size={32} />
               </div>
               <h3 style={{ fontSize: '24px', marginBottom: '12px', fontWeight: '600' }}>For Freelancers</h3>
@@ -645,7 +645,7 @@ export const About = () => {
             </div>
             
             <div className="premium-card" onClick={() => document.getElementById('customer-edge')?.scrollIntoView({ behavior: 'smooth' })} style={{ flex: '1 1 300px', maxWidth: '400px', padding: '32px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer' }}>
-              <div style={{ width: '64px', height: '64px', background: '#f0fdf4', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: '#22c55e' }}>
+              <div style={{ width: '64px', height: '64px', background: 'var(--success-bg)', borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: 'var(--success)' }}>
                 <BriefcaseBusiness size={32} />
               </div>
               <h3 style={{ fontSize: '24px', marginBottom: '12px', fontWeight: '600' }}>For Customers</h3>
@@ -664,17 +664,17 @@ export const About = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Freelancer's Edge</h3>
-              <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
+              <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '16px', color: 'var(--text-primary)', textAlign: 'center' }}>The Freelancer's Edge</h3>
+              <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
                 Empowering independent professionals to take control of their careers with the tools, clients, and security they deserve.
               </p>
               
               <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Freelancer working remotely" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px', transition: 'transform 0.4s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80" alt="Freelancer working remotely" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid var(--border-color)', objectFit: 'cover', height: '650px', transition: 'transform 0.4s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
               </div>
 
               <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
+                <p style={{ fontSize: '20px', color: 'var(--text-secondary)', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   We believe that talent should not be limited by geography. Our platform empowers independent professionals to build sustainable, scalable careers:
                 </p>
                 <motion.div 
@@ -688,28 +688,28 @@ export const About = () => {
                   }}
                 >
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Access a diverse, global pool of high-quality clients ranging from ambitious startups to established Fortune 500 companies.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Utilize sophisticated platform tools to build a professional portfolio, gather client reviews, and establish a stellar reputation.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Utilize sophisticated platform tools to build a professional portfolio, gather client reviews, and establish a stellar reputation.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Maintain absolute flexibility to choose your projects, negotiate your timelines, and set your own hourly or fixed rates.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Maintain absolute flexibility to choose your projects, negotiate your timelines, and set your own hourly or fixed rates.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Participate in optional skill-verification tests to earn platform badges that instantly boost your visibility to premium clients.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Get access to dedicated support and dispute resolution teams to ensure fair treatment at all times.</span>
                   </motion.div>
                 </motion.div>
               </div>
@@ -726,17 +726,17 @@ export const About = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
             >
-              <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '16px', color: '#111111', textAlign: 'center' }}>The Customer's Edge</h3>
-              <p style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
+              <h3 style={{ fontSize: '32px', fontWeight: '600', marginBottom: '16px', color: 'var(--text-primary)', textAlign: 'center' }}>The Customer's Edge</h3>
+              <p style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '20px', maxWidth: '800px', margin: '0 auto 40px' }}>
                 Giving businesses the agility to build world-class teams on demand, with zero compromise on quality or security.
               </p>
               
               <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" alt="Corporate client meeting" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid #E5E7EB', objectFit: 'cover', height: '650px', transition: 'transform 0.4s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=80" alt="Corporate client meeting" style={{ width: '100%', maxWidth: '1200px', borderRadius: '24px', border: '1px solid var(--border-color)', objectFit: 'cover', height: '650px', transition: 'transform 0.4s ease' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'} />
               </div>
 
               <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
-                <p style={{ fontSize: '20px', color: '#555555', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
+                <p style={{ fontSize: '20px', color: 'var(--text-secondary)', marginBottom: '40px', lineHeight: '1.6', textAlign: 'center' }}>
                   Finding the right talent quickly can make or break a project. Freelancer Hub provides businesses with the agility to scale their workforce on demand:
                 </p>
                 <motion.div 
@@ -750,28 +750,28 @@ export const About = () => {
                   }}
                 >
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Gain on-demand access to a highly vetted, top-tier talent pool with specialized skills across hundreds of categories.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Experience a streamlined, AI-driven hiring process that drastically reduces time-to-hire and administrative overhead.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Experience a streamlined, AI-driven hiring process that drastically reduces time-to-hire and administrative overhead.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#111111' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Leverage scalable workforce solutions, allowing you to hire a single expert or assemble an entire remote team in days.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--primary-action)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Leverage scalable workforce solutions, allowing you to hire a single expert or assemble an entire remote team in days.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Monitor project progress transparently with built-in time tracking, daily work diaries, and integrated communication tools.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--primary-action)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Monitor project progress transparently with built-in time tracking, daily work diaries, and integrated communication tools.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
-                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: '#3b82f6' }} />
-                    <span style={{ fontSize: '18px', color: '#111111', lineHeight: '1.6' }}>Rest easy with enterprise-grade security and compliance tools designed specifically to protect your intellectual property.</span>
+                    <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--primary-action)' }} />
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Rest easy with enterprise-grade security and compliance tools designed specifically to protect your intellectual property.</span>
                   </motion.div>
                 </motion.div>
               </div>
@@ -787,12 +787,12 @@ export const About = () => {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="core-values-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Core Values</h2>
-          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 60px' }}>
+          <p className="text-content" style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 60px' }}>
             The guiding principles that shape our culture, drive our decisions, and define how we serve our community.
           </p>
           <div className="core-values-grid">
             <div className="core-value-card">
-              <div className="core-value-icon" style={{ backgroundColor: '#eff6ff', color: '#3b82f6' }}>
+              <div className="core-value-icon" style={{ backgroundColor: 'var(--primary-action-bg)', color: 'var(--primary-action)' }}>
                 <Users size={32} />
               </div>
               <h3 className="core-value-title">Community</h3>
@@ -800,7 +800,7 @@ export const About = () => {
             </div>
             
             <div className="core-value-card">
-              <div className="core-value-icon" style={{ backgroundColor: '#f0fdf4', color: '#22c55e' }}>
+              <div className="core-value-icon" style={{ backgroundColor: 'var(--success-bg)', color: 'var(--success)' }}>
                 <BookOpen size={32} />
               </div>
               <h3 className="core-value-title">Faith</h3>
@@ -833,7 +833,7 @@ export const About = () => {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="section-header" style={{ textAlign: 'center', marginBottom: '16px' }}>Our Offices</h2>
-          <p className="text-content" style={{ textAlign: 'center', color: '#555555', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 40px' }}>
+          <p className="text-content" style={{ textAlign: 'center', color: 'var(--text-secondary)', fontSize: '20px', maxWidth: '1000px', margin: '0 auto 40px' }}>
             We operate globally with a remote-first culture, anchored by strategic hubs in major tech capitals around the world.
           </p>
           <div className="marquee-container">
