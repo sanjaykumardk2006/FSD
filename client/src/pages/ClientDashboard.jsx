@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText } from 'lucide-react';
+import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText, X } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { ProfileSection } from '../components/ProfileSection';
 
