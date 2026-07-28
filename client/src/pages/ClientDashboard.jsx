@@ -230,7 +230,7 @@ export const ClientDashboard = () => {
           <div className="modal-overlay">
             <motion.div 
               className="modal"
-              style={{ maxWidth: '600px', width: '90%', maxHeight: '90vh', overflowY: 'auto' }}
+              style={{ maxWidth: '800px', width: '95%', maxHeight: '90vh', overflowY: 'auto' }}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 30 }}
@@ -250,7 +250,7 @@ export const ClientDashboard = () => {
 
                 <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
                   <textarea name="description" placeholder=" " value={formData.description} onChange={handleFormChange} required rows="5" style={{ width: '100%', padding: '12px 16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
-                  <label style={{ top: '24px' }}>Project Description</label>
+                  <label>Project Description</label>
                 </div>
 
                 <div className="form-row">

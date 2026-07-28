@@ -441,12 +441,12 @@ export const FreelancerDashboard = () => {
 
                 <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
                   <textarea name="coverLetter" placeholder=" " value={proposalData.coverLetter} onChange={handleProposalChange} required rows="6" style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
-                  <label style={{ top: '24px' }}>Cover Letter / Proposal Details</label>
+                  <label>Cover Letter / Proposal Details</label>
                 </div>
 
                 <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
                   <textarea name="completedProjects" placeholder=" " value={proposalData.completedProjects} onChange={handleProposalChange} rows="3" style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
-                  <label style={{ top: '24px' }}>Previously Completed Projects (Optional)</label>
+                  <label>Previously Completed Projects (Optional)</label>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
