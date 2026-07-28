@@ -17,6 +17,8 @@ export const ClientDashboard = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showJobForm, setShowJobForm] = useState(false);
+  const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
+  const availableSkills = ["React", "Node.js", "Python", "Figma", "AWS", "SEO", "Copywriting", "UI Design", "TypeScript", "Docker", "GraphQL", "TailwindCSS", "Next.js", "MongoDB"];
   
   // Job Form State
   const [formData, setFormData] = useState({
@@ -25,7 +27,7 @@ export const ClientDashboard = () => {
     budget: '',
     deadline: '',
     requiredSkills: [],
-    experienceRequired: 'Intermediate',
+    experienceRequired: '1 yr to 2 yr',
     category: 'Web Development',
   });
 
@@ -90,7 +92,7 @@ export const ClientDashboard = () => {
         budget: '',
         deadline: '',
         requiredSkills: [],
-        experienceRequired: 'Intermediate',
+        experienceRequired: '1 yr to 2 yr',
         category: 'Web Development',
       });
       fetchJobs();
@@ -268,9 +270,9 @@ export const ClientDashboard = () => {
                   <div className="form-group">
                     <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Experience Required</label>
                     <select name="experienceRequired" value={formData.experienceRequired} onChange={handleFormChange} style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-                      <option value="Entry Level">Entry Level</option>
-                      <option value="Intermediate">Intermediate</option>
-                      <option value="Expert">Expert</option>
+                      <option value="1 yr to 2 yr">1 yr to 2 yr</option>
+                      <option value="2 to 4 yr">2 to 4 yr</option>
+                      <option value="Above 5 yr">Above 5 yr</option>
                     </select>
                   </div>
                   <div className="form-group">
@@ -279,24 +281,63 @@ export const ClientDashboard = () => {
                       <option value="Web Development">Web Development</option>
                       <option value="Mobile App">Mobile App</option>
                       <option value="UI/UX Design">UI/UX Design</option>
+                      <option value="Graphic Design">Graphic Design</option>
                       <option value="Writing">Writing</option>
                       <option value="Marketing">Marketing</option>
+                      <option value="Data Science">Data Science</option>
+                      <option value="Video Editing">Video Editing</option>
+                      <option value="Customer Support">Customer Support</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Virtual Assistant">Virtual Assistant</option>
                     </select>
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Required Skills (Hold Ctrl/Cmd to select multiple)</label>
-                  <select multiple name="requiredSkills" onChange={handleSkillsChange} style={{ width: '100%', height: '120px', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-                    <option value="React">React</option>
-                    <option value="Node.js">Node.js</option>
-                    <option value="Python">Python</option>
-                    <option value="Figma">Figma</option>
-                    <option value="AWS">AWS</option>
-                    <option value="SEO">SEO</option>
-                    <option value="Copywriting">Copywriting</option>
-                    <option value="UI Design">UI Design</option>
-                  </select>
+                <div className="form-group" style={{ position: 'relative' }}>
+                  <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Required Skills</label>
+                  <div 
+                    onClick={() => setIsSkillsDropdownOpen(!isSkillsDropdownOpen)}
+                    style={{ width: '100%', padding: '12px', minHeight: '48px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', cursor: 'pointer', display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}
+                  >
+                    {formData.requiredSkills.length === 0 && <span style={{ color: 'var(--text-muted)' }}>Select skills...</span>}
+                    {formData.requiredSkills.map(skill => (
+                      <span key={skill} style={{ background: 'var(--primary-action)', color: 'white', padding: '4px 10px', borderRadius: '20px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        {skill}
+                        <span 
+                          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
+                          onClick={(e) => { 
+                            e.stopPropagation(); 
+                            setFormData({...formData, requiredSkills: formData.requiredSkills.filter(s => s !== skill)}); 
+                          }}
+                        >
+                          <X size={12} />
+                        </span>
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {isSkillsDropdownOpen && (
+                    <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '4px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', padding: '12px', zIndex: 50, maxHeight: '200px', overflowY: 'auto', display: 'flex', flexWrap: 'wrap', gap: '8px', boxShadow: 'var(--shadow-md)' }}>
+                      {availableSkills.map(skill => (
+                        <div 
+                          key={skill} 
+                          onClick={() => {
+                            const isSelected = formData.requiredSkills.includes(skill);
+                            let newSkills = [...formData.requiredSkills];
+                            if (isSelected) {
+                              newSkills = newSkills.filter(s => s !== skill);
+                            } else {
+                              newSkills.push(skill);
+                            }
+                            setFormData({...formData, requiredSkills: newSkills});
+                          }}
+                          style={{ padding: '6px 12px', borderRadius: '20px', border: `1px solid ${formData.requiredSkills.includes(skill) ? 'var(--primary-action)' : 'var(--border-color)'}`, background: formData.requiredSkills.includes(skill) ? 'var(--primary-action-bg)' : 'transparent', color: formData.requiredSkills.includes(skill) ? 'var(--primary-action)' : 'var(--text-primary)', cursor: 'pointer', fontSize: '13px', transition: 'all 0.2s' }}
+                        >
+                          {skill}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="form-group">

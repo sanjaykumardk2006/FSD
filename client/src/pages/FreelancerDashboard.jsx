@@ -238,9 +238,9 @@ export const FreelancerDashboard = () => {
                     style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
                   >
                     <option value="">Any Experience Level</option>
-                    <option value="Entry Level">Entry Level</option>
-                    <option value="Intermediate">Intermediate</option>
-                    <option value="Expert">Expert</option>
+                    <option value="1 yr to 2 yr">1 yr to 2 yr</option>
+                    <option value="2 to 4 yr">2 to 4 yr</option>
+                    <option value="Above 5 yr">Above 5 yr</option>
                   </select>
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
@@ -254,6 +254,14 @@ export const FreelancerDashboard = () => {
                     <option value="Web Development">Web Development</option>
                     <option value="Mobile App">Mobile App</option>
                     <option value="UI/UX Design">UI/UX Design</option>
+                    <option value="Graphic Design">Graphic Design</option>
+                    <option value="Writing">Writing</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Video Editing">Video Editing</option>
+                    <option value="Customer Support">Customer Support</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Virtual Assistant">Virtual Assistant</option>
                   </select>
                 </div>
               </div>
