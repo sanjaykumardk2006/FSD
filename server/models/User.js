@@ -56,7 +56,7 @@ const userSchema = new mongoose.Schema(
       profileImage: String,
       skills: [String], // For freelancers
       experience: String, // For freelancers
-      hourlyRate: Number, // For freelancers
+      resume: String, // For freelancers (base64 string or URL)
     },
     isActive: {
       type: Boolean,

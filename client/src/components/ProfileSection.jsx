@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import apiClient from '../utils/apiClient';
-import { User, Mail, Briefcase, Clock, DollarSign, Edit2, Save, X } from 'lucide-react';
+import { User, Mail, Briefcase, Clock, FileText, Edit2, Save, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const ProfileSection = ({ role }) => {
@@ -13,7 +13,7 @@ export const ProfileSection = ({ role }) => {
     bio: '',
     skills: '',
     experience: '',
-    hourlyRate: '',
+    resume: '',
     profileImage: '',
     companyName: '',
     entityType: 'Self-employed',
@@ -35,7 +35,7 @@ export const ProfileSection = ({ role }) => {
           bio: userData.profile?.bio || '',
           skills: userData.profile?.skills ? userData.profile.skills.join(', ') : '',
           experience: userData.profile?.experience || '',
-          hourlyRate: userData.profile?.hourlyRate || '',
+          resume: userData.profile?.resume || '',
           profileImage: userData.profile?.profileImage || '',
           companyName: userData.companyName || '',
           entityType: userData.entityType || 'Self-employed',
@@ -75,6 +75,21 @@ export const ProfileSection = ({ role }) => {
     }
   };
 
+  const handleResumeChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        showMessage('error', 'Resume size must be less than 5MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, resume: reader.result }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -82,7 +97,7 @@ export const ProfileSection = ({ role }) => {
         bio: formData.bio,
         skills: formData.skills.split(',').map(s => s.trim()).filter(Boolean),
         experience: formData.experience,
-        hourlyRate: formData.hourlyRate ? Number(formData.hourlyRate) : undefined,
+        resume: formData.resume,
         profileImage: formData.profileImage,
         companyName: formData.companyName,
         entityType: formData.entityType,
@@ -199,9 +214,10 @@ export const ProfileSection = ({ role }) => {
                       <label>Experience (e.g. 3 years)</label>
                     </div>
                     <div className="form-group floating-label">
-                      <DollarSign size={18} className="input-icon" />
-                      <input type="number" name="hourlyRate" placeholder=" " value={formData.hourlyRate} onChange={handleInputChange} />
-                      <label>Hourly Rate ($)</label>
+                      <FileText size={18} className="input-icon" />
+                      <input type="file" name="resume" onChange={handleResumeChange} accept=".pdf,.doc,.docx" style={{ padding: '16px 16px 16px 40px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', width: '100%' }} />
+                      <label>Resume (PDF, DOC)</label>
+                      {formData.resume && <div style={{ fontSize: '12px', color: 'var(--success)', marginTop: '4px' }}>Resume selected/uploaded.</div>}
                     </div>
                   </div>
                 </>
@@ -267,8 +283,16 @@ export const ProfileSection = ({ role }) => {
                       <div style={{ fontSize: '18px', fontWeight: '600' }}>{profile?.profile?.experience || 'Not specified'}</div>
                     </div>
                     <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
-                      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Hourly Rate</div>
-                      <div style={{ fontSize: '18px', fontWeight: '600' }}>{profile?.profile?.hourlyRate ? `$${profile.profile.hourlyRate}/hr` : 'Not specified'}</div>
+                      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Resume</div>
+                      <div style={{ fontSize: '16px', fontWeight: '600' }}>
+                        {profile?.profile?.resume ? (
+                          <a href={profile.profile.resume} download="resume" style={{ color: 'var(--primary-action)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <FileText size={16} /> View/Download Resume
+                          </a>
+                        ) : (
+                          'Not uploaded'
+                        )}
+                      </div>
                     </div>
                   </div>
                 </>

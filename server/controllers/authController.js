@@ -119,13 +119,13 @@ exports.getUserProfile = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { bio, skills, experience, hourlyRate, profileImage, companyName, entityType, country, mobileNumber } = req.body;
+    const { bio, skills, experience, resume, profileImage, companyName, entityType, country, mobileNumber } = req.body;
 
     const updateData = {
       'profile.bio': bio,
       'profile.skills': skills,
       'profile.experience': experience,
-      'profile.hourlyRate': hourlyRate,
+      'profile.resume': resume,
     };
     
     // Client specific fields on the root document
