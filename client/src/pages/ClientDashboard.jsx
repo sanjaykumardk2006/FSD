@@ -272,6 +272,7 @@ export const ClientDashboard = () => {
                   <div className="form-group">
                     <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Experience Required</label>
                     <select name="experienceRequired" value={formData.experienceRequired} onChange={handleFormChange} style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                      <option value="Fresher">Fresher</option>
                       <option value="1 yr to 2 yr">1 yr to 2 yr</option>
                       <option value="2 to 4 yr">2 to 4 yr</option>
                       <option value="Above 5 yr">Above 5 yr</option>
