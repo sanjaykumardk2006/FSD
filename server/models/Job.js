@@ -18,6 +18,14 @@ const jobSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    category: {
+      type: String,
+      default: 'Web Development',
+    },
+    experienceRequired: {
+      type: String,
+      default: '1 yr to 2 yr',
+    },
     deadline: {
       type: Date,
       required: true,

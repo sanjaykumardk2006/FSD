@@ -153,17 +153,41 @@ export const FreelancerDashboard = () => {
     if (filters.budget === '100to500') matchesBudget = job.budget >= 100 && job.budget <= 500;
     if (filters.budget === 'over500') matchesBudget = job.budget > 500;
 
-    // Experience filter (assuming job.experienceLevel or just mapping it for now since model doesn't strictly have it yet)
-    // We'll mock experience match if job doesn't have it, or check job.requiredSkills etc.
-    // For now, if user selects experience, we'll just ignore if job doesn't have it, or we can assume any matches if job doesn't have experience field.
+    // Duration filter
+    let matchesDuration = true;
+    if (filters.duration) {
+      const deadlineDate = new Date(job.deadline);
+      const createdAtDate = new Date(job.createdAt);
+      const durationDays = (deadlineDate - createdAtDate) / (1000 * 60 * 60 * 24);
+      
+      if (filters.duration === 'lessThanWeek') matchesDuration = durationDays < 7;
+      if (filters.duration === 'lessThanMonth') matchesDuration = durationDays >= 7 && durationDays <= 30;
+      if (filters.duration === 'moreThanMonth') matchesDuration = durationDays > 30;
+    }
+
+    // Experience filter
+    let matchesExperience = true;
+    if (filters.experience) {
+      if (job.experienceRequired) {
+        matchesExperience = job.experienceRequired === filters.experience;
+      } else {
+        // Fallback for old jobs without experienceRequired
+        matchesExperience = true;
+      }
+    }
 
     // Category filter
     let matchesCategory = true;
     if (filters.category) {
-      matchesCategory = job.category === filters.category;
+      if (job.category) {
+        matchesCategory = job.category === filters.category;
+      } else {
+        // Fallback for old jobs without category
+        matchesCategory = true;
+      }
     }
 
-    return matchesSearch && matchesBudget && matchesCategory;
+    return matchesSearch && matchesBudget && matchesDuration && matchesExperience && matchesCategory;
   });
 
   const renderJobs = () => (

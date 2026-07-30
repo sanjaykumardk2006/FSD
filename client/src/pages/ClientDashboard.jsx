@@ -82,6 +82,8 @@ export const ClientDashboard = () => {
         requiredSkills: formData.requiredSkills.length ? formData.requiredSkills : ['Not Specified'],
         budget: formData.budget,
         deadline: formData.deadline,
+        category: formData.category,
+        experienceRequired: formData.experienceRequired,
       };
       await apiClient.post('/jobs/post', payload);
       alert('Job posted successfully!');

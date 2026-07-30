@@ -16,7 +16,7 @@ exports.postJob = [
     }
 
     try {
-      const { title, description, requiredSkills, budget, deadline } = req.body;
+      const { title, description, requiredSkills, budget, deadline, category, experienceRequired } = req.body;
 
       const job = new Job({
         title,
@@ -24,6 +24,8 @@ exports.postJob = [
         requiredSkills,
         budget,
         deadline,
+        category: category || 'Web Development',
+        experienceRequired: experienceRequired || '1 yr to 2 yr',
         clientId: req.user.userId,
       });
 
