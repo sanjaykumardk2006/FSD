@@ -105,16 +105,7 @@ export const DashboardLayout = ({ children, role }) => {
             <span className="profile-email">{user?.email}</span>
           </div>
           
-          <div className="quick-stats">
-            <div className="stat-item">
-              <span className="stat-value">{role === 'Client' ? '12' : '$4.5k'}</span>
-              <span className="stat-label">{role === 'Client' ? 'Jobs' : 'Earned'}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-value">{role === 'Client' ? '$1k' : '5'}</span>
-              <span className="stat-label">{role === 'Client' ? 'Spent' : 'Jobs'}</span>
-            </div>
-          </div>
+
         </div>
 
         <nav className="sidebar-nav">
