@@ -2,7 +2,8 @@ import React, { useContext, useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
-import { ChevronDown, User, Briefcase, Menu, X, Sun, Moon } from 'lucide-react';
+import { ChevronDown, User, Briefcase, Menu, X, Sun, Moon, Bell } from 'lucide-react';
+import apiClient from '../utils/apiClient';
 import '../App.css';
 
 export const Header = () => {
@@ -18,6 +19,25 @@ export const Header = () => {
   const [signupDropdownOpen, setSignupDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    if (user) {
+      fetchUnreadCount();
+      // Optionally set up an interval to poll for new notifications
+      const interval = setInterval(fetchUnreadCount, 60000); // Poll every minute
+      return () => clearInterval(interval);
+    }
+  }, [user]);
+
+  const fetchUnreadCount = async () => {
+    try {
+      const response = await apiClient.get('/notifications/unread/count');
+      setUnreadCount(response.data.unreadCount || 0);
+    } catch (error) {
+      console.error('Failed to fetch unread notifications count:', error);
+    }
+  };
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -68,10 +88,22 @@ export const Header = () => {
             <NavLink to="/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</NavLink>
             
             {user ? (
-              <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <button 
+                  onClick={() => navigate(user.role === 'Client' ? '/client-dashboard?tab=notifications' : '/freelancer-dashboard?tab=notifications')}
+                  style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', position: 'relative', display: 'flex', alignItems: 'center' }}
+                  title="Notifications"
+                >
+                  <Bell size={20} />
+                  {unreadCount > 0 && (
+                    <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: 'var(--danger)', color: 'white', fontSize: '10px', fontWeight: 'bold', padding: '2px 6px', borderRadius: '10px', border: '2px solid var(--bg-primary)' }}>
+                      {unreadCount > 99 ? '99+' : unreadCount}
+                    </span>
+                  )}
+                </button>
                 <NavLink to={user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard'} className="btn btn-primary" style={{color: 'white'}}>Dashboard</NavLink>
                 <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px', fontWeight: '500', fontFamily: 'inherit' }} onMouseEnter={(e) => e.target.style.color = 'var(--danger)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Logout</button>
-              </>
+              </div>
             ) : (
               <div className="auth-nav-group">
                 <div 

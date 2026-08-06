@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText, X } from 'lucide-react';
+import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText, X, Bell, MessageSquare, CheckCircle } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { ProfileSection } from '../components/ProfileSection';
 
@@ -15,6 +15,7 @@ export const ClientDashboard = () => {
 
   const [jobs, setJobs] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showJobForm, setShowJobForm] = useState(false);
   const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
@@ -34,7 +35,17 @@ export const ClientDashboard = () => {
   useEffect(() => {
     fetchJobs();
     fetchProjects();
+    fetchNotifications();
   }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await apiClient.get('/notifications');
+      setNotifications(response.data.notifications || []);
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
 
   const fetchJobs = async () => {
     try {
@@ -115,6 +126,17 @@ export const ClientDashboard = () => {
     }
   };
 
+  const handleMarkNotificationRead = async (notificationId) => {
+    try {
+      await apiClient.put(`/notifications/${notificationId}/read`);
+      setNotifications(notifications.map(n => n._id === notificationId ? { ...n, isRead: true } : n));
+      // Dispatch custom event to update header bell count
+      window.dispatchEvent(new Event('notification-read'));
+    } catch (error) {
+      console.error('Error marking notification as read:', error);
+    }
+  };
+
   const renderJobs = () => (
     <div className="jobs-section">
       <div className="dashboard-top-actions" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
@@ -179,31 +201,106 @@ export const ClientDashboard = () => {
     </div>
   );
 
-  const renderProjects = () => (
-    <div className="projects-section">
-      <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>Active Projects</h2>
+  const renderProjects = (isCompleted = false) => {
+    const filteredProjects = projects.filter(p => isCompleted ? p.status === 'Completed' : p.status !== 'Completed');
+    
+    return (
+      <div className="projects-section">
+        <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>{isCompleted ? 'Completed Projects' : 'Active Projects'}</h2>
+        {filteredProjects.length === 0 ? (
+          <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+            {isCompleted ? <CheckCircle size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} /> : <Briefcase size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />}
+            <h3>No {isCompleted ? 'completed' : 'active'} projects</h3>
+            <p style={{ color: 'var(--text-secondary)' }}>
+              {isCompleted ? 'You have no completed projects yet.' : 'Accept a proposal to start a project.'}
+            </p>
+          </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+            {filteredProjects.map((project) => (
+              <motion.div key={project._id} className="card" variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }} initial="hidden" animate="visible">
+                <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Project: {project.jobId?.title}</h3>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>Freelancer: <strong>{project.freelancerId?.username}</strong></p>
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', fontSize: '14px' }}>
+                  <span style={{ color: 'var(--text-muted)' }}>Status:</span>
+                  <span style={{ color: 'var(--primary-action)', fontWeight: '600' }}>{project.status}</span>
+                </div>
+                
+                <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => navigate(`/project/${project._id}`)}>
+                  {isCompleted ? 'View Details' : 'Open Workspace'}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const renderMessages = () => (
+    <div className="messages-section">
+      <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>Inbox</h2>
       {projects.length === 0 ? (
         <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-          <Briefcase size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
-          <h3>No active projects</h3>
-          <p style={{ color: 'var(--text-secondary)' }}>Accept a proposal to start a project.</p>
+          <MessageSquare size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
+          <h3>No messages yet</h3>
+          <p style={{ color: 'var(--text-secondary)' }}>Start a project to communicate with freelancers.</p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {projects.map((project) => (
-            <motion.div key={project._id} className="card" variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }} initial="hidden" animate="visible">
-              <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Project: {project.jobId?.title}</h3>
-              <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>Freelancer: <strong>{project.freelancerId?.username}</strong></p>
-              
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px', fontSize: '14px' }}>
-                <span style={{ color: 'var(--text-muted)' }}>Status:</span>
-                <span style={{ color: 'var(--primary-action)', fontWeight: '600' }}>{project.status}</span>
+            <div key={project._id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--bg-card)', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'background 0.2s', cursor: 'pointer' }} onClick={() => navigate(`/project/${project._id}`)} onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'} onMouseLeave={(e) => e.currentTarget.style.background = 'var(--bg-card)'}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--primary-action-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: 'var(--primary-action)', fontWeight: 'bold' }}>
+                  {project.freelancerId?.username?.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h4 style={{ fontSize: '16px', margin: '0 0 4px 0' }}>{project.freelancerId?.username}</h4>
+                  <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Project: {project.jobId?.title}</p>
+                </div>
               </div>
-              
-              <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => navigate(`/project/${project._id}`)}>
-                Open Workspace
-              </button>
-            </motion.div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span className="status-badge" style={{ padding: '2px 8px', borderRadius: '12px', fontSize: '11px', background: project.status === 'Completed' ? 'var(--success-bg)' : 'var(--primary-action-bg)', color: project.status === 'Completed' ? 'var(--success)' : 'var(--primary-action)' }}>
+                  {project.status}
+                </span>
+                <button className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }}>Go to Chat</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
+  const renderNotifications = () => (
+    <div className="notifications-section">
+      <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>Notifications</h2>
+      {notifications.length === 0 ? (
+        <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+          <Bell size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
+          <h3>No notifications</h3>
+          <p style={{ color: 'var(--text-secondary)' }}>You're all caught up!</p>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {notifications.map((notification) => (
+            <div key={notification._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '16px', background: notification.isRead ? 'var(--bg-card)' : 'var(--bg-secondary)', borderRadius: '12px', border: `1px solid ${notification.isRead ? 'var(--border-color)' : 'var(--primary-action)'}`, position: 'relative', overflow: 'hidden' }}>
+              {!notification.isRead && <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '4px', background: 'var(--primary-action)' }}></div>}
+              <div>
+                <h4 style={{ fontSize: '16px', margin: '0 0 4px 0', color: notification.isRead ? 'var(--text-primary)' : 'var(--primary-action)' }}>{notification.title}</h4>
+                <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: 'var(--text-secondary)' }}>{notification.message}</p>
+                <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{new Date(notification.createdAt).toLocaleString()}</span>
+              </div>
+              {!notification.isRead && (
+                <button 
+                  onClick={() => handleMarkNotificationRead(notification._id)}
+                  style={{ background: 'none', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '4px 8px', fontSize: '12px', cursor: 'pointer', color: 'var(--text-secondary)' }}
+                >
+                  Mark as Read
+                </button>
+              )}
+            </div>
           ))}
         </div>
       )}
@@ -220,11 +317,11 @@ export const ClientDashboard = () => {
   return (
     <div className="dashboard-content-wrapper">
       {activeTab === 'jobs' && renderJobs()}
-      {activeTab === 'projects' && renderProjects()}
+      {activeTab === 'projects' && renderProjects(false)}
       {activeTab === 'proposals' && renderPlaceholder('View Proposals (Select a job from "My Jobs" to view its proposals)')}
-      {activeTab === 'completed' && renderPlaceholder('Completed Projects')}
-      {activeTab === 'messages' && renderPlaceholder('Messages')}
-      {activeTab === 'notifications' && renderPlaceholder('Notifications')}
+      {activeTab === 'completed' && renderProjects(true)}
+      {activeTab === 'messages' && renderMessages()}
+      {activeTab === 'notifications' && renderNotifications()}
       {activeTab === 'payments' && renderPlaceholder('Payment History')}
       {activeTab === 'profile' && <ProfileSection role="Client" />}
 
