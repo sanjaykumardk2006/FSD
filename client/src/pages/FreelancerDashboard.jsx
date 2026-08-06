@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Clock, DollarSign, Calendar, FileText, CheckCircle, Briefcase, Filter, X, Bell, MessageSquare } from 'lucide-react';
+import { Search, MapPin, Clock, DollarSign, Calendar, FileText, CheckCircle, Briefcase, Filter, X, Bell, MessageSquare, User, AlignLeft, CheckSquare, Link as LinkIcon, Target, Tag } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { JobDetails } from '../components/JobDetails';
 import { ProfileSection } from '../components/ProfileSection';
@@ -33,6 +33,8 @@ export const FreelancerDashboard = () => {
   // Proposal Form State
   const [selectedJob, setSelectedJob] = useState(null);
   const [showProposalForm, setShowProposalForm] = useState(false);
+  const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
+  const availableSkills = ["React", "Node.js", "Python", "Figma", "AWS", "SEO", "Copywriting", "UI Design", "TypeScript", "Docker", "GraphQL", "TailwindCSS", "Next.js", "MongoDB"];
   const [proposalData, setProposalData] = useState({
     fullName: user?.username || '',
     experience: '',
@@ -250,38 +252,37 @@ export const FreelancerDashboard = () => {
               style={{ overflow: 'hidden', marginTop: '16px' }}
             >
               <div style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Budget</label>
+                <div className="form-group floating-label" style={{ marginBottom: 0 }}>
+                  <DollarSign size={18} className="input-icon" />
                   <select 
                     value={filters.budget} 
                     onChange={(e) => setFilters({...filters, budget: e.target.value})}
-                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
                   >
                     <option value="">Any Budget</option>
                     <option value="under100">Under $100</option>
                     <option value="100to500">$100 - $500</option>
                     <option value="over500">Over $500</option>
                   </select>
+                  <label>Budget</label>
                 </div>
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Duration</label>
+                <div className="form-group floating-label" style={{ marginBottom: 0 }}>
+                  <Calendar size={18} className="input-icon" />
                   <select 
                     value={filters.duration}
                     onChange={(e) => setFilters({...filters, duration: e.target.value})}
-                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
                   >
                     <option value="">Any Duration</option>
                     <option value="lessThanWeek">Less than 1 week</option>
                     <option value="lessThanMonth">Less than 1 month</option>
                     <option value="moreThanMonth">More than 1 month</option>
                   </select>
+                  <label>Duration</label>
                 </div>
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Experience</label>
+                <div className="form-group floating-label" style={{ marginBottom: 0 }}>
+                  <Target size={18} className="input-icon" />
                   <select 
                     value={filters.experience}
                     onChange={(e) => setFilters({...filters, experience: e.target.value})}
-                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
                   >
                     <option value="">Any Experience Level</option>
                     <option value="Fresher">Fresher</option>
@@ -289,13 +290,13 @@ export const FreelancerDashboard = () => {
                     <option value="2 to 4 yr">2 to 4 yr</option>
                     <option value="Above 5 yr">Above 5 yr</option>
                   </select>
+                  <label>Experience</label>
                 </div>
-                <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ fontSize: '12px', marginBottom: '4px', display: 'block', color: 'var(--text-secondary)' }}>Category</label>
+                <div className="form-group floating-label" style={{ marginBottom: 0 }}>
+                  <Tag size={18} className="input-icon" />
                   <select 
                     value={filters.category}
                     onChange={(e) => setFilters({...filters, category: e.target.value})}
-                    style={{ width: '100%', padding: '10px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
                   >
                     <option value="">All Categories</option>
                     <option value="Web Development">Web Development</option>
@@ -310,6 +311,7 @@ export const FreelancerDashboard = () => {
                     <option value="Sales">Sales</option>
                     <option value="Virtual Assistant">Virtual Assistant</option>
                   </select>
+                  <label>Category</label>
                 </div>
               </div>
             </motion.div>
@@ -560,31 +562,85 @@ export const FreelancerDashboard = () => {
               <form onSubmit={handleSubmitProposal} style={{ padding: '32px' }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                   <div className="form-group floating-label">
+                    <User size={18} className="input-icon" />
                     <input type="text" name="fullName" placeholder=" " value={proposalData.fullName} onChange={handleProposalChange} required />
                     <label>Full Name</label>
                   </div>
                   <div className="form-group floating-label">
+                    <Clock size={18} className="input-icon" />
                     <input type="number" name="experience" placeholder=" " value={proposalData.experience} onChange={handleProposalChange} required />
                     <label>Years of Experience</label>
                   </div>
                 </div>
 
-                <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
-                  <textarea name="coverLetter" placeholder=" " value={proposalData.coverLetter} onChange={handleProposalChange} required rows="6" style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
-                  <label>Cover Letter / Proposal Details</label>
+                <div className="form-group" style={{ position: 'relative', marginBottom: '24px' }}>
+                  <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Relevant Skills for this Project</label>
+                  <div 
+                    onClick={() => setIsSkillsDropdownOpen(!isSkillsDropdownOpen)}
+                    style={{ width: '100%', padding: '12px', minHeight: '48px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', cursor: 'pointer', display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}
+                  >
+                    {(!proposalData.skills || proposalData.skills.length === 0) && <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '8px' }}><Briefcase size={18} /> Select skills...</span>}
+                    {proposalData.skills && proposalData.skills.map(skill => (
+                      <span key={skill} style={{ background: 'var(--primary-action)', color: 'white', padding: '4px 10px', borderRadius: '20px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        {skill}
+                        <span 
+                          style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
+                          onClick={(e) => { 
+                            e.stopPropagation(); 
+                            setProposalData({...proposalData, skills: proposalData.skills.filter(s => s !== skill)}); 
+                          }}
+                        >
+                          <X size={12} />
+                        </span>
+                      </span>
+                    ))}
+                  </div>
+                  
+                  {isSkillsDropdownOpen && (
+                    <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '4px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', padding: '12px', zIndex: 50, maxHeight: '200px', overflowY: 'auto', display: 'flex', flexWrap: 'wrap', gap: '8px', boxShadow: 'var(--shadow-md)' }}>
+                      {availableSkills.map(skill => (
+                        <div 
+                          key={skill} 
+                          onClick={() => {
+                            const currentSkills = proposalData.skills || [];
+                            const isSelected = currentSkills.includes(skill);
+                            let newSkills = [...currentSkills];
+                            if (isSelected) {
+                              newSkills = newSkills.filter(s => s !== skill);
+                            } else {
+                              newSkills.push(skill);
+                            }
+                            setProposalData({...proposalData, skills: newSkills});
+                          }}
+                          style={{ padding: '6px 12px', borderRadius: '20px', border: `1px solid ${(proposalData.skills || []).includes(skill) ? 'var(--primary-action)' : 'var(--border-color)'}`, background: (proposalData.skills || []).includes(skill) ? 'var(--primary-action-bg)' : 'transparent', color: (proposalData.skills || []).includes(skill) ? 'var(--primary-action)' : 'var(--text-primary)', cursor: 'pointer', fontSize: '13px', transition: 'all 0.2s' }}
+                        >
+                          {skill}
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
+                  <AlignLeft size={18} className="input-icon" style={{ top: '24px' }} />
+                  <textarea name="coverLetter" placeholder=" " value={proposalData.coverLetter} onChange={handleProposalChange} required rows="6" style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
+                  <label style={{ top: '24px' }}>Cover Letter / Proposal Details</label>
+                </div>
+
+                <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
+                  <CheckSquare size={18} className="input-icon" style={{ top: '24px' }} />
                   <textarea name="completedProjects" placeholder=" " value={proposalData.completedProjects} onChange={handleProposalChange} rows="3" style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
-                  <label>Previously Completed Projects (Optional)</label>
+                  <label style={{ top: '24px' }}>Previously Completed Projects (Optional)</label>
                 </div>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                   <div className="form-group floating-label">
+                    <DollarSign size={18} className="input-icon" />
                     <input type="number" name="proposedCost" placeholder=" " value={proposalData.proposedCost} onChange={handleProposalChange} required />
                     <label>Proposed Amount ($)</label>
                   </div>
                   <div className="form-group floating-label">
+                    <Calendar size={18} className="input-icon" />
                     <input type="text" name="proposedDeadline" placeholder=" " value={proposalData.proposedDeadline} onChange={handleProposalChange} required />
                     <label>Estimated Duration (e.g. 2 weeks)</label>
                   </div>
@@ -594,10 +650,12 @@ export const FreelancerDashboard = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                   <div className="form-group floating-label">
+                    <LinkIcon size={18} className="input-icon" />
                     <input type="url" name="portfolioUrl" placeholder=" " value={proposalData.portfolioUrl} onChange={handleProposalChange} />
                     <label>Portfolio URL (Optional)</label>
                   </div>
                   <div className="form-group floating-label">
+                    <LinkIcon size={18} className="input-icon" />
                     <input type="url" name="githubUrl" placeholder=" " value={proposalData.githubUrl} onChange={handleProposalChange} />
                     <label>GitHub URL (Optional)</label>
                   </div>
@@ -605,6 +663,7 @@ export const FreelancerDashboard = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                   <div className="form-group floating-label">
+                    <LinkIcon size={18} className="input-icon" />
                     <input type="url" name="linkedinUrl" placeholder=" " value={proposalData.linkedinUrl} onChange={handleProposalChange} />
                     <label>LinkedIn URL (Optional)</label>
                   </div>
@@ -615,6 +674,7 @@ export const FreelancerDashboard = () => {
                 </div>
 
                 <div className="form-group floating-label">
+                  <LinkIcon size={18} className="input-icon" />
                   <input type="text" name="projectLinks" placeholder=" " value={proposalData.projectLinks} onChange={handleProposalChange} />
                   <label>Other Relevant Project Links (Comma separated)</label>
                 </div>
