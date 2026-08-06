@@ -874,7 +874,7 @@ main> :first-child {
     position: absolute;
     top: 100%;
     left: 0;
-    background: #FFFFFF;
+    background: var(--bg-primary);
     backdrop-filter: none;
     padding: 24px 5%;
     border-bottom: 1px solid var(--border-color);
@@ -882,10 +882,6 @@ main> :first-child {
     align-items: flex-start !important;
     gap: 24px !important;
     z-index: 999;
-  }
-
-  [data-theme="dark"] .nav {
-    background: #121212;
   }
 
   .nav.mobile-open {
@@ -1171,14 +1167,14 @@ main> :first-child {
 }
 
 .chat-bubble-wrapper.sent .chat-bubble {
-  background: #000000;
-  color: #ffffff;
+  background: var(--primary-action);
+  color: white;
   border-bottom-right-radius: 4px;
 }
 
 .chat-bubble-wrapper.received .chat-bubble {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
   border-bottom-left-radius: 4px;
   border: 1px solid var(--border-color);
 }
@@ -1186,7 +1182,7 @@ main> :first-child {
 .chat-bubble .sender-name {
   font-size: 12px;
   font-weight: 600;
-  color: #000000;
+  color: var(--text-primary);
   margin-bottom: 6px;
   display: block;
 }
@@ -1251,8 +1247,8 @@ main> :first-child {
 }
 
 .btn-send {
-  background: #000000;
-  color: #ffffff;
+  background: var(--primary-action);
+  color: white;
   border: none;
   border-radius: 50%;
   width: 52px;
@@ -1263,13 +1259,13 @@ main> :first-child {
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
 }
 
 .btn-send:hover {
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-  background: #222222;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+  background: var(--accent-primary);
 }
 
 /* Edit and Delete Message Actions */
@@ -1294,7 +1290,7 @@ main> :first-child {
 }
 
 .message-actions button {
-  background: white;
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 50%;
   width: 24px;
