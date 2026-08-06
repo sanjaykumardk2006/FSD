@@ -101,7 +101,7 @@ export const Header = () => {
                     </span>
                   )}
                 </button>
-                <NavLink to={user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard'} className="btn btn-primary" style={{color: 'white'}}>Dashboard</NavLink>
+                <NavLink to={user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard'} className="btn btn-primary">Dashboard</NavLink>
                 <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px', fontWeight: '500', fontFamily: 'inherit' }} onMouseEnter={(e) => e.target.style.color = 'var(--danger)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Logout</button>
               </div>
             ) : (
@@ -133,7 +133,7 @@ export const Header = () => {
                   onMouseLeave={() => setSignupDropdownOpen(false)}
                   onClick={() => setSignupDropdownOpen(!signupDropdownOpen)}
                 >
-                  <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '10px 20px', color: 'white' }}>
+                  <button className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '10px 20px' }}>
                     Sign Up <ChevronDown size={14} />
                   </button>
                   {signupDropdownOpen && (
