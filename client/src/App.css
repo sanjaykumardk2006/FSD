@@ -238,11 +238,15 @@ main> :first-child {
   font-family: 'Inter', sans-serif;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid transparent;
+  border: 2px solid transparent;
 }
 
-.btn:active {
-  transform: scale(0.95);
+.btn:active,
+.btn-primary:active,
+.btn-secondary:active,
+.btn-accept:active,
+.btn-danger:active {
+  transform: scale(0.95) !important;
 }
 
 .btn-primary {
@@ -282,6 +286,7 @@ main> :first-child {
   background-color: transparent;
   color: var(--text-primary);
   border-color: var(--border-color);
+  border-width: 2px;
 }
 
 .btn-secondary:hover {
