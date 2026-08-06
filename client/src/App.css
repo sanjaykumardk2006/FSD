@@ -1768,7 +1768,6 @@ main> :first-child {
   background: var(--bg-secondary);
   border-color: rgba(16, 185, 129, 0.6);
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
-  transform: translateY(-1px);
 }
 
 .nav-item.active {

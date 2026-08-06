@@ -168,8 +168,10 @@ export const FreelancerDashboard = () => {
 
   const filteredJobs = jobs.filter(job => {
     // Search Query filter
-    const matchesSearch = job.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          job.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const title = job.title || '';
+    const desc = job.description || '';
+    const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          desc.toLowerCase().includes(searchQuery.toLowerCase());
     
     // Budget filter
     let matchesBudget = true;
@@ -355,7 +357,7 @@ export const FreelancerDashboard = () => {
 
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                    {job.requiredSkills.map((skill, i) => (
+                    {(job.requiredSkills || []).map((skill, i) => (
                       <span key={i} style={{ background: 'var(--bg-secondary)', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>{skill}</span>
                     ))}
                   </div>
