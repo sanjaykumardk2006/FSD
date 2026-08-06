@@ -2025,7 +2025,8 @@ main> :first-child {
 }
 
 .floating-label input,
-.floating-label textarea {
+.floating-label textarea,
+.floating-label select {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid var(--border-color);
@@ -2033,15 +2034,27 @@ main> :first-child {
   font-size: 15px;
   background-color: var(--bg-secondary);
   transition: all 0.2s ease;
+  color: var(--text-primary);
+}
+
+.floating-label select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236B7280' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+  cursor: pointer;
 }
 
 .floating-label:has(.input-icon) input,
-.floating-label:has(.input-icon) textarea {
+.floating-label:has(.input-icon) textarea,
+.floating-label:has(.input-icon) select {
   padding-left: 42px;
 }
 
 .floating-label input:focus,
-.floating-label textarea:focus {
+.floating-label textarea:focus,
+.floating-label select:focus {
   background-color: var(--bg-primary);
   border-color: var(--primary-action);
   box-shadow: 0 0 0 3px var(--primary-action-bg);
@@ -2071,7 +2084,8 @@ main> :first-child {
 .floating-label input:focus + label,
 .floating-label input:not(:placeholder-shown) + label,
 .floating-label textarea:focus + label,
-.floating-label textarea:not(:placeholder-shown) + label {
+.floating-label textarea:not(:placeholder-shown) + label,
+.floating-label select + label {
   top: -10px;
   left: 12px;
   font-size: 12px;
@@ -2081,8 +2095,17 @@ main> :first-child {
   transform: none;
 }
 
+.floating-label select + label {
+  color: var(--text-secondary);
+}
+
+.floating-label select:focus + label {
+  color: var(--primary-action);
+}
+
 .floating-label input:focus ~ .input-icon,
-.floating-label textarea:focus ~ .input-icon {
+.floating-label textarea:focus ~ .input-icon,
+.floating-label select:focus ~ .input-icon {
   color: var(--primary-action);
 }
 

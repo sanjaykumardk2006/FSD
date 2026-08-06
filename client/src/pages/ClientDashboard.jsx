@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText, X, Bell, MessageSquare, CheckCircle } from 'lucide-react';
+import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText, X, Bell, MessageSquare, CheckCircle, AlignLeft, Tag, Target } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { ProfileSection } from '../components/ProfileSection';
 
@@ -345,39 +345,44 @@ export const ClientDashboard = () => {
 
               <form onSubmit={handlePostJob} style={{ padding: '24px' }}>
                 <div className="form-group floating-label">
+                  <Briefcase size={18} className="input-icon" />
                   <input type="text" name="title" placeholder=" " value={formData.title} onChange={handleFormChange} required />
                   <label>Project Name</label>
                 </div>
 
                 <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
+                  <AlignLeft size={18} className="input-icon" style={{ top: '24px' }} />
                   <textarea name="description" placeholder=" " value={formData.description} onChange={handleFormChange} required rows="5" style={{ width: '100%', padding: '12px 16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
-                  <label>Project Description</label>
+                  <label style={{ top: '24px' }}>Project Description</label>
                 </div>
 
                 <div className="form-row">
                   <div className="form-group floating-label">
+                    <DollarSign size={18} className="input-icon" />
                     <input type="number" name="budget" placeholder=" " value={formData.budget} onChange={handleFormChange} required />
                     <label>Budget ($)</label>
                   </div>
                   <div className="form-group floating-label">
+                    <Calendar size={18} className="input-icon" />
                     <input type="date" name="deadline" placeholder=" " value={formData.deadline} onChange={handleFormChange} required />
                     <label>Project Duration (Deadline)</label>
                   </div>
                 </div>
 
                 <div className="form-row">
-                  <div className="form-group">
-                    <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Experience Required</label>
-                    <select name="experienceRequired" value={formData.experienceRequired} onChange={handleFormChange} style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                  <div className="form-group floating-label">
+                    <Target size={18} className="input-icon" />
+                    <select name="experienceRequired" value={formData.experienceRequired} onChange={handleFormChange}>
                       <option value="Fresher">Fresher</option>
                       <option value="1 yr to 2 yr">1 yr to 2 yr</option>
                       <option value="2 to 4 yr">2 to 4 yr</option>
                       <option value="Above 5 yr">Above 5 yr</option>
                     </select>
+                    <label>Experience Required</label>
                   </div>
-                  <div className="form-group">
-                    <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Category</label>
-                    <select name="category" value={formData.category} onChange={handleFormChange} style={{ width: '100%', padding: '12px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                  <div className="form-group floating-label">
+                    <Tag size={18} className="input-icon" />
+                    <select name="category" value={formData.category} onChange={handleFormChange}>
                       <option value="Web Development">Web Development</option>
                       <option value="Mobile App">Mobile App</option>
                       <option value="UI/UX Design">UI/UX Design</option>
@@ -390,6 +395,7 @@ export const ClientDashboard = () => {
                       <option value="Sales">Sales</option>
                       <option value="Virtual Assistant">Virtual Assistant</option>
                     </select>
+                    <label>Category</label>
                   </div>
                 </div>
 

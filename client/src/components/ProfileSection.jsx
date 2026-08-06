@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import apiClient from '../utils/apiClient';
-import { User, Mail, Briefcase, Clock, FileText, Edit2, Save, X } from 'lucide-react';
+import { User, Mail, Briefcase, Clock, FileText, Edit2, Save, X, Building, MapPin, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const ProfileSection = ({ role }) => {
@@ -9,9 +9,11 @@ export const ProfileSection = ({ role }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
+  const availableSkills = ["React", "Node.js", "Python", "Figma", "AWS", "SEO", "Copywriting", "UI Design", "TypeScript", "Docker", "GraphQL", "TailwindCSS", "Next.js", "MongoDB"];
   const [formData, setFormData] = useState({
     bio: '',
-    skills: '',
+    skills: [],
     experience: '',
     resume: '',
     profileImage: '',
@@ -33,7 +35,7 @@ export const ProfileSection = ({ role }) => {
       setProfile(userData);
         setFormData({
           bio: userData.profile?.bio || '',
-          skills: userData.profile?.skills ? userData.profile.skills.join(', ') : '',
+          skills: userData.profile?.skills || [],
           experience: userData.profile?.experience || '',
           resume: userData.profile?.resume || '',
           profileImage: userData.profile?.profileImage || '',
@@ -95,7 +97,7 @@ export const ProfileSection = ({ role }) => {
     try {
       const payload = {
         bio: formData.bio,
-        skills: formData.skills.split(',').map(s => s.trim()).filter(Boolean),
+        skills: Array.isArray(formData.skills) ? formData.skills : [],
         experience: formData.experience,
         resume: formData.resume,
         profileImage: formData.profileImage,
@@ -171,6 +173,7 @@ export const ProfileSection = ({ role }) => {
           {isEditing ? (
             <form onSubmit={handleSubmit}>
               <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
+                <FileText size={18} className="input-icon" style={{ top: '24px' }} />
                 <textarea name="bio" placeholder=" " value={formData.bio} onChange={handleInputChange} rows="4" style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px' }}></textarea>
                 <label style={{ top: '24px' }}>About Me (Bio)</label>
               </div>
@@ -178,21 +181,25 @@ export const ProfileSection = ({ role }) => {
               {role === 'Client' && (
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                   <div className="form-group floating-label">
+                    <Building size={18} className="input-icon" />
                     <input type="text" name="companyName" placeholder=" " value={formData.companyName} onChange={handleInputChange} />
                     <label>Company Name</label>
                   </div>
-                  <div className="form-group floating-label" style={{ position: 'relative' }}>
-                    <select name="entityType" value={formData.entityType} onChange={handleInputChange} style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', fontSize: '15px', color: 'var(--text-primary)', outline: 'none' }}>
+                  <div className="form-group floating-label">
+                    <Building size={18} className="input-icon" />
+                    <select name="entityType" value={formData.entityType} onChange={handleInputChange}>
                       <option value="Self-employed">Self-employed</option>
                       <option value="Company">Company</option>
                     </select>
-                    <label style={{ position: 'absolute', top: '-10px', left: '12px', background: 'var(--bg-card)', padding: '0 4px', fontSize: '12px', color: 'var(--text-secondary)' }}>Entity Type</label>
+                    <label>Entity Type</label>
                   </div>
                   <div className="form-group floating-label">
+                    <MapPin size={18} className="input-icon" />
                     <input type="text" name="country" placeholder=" " value={formData.country} onChange={handleInputChange} />
                     <label>Country</label>
                   </div>
                   <div className="form-group floating-label">
+                    <Phone size={18} className="input-icon" />
                     <input type="text" name="mobileNumber" placeholder=" " value={formData.mobileNumber} onChange={handleInputChange} />
                     <label>Mobile Number</label>
                   </div>
@@ -201,10 +208,52 @@ export const ProfileSection = ({ role }) => {
 
               {role === 'Freelancer' && (
                 <>
-                  <div className="form-group floating-label" style={{ marginBottom: '24px' }}>
-                    <Briefcase size={18} className="input-icon" />
-                    <input type="text" name="skills" placeholder=" " value={formData.skills} onChange={handleInputChange} />
-                    <label>Skills (comma separated)</label>
+                  <div className="form-group" style={{ position: 'relative', marginBottom: '24px' }}>
+                    <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Skills</label>
+                    <div 
+                      onClick={() => setIsSkillsDropdownOpen(!isSkillsDropdownOpen)}
+                      style={{ width: '100%', padding: '12px', minHeight: '48px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', cursor: 'pointer', display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}
+                    >
+                      {(!formData.skills || formData.skills.length === 0) && <span style={{ color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '8px' }}><Briefcase size={18} /> Select skills...</span>}
+                      {formData.skills && formData.skills.map(skill => (
+                        <span key={skill} style={{ background: 'var(--primary-action)', color: 'white', padding: '4px 10px', borderRadius: '20px', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          {skill}
+                          <span 
+                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }} 
+                            onClick={(e) => { 
+                              e.stopPropagation(); 
+                              setFormData({...formData, skills: formData.skills.filter(s => s !== skill)}); 
+                            }}
+                          >
+                            <X size={12} />
+                          </span>
+                        </span>
+                      ))}
+                    </div>
+                    
+                    {isSkillsDropdownOpen && (
+                      <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '4px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', padding: '12px', zIndex: 50, maxHeight: '200px', overflowY: 'auto', display: 'flex', flexWrap: 'wrap', gap: '8px', boxShadow: 'var(--shadow-md)' }}>
+                        {availableSkills.map(skill => (
+                          <div 
+                            key={skill} 
+                            onClick={() => {
+                              const currentSkills = formData.skills || [];
+                              const isSelected = currentSkills.includes(skill);
+                              let newSkills = [...currentSkills];
+                              if (isSelected) {
+                                newSkills = newSkills.filter(s => s !== skill);
+                              } else {
+                                newSkills.push(skill);
+                              }
+                              setFormData({...formData, skills: newSkills});
+                            }}
+                            style={{ padding: '6px 12px', borderRadius: '20px', border: `1px solid ${(formData.skills || []).includes(skill) ? 'var(--primary-action)' : 'var(--border-color)'}`, background: (formData.skills || []).includes(skill) ? 'var(--primary-action-bg)' : 'transparent', color: (formData.skills || []).includes(skill) ? 'var(--primary-action)' : 'var(--text-primary)', cursor: 'pointer', fontSize: '13px', transition: 'all 0.2s' }}
+                          >
+                            {skill}
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
