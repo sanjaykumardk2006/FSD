@@ -766,6 +766,15 @@ main> :first-child {
   padding-bottom: 16px;
 }
 
+.dashboard-top-actions {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--bg-secondary);
+  padding: 16px 0 24px;
+  margin-top: -16px;
+}
+
 .tab-btn {
   background: var(--bg-primary);
   border: 1px solid var(--border-color);
@@ -1637,7 +1646,21 @@ main> :first-child {
   height: 100vh;
   z-index: 100;
   transition: transform 0.3s ease;
+  overflow-y: auto;
 }
+
+/* Hide scrollbar for a cleaner look */
+.dashboard-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.dashboard-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dashboard-sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 10px;
+}
+
 
 .sidebar-header {
   padding: 24px;
@@ -1735,7 +1758,7 @@ main> :first-child {
 .sidebar-nav {
   flex: 1;
   padding: 24px 16px;
-  overflow-y: auto;
+  overflow: visible;
 }
 
 .sidebar-nav ul {
@@ -1767,11 +1790,17 @@ main> :first-child {
 }
 
 .nav-item.active {
-  background: var(--primary-action-bg);
-  color: var(--text-primary);
-  border-color: rgba(16, 185, 129, 0.8);
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
+  background: var(--primary-action);
+  color: #FFFFFF;
+  border-color: var(--primary-action);
+  box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.nav-item.active svg {
+  color: #FFFFFF;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .sidebar-footer {
