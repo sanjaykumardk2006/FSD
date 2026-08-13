@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { ThemeContext } from '../context/ThemeContext';
 import { 
@@ -120,14 +120,14 @@ export const DashboardLayout = ({ children, role }) => {
 
               return (
                 <li key={index}>
-                  <NavLink 
+                  <Link 
                     to={link.path}
                     className={`nav-item ${isActive ? 'active' : ''}`}
                     onClick={() => setIsSidebarOpen(false)}
                   >
                     {link.icon}
                     <span>{link.name}</span>
-                  </NavLink>
+                  </Link>
                 </li>
               )
             })}
