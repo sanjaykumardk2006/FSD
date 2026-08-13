@@ -89,7 +89,10 @@ export const DashboardLayout = ({ children, role }) => {
           </button>
         </div>
 
-        <div className="sidebar-profile">
+        <div className="sidebar-profile" style={{ position: 'relative' }}>
+          <button onClick={toggleTheme} style={{ position: 'absolute', top: '16px', right: '16px', background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px' }} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
           <div className="profile-avatar" style={{ overflow: 'hidden' }}>
             {user?.profile?.profileImage ? (
               <img src={user.profile.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -132,10 +135,6 @@ export const DashboardLayout = ({ children, role }) => {
         </nav>
 
         <div className="sidebar-footer" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <button className="logout-btn" onClick={toggleTheme} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: 'transparent', color: 'var(--text-secondary)', border: 'none', padding: '12px 16px', borderRadius: '8px', cursor: 'pointer', fontSize: '15px', fontWeight: '500', transition: 'all 0.2s ease', width: '100%' }}>
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
-          </button>
           <button className="logout-btn" onClick={handleLogout}>
             <LogOut size={20} />
             <span>Logout</span>

@@ -2,31 +2,43 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
-import { motion, useInView, animate } from 'framer-motion';
+import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
 import '../App.css';
 
-const AnimatedNumber = ({ value, prefix = '', suffix = '', decimals = 0 }) => {
-  const countRef = useRef(null);
-  const startValue = value * 0.75;
-  const [displayValue, setDisplayValue] = useState(startValue);
-  const isInView = useInView(countRef, { amount: 0.5 });
+const StatsCounter = ({
+  value,
+  duration = 1.5,
+  prefix = "",
+  suffix = "",
+  decimals = 0,
+  className = "",
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const motionValue = useMotionValue(0);
+  const springValue = useSpring(motionValue, { duration: duration * 1000, bounce: 0 });
+  const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
     if (isInView) {
-      const controls = animate(startValue, value, {
-        duration: 1.0,
-        ease: "easeOut",
-        onUpdate(v) {
-          setDisplayValue(v);
-        }
-      });
-      return () => controls.stop();
-    } else {
-      setDisplayValue(startValue);
+      motionValue.set(value);
     }
-  }, [isInView, value, startValue]);
+  }, [isInView, value, motionValue]);
 
-  return <span ref={countRef}>{prefix}{displayValue.toFixed(decimals)}{suffix}</span>;
+  useEffect(() => {
+    const unsubscribe = springValue.on("change", (latest) => {
+      setDisplayValue(latest);
+    });
+    return unsubscribe;
+  }, [springValue]);
+
+  return (
+    <span ref={ref} className={`tabular-nums ${className}`.trim()}>
+      {prefix}
+      {displayValue.toFixed(decimals)}
+      {suffix}
+    </span>
+  );
 };
 
 export const Home = () => {
@@ -140,25 +152,25 @@ export const Home = () => {
           <div style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px', padding: '50px 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '30px', textAlign: 'center' }}>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
-                <AnimatedNumber value={10} suffix="k+" />
+                <StatsCounter value={10} suffix="k+" />
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Active Freelancers</p>
             </div>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
-                <AnimatedNumber value={5} prefix="$" suffix="M+" />
+                <StatsCounter value={5} prefix="$" suffix="M+" />
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Paid to Talent</p>
             </div>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
-                <AnimatedNumber value={4.8} decimals={1} suffix="/5" />
+                <StatsCounter value={4.8} decimals={1} suffix="/5" />
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Average Client Rating</p>
             </div>
             <div>
               <h2 style={{ fontSize: '48px', fontWeight: '800', marginBottom: '10px' }}>
-                <AnimatedNumber value={100} suffix="%" />
+                <StatsCounter value={100} suffix="%" />
               </h2>
               <p style={{ color: 'var(--text-secondary)', fontWeight: '500' }}>Project Success Rate</p>
             </div>
