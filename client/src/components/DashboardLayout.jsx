@@ -16,7 +16,8 @@ import {
   Menu,
   X,
   Moon,
-  Sun
+  Sun,
+  ArrowLeft
 } from 'lucide-react';
 import '../App.css'; // Make sure styles are available
 
@@ -80,39 +81,38 @@ export const DashboardLayout = ({ children, role }) => {
 
       {/* Sidebar */}
       <aside className={`dashboard-sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-            <h2 style={{ fontSize: '20px', margin: 0 }}><span className="freelancer-text">Freelancer</span> <span className="hub-text">Hub</span></h2>
-          </div>
-          <button className="close-sidebar-btn" onClick={toggleSidebar}>
-             <X size={24} />
+        <div className="sidebar-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '24px 24px 16px', borderBottom: 'none' }}>
+          <button onClick={() => navigate(-1)} style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', width: '32px', height: '32px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
+            <ArrowLeft size={18} />
+          </button>
+          <button className="close-sidebar-btn" onClick={toggleSidebar} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: 0 }}>
+             <Menu size={20} />
           </button>
         </div>
 
-        <div className="sidebar-profile" style={{ position: 'relative' }}>
-          <button onClick={toggleTheme} style={{ position: 'absolute', top: '16px', right: '16px', background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: '4px' }} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
-            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+        <div className="sidebar-mini-profile" style={{ padding: '0 24px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--primary-action-bg)', color: 'var(--primary-action)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '16px', overflow: 'hidden' }}>
+              {user?.profile?.profileImage ? (
+                <img src={user.profile.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                getInitials(user?.username)
+              )}
+            </div>
+            <div>
+              <h3 style={{ margin: 0, fontSize: '15px', color: 'var(--text-primary)', fontWeight: '600' }}>{user?.username || 'User'}</h3>
+              <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{role === 'Client' ? 'Customer' : role}</span>
+            </div>
+          </div>
+          <button onClick={toggleTheme} style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <div className="profile-avatar" style={{ overflow: 'hidden' }}>
-            {user?.profile?.profileImage ? (
-              <img src={user.profile.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            ) : (
-              getInitials(user?.username)
-            )}
-          </div>
-          <div className="profile-info">
-            <h3>{user?.username || 'User'}</h3>
-            <span className={`role-badge ${role.toLowerCase()}`}>
-              {role === 'Client' ? 'Customer' : role}
-            </span>
-            <span className="profile-email">{user?.email}</span>
-          </div>
-          
-
         </div>
+
+        <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '0 24px 16px' }} />
 
         <nav className="sidebar-nav">
-          <ul>
+          <ul style={{ padding: '0 16px' }}>
             {navLinks.map((link, index) => {
               const isActive = link.exact 
                 ? location.pathname === link.path.split('?')[0] && location.search === ''
@@ -125,8 +125,8 @@ export const DashboardLayout = ({ children, role }) => {
                     className={`nav-item ${isActive ? 'active' : ''}`}
                     onClick={() => setIsSidebarOpen(false)}
                   >
-                    {link.icon}
                     <span>{link.name}</span>
+                    <div className="nav-icon-box">{link.icon}</div>
                   </Link>
                 </li>
               )
@@ -136,8 +136,10 @@ export const DashboardLayout = ({ children, role }) => {
 
         <div className="sidebar-footer" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <button className="logout-btn" onClick={handleLogout}>
-            <LogOut size={20} />
             <span>Logout</span>
+            <div className="nav-icon-box">
+              <LogOut size={20} />
+            </div>
           </button>
         </div>
       </aside>
