@@ -1,4 +1,5 @@
 const Message = require('../models/Message');
+const Project = require('../models/Project');
 const { body, validationResult } = require('express-validator');
 
 // Send message
@@ -64,6 +65,58 @@ exports.markAsRead = async (req, res) => {
 
     res.status(200).json({ message: 'Message marked as read', data: message });
   } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+// Get global inbox (latest message per project)
+exports.getInbox = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    // Find all active projects for the user
+    const projects = await Project.find({
+      $or: [{ clientId: userId }, { freelancerId: userId }]
+    }).populate('clientId', 'username profile').populate('freelancerId', 'username profile').populate('jobId', 'title');
+
+    const inbox = await Promise.all(projects.map(async (project) => {
+      const latestMessage = await Message.findOne({ projectId: project._id })
+        .sort({ createdAt: -1 })
+        .populate('senderId', 'username profile');
+      
+      const unreadCount = await Message.countDocuments({
+        projectId: project._id,
+        receiverId: userId,
+        isRead: false
+      });
+
+      const otherUser = project.clientId._id.toString() === userId.toString() ? project.freelancerId : project.clientId;
+
+      return {
+        project: {
+          _id: project._id,
+          title: project.jobId?.title || 'Unknown Project',
+          status: project.status
+        },
+        otherUser: {
+          _id: otherUser._id,
+          username: otherUser.username,
+          profileImage: otherUser.profile?.profileImage
+        },
+        latestMessage,
+        unreadCount
+      };
+    }));
+
+    // Sort inbox by latest message date (descending)
+    inbox.sort((a, b) => {
+      const dateA = a.latestMessage ? new Date(a.latestMessage.createdAt).getTime() : 0;
+      const dateB = b.latestMessage ? new Date(b.latestMessage.createdAt).getTime() : 0;
+      return dateB - dateA;
+    });
+
+    res.status(200).json({ inbox });
+  } catch (error) {
+    console.error('Get inbox error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

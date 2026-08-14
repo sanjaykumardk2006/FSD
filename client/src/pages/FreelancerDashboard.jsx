@@ -18,6 +18,7 @@ export const FreelancerDashboard = () => {
   const [proposals, setProposals] = useState([]);
   const [projects, setProjects] = useState([]);
   const [notifications, setNotifications] = useState([]);
+  const [inbox, setInbox] = useState([]);
   const [loading, setLoading] = useState(true);
   
   // Search & Filter State
@@ -62,7 +63,17 @@ export const FreelancerDashboard = () => {
     fetchProposals();
     fetchProjects();
     fetchNotifications();
+    fetchInbox();
   }, []);
+
+  const fetchInbox = async () => {
+    try {
+      const response = await apiClient.get('/messages/inbox');
+      setInbox(response.data.inbox || []);
+    } catch (error) {
+      console.error('Error fetching inbox:', error);
+    }
+  };
 
   const fetchNotifications = async () => {
     try {
@@ -461,8 +472,8 @@ export const FreelancerDashboard = () => {
 
   const renderMessages = () => (
     <div className="messages-section">
-      <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>Inbox</h2>
-      {projects.length === 0 ? (
+      <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>Global Inbox</h2>
+      {inbox.length === 0 ? (
         <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
           <MessageSquare size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
           <h3>No messages yet</h3>
@@ -470,21 +481,45 @@ export const FreelancerDashboard = () => {
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          {projects.map((project) => (
-            <div key={project._id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: 'var(--bg-card)', borderRadius: '12px', border: '1px solid var(--border-color)', transition: 'background 0.2s', cursor: 'pointer' }} onClick={() => navigate(`/project/${project._id}`)} onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'} onMouseLeave={(e) => e.currentTarget.style.background = 'var(--bg-card)'}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--primary-action-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: 'var(--primary-action)', fontWeight: 'bold' }}>
-                  {project.clientId?.username?.charAt(0).toUpperCase()}
+          {inbox.map((item) => (
+            <div key={item.project._id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px', background: item.unreadCount > 0 ? 'var(--bg-secondary)' : 'var(--bg-card)', borderRadius: '12px', border: `1px solid ${item.unreadCount > 0 ? 'var(--primary-action)' : 'var(--border-color)'}`, transition: 'background 0.2s', cursor: 'pointer', position: 'relative', overflow: 'hidden' }} onClick={() => navigate(`/project/${item.project._id}`)} onMouseEnter={(e) => e.currentTarget.style.background = 'var(--bg-secondary)'} onMouseLeave={(e) => e.currentTarget.style.background = item.unreadCount > 0 ? 'var(--bg-secondary)' : 'var(--bg-card)'}>
+              {item.unreadCount > 0 && <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '4px', background: 'var(--primary-action)' }}></div>}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flex: 1, overflow: 'hidden' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'var(--primary-action-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', color: 'var(--primary-action)', fontWeight: 'bold', flexShrink: 0, overflow: 'hidden' }}>
+                  {item.otherUser.profileImage ? (
+                    <img src={item.otherUser.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    item.otherUser.username?.charAt(0).toUpperCase()
+                  )}
                 </div>
-                <div>
-                  <h4 style={{ fontSize: '16px', margin: '0 0 4px 0' }}>{project.clientId?.username}</h4>
-                  <p style={{ margin: 0, fontSize: '13px', color: 'var(--text-secondary)' }}>Project: {project.jobId?.title}</p>
+                <div style={{ flex: 1, overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+                    <h4 style={{ fontSize: '16px', margin: 0, color: item.unreadCount > 0 ? 'var(--text-primary)' : 'inherit', fontWeight: item.unreadCount > 0 ? '600' : 'normal' }}>{item.otherUser.username}</h4>
+                    {item.latestMessage && (
+                      <span style={{ fontSize: '12px', color: item.unreadCount > 0 ? 'var(--primary-action)' : 'var(--text-muted)', whiteSpace: 'nowrap', marginLeft: '8px' }}>
+                        {new Date(item.latestMessage.createdAt).toLocaleDateString()}
+                      </span>
+                    )}
+                  </div>
+                  <p style={{ margin: '0 0 4px 0', fontSize: '13px', color: 'var(--primary-action)' }}>Project: {item.project.title}</p>
+                  <p style={{ margin: 0, fontSize: '14px', color: item.unreadCount > 0 ? 'var(--text-primary)' : 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                    {item.latestMessage ? (
+                      <>
+                        {item.latestMessage.senderId._id === user.id ? 'You: ' : ''}
+                        {item.latestMessage.isSystemMessage ? <i>System Message</i> : item.latestMessage.message}
+                      </>
+                    ) : (
+                      <span style={{ fontStyle: 'italic' }}>No messages yet</span>
+                    )}
+                  </p>
                 </div>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <span className="status-badge" style={{ padding: '2px 8px', borderRadius: '12px', fontSize: '11px', background: project.status === 'Completed' ? 'var(--success-bg)' : 'var(--primary-action-bg)', color: project.status === 'Completed' ? 'var(--success)' : 'var(--primary-action)' }}>
-                  {project.status}
-                </span>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px', marginLeft: '16px' }}>
+                {item.unreadCount > 0 && (
+                  <span style={{ background: 'var(--primary-action)', color: 'white', fontSize: '12px', fontWeight: 'bold', padding: '2px 8px', borderRadius: '12px' }}>
+                    {item.unreadCount} new
+                  </span>
+                )}
                 <button className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }}>Go to Chat</button>
               </div>
             </div>

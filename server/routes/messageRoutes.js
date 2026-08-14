@@ -1,11 +1,14 @@
 const express = require('express');
-const { sendMessage, getProjectMessages, markAsRead, getUnreadCount, editMessage, deleteMessage } = require('../controllers/messageController');
+const { sendMessage, getProjectMessages, markAsRead, getUnreadCount, editMessage, deleteMessage, getInbox } = require('../controllers/messageController');
 const { authMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 // Send message
 router.post('/send', authMiddleware, sendMessage);
+
+// Get global inbox
+router.get('/inbox', authMiddleware, getInbox);
 
 // Get messages for a project
 router.get('/:projectId', authMiddleware, getProjectMessages);
