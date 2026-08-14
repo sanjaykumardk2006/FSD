@@ -72,10 +72,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
     }
 
     try {
-      const endpoint = mode === 'login' ? '/auth/login' : '/auth/signup';
+      const endpoint = mode === 'login' ? '/auth/login' : (mode === 'forgot-password' ? '/auth/forgot-password' : '/auth/signup');
       const payload = mode === 'login' 
         ? { email: formData.email, password: formData.password }
-        : { ...formData, role };
+        : (mode === 'forgot-password' ? { email: formData.email } : { ...formData, role });
 
       const response = await apiClient.post(endpoint, payload);
       
@@ -85,6 +85,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
         
         const userRole = response.data.user.role;
         navigate(userRole === 'Client' ? '/client-dashboard' : '/freelancer-dashboard');
+      } else if (mode === 'forgot-password') {
+        setError('');
+        alert('If an account with that email exists, a password reset link has been sent.');
+        setMode('login');
       } else {
         setMode('login');
         setFormData(prev => ({ ...prev, password: '', confirmPassword: '' }));
@@ -113,7 +117,8 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
             </button>
 
             <div className="auth-header">
-              <h2>{mode === 'login' ? 'Welcome Back' : `Join as ${role === 'Client' ? 'Customer' : role}`}</h2>
+              <h2>{mode === 'login' ? 'Welcome Back' : (mode === 'forgot-password' ? 'Reset Password' : `Join as ${role === 'Client' ? 'Customer' : role}`)}</h2>
+              {mode === 'forgot-password' && <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginTop: '8px' }}>Enter your email and we'll send you a link to reset your password.</p>}
             </div>
 
             <form onSubmit={handleSubmit} className="auth-form-content" style={{ maxHeight: '65vh', overflowY: 'auto', paddingRight: '8px' }}>
@@ -214,18 +219,28 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
                 <label>Email Address</label>
               </div>
 
-              <div className="form-group floating-label">
-                <Lock size={18} className="input-icon" />
-                <input
-                  type="password"
-                  name="password"
-                  placeholder=" "
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                />
-                <label>Password</label>
-              </div>
+              {mode !== 'forgot-password' && (
+                <div className="form-group floating-label">
+                  <Lock size={18} className="input-icon" />
+                  <input
+                    type="password"
+                    name="password"
+                    placeholder=" "
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
+                  <label>Password</label>
+                </div>
+              )}
+
+              {mode === 'login' && (
+                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '16px', marginTop: '-8px' }}>
+                  <button type="button" className="text-btn" onClick={() => setMode('forgot-password')} style={{ fontSize: '13px' }}>
+                    Forgot Password?
+                  </button>
+                </div>
+              )}
 
               {mode === 'signup' && (
                 <div className="form-group floating-label">
@@ -243,13 +258,15 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
               )}
 
               <button type="submit" className="btn btn-primary auth-submit-btn" disabled={loading}>
-                {loading ? 'Processing...' : (mode === 'login' ? 'Sign In' : 'Create Account')}
+                {loading ? 'Processing...' : (mode === 'login' ? 'Sign In' : (mode === 'forgot-password' ? 'Send Reset Link' : 'Create Account'))}
                 {!loading && <ChevronRight size={18} />}
               </button>
 
               <div className="auth-footer" style={{ marginTop: '20px', paddingBottom: '30px' }}>
                 {mode === 'login' ? (
                   <p>Don't have an account? <button type="button" className="text-btn" onClick={() => setMode('signup')}>Sign up</button></p>
+                ) : mode === 'forgot-password' ? (
+                  <p>Remember your password? <button type="button" className="text-btn" onClick={() => setMode('login')}>Log in</button></p>
                 ) : (
                   <p>Already have an account? <button type="button" className="text-btn" onClick={() => setMode('login')}>Log in</button></p>
                 )}

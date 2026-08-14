@@ -1,5 +1,7 @@
+const crypto = require('crypto');
 const User = require('../models/User');
 const { generateToken } = require('../utils/tokenUtils');
+const { sendVerificationEmail, sendPasswordResetEmail } = require('../utils/mailer');
 const { body, validationResult } = require('express-validator');
 
 exports.signup = [
@@ -41,6 +43,8 @@ exports.signup = [
         return res.status(400).json({ message: 'username exist' });
       }
 
+      const verificationToken = crypto.randomBytes(32).toString('hex');
+
       // Create new user
       const user = new User({
         username,
@@ -53,11 +57,16 @@ exports.signup = [
         country,
         mobileNumber,
         entityType: entityType || 'Self-employed',
-        profile: role === 'Freelancer' && service ? { skills: [service] } : undefined
+        profile: role === 'Freelancer' && service ? { skills: [service] } : undefined,
+        verificationToken,
       });
 
       await user.save();
-      res.status(201).json({ message: 'User registered successfully. Please login.' });
+      
+      // Send verification email (non-blocking)
+      sendVerificationEmail(user.email, verificationToken);
+
+      res.status(201).json({ message: 'User registered successfully. Please check your email to verify your account.' });
     } catch (error) {
       console.error('Signup error:', error);
       res.status(500).json({ message: 'Server error during signup' });
@@ -149,3 +158,81 @@ exports.updateUserProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+exports.verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.params;
+    const user = await User.findOne({ verificationToken: token });
+
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired verification token' });
+    }
+
+    user.isVerified = true;
+    user.verificationToken = undefined;
+    await user.save();
+
+    res.status(200).json({ message: 'Email verified successfully' });
+  } catch (error) {
+    console.error('Email verification error:', error);
+    res.status(500).json({ message: 'Server error during email verification' });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      // Return 200 even if user not found to prevent email enumeration
+      return res.status(200).json({ message: 'If an account with that email exists, a password reset link has been sent.' });
+    }
+
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    await sendPasswordResetEmail(user.email, resetToken);
+
+    res.status(200).json({ message: 'If an account with that email exists, a password reset link has been sent.' });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    res.status(500).json({ message: 'Server error during password reset request' });
+  }
+};
+
+exports.resetPassword = [
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array()[0].msg, errors: errors.array() });
+    }
+
+    try {
+      const { token } = req.params;
+      const { password } = req.body;
+
+      const user = await User.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: Date.now() }
+      });
+
+      if (!user) {
+        return res.status(400).json({ message: 'Password reset token is invalid or has expired.' });
+      }
+
+      user.password = password; // Will be hashed by pre-save hook
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      await user.save();
+
+      res.status(200).json({ message: 'Password has been reset successfully.' });
+    } catch (error) {
+      console.error('Reset password error:', error);
+      res.status(500).json({ message: 'Server error during password reset' });
+    }
+  }
+];
