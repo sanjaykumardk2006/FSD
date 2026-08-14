@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Clock, DollarSign, Calendar, FileText, CheckCircle, Briefcase, Filter, X, Bell, MessageSquare, User, AlignLeft, CheckSquare, Link as LinkIcon, Target, Tag } from 'lucide-react';
+import { Search, MapPin, Clock, DollarSign, Calendar, FileText, CheckCircle, Briefcase, Filter, X, Bell, MessageSquare, User, AlignLeft, CheckSquare, Link as LinkIcon, Target, Tag, Trash2 } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { JobDetails } from '../components/JobDetails';
 import { ProfileSection } from '../components/ProfileSection';
@@ -163,6 +163,18 @@ export const FreelancerDashboard = () => {
       window.dispatchEvent(new Event('notification-read'));
     } catch (error) {
       console.error('Error marking notification as read:', error);
+    }
+  };
+
+  const handleDeleteNotification = async (notificationId) => {
+    if (!window.confirm('Are you sure you want to delete this notification?')) return;
+    try {
+      await apiClient.delete(`/notifications/${notificationId}`);
+      setNotifications(notifications.filter(n => n._id !== notificationId));
+      // If deleting an unread notification, the header count should update
+      window.dispatchEvent(new Event('notification-read'));
+    } catch (error) {
+      console.error('Error deleting notification:', error);
     }
   };
 
@@ -501,14 +513,23 @@ export const FreelancerDashboard = () => {
                 <p style={{ margin: '0 0 8px 0', fontSize: '14px', color: 'var(--text-secondary)' }}>{notification.message}</p>
                 <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>{new Date(notification.createdAt).toLocaleString()}</span>
               </div>
-              {!notification.isRead && (
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                {!notification.isRead && (
+                  <button 
+                    onClick={() => handleMarkNotificationRead(notification._id)}
+                    style={{ background: 'none', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '4px 8px', fontSize: '12px', cursor: 'pointer', color: 'var(--text-secondary)' }}
+                  >
+                    Mark as Read
+                  </button>
+                )}
                 <button 
-                  onClick={() => handleMarkNotificationRead(notification._id)}
-                  style={{ background: 'none', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '4px 8px', fontSize: '12px', cursor: 'pointer', color: 'var(--text-secondary)' }}
+                  onClick={() => handleDeleteNotification(notification._id)}
+                  style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px' }}
+                  title="Delete Notification"
                 >
-                  Mark as Read
+                  <Trash2 size={16} />
                 </button>
-              )}
+              </div>
             </div>
           ))}
         </div>

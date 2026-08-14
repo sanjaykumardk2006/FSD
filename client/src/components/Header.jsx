@@ -26,7 +26,16 @@ export const Header = () => {
       fetchUnreadCount();
       // Optionally set up an interval to poll for new notifications
       const interval = setInterval(fetchUnreadCount, 60000); // Poll every minute
-      return () => clearInterval(interval);
+      
+      const handleNotificationRead = () => {
+        fetchUnreadCount();
+      };
+      window.addEventListener('notification-read', handleNotificationRead);
+      
+      return () => {
+        clearInterval(interval);
+        window.removeEventListener('notification-read', handleNotificationRead);
+      };
     }
   }, [user]);
 
