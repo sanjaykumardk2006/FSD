@@ -17,7 +17,8 @@ import {
   X,
   Moon,
   Sun,
-  ArrowLeft
+  ArrowLeft,
+  Mail
 } from 'lucide-react';
 import '../App.css'; // Make sure styles are available
 
@@ -27,6 +28,7 @@ export const DashboardLayout = ({ children, role }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [activeProfileDetail, setActiveProfileDetail] = useState(null);
 
   const handleLogout = () => {
     logout();
@@ -90,23 +92,47 @@ export const DashboardLayout = ({ children, role }) => {
           </button>
         </div>
 
-        <div className="sidebar-mini-profile" style={{ padding: '0 24px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--primary-action-bg)', color: 'var(--primary-action)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '16px', overflow: 'hidden' }}>
-              {user?.profile?.profileImage ? (
-                <img src={user.profile.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              ) : (
-                getInitials(user?.username)
+        <div className="sidebar-mini-profile" style={{ padding: '0 24px 16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--primary-action-bg)', color: 'var(--primary-action)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '16px', overflow: 'hidden' }}>
+                {user?.profile?.profileImage ? (
+                  <img src={user.profile.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  getInitials(user?.username)
+                )}
+              </div>
+              <div>
+                <h3 style={{ margin: 0, fontSize: '15px', color: 'var(--text-primary)', fontWeight: '600' }}>{user?.username || 'User'}</h3>
+                <div style={{ display: 'flex', gap: '12px', marginTop: '6px' }}>
+                  <button onClick={() => setActiveProfileDetail(activeProfileDetail === 'email' ? null : 'email')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'email' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Email">
+                    <Mail size={14} />
+                  </button>
+                  <button onClick={() => setActiveProfileDetail(activeProfileDetail === 'role' ? null : 'role')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'role' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Role">
+                    <User size={14} />
+                  </button>
+                </div>
+              </div>
+            </div>
+            <button onClick={toggleTheme} style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
+              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+          </div>
+
+          {activeProfileDetail && (
+            <div style={{ background: 'var(--bg-secondary)', padding: '12px', borderRadius: '8px', fontSize: '12px', color: 'var(--text-secondary)', marginTop: '4px' }}>
+              {activeProfileDetail === 'email' && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Mail size={14} style={{ color: 'var(--primary-action)' }} /> <span>{user?.email || 'No email provided'}</span>
+                </div>
+              )}
+              {activeProfileDetail === 'role' && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <User size={14} style={{ color: 'var(--primary-action)' }} /> <span style={{ textTransform: 'capitalize' }}>{role === 'Client' ? 'Customer' : role}</span>
+                </div>
               )}
             </div>
-            <div>
-              <h3 style={{ margin: 0, fontSize: '15px', color: 'var(--text-primary)', fontWeight: '600' }}>{user?.username || 'User'}</h3>
-              <span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{role === 'Client' ? 'Customer' : role}</span>
-            </div>
-          </div>
-          <button onClick={toggleTheme} style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
-            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-          </button>
+          )}
         </div>
 
         <hr style={{ border: 'none', borderTop: '1px solid var(--border-color)', margin: '0 24px 16px' }} />

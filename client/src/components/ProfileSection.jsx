@@ -9,6 +9,7 @@ export const ProfileSection = ({ role }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [activeProfileDetail, setActiveProfileDetail] = useState(null);
   const [isSkillsDropdownOpen, setIsSkillsDropdownOpen] = useState(false);
   const availableSkills = ["React", "Node.js", "Python", "Figma", "AWS", "SEO", "Copywriting", "UI Design", "TypeScript", "Docker", "GraphQL", "TailwindCSS", "Next.js", "MongoDB"];
   const [formData, setFormData] = useState({
@@ -155,10 +156,29 @@ export const ProfileSection = ({ role }) => {
           </div>
           <div>
             <h2 style={{ fontSize: '24px', marginBottom: '4px' }}>{profile?.username}</h2>
-            <div style={{ display: 'flex', gap: '16px', color: 'var(--text-secondary)', fontSize: '14px' }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Mail size={16} /> {profile?.email}</span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: '4px', textTransform: 'capitalize' }}><User size={16} /> {profile?.role === 'Client' ? 'Customer' : profile?.role}</span>
+            <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
+              <button onClick={() => setActiveProfileDetail(activeProfileDetail === 'email' ? null : 'email')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'email' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Email">
+                <Mail size={18} />
+              </button>
+              <button onClick={() => setActiveProfileDetail(activeProfileDetail === 'role' ? null : 'role')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'role' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Role">
+                <User size={18} />
+              </button>
             </div>
+            
+            {activeProfileDetail && (
+              <div style={{ background: 'var(--bg-secondary)', padding: '8px 12px', borderRadius: '8px', fontSize: '13px', color: 'var(--text-secondary)', marginTop: '12px', width: 'fit-content' }}>
+                {activeProfileDetail === 'email' && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <Mail size={14} style={{ color: 'var(--primary-action)' }} /> <span>{profile?.email || 'No email provided'}</span>
+                  </div>
+                )}
+                {activeProfileDetail === 'role' && (
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <User size={14} style={{ color: 'var(--primary-action)' }} /> <span style={{ textTransform: 'capitalize' }}>{profile?.role === 'Client' ? 'Customer' : profile?.role}</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           
           {!isEditing && (
