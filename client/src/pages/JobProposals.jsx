@@ -6,6 +6,7 @@ import { ArrowLeft, Check, X as XIcon, FileText, User, Star, Calendar } from 'lu
 import { ProposalDetail } from '../components/ProposalDetail';
 import { FreelancerProfile } from '../components/FreelancerProfile';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const JobProposals = () => {
   const { jobId } = useParams();
   const navigate = useNavigate();
@@ -72,14 +73,14 @@ export const JobProposals = () => {
   return (
     <div className="proposals-page-wrapper">
       <div style={{ marginBottom: '24px' }}>
-        <button 
+        <AnimatedButton 
           onClick={() => navigate('/client-dashboard')} 
           style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '15px', fontWeight: '500', padding: '8px 0', transition: 'color 0.2s' }}
           onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'}
           onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}
         >
           <ArrowLeft size={18} /> Back to Dashboard
-        </button>
+        </AnimatedButton>
       </div>
 
       <div style={{ background: 'var(--bg-card)', padding: '32px', borderRadius: '16px', border: '1px solid var(--border-color)', marginBottom: '32px' }}>
@@ -147,26 +148,26 @@ export const JobProposals = () => {
               {/* Proposal Actions */}
               <div style={{ padding: '16px 24px', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
                 <div style={{ display: 'flex', gap: '12px' }}>
-                  <button className="btn btn-secondary" onClick={() => openProposalDetail(proposal)}>Read Full Proposal</button>
-                  <button className="btn btn-secondary" onClick={() => openFreelancerProfile(proposal.freelancerId?._id)}>View Profile</button>
+                  <AnimatedButton className="btn btn-secondary" onClick={() => openProposalDetail(proposal)}>Read Full Proposal</AnimatedButton>
+                  <AnimatedButton className="btn btn-secondary" onClick={() => openFreelancerProfile(proposal.freelancerId?._id)}>View Profile</AnimatedButton>
                 </div>
                 
                 {proposal.status === 'Pending' ? (
                   <div style={{ display: 'flex', gap: '12px' }}>
-                    <button 
+                    <AnimatedButton 
                       className="btn" 
                       onClick={() => handleUpdateStatus(proposal._id, 'Rejected')}
                       style={{ background: 'var(--bg-card)', color: 'var(--danger)', border: '1px solid var(--danger)', display: 'flex', alignItems: 'center', gap: '6px' }}
                     >
                       <XIcon size={16} /> Decline
-                    </button>
-                    <button 
+                    </AnimatedButton>
+                    <AnimatedButton 
                       className="btn btn-primary" 
                       onClick={() => handleUpdateStatus(proposal._id, 'Accepted')}
                       style={{ background: 'var(--success)', color: 'white', display: 'flex', alignItems: 'center', gap: '6px', border: 'none' }}
                     >
                       <Check size={16} /> Accept Proposal
-                    </button>
+                    </AnimatedButton>
                   </div>
                 ) : (
                   <span className={`status-badge ${proposal.status.toLowerCase()}`} style={{ padding: '6px 16px', borderRadius: '20px', fontSize: '14px', fontWeight: '600', background: proposal.status === 'Accepted' ? 'var(--success-bg)' : 'var(--danger-bg)', color: proposal.status === 'Accepted' ? 'var(--success)' : 'var(--danger)' }}>

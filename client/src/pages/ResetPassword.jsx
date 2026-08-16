@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -87,14 +88,14 @@ export const ResetPassword = () => {
               />
             </div>
 
-            <button type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: '8px', width: '100%' }}>
+            <AnimatedButton type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: '8px', width: '100%' }}>
               {loading ? 'Resetting...' : 'Reset Password'}
-            </button>
+            </AnimatedButton>
           </form>
         )}
         
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          <button type="button" className="text-btn" onClick={() => navigate('/')}>Back to Home</button>
+          <AnimatedButton type="button" className="text-btn" onClick={() => navigate('/')}>Back to Home</AnimatedButton>
         </div>
       </div>
     </div>

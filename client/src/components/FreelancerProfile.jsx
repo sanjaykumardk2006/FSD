@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { X, User, MapPin, Mail, Phone, Globe, Link, Star, Award, Briefcase, GraduationCap } from 'lucide-react';
 
+import AnimatedButton from './AnimatedButton';
 export const FreelancerProfile = ({ freelancerId, onClose }) => {
   // In a real app, you would fetch the full profile using freelancerId
   // For this redesign, we'll use a mocked premium profile display
@@ -17,9 +18,9 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
       >
         <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-primary)', position: 'sticky', top: 0, zIndex: 10 }}>
           <h2 style={{ fontSize: '20px', margin: 0 }}>Freelancer Profile</h2>
-          <button className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={onClose}>
+          <AnimatedButton className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={onClose}>
             <X size={20} />
-          </button>
+          </AnimatedButton>
         </div>
 
         <div style={{ padding: '32px' }}>
@@ -48,8 +49,8 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
               </div>
               
               <div style={{ display: 'flex', gap: '12px' }}>
-                <button className="btn btn-primary">Invite to Job</button>
-                <button className="btn btn-secondary">Message</button>
+                <AnimatedButton className="btn btn-primary">Invite to Job</AnimatedButton>
+                <AnimatedButton className="btn btn-secondary">Message</AnimatedButton>
               </div>
             </div>
           </div>

@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
 import { Send, Edit2, Trash2, Check, X, Clock, MapPin, DollarSign, Briefcase } from 'lucide-react';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const ProjectDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
@@ -169,8 +170,8 @@ export const ProjectDetail = () => {
             </div>
           </div>
           <div style={{ display: 'flex', gap: '12px' }}>
-            <button className="btn btn-secondary" onClick={() => setShowProgressForm(true)}>Project Milestones</button>
-            <button className="btn btn-primary" onClick={() => navigate(-1)}>Back</button>
+            <AnimatedButton className="btn btn-secondary" onClick={() => setShowProgressForm(true)}>Project Milestones</AnimatedButton>
+            <AnimatedButton className="btn btn-primary" onClick={() => navigate(-1)}>Back</AnimatedButton>
           </div>
         </div>
 
@@ -243,8 +244,8 @@ export const ProjectDetail = () => {
                               autoFocus
                               style={{ padding: '4px 8px', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.1)', color: 'white', outline: 'none' }}
                             />
-                            <button type="submit" style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><Check size={16} /></button>
-                            <button type="button" onClick={() => setEditingMessageId(null)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><X size={16} /></button>
+                            <AnimatedButton type="submit" style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><Check size={16} /></AnimatedButton>
+                            <AnimatedButton type="button" onClick={() => setEditingMessageId(null)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}><X size={16} /></AnimatedButton>
                           </form>
                         ) : (
                           <>
@@ -259,8 +260,8 @@ export const ProjectDetail = () => {
 
                             {isMine && editingMessageId !== msg._id && (
                               <div className="msg-actions" style={{ position: 'absolute', top: '50%', left: '-60px', transform: 'translateY(-50%)', display: 'flex', gap: '4px', opacity: 0, transition: 'opacity 0.2s', background: 'var(--bg-card)', padding: '4px', borderRadius: '8px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-                                <button onClick={() => { setEditingMessageId(msg._id); setEditMessageText(msg.message); }} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--text-secondary)' }}><Edit2 size={14} /></button>
-                                <button onClick={() => handleDeleteMessage(msg._id)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--danger)' }}><Trash2 size={14} /></button>
+                                <AnimatedButton onClick={() => { setEditingMessageId(msg._id); setEditMessageText(msg.message); }} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--text-secondary)' }}><Edit2 size={14} /></AnimatedButton>
+                                <AnimatedButton onClick={() => handleDeleteMessage(msg._id)} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', color: 'var(--danger)' }}><Trash2 size={14} /></AnimatedButton>
                               </div>
                             )}
                           </>
@@ -286,9 +287,9 @@ export const ProjectDetail = () => {
                 onFocus={(e) => e.target.style.borderColor = 'var(--primary-action)'}
                 onBlur={(e) => e.target.style.borderColor = 'var(--border-color)'}
               />
-              <button type="submit" className="btn btn-primary" style={{ padding: '14px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px' }}>
+              <AnimatedButton type="submit" className="btn btn-primary" style={{ padding: '14px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px' }}>
                 <Send size={20} />
-              </button>
+              </AnimatedButton>
             </form>
           </div>
 
@@ -302,9 +303,9 @@ export const ProjectDetail = () => {
           <div className="modal" style={{ maxWidth: '600px', width: '95%' }}>
             <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <h2 style={{ fontSize: '20px', margin: 0 }}>Project Milestones</h2>
-              <button className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={() => setShowProgressForm(false)}>
+              <AnimatedButton className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={() => setShowProgressForm(false)}>
                 <X size={20} />
-              </button>
+              </AnimatedButton>
             </div>
 
             <div style={{ padding: '24px', maxHeight: '50vh', overflowY: 'auto' }}>
@@ -337,7 +338,7 @@ export const ProjectDetail = () => {
                     <textarea placeholder=" " value={progressData.description} onChange={(e) => setProgressData({ ...progressData, description: e.target.value })} rows="3" required style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-card)', fontSize: '15px' }}></textarea>
                     <label style={{ top: '24px' }}>Description</label>
                   </div>
-                  <button type="submit" className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>Save Milestone</button>
+                  <AnimatedButton type="submit" className="btn btn-primary" style={{ width: '100%', padding: '14px' }}>Save Milestone</AnimatedButton>
                 </form>
               </div>
             )}

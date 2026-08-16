@@ -4,6 +4,7 @@ import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import { motion } from 'framer-motion';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -172,9 +173,9 @@ export const Contact = () => {
                     required
                   ></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '14px', fontWeight: '700' }}>
+                <AnimatedButton type="submit" className="btn btn-primary" style={{ width: '100%', fontSize: '16px', padding: '14px', fontWeight: '700' }}>
                   CONNECT
-                </button>
+                </AnimatedButton>
               </form>
               </div>
             </motion.div>

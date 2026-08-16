@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { X, MapPin, Calendar, DollarSign, Clock, Tag, Briefcase, FileText } from 'lucide-react';
 
+import AnimatedButton from './AnimatedButton';
 export const JobDetails = ({ job, onClose, onApply }) => {
   return (
     <div className="modal-overlay" style={{ zIndex: 10000 }}>
@@ -14,9 +15,9 @@ export const JobDetails = ({ job, onClose, onApply }) => {
       >
         <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-primary)', position: 'sticky', top: 0, zIndex: 10 }}>
           <h2 style={{ fontSize: '20px', margin: 0 }}>Project Details</h2>
-          <button className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={onClose}>
+          <AnimatedButton className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={onClose}>
             <X size={20} />
-          </button>
+          </AnimatedButton>
         </div>
 
         <div style={{ padding: '32px' }}>
@@ -93,12 +94,12 @@ export const JobDetails = ({ job, onClose, onApply }) => {
           </div>
 
           <div style={{ display: 'flex', gap: '16px', borderTop: '1px solid var(--border-color)', paddingTop: '24px' }}>
-            <button className="btn btn-primary" style={{ flex: 1, padding: '16px', fontSize: '16px' }} onClick={onApply}>
+            <AnimatedButton className="btn btn-primary" style={{ flex: 1, padding: '16px', fontSize: '16px' }} onClick={onApply}>
               Submit a Proposal
-            </button>
-            <button className="btn btn-secondary" style={{ padding: '16px 24px', fontSize: '16px' }}>
+            </AnimatedButton>
+            <AnimatedButton className="btn btn-secondary" style={{ padding: '16px 24px', fontSize: '16px' }}>
               Save Job
-            </button>
+            </AnimatedButton>
           </div>
 
         </div>

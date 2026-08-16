@@ -4,6 +4,7 @@ import apiClient from '../utils/apiClient';
 import { User, Mail, Briefcase, Clock, FileText, Edit2, Save, X, Building, MapPin, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 
+import AnimatedButton from './AnimatedButton';
 export const ProfileSection = ({ role }) => {
   const { user, updateUser } = useContext(AuthContext);
   const [profile, setProfile] = useState(null);
@@ -157,12 +158,12 @@ export const ProfileSection = ({ role }) => {
           <div>
             <h2 style={{ fontSize: '24px', marginBottom: '4px' }}>{profile?.username}</h2>
             <div style={{ display: 'flex', gap: '12px', marginTop: '8px' }}>
-              <button onClick={() => setActiveProfileDetail(activeProfileDetail === 'email' ? null : 'email')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'email' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Email">
+              <AnimatedButton onClick={() => setActiveProfileDetail(activeProfileDetail === 'email' ? null : 'email')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'email' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Email">
                 <Mail size={18} />
-              </button>
-              <button onClick={() => setActiveProfileDetail(activeProfileDetail === 'role' ? null : 'role')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'role' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Role">
+              </AnimatedButton>
+              <AnimatedButton onClick={() => setActiveProfileDetail(activeProfileDetail === 'role' ? null : 'role')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'role' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Role">
                 <User size={18} />
-              </button>
+              </AnimatedButton>
             </div>
             
             {activeProfileDetail && (
@@ -182,9 +183,9 @@ export const ProfileSection = ({ role }) => {
           </div>
           
           {!isEditing && (
-            <button className="btn btn-secondary" onClick={() => setIsEditing(true)} style={{ position: 'absolute', right: '32px', top: '32px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <AnimatedButton className="btn btn-secondary" onClick={() => setIsEditing(true)} style={{ position: 'absolute', right: '32px', top: '32px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Edit2 size={16} /> Edit Profile
-            </button>
+            </AnimatedButton>
           )}
         </div>
 
@@ -293,12 +294,12 @@ export const ProfileSection = ({ role }) => {
               )}
 
               <div style={{ display: 'flex', gap: '16px', marginTop: '24px' }}>
-                <button type="submit" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <AnimatedButton type="submit" className="btn btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <Save size={18} /> Save Changes
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={() => { setIsEditing(false); fetchProfile(); }}>
+                </AnimatedButton>
+                <AnimatedButton type="button" className="btn btn-secondary" onClick={() => { setIsEditing(false); fetchProfile(); }}>
                   Cancel
-                </button>
+                </AnimatedButton>
               </div>
             </form>
           ) : (

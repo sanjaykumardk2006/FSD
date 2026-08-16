@@ -7,6 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 import { JobDetails } from '../components/JobDetails';
 import { ProfileSection } from '../components/ProfileSection';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const FreelancerDashboard = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -255,16 +256,16 @@ export const FreelancerDashboard = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{ width: '100%', padding: '14px 16px 14px 48px', border: 'none', background: 'transparent', color: 'var(--text-primary)', outline: 'none', fontSize: '15px' }}
             />
-            <button className="btn btn-primary" style={{ margin: '4px 6px', padding: '8px 24px', borderRadius: 'var(--radius-md)' }}>Search</button>
+            <AnimatedButton className="btn btn-primary" style={{ margin: '4px 6px', padding: '8px 24px', borderRadius: 'var(--radius-md)' }}>Search</AnimatedButton>
           </div>
           
-          <button 
+          <AnimatedButton 
             className="btn btn-secondary" 
             onClick={() => setShowFilters(!showFilters)}
             style={{ display: 'flex', alignItems: 'center', gap: '8px', background: showFilters ? 'var(--bg-secondary)' : 'var(--bg-card)', padding: '0 20px', height: 'auto', borderRadius: 'var(--radius-lg)' }}
           >
             <Filter size={18} /> Filters
-          </button>
+          </AnimatedButton>
         </div>
 
         {/* Expandable Filters */}
@@ -385,8 +386,8 @@ export const FreelancerDashboard = () => {
                     ))}
                   </div>
                   <div style={{ display: 'flex', gap: '12px' }}>
-                    <button className="btn btn-secondary" onClick={() => { setSelectedJob(job); setShowJobDetails(true); }}>View Details</button>
-                    <button className="btn btn-primary" onClick={() => { setSelectedJob(job); setShowProposalForm(true); }}>Apply Now</button>
+                    <AnimatedButton className="btn btn-secondary" onClick={() => { setSelectedJob(job); setShowJobDetails(true); }}>View Details</AnimatedButton>
+                    <AnimatedButton className="btn btn-primary" onClick={() => { setSelectedJob(job); setShowProposalForm(true); }}>Apply Now</AnimatedButton>
                   </div>
                 </div>
               </motion.div>
@@ -423,8 +424,8 @@ export const FreelancerDashboard = () => {
               <p style={{ fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: 'var(--primary-action)' }}>${proposal.proposedCost}</p>
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px' }}>
-                <button className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '12px' }}>Details</button>
-                <button className="btn btn-secondary" onClick={() => handleDeleteProposal(proposal._id)} style={{ padding: '6px 12px', fontSize: '12px', color: 'var(--danger)', borderColor: 'var(--danger)' }} disabled={proposal.status === 'Accepted'}>Withdraw</button>
+                <AnimatedButton className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '12px' }}>Details</AnimatedButton>
+                <AnimatedButton className="btn btn-secondary" onClick={() => handleDeleteProposal(proposal._id)} style={{ padding: '6px 12px', fontSize: '12px', color: 'var(--danger)', borderColor: 'var(--danger)' }} disabled={proposal.status === 'Accepted'}>Withdraw</AnimatedButton>
               </div>
             </motion.div>
           ))}
@@ -459,9 +460,9 @@ export const FreelancerDashboard = () => {
                   <span style={{ color: 'var(--primary-action)', fontWeight: '600' }}>{project.status}</span>
                 </div>
                 
-                <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => navigate(`/project/${project._id}`)}>
+                <AnimatedButton className="btn btn-primary" style={{ width: '100%' }} onClick={() => navigate(`/project/${project._id}`)}>
                   {isCompleted ? 'View Details' : 'Open Chat / Workspace'}
-                </button>
+                </AnimatedButton>
               </motion.div>
             ))}
           </div>
@@ -520,7 +521,7 @@ export const FreelancerDashboard = () => {
                     {item.unreadCount} new
                   </span>
                 )}
-                <button className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }}>Go to Chat</button>
+                <AnimatedButton className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }}>Go to Chat</AnimatedButton>
               </div>
             </div>
           ))}
@@ -550,20 +551,20 @@ export const FreelancerDashboard = () => {
               </div>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 {!notification.isRead && (
-                  <button 
+                  <AnimatedButton 
                     onClick={() => handleMarkNotificationRead(notification._id)}
                     style={{ background: 'none', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '4px 8px', fontSize: '12px', cursor: 'pointer', color: 'var(--text-secondary)' }}
                   >
                     Mark as Read
-                  </button>
+                  </AnimatedButton>
                 )}
-                <button 
+                <AnimatedButton 
                   onClick={() => handleDeleteNotification(notification._id)}
                   style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px' }}
                   title="Delete Notification"
                 >
                   <Trash2 size={16} />
-                </button>
+                </AnimatedButton>
               </div>
             </div>
           ))}
@@ -612,9 +613,9 @@ export const FreelancerDashboard = () => {
                   <h2 style={{ fontSize: '20px', margin: 0, marginBottom: '4px' }}>Submit Proposal</h2>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '14px', margin: 0 }}>For: {selectedJob.title}</p>
                 </div>
-                <button className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={() => setShowProposalForm(false)}>
+                <AnimatedButton className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={() => setShowProposalForm(false)}>
                   <X size={20} />
-                </button>
+                </AnimatedButton>
               </div>
 
               <form onSubmit={handleSubmitProposal} style={{ padding: '32px' }}>
@@ -738,8 +739,8 @@ export const FreelancerDashboard = () => {
                 </div>
 
                 <div style={{ display: 'flex', gap: '16px', marginTop: '40px' }}>
-                  <button type="submit" className="btn btn-primary" style={{ flex: 2, padding: '16px', fontSize: '16px' }}>Submit Proposal</button>
-                  <button type="button" className="btn btn-secondary" onClick={() => setShowProposalForm(false)} style={{ flex: 1, padding: '16px', fontSize: '16px' }}>Cancel</button>
+                  <AnimatedButton type="submit" className="btn btn-primary" style={{ flex: 2, padding: '16px', fontSize: '16px' }}>Submit Proposal</AnimatedButton>
+                  <AnimatedButton type="button" className="btn btn-secondary" onClick={() => setShowProposalForm(false)} style={{ flex: 1, padding: '16px', fontSize: '16px' }}>Cancel</AnimatedButton>
                 </div>
               </form>
             </motion.div>

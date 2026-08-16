@@ -6,6 +6,7 @@ import { Plus, Search, Calendar, DollarSign, Clock, MapPin, Briefcase, FileText,
 import { AuthContext } from '../context/AuthContext';
 import { ProfileSection } from '../components/ProfileSection';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const ClientDashboard = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -164,9 +165,9 @@ export const ClientDashboard = () => {
     <div className="jobs-section">
       <div className="dashboard-top-actions" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
         <h2 style={{ fontSize: '24px' }}>My Posted Jobs</h2>
-        <button className="btn btn-primary" onClick={() => setShowJobForm(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <AnimatedButton className="btn btn-primary" onClick={() => setShowJobForm(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Plus size={18} /> Post New Job
-        </button>
+        </AnimatedButton>
       </div>
 
       <motion.div 
@@ -180,7 +181,7 @@ export const ClientDashboard = () => {
             <Briefcase size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
             <h3>No jobs posted yet</h3>
             <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>Create your first job posting to start receiving proposals.</p>
-            <button className="btn btn-primary" onClick={() => setShowJobForm(true)}>Post a Job</button>
+            <AnimatedButton className="btn btn-primary" onClick={() => setShowJobForm(true)}>Post a Job</AnimatedButton>
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -212,8 +213,8 @@ export const ClientDashboard = () => {
                     {job.requiredSkills.length > 3 && <span style={{ background: 'var(--bg-secondary)', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>+{job.requiredSkills.length - 3} more</span>}
                   </div>
                   <div style={{ display: 'flex', gap: '12px' }}>
-                    <button className="btn btn-secondary" onClick={() => navigate(`/job/${job._id}/proposals`)}>View Proposals</button>
-                    <button className="btn btn-danger" style={{ background: 'var(--danger)', color: 'white', border: 'none' }} onClick={() => handleDeleteJob(job._id)}>Delete</button>
+                    <AnimatedButton className="btn btn-secondary" onClick={() => navigate(`/job/${job._id}/proposals`)}>View Proposals</AnimatedButton>
+                    <AnimatedButton className="btn btn-danger" style={{ background: 'var(--danger)', color: 'white', border: 'none' }} onClick={() => handleDeleteJob(job._id)}>Delete</AnimatedButton>
                   </div>
                 </div>
               </motion.div>
@@ -250,9 +251,9 @@ export const ClientDashboard = () => {
                   <span style={{ color: 'var(--primary-action)', fontWeight: '600' }}>{project.status}</span>
                 </div>
                 
-                <button className="btn btn-primary" style={{ width: '100%' }} onClick={() => navigate(`/project/${project._id}`)}>
+                <AnimatedButton className="btn btn-primary" style={{ width: '100%' }} onClick={() => navigate(`/project/${project._id}`)}>
                   {isCompleted ? 'View Details' : 'Open Workspace'}
-                </button>
+                </AnimatedButton>
               </motion.div>
             ))}
           </div>
@@ -311,7 +312,7 @@ export const ClientDashboard = () => {
                     {item.unreadCount} new
                   </span>
                 )}
-                <button className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }}>Go to Chat</button>
+                <AnimatedButton className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }}>Go to Chat</AnimatedButton>
               </div>
             </div>
           ))}
@@ -341,20 +342,20 @@ export const ClientDashboard = () => {
               </div>
               <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                 {!notification.isRead && (
-                  <button 
+                  <AnimatedButton 
                     onClick={() => handleMarkNotificationRead(notification._id)}
                     style={{ background: 'none', border: '1px solid var(--border-color)', borderRadius: '4px', padding: '4px 8px', fontSize: '12px', cursor: 'pointer', color: 'var(--text-secondary)' }}
                   >
                     Mark as Read
-                  </button>
+                  </AnimatedButton>
                 )}
-                <button 
+                <AnimatedButton 
                   onClick={() => handleDeleteNotification(notification._id)}
                   style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px' }}
                   title="Delete Notification"
                 >
                   <Trash2 size={16} />
-                </button>
+                </AnimatedButton>
               </div>
             </div>
           ))}
@@ -394,9 +395,9 @@ export const ClientDashboard = () => {
             >
               <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-primary)', position: 'sticky', top: 0, zIndex: 10 }}>
                 <h2 style={{ fontSize: '20px', margin: 0 }}>Post a New Job</h2>
-                <button className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={() => setShowJobForm(false)}>
+                <AnimatedButton className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={() => setShowJobForm(false)}>
                   <X size={20} />
-                </button>
+                </AnimatedButton>
               </div>
 
               <form onSubmit={handlePostJob} style={{ padding: '24px' }}>
@@ -508,8 +509,8 @@ export const ClientDashboard = () => {
                 </div>
 
                 <div style={{ display: 'flex', gap: '16px', marginTop: '32px' }}>
-                  <button type="submit" className="btn btn-primary" style={{ flex: 1, padding: '14px' }}>Publish Job</button>
-                  <button type="button" className="btn btn-secondary" onClick={() => setShowJobForm(false)} style={{ flex: 1, padding: '14px' }}>Cancel</button>
+                  <AnimatedButton type="submit" className="btn btn-primary" style={{ flex: 1, padding: '14px' }}>Publish Job</AnimatedButton>
+                  <AnimatedButton type="button" className="btn btn-secondary" onClick={() => setShowJobForm(false)} style={{ flex: 1, padding: '14px' }}>Cancel</AnimatedButton>
                 </div>
               </form>
             </motion.div>

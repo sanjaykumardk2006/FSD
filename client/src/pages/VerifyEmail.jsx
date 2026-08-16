@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const VerifyEmail = () => {
   const { token } = useParams();
   const navigate = useNavigate();
@@ -35,18 +36,18 @@ export const VerifyEmail = () => {
         {status === 'success' && (
           <div>
             <p style={{ color: 'var(--success)', marginBottom: '24px' }}>{message}</p>
-            <button className="btn btn-primary" onClick={() => navigate('/')} style={{ width: '100%' }}>
+            <AnimatedButton className="btn btn-primary" onClick={() => navigate('/')} style={{ width: '100%' }}>
               Go to Login
-            </button>
+            </AnimatedButton>
           </div>
         )}
         
         {status === 'error' && (
           <div>
             <p style={{ color: 'var(--danger)', marginBottom: '24px' }}>{message}</p>
-            <button className="btn btn-secondary" onClick={() => navigate('/')} style={{ width: '100%' }}>
+            <AnimatedButton className="btn btn-secondary" onClick={() => navigate('/')} style={{ width: '100%' }}>
               Return Home
-            </button>
+            </AnimatedButton>
           </div>
         )}
       </div>

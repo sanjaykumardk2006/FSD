@@ -5,6 +5,7 @@ import { Footer } from '../components/Footer';
 import apiClient from '../utils/apiClient';
 import { motion } from 'framer-motion';
 
+import AnimatedButton from '../components/AnimatedButton';
 export const Search = () => {
   const navigate = useNavigate();
   const [jobs, setJobs] = useState([]);
@@ -78,9 +79,9 @@ export const Search = () => {
                       <span key={i} style={{ padding: '6px 12px', background: 'rgba(0,0,0,0.05)', borderRadius: '100px', fontSize: '12px', fontWeight: '500', color: 'var(--text-secondary)' }}>{skill}</span>
                     ))}
                   </div>
-                  <button className="btn btn-primary" style={{ width: '100%', padding: '12px', borderRadius: '8px', fontSize: '15px' }} onClick={() => navigate('/login')}>
+                  <AnimatedButton className="btn btn-primary" style={{ width: '100%', padding: '12px', borderRadius: '8px', fontSize: '15px' }} onClick={() => navigate('/login')}>
                     View Details
-                  </button>
+                  </AnimatedButton>
                 </motion.div>
               ))}
             </motion.div>

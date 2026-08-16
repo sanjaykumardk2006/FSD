@@ -5,6 +5,7 @@ import { Footer } from '../components/Footer';
 import { motion, useInView, useMotionValue, useSpring } from 'framer-motion';
 import '../App.css';
 
+import AnimatedButton from '../components/AnimatedButton';
 const StatsCounter = ({
   value,
   duration = 1.5,
@@ -80,14 +81,14 @@ export const Home = () => {
             Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
           </p>
           <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center', marginTop: '40px' }}>
-            <button className="btn btn-primary" onClick={() => navigate('/search')} style={{ gap: '10px' }}>
+            <AnimatedButton className="btn btn-primary" onClick={() => navigate('/search')} style={{ gap: '10px' }}>
               Get Started
               <svg className="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
-            <button className="btn btn-secondary" onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'signup', role: 'Freelancer' } }))} style={{ gap: '10px' }}>
+            </AnimatedButton>
+            <AnimatedButton className="btn btn-secondary" onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'signup', role: 'Freelancer' } }))} style={{ gap: '10px' }}>
               Join Now
               <svg className="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
+            </AnimatedButton>
           </div>
         </div>
       </section>
@@ -214,9 +215,9 @@ export const Home = () => {
             ))}
           </div>
           <div style={{ marginTop: '60px', textAlign: 'center' }}>
-            <button className="btn btn-secondary" onClick={() => setShowAllCategories(!showAllCategories)} style={{ padding: '16px 40px', fontSize: '16px', borderRadius: '50px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            <AnimatedButton className="btn btn-secondary" onClick={() => setShowAllCategories(!showAllCategories)} style={{ padding: '16px 40px', fontSize: '16px', borderRadius: '50px', background: 'var(--bg-card)', border: '1px solid var(--border-color)', cursor: 'pointer', fontWeight: '600', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
               {showAllCategories ? 'Explore Less ↑' : 'Explore More ↓'}
-            </button>
+            </AnimatedButton>
           </div>
         </section>
 
@@ -294,10 +295,10 @@ export const Home = () => {
         <section className="slogan-section" style={{ margin: '80px auto 40px', maxWidth: '1440px' }} ref={(el) => sectionRefs.current.push(el)}>
           <h2 style={{ fontSize: '48px', marginBottom: '30px' }}>Ready to Scale Your Business?</h2>
           <p style={{ maxWidth: '800px', margin: '0 auto 40px', fontSize: '20px' }}>Join thousands of modern teams building the future with our premium talent network. No credit card required to start.</p>
-          <button className="btn btn-primary" onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'signup', role: 'Client' } }))} style={{ padding: '16px 32px', fontSize: '16px', borderRadius: '50px', gap: '8px' }}>
+          <AnimatedButton className="btn btn-primary" onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'signup', role: 'Client' } }))} style={{ padding: '16px 32px', fontSize: '16px', borderRadius: '50px', gap: '8px' }}>
             Get Started Now
             <svg className="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </button>
+          </AnimatedButton>
         </section>
       </main>
       <Footer />

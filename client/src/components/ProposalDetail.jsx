@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { X, User, Calendar, DollarSign, FileText, Link as LinkIcon, Download, Check, X as XIcon, Star } from 'lucide-react';
 
+import AnimatedButton from './AnimatedButton';
 export const ProposalDetail = ({ proposal, onClose, onAccept, onReject, onViewProfile }) => {
   return (
     <div className="modal-overlay" style={{ zIndex: 10000 }}>
@@ -14,9 +15,9 @@ export const ProposalDetail = ({ proposal, onClose, onAccept, onReject, onViewPr
       >
         <div style={{ padding: '24px', borderBottom: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-primary)', position: 'sticky', top: 0, zIndex: 10 }}>
           <h2 style={{ fontSize: '20px', margin: 0 }}>Proposal Details</h2>
-          <button className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={onClose}>
+          <AnimatedButton className="close-modal-btn" style={{ position: 'relative', top: 0, right: 0 }} onClick={onClose}>
             <X size={20} />
-          </button>
+          </AnimatedButton>
         </div>
 
         <div style={{ padding: '32px' }}>
@@ -31,7 +32,7 @@ export const ProposalDetail = ({ proposal, onClose, onAccept, onReject, onViewPr
                 <p style={{ color: 'var(--text-secondary)', fontSize: '15px', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
                   <span>{proposal.experience || '3 years exp.'}</span> • <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Star size={16} fill="var(--pending)" color="var(--pending)" /> 4.9 (12 reviews)</span>
                 </p>
-                <button className="text-btn" onClick={onViewProfile} style={{ fontSize: '14px' }}>View Full Profile &rarr;</button>
+                <AnimatedButton className="text-btn" onClick={onViewProfile} style={{ fontSize: '14px' }}>View Full Profile &rarr;</AnimatedButton>
               </div>
             </div>
             
@@ -89,20 +90,20 @@ export const ProposalDetail = ({ proposal, onClose, onAccept, onReject, onViewPr
           <div style={{ display: 'flex', gap: '16px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
             {proposal.status === 'Pending' ? (
               <>
-                <button 
+                <AnimatedButton 
                   className="btn btn-primary" 
                   onClick={onAccept}
                   style={{ flex: 2, background: 'var(--success)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', border: 'none', padding: '16px', fontSize: '16px' }}
                 >
                   <Check size={20} /> Accept & Hire Freelancer
-                </button>
-                <button 
+                </AnimatedButton>
+                <AnimatedButton 
                   className="btn" 
                   onClick={onReject}
                   style={{ flex: 1, background: 'var(--bg-card)', color: 'var(--danger)', border: '1px solid var(--danger)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', padding: '16px', fontSize: '16px' }}
                 >
                   <XIcon size={20} /> Decline Proposal
-                </button>
+                </AnimatedButton>
               </>
             ) : (
               <div style={{ width: '100%', textAlign: 'center', padding: '16px', background: 'var(--bg-secondary)', borderRadius: '12px', color: 'var(--text-secondary)' }}>
