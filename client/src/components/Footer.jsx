@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { User, Briefcase, ChevronUp } from 'lucide-react';
+import { User, Briefcase, ChevronDown } from 'lucide-react';
 
 export const Footer = () => {
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
@@ -38,7 +38,7 @@ export const Footer = () => {
               onClick={() => setLoginDropdownOpen(!loginDropdownOpen)}
             >
               <a href="#login" onClick={(e) => e.preventDefault()} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                Login <ChevronUp size={14} />
+                Login <ChevronDown size={14} />
               </a>
               {loginDropdownOpen && (
                 <div className="dropdown-menu" style={{ bottom: '100%', top: 'auto', left: 0, marginBottom: '8px' }}>
@@ -59,7 +59,7 @@ export const Footer = () => {
               onClick={() => setSignupDropdownOpen(!signupDropdownOpen)}
             >
               <a href="#signup" onClick={(e) => e.preventDefault()} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                Sign Up <ChevronUp size={14} />
+                Sign Up <ChevronDown size={14} />
               </a>
               {signupDropdownOpen && (
                 <div className="dropdown-menu" style={{ bottom: '100%', top: 'auto', left: 0, marginBottom: '8px' }}>
