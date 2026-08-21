@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../components/Header';
 import { Footer } from '../components/Footer';
 import apiClient from '../utils/apiClient';
 import { motion } from 'framer-motion';
-
+import { AuthContext } from '../context/AuthContext';
 import AnimatedButton from '../components/AnimatedButton';
 export const Search = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -79,7 +80,17 @@ export const Search = () => {
                       <span key={i} style={{ padding: '6px 12px', background: 'rgba(0,0,0,0.05)', borderRadius: '100px', fontSize: '12px', fontWeight: '500', color: 'var(--text-secondary)' }}>{skill}</span>
                     ))}
                   </div>
-                  <AnimatedButton className="btn btn-primary" style={{ width: '100%', padding: '12px', borderRadius: '8px', fontSize: '15px' }} onClick={() => navigate('/login')}>
+                  <AnimatedButton 
+                    className="btn btn-primary" 
+                    style={{ width: '100%', padding: '12px', borderRadius: '8px', fontSize: '15px' }} 
+                    onClick={() => {
+                      if (user) {
+                        navigate(user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard?tab=jobs');
+                      } else {
+                        window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'login', role: 'Freelancer' } }));
+                      }
+                    }}
+                  >
                     View Details
                   </AnimatedButton>
                 </motion.div>
