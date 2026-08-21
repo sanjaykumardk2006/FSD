@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { User, Briefcase, ChevronUp } from 'lucide-react';
 
 export const Footer = () => {
+  const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
+  const [signupDropdownOpen, setSignupDropdownOpen] = useState(false);
+
+  const openAuth = (mode, role) => {
+    window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode, role } }));
+    setLoginDropdownOpen(false);
+    setSignupDropdownOpen(false);
+  };
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -21,8 +30,48 @@ export const Footer = () => {
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
             <Link to="/contact">Contact</Link>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            
+            <div 
+              style={{ position: 'relative', cursor: 'pointer', width: 'fit-content' }}
+              onMouseEnter={() => setLoginDropdownOpen(true)}
+              onMouseLeave={() => setLoginDropdownOpen(false)}
+              onClick={() => setLoginDropdownOpen(!loginDropdownOpen)}
+            >
+              <a href="#login" onClick={(e) => e.preventDefault()} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                Login <ChevronUp size={14} />
+              </a>
+              {loginDropdownOpen && (
+                <div className="dropdown-menu" style={{ bottom: '100%', top: 'auto', left: 0, marginBottom: '8px' }}>
+                  <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Freelancer'); }}>
+                    <User size={16} /> As Freelancer
+                  </button>
+                  <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Client'); }}>
+                    <Briefcase size={16} /> As Customer
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div 
+              style={{ position: 'relative', cursor: 'pointer', width: 'fit-content' }}
+              onMouseEnter={() => setSignupDropdownOpen(true)}
+              onMouseLeave={() => setSignupDropdownOpen(false)}
+              onClick={() => setSignupDropdownOpen(!signupDropdownOpen)}
+            >
+              <a href="#signup" onClick={(e) => e.preventDefault()} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                Sign Up <ChevronUp size={14} />
+              </a>
+              {signupDropdownOpen && (
+                <div className="dropdown-menu" style={{ bottom: '100%', top: 'auto', left: 0, marginBottom: '8px' }}>
+                  <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Freelancer'); }}>
+                    <User size={16} /> As Freelancer
+                  </button>
+                  <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Client'); }}>
+                    <Briefcase size={16} /> As Customer
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
           <div className="footer-section">
             <h3>Contact Us</h3>
