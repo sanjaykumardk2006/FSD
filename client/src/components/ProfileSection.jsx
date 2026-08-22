@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import apiClient from '../utils/apiClient';
-import { User, Mail, Briefcase, Clock, FileText, Edit2, Save, X, Building, MapPin, Phone } from 'lucide-react';
+import { User, Mail, Briefcase, Clock, FileText, Edit2, Save, X, Building, MapPin, Phone, Code, Users, ExternalLink, Trash2, Plus, DollarSign, Image as ImageIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import AnimatedButton from './AnimatedButton';
@@ -22,7 +22,11 @@ export const ProfileSection = ({ role }) => {
     companyName: '',
     entityType: 'Self-employed',
     country: '',
-    mobileNumber: ''
+    mobileNumber: '',
+    hourlyRate: '',
+    githubUrl: '',
+    linkedinUrl: '',
+    portfolio: []
   });
   const [message, setMessage] = useState({ type: '', text: '' });
 
@@ -44,7 +48,11 @@ export const ProfileSection = ({ role }) => {
           companyName: userData.companyName || '',
           entityType: userData.entityType || 'Self-employed',
           country: userData.country || '',
-          mobileNumber: userData.mobileNumber || ''
+          mobileNumber: userData.mobileNumber || '',
+          hourlyRate: userData.profile?.hourlyRate || '',
+          githubUrl: userData.profile?.githubUrl || '',
+          linkedinUrl: userData.profile?.linkedinUrl || '',
+          portfolio: userData.profile?.portfolio || []
         });
     } catch (error) {
       console.error('Error fetching profile:', error);
@@ -94,6 +102,43 @@ export const ProfileSection = ({ role }) => {
     }
   };
 
+  const handleAddPortfolioItem = () => {
+    setFormData(prev => ({
+      ...prev,
+      portfolio: [...prev.portfolio, { title: '', description: '', link: '', image: '' }]
+    }));
+  };
+
+  const handleRemovePortfolioItem = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      portfolio: prev.portfolio.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handlePortfolioChange = (index, field, value) => {
+    setFormData(prev => {
+      const updatedPortfolio = [...prev.portfolio];
+      updatedPortfolio[index] = { ...updatedPortfolio[index], [field]: value };
+      return { ...prev, portfolio: updatedPortfolio };
+    });
+  };
+
+  const handlePortfolioImageChange = (index, e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        showMessage('error', 'Image size must be less than 2MB');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        handlePortfolioChange(index, 'image', reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -106,7 +151,11 @@ export const ProfileSection = ({ role }) => {
         companyName: formData.companyName,
         entityType: formData.entityType,
         country: formData.country,
-        mobileNumber: formData.mobileNumber
+        mobileNumber: formData.mobileNumber,
+        hourlyRate: formData.hourlyRate,
+        githubUrl: formData.githubUrl,
+        linkedinUrl: formData.linkedinUrl,
+        portfolio: formData.portfolio
       };
       
       const response = await apiClient.put('/auth/profile', payload);
@@ -284,11 +333,80 @@ export const ProfileSection = ({ role }) => {
                       <label>Experience (e.g. 3 years)</label>
                     </div>
                     <div className="form-group floating-label">
+                      <DollarSign size={18} className="input-icon" />
+                      <input type="number" name="hourlyRate" placeholder=" " value={formData.hourlyRate} onChange={handleInputChange} />
+                      <label>Hourly Rate ($)</label>
+                    </div>
+                    <div className="form-group floating-label">
+                      <Code size={18} className="input-icon" />
+                      <input type="url" name="githubUrl" placeholder=" " value={formData.githubUrl} onChange={handleInputChange} />
+                      <label>GitHub URL</label>
+                    </div>
+                    <div className="form-group floating-label">
+                      <Users size={18} className="input-icon" />
+                      <input type="url" name="linkedinUrl" placeholder=" " value={formData.linkedinUrl} onChange={handleInputChange} />
+                      <label>LinkedIn URL</label>
+                    </div>
+                    <div className="form-group floating-label" style={{ gridColumn: '1 / -1' }}>
                       <FileText size={18} className="input-icon" />
                       <input type="file" name="resume" onChange={handleResumeChange} accept=".pdf,.doc,.docx" style={{ padding: '16px 16px 16px 40px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-secondary)', width: '100%' }} />
                       <label>Resume (PDF, DOC)</label>
                       {formData.resume && <div style={{ fontSize: '12px', color: 'var(--success)', marginTop: '4px' }}>Resume selected/uploaded.</div>}
                     </div>
+                  </div>
+
+                  <div style={{ marginTop: '32px', borderTop: '1px solid var(--border-color)', paddingTop: '24px', marginBottom: '24px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                      <h3 style={{ fontSize: '18px', margin: 0 }}>Portfolio Projects</h3>
+                      <AnimatedButton type="button" className="btn btn-secondary" onClick={handleAddPortfolioItem} style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '6px 12px' }}>
+                        <Plus size={16} /> Add Project
+                      </AnimatedButton>
+                    </div>
+                    
+                    {formData.portfolio.length === 0 ? (
+                      <div style={{ padding: '32px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '12px', border: '1px dashed var(--border-color)' }}>
+                        <ImageIcon size={32} style={{ color: 'var(--text-muted)', marginBottom: '12px' }} />
+                        <p style={{ color: 'var(--text-secondary)', margin: 0 }}>Add portfolio items to showcase your work to clients.</p>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+                        {formData.portfolio.map((item, index) => (
+                          <div key={index} style={{ background: 'var(--bg-secondary)', padding: '20px', borderRadius: '12px', border: '1px solid var(--border-color)', position: 'relative' }}>
+                            <AnimatedButton type="button" onClick={() => handleRemovePortfolioItem(index)} style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', padding: '4px' }}>
+                              <Trash2 size={18} />
+                            </AnimatedButton>
+                            
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px', paddingRight: '32px' }}>
+                              <div className="form-group floating-label" style={{ marginBottom: 0 }}>
+                                <input type="text" placeholder=" " value={item.title} onChange={(e) => handlePortfolioChange(index, 'title', e.target.value)} required style={{ paddingLeft: '16px' }} />
+                                <label style={{ left: '16px', top: '50%', transform: 'translateY(-50%)' }}>Project Title</label>
+                              </div>
+                              <div className="form-group floating-label" style={{ marginBottom: 0 }}>
+                                <input type="url" placeholder=" " value={item.link} onChange={(e) => handlePortfolioChange(index, 'link', e.target.value)} style={{ paddingLeft: '16px' }} />
+                                <label style={{ left: '16px', top: '50%', transform: 'translateY(-50%)' }}>Project Link (Optional)</label>
+                              </div>
+                            </div>
+                            
+                            <div className="form-group floating-label" style={{ marginBottom: '16px' }}>
+                              <textarea placeholder=" " value={item.description} onChange={(e) => handlePortfolioChange(index, 'description', e.target.value)} rows="2" style={{ width: '100%', padding: '16px', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', background: 'var(--bg-card)', fontSize: '15px' }}></textarea>
+                              <label style={{ top: '24px', left: '16px' }}>Description</label>
+                            </div>
+                            
+                            <div className="form-group" style={{ marginBottom: 0 }}>
+                              <label style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '8px', display: 'block' }}>Project Thumbnail (Image)</label>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                {item.image && (
+                                  <div style={{ width: '80px', height: '80px', borderRadius: '8px', overflow: 'hidden', border: '1px solid var(--border-color)' }}>
+                                    <img src={item.image} alt="Thumbnail" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                  </div>
+                                )}
+                                <input type="file" onChange={(e) => handlePortfolioImageChange(index, e)} accept="image/*" style={{ flex: 1, padding: '12px', borderRadius: 'var(--radius-md)', border: '1px dashed var(--border-color)', background: 'var(--bg-card)', width: '100%' }} />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </>
               )}
@@ -306,7 +424,21 @@ export const ProfileSection = ({ role }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div>
                 <h3 style={{ fontSize: '16px', color: 'var(--text-secondary)', marginBottom: '8px' }}>About Me</h3>
-                <p style={{ color: 'var(--text-primary)', lineHeight: '1.6' }}>{profile?.profile?.bio || 'No bio provided.'}</p>
+                <p style={{ color: 'var(--text-primary)', lineHeight: '1.6', marginBottom: '16px' }}>{profile?.profile?.bio || 'No bio provided.'}</p>
+                {role === 'Freelancer' && (profile?.profile?.githubUrl || profile?.profile?.linkedinUrl) && (
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    {profile?.profile?.githubUrl && (
+                      <a href={profile.profile.githubUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: '20px', background: 'var(--bg-secondary)', color: 'var(--text-primary)', textDecoration: 'none', fontSize: '14px', border: '1px solid var(--border-color)', transition: 'all 0.2s' }}>
+                        <Code size={16} /> GitHub
+                      </a>
+                    )}
+                    {profile?.profile?.linkedinUrl && (
+                      <a href={profile.profile.linkedinUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: '20px', background: '#0a66c2', color: 'white', textDecoration: 'none', fontSize: '14px', transition: 'all 0.2s' }}>
+                        <Users size={16} /> LinkedIn
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
               
               {role === 'Client' && (
@@ -332,12 +464,35 @@ export const ProfileSection = ({ role }) => {
               
               {role === 'Freelancer' && (
                 <>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '24px' }}>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
+                      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Experience</div>
+                      <div style={{ fontSize: '18px', fontWeight: '600' }}>{profile?.profile?.experience || 'Not specified'}</div>
+                    </div>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
+                      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Hourly Rate</div>
+                      <div style={{ fontSize: '18px', fontWeight: '600' }}>{profile?.profile?.hourlyRate ? `$${profile.profile.hourlyRate}/hr` : 'Not specified'}</div>
+                    </div>
+                    <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
+                      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Resume</div>
+                      <div style={{ fontSize: '16px', fontWeight: '600' }}>
+                        {profile?.profile?.resume ? (
+                          <a href={profile.profile.resume} download="resume" style={{ color: 'var(--primary-action)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <FileText size={16} /> View/Download
+                          </a>
+                        ) : (
+                          'Not uploaded'
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
                   <div>
                     <h3 style={{ fontSize: '16px', color: 'var(--text-secondary)', marginBottom: '8px' }}>Skills</h3>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                       {profile?.profile?.skills?.length > 0 ? (
                         profile.profile.skills.map((skill, index) => (
-                          <span key={index} style={{ background: 'var(--bg-secondary)', padding: '6px 12px', borderRadius: '8px', fontSize: '14px', color: 'var(--text-primary)' }}>
+                          <span key={index} style={{ background: 'var(--primary-action-bg)', padding: '6px 16px', borderRadius: '20px', fontSize: '14px', color: 'var(--primary-action)', fontWeight: '500', border: '1px solid var(--primary-action)' }}>
                             {skill}
                           </span>
                         ))
@@ -347,24 +502,33 @@ export const ProfileSection = ({ role }) => {
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-                    <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
-                      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Experience</div>
-                      <div style={{ fontSize: '18px', fontWeight: '600' }}>{profile?.profile?.experience || 'Not specified'}</div>
-                    </div>
-                    <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
-                      <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Resume</div>
-                      <div style={{ fontSize: '16px', fontWeight: '600' }}>
-                        {profile?.profile?.resume ? (
-                          <a href={profile.profile.resume} download="resume" style={{ color: 'var(--primary-action)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                            <FileText size={16} /> View/Download Resume
-                          </a>
-                        ) : (
-                          'Not uploaded'
-                        )}
+                  {profile?.profile?.portfolio?.length > 0 && (
+                    <div style={{ marginTop: '16px' }}>
+                      <h3 style={{ fontSize: '16px', color: 'var(--text-secondary)', marginBottom: '16px' }}>Portfolio Showcase</h3>
+                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
+                        {profile.profile.portfolio.map((item, index) => (
+                          <div key={index} style={{ background: 'var(--bg-secondary)', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', transition: 'transform 0.2s, box-shadow 0.2s' }} className="portfolio-card">
+                            {item.image ? (
+                              <img src={item.image} alt={item.title} style={{ width: '100%', height: '160px', objectFit: 'cover', borderBottom: '1px solid var(--border-color)' }} />
+                            ) : (
+                              <div style={{ width: '100%', height: '160px', background: 'var(--bg-card)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', borderBottom: '1px solid var(--border-color)' }}>
+                                <ImageIcon size={32} />
+                              </div>
+                            )}
+                            <div style={{ padding: '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                              <h4 style={{ margin: '0 0 8px 0', fontSize: '16px' }}>{item.title}</h4>
+                              <p style={{ margin: '0 0 16px 0', fontSize: '14px', color: 'var(--text-secondary)', flex: 1, lineHeight: '1.5' }}>{item.description}</p>
+                              {item.link && (
+                                <a href={item.link} target="_blank" rel="noopener noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--primary-action)', textDecoration: 'none', fontSize: '14px', fontWeight: '500', width: 'fit-content' }}>
+                                  <ExternalLink size={14} /> View Project
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
+                  )}
                 </>
               )}
             </div>

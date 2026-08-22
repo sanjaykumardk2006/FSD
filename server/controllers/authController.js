@@ -128,7 +128,7 @@ exports.getUserProfile = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
   try {
-    const { bio, skills, experience, resume, profileImage, companyName, entityType, country, mobileNumber } = req.body;
+    const { bio, skills, experience, resume, profileImage, companyName, entityType, country, mobileNumber, hourlyRate, githubUrl, linkedinUrl, portfolio } = req.body;
 
     const updateData = {
       'profile.bio': bio,
@@ -136,6 +136,12 @@ exports.updateUserProfile = async (req, res) => {
       'profile.experience': experience,
       'profile.resume': resume,
     };
+    
+    // Additional Freelancer Fields
+    if (hourlyRate !== undefined) updateData['profile.hourlyRate'] = hourlyRate;
+    if (githubUrl !== undefined) updateData['profile.githubUrl'] = githubUrl;
+    if (linkedinUrl !== undefined) updateData['profile.linkedinUrl'] = linkedinUrl;
+    if (portfolio !== undefined) updateData['profile.portfolio'] = portfolio;
     
     // Client specific fields on the root document
     if (companyName !== undefined) updateData.companyName = companyName;
