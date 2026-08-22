@@ -370,12 +370,12 @@ export const FreelancerDashboard = () => {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {filteredJobs.map((job) => (
               <motion.div key={job._id} className="modern-job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '16px', transition: 'all 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; transform = 'translateY(-2px)' }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'none'; transform = 'translateY(0)' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div className="modern-job-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>{job.title}</h3>
                     <p style={{ color: 'var(--text-secondary)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{job.description}</p>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px', minWidth: '100px' }}>
+                  <div className="modern-job-card-meta" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px', minWidth: '100px' }}>
                     <span className="status-badge" style={{ padding: '4px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '600', background: 'var(--success-bg)', color: 'var(--success)' }}>
                       Available
                     </span>
@@ -388,15 +388,15 @@ export const FreelancerDashboard = () => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', color: 'var(--text-secondary)' }}><Clock size={16} /> Duration: By {new Date(job.deadline).toLocaleDateString()}</div>
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+                <div className="responsive-flex-col" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
                   <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     {(job.requiredSkills || []).map((skill, i) => (
                       <span key={i} style={{ background: 'var(--bg-secondary)', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>{skill}</span>
                     ))}
                   </div>
-                  <div style={{ display: 'flex', gap: '12px' }}>
-                    <AnimatedButton className="btn btn-secondary" onClick={() => { setSelectedJob(job); setShowJobDetails(true); }}>View Details</AnimatedButton>
-                    <AnimatedButton className="btn btn-primary" onClick={() => { setSelectedJob(job); setShowProposalForm(true); }}>Apply Now</AnimatedButton>
+                  <div className="responsive-flex-wrap" style={{ display: 'flex', gap: '12px', width: '100%' }}>
+                    <AnimatedButton className="btn btn-secondary btn-responsive-full" onClick={() => { setSelectedJob(job); setShowJobDetails(true); }}>View Details</AnimatedButton>
+                    <AnimatedButton className="btn btn-primary btn-responsive-full" onClick={() => { setSelectedJob(job); setShowProposalForm(true); }}>Apply Now</AnimatedButton>
                   </div>
                 </div>
               </motion.div>

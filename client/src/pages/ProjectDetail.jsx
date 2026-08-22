@@ -153,7 +153,7 @@ export const ProjectDetail = () => {
       <div style={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 80px)', gap: '24px' }}>
         
         {/* Workspace Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)', flexShrink: 0 }}>
+        <div className="chat-workspace-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)', flexShrink: 0 }}>
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
             <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'var(--primary-action-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px', color: 'var(--primary-action)', fontWeight: 'bold' }}>
               {otherUser.username.charAt(0).toUpperCase()}
@@ -169,9 +169,9 @@ export const ProjectDetail = () => {
               </div>
             </div>
           </div>
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <AnimatedButton className="btn btn-secondary" onClick={() => setShowProgressForm(true)}>Project Milestones</AnimatedButton>
-            <AnimatedButton className="btn btn-primary" onClick={() => navigate(-1)}>Back</AnimatedButton>
+          <div className="responsive-flex-wrap" style={{ display: 'flex', gap: '12px', width: '100%' }}>
+            <AnimatedButton className="btn btn-secondary btn-responsive-full" onClick={() => setShowProgressForm(true)}>Project Milestones</AnimatedButton>
+            <AnimatedButton className="btn btn-primary btn-responsive-full" onClick={() => navigate(-1)}>Back</AnimatedButton>
           </div>
         </div>
 
@@ -206,7 +206,7 @@ export const ProjectDetail = () => {
 
                 return (
                   <div key={msg._id} style={{ display: 'flex', flexDirection: 'column', alignItems: isMine ? 'flex-end' : 'flex-start', margin: '4px 0' }}>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', flexDirection: isMine ? 'row-reverse' : 'row', maxWidth: '75%' }}>
+                    <div className="chat-message-bubble" style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', flexDirection: isMine ? 'row-reverse' : 'row', maxWidth: '75%' }}>
                       
                       {!isMine && (
                         <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'var(--primary-action-bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', color: 'var(--primary-action)', flexShrink: 0 }}>
@@ -276,18 +276,18 @@ export const ProjectDetail = () => {
           </div>
 
           <div style={{ padding: '20px 24px', background: 'var(--bg-card)', borderTop: '1px solid var(--border-color)' }}>
-            <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <form className="chat-input-form" onSubmit={handleSendMessage} style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
               <input
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 placeholder="Type your message here..."
                 required
-                style={{ flex: 1, padding: '16px 20px', borderRadius: '30px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', fontSize: '15px', outline: 'none', transition: 'border-color 0.2s' }}
+                style={{ flex: 1, width: '100%', padding: '16px 20px', borderRadius: '30px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', fontSize: '15px', outline: 'none', transition: 'border-color 0.2s' }}
                 onFocus={(e) => e.target.style.borderColor = 'var(--primary-action)'}
                 onBlur={(e) => e.target.style.borderColor = 'var(--border-color)'}
               />
-              <AnimatedButton type="submit" className="btn btn-primary" style={{ padding: '14px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px' }}>
+              <AnimatedButton type="submit" className="btn btn-primary" style={{ padding: '14px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '52px', height: '52px', flexShrink: 0 }}>
                 <Send size={20} />
               </AnimatedButton>
             </form>
