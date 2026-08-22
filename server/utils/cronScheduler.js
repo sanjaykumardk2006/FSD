@@ -6,7 +6,7 @@ const Notification = require('../models/Notification');
 const { sendProjectUpdateReminder } = require('../utils/emailUtils');
 
 // Run at 8:00 AM on Monday and Thursday
-const scheduleProjectReminders = () => {
+const scheduleProjectReminders = (io) => {
   cron.schedule('0 8 * * 1,4', async () => {
     try {
       // Find all active projects
@@ -19,13 +19,17 @@ const scheduleProjectReminders = () => {
         await sendProjectUpdateReminder(project.freelancerId.email, project.jobId);
 
         // Create notification
-        await Notification.create({
+        const notification = await Notification.create({
           userId: project.freelancerId._id,
           type: 'reminder',
           title: 'Project Update Reminder',
           message: 'Please update your project status.',
           relatedId: project._id,
         });
+
+        if (io) {
+          io.to(project.freelancerId._id.toString()).emit('new_notification', notification);
+        }
 
         // Send System Message in the chat
         const sysMsg = new Message({
@@ -34,6 +38,10 @@ const scheduleProjectReminders = () => {
           isSystemMessage: true,
         });
         await sysMsg.save();
+
+        if (io) {
+          io.to(project._id.toString()).emit('receive_message', sysMsg);
+        }
       }
 
       console.log(`Project reminder cron: Sent reminders to ${projects.length} active projects`);

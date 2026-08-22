@@ -89,13 +89,17 @@ exports.updateProjectProgress = [
       await project.save();
 
       // Create notification for client
-      await Notification.create({
+      const notification = await Notification.create({
         userId: project.clientId,
         type: 'project_update',
         title: 'Project Update',
         message: `Project progress updated: ${stage}`,
         relatedId: project._id,
       });
+
+      if (req.io) {
+        req.io.to(project.clientId.toString()).emit('new_notification', notification);
+      }
 
       res.status(200).json({ message: 'Project progress updated', project });
     } catch (error) {

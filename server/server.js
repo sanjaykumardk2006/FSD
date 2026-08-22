@@ -73,6 +73,12 @@ io.on('connection', (socket) => {
     console.log(`User ${socket.id} joined project room: ${projectId}`);
   });
 
+  // Join a personal user room for notifications
+  socket.on('join_user', (userId) => {
+    socket.join(userId.toString());
+    console.log(`User ${socket.id} joined personal room: ${userId}`);
+  });
+
   // Handle new messages
   socket.on('send_message', (data) => {
     // Broadcast to everyone in the project room (including sender if needed, but we can emit to others)
@@ -138,7 +144,7 @@ server.listen(PORT, '0.0.0.0', async () => {
     console.log("MongoDB connected successfully");
 
     // Start cron AFTER DB is ready
-    scheduleProjectReminders();
+    scheduleProjectReminders(io);
     console.log("Cron scheduler initialized");
 
   } catch (err) {

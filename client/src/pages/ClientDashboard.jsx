@@ -39,6 +39,15 @@ export const ClientDashboard = () => {
     fetchProjects();
     fetchNotifications();
     fetchInbox();
+
+    const handleNewNotification = () => {
+      fetchNotifications();
+    };
+    window.addEventListener('notification-received', handleNewNotification);
+    
+    return () => {
+      window.removeEventListener('notification-received', handleNewNotification);
+    };
   }, []);
 
   const fetchInbox = async () => {

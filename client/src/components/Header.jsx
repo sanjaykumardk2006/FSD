@@ -1,9 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
 import { ChevronDown, User, Briefcase, Menu, X, Sun, Moon, Bell } from 'lucide-react';
 import apiClient from '../utils/apiClient';
+import { io } from 'socket.io-client';
 import '../App.css';
 
 export const Header = () => {
@@ -21,11 +22,21 @@ export const Header = () => {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [unreadCount, setUnreadCount] = useState(0);
 
+  const socketRef = useRef(null);
+
   useEffect(() => {
     if (user) {
       fetchUnreadCount();
-      // Optionally set up an interval to poll for new notifications
-      const interval = setInterval(fetchUnreadCount, 60000); // Poll every minute
+      
+      const SOCKET_URL = import.meta.env.VITE_API_URL.replace('/api', '');
+      socketRef.current = io(SOCKET_URL);
+      
+      socketRef.current.emit('join_user', user.id);
+      
+      socketRef.current.on('new_notification', () => {
+        fetchUnreadCount();
+        window.dispatchEvent(new Event('notification-received'));
+      });
       
       const handleNotificationRead = () => {
         fetchUnreadCount();
@@ -33,7 +44,9 @@ export const Header = () => {
       window.addEventListener('notification-read', handleNotificationRead);
       
       return () => {
-        clearInterval(interval);
+        if (socketRef.current) {
+          socketRef.current.disconnect();
+        }
         window.removeEventListener('notification-read', handleNotificationRead);
       };
     }

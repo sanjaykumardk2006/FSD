@@ -49,13 +49,17 @@ exports.submitProposal = [
       await proposal.save();
 
       // Create notification for client
-      await Notification.create({
+      const notification = await Notification.create({
         userId: job.clientId,
         type: 'new_proposal',
         title: 'New Proposal Received',
         message: `A freelancer submitted a proposal for "${job.title}"`,
         relatedId: proposal._id,
       });
+
+      if (req.io) {
+        req.io.to(job.clientId.toString()).emit('new_notification', notification);
+      }
 
       res.status(201).json({ message: 'Proposal submitted successfully', proposal });
     } catch (error) {
@@ -118,13 +122,17 @@ exports.acceptProposal = async (req, res) => {
     });
 
     // Create notification for freelancer
-    await Notification.create({
+    const notification = await Notification.create({
       userId: proposal.freelancerId,
       type: 'proposal_accepted',
       title: 'Proposal Accepted',
       message: `Your proposal for "${job.title}" was accepted!`,
       relatedId: proposal._id,
     });
+
+    if (req.io) {
+      req.io.to(proposal.freelancerId.toString()).emit('new_notification', notification);
+    }
 
     res.status(200).json({ message: 'Proposal accepted', proposal });
   } catch (error) {
@@ -168,13 +176,17 @@ exports.rejectProposal = [
       await sendProposalRejectionEmail(proposal.freelancerId.email, job.title, rejectionReason);
 
       // Create notification for freelancer
-      await Notification.create({
+      const notification = await Notification.create({
         userId: proposal.freelancerId._id,
         type: 'proposal_rejected',
         title: 'Proposal Rejected',
         message: `Your proposal for "${job.title}" was rejected.\nReason: ${rejectionReason}`,
         relatedId: proposal._id,
       });
+
+      if (req.io) {
+        req.io.to(proposal.freelancerId._id.toString()).emit('new_notification', notification);
+      }
 
       res.status(200).json({ message: 'Proposal rejected', proposal });
     } catch (error) {
