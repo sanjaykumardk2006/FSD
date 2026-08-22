@@ -17,6 +17,7 @@ import { JobProposals } from './pages/JobProposals';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { VerifyEmail } from './pages/VerifyEmail';
 import { ResetPassword } from './pages/ResetPassword';
+import { PublicJobDetail } from './pages/PublicJobDetail';
 
 import './App.css';
 
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/job/:jobId" element={<PublicJobDetail />} />
             <Route path="/verify-email/:token" element={<VerifyEmail />} />
             <Route path="/reset-password/:token" element={<ResetPassword />} />
 

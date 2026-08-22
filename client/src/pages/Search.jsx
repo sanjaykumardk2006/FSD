@@ -83,13 +83,7 @@ export const Search = () => {
                   <AnimatedButton 
                     className="btn btn-primary" 
                     style={{ width: '100%', padding: '12px', borderRadius: '8px', fontSize: '15px' }} 
-                    onClick={() => {
-                      if (user) {
-                        navigate(user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard?tab=jobs');
-                      } else {
-                        window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'login', role: 'Freelancer' } }));
-                      }
-                    }}
+                    onClick={() => navigate(`/job/${job._id}`)}
                   >
                     View Details
                   </AnimatedButton>
