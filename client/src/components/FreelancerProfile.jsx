@@ -1,11 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, User, MapPin, Mail, Phone, Globe, Link, Star, Award, Briefcase, GraduationCap } from 'lucide-react';
+import apiClient from '../utils/apiClient';
 
 import AnimatedButton from './AnimatedButton';
 export const FreelancerProfile = ({ freelancerId, onClose }) => {
-  // In a real app, you would fetch the full profile using freelancerId
-  // For this redesign, we'll use a mocked premium profile display
+  const [profile, setProfile] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        setLoading(true);
+        const [profileRes, reviewsRes] = await Promise.all([
+          apiClient.get(`/auth/profile/${freelancerId}`),
+          apiClient.get(`/reviews/user/${freelancerId}`)
+        ]);
+        setProfile(profileRes.data.user);
+        setReviews(reviewsRes.data.reviews || []);
+      } catch (error) {
+        console.error('Error fetching freelancer profile:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    if (freelancerId) {
+      fetchProfileData();
+    }
+  }, [freelancerId]);
+
+  if (loading) {
+    return (
+      <div className="modal-overlay" style={{ zIndex: 10000 }}>
+        <div className="modal" style={{ padding: '40px', textAlign: 'center' }}>Loading Profile...</div>
+      </div>
+    );
+  }
+
+  if (!profile) return null;
   
   return (
     <div className="modal-overlay" style={{ zIndex: 10000 }}>
@@ -34,17 +68,24 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap' }}>
                 <div>
-                  <h1 style={{ fontSize: '32px', marginBottom: '8px' }}>Alex Developer</h1>
-                  <h2 style={{ fontSize: '18px', color: 'var(--primary-action)', fontWeight: '500', marginBottom: '12px' }}>Senior Full Stack Engineer</h2>
+                  <h1 style={{ fontSize: '32px', marginBottom: '8px' }}>{profile.firstName} {profile.lastName}</h1>
+                  <h2 style={{ fontSize: '18px', color: 'var(--primary-action)', fontWeight: '500', marginBottom: '12px' }}>{profile.profile?.skills?.[0] || 'Freelancer'}</h2>
                   <div style={{ display: 'flex', gap: '16px', color: 'var(--text-secondary)', fontSize: '14px', flexWrap: 'wrap', marginBottom: '16px' }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={16} /> New York, USA</span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Star size={16} fill="var(--pending)" color="var(--pending)" /> 4.9 (45 Reviews)</span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Award size={16} color="var(--success)" /> Top Rated Plus</span>
+                    {profile.country && <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><MapPin size={16} /> {profile.country}</span>}
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Star size={16} fill="var(--pending)" color="var(--pending)" /> 
+                      {profile.averageRating ? profile.averageRating.toFixed(1) : 'New'} ({profile.totalReviews || 0} Reviews)
+                    </span>
+                    {profile.averageRating >= 4.5 && profile.totalReviews >= 5 && (
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Award size={16} color="var(--success)" /> Top Rated</span>
+                    )}
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <h3 style={{ fontSize: '24px', fontWeight: '700' }}>$65.00 <span style={{ fontSize: '14px', color: 'var(--text-secondary)', fontWeight: '500' }}>/ hr</span></h3>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>100% Job Success</p>
+                  <h3 style={{ fontSize: '24px', fontWeight: '700' }}>
+                    {profile.profile?.hourlyRate ? `$${profile.profile.hourlyRate}` : 'N/A'} 
+                    <span style={{ fontSize: '14px', color: 'var(--text-secondary)', fontWeight: '500' }}>/ hr</span>
+                  </h3>
                 </div>
               </div>
               
@@ -61,8 +102,8 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <div style={{ background: 'var(--bg-card)', padding: '32px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
                 <h3 style={{ fontSize: '20px', marginBottom: '16px' }}>About Me</h3>
-                <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '15px' }}>
-                  I am a passionate Full Stack Developer with over 5 years of experience in building scalable web applications. I specialize in React, Node.js, and Cloud Infrastructure. I have successfully delivered over 30 projects for clients ranging from startups to enterprise companies. My focus is always on clean code, performance, and excellent user experience.
+                <p style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '15px', whiteSpace: 'pre-wrap' }}>
+                  {profile.profile?.bio || 'No bio provided.'}
                 </p>
               </div>
 
@@ -70,25 +111,21 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
                 <h3 style={{ fontSize: '20px', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}><Briefcase size={20} /> Work History & Reviews</h3>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-                  <div style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '24px' }}>
-                    <h4 style={{ fontSize: '16px', marginBottom: '8px' }}>E-commerce Dashboard Redesign</h4>
-                    <div style={{ display: 'flex', gap: '16px', color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '12px' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Star size={14} fill="var(--pending)" color="var(--pending)" /> 5.0</span>
-                      <span>Oct 2025 - Dec 2025</span>
-                      <span>Earned $4,500</span>
-                    </div>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '14px', fontStyle: 'italic' }}>"Alex was fantastic to work with. Delivered ahead of schedule and the code quality was superb. Will definitely hire again!"</p>
-                  </div>
-                  
-                  <div>
-                    <h4 style={{ fontSize: '16px', marginBottom: '8px' }}>SaaS API Integration</h4>
-                    <div style={{ display: 'flex', gap: '16px', color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '12px' }}>
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Star size={14} fill="var(--pending)" color="var(--pending)" /> 4.8</span>
-                      <span>Aug 2025 - Sep 2025</span>
-                      <span>Earned $2,200</span>
-                    </div>
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '14px', fontStyle: 'italic' }}>"Great communication and solid technical skills. Solved complex authentication issues quickly."</p>
-                  </div>
+                  {reviews.length === 0 ? (
+                    <p style={{ color: 'var(--text-secondary)' }}>No reviews yet.</p>
+                  ) : (
+                    reviews.map(review => (
+                      <div key={review._id} style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '24px' }}>
+                        <h4 style={{ fontSize: '16px', marginBottom: '8px' }}>{review.projectId?.jobId?.title || 'Completed Project'}</h4>
+                        <div style={{ display: 'flex', gap: '16px', color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '12px' }}>
+                          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Star size={14} fill="var(--pending)" color="var(--pending)" /> {review.rating.toFixed(1)}</span>
+                          <span>{new Date(review.createdAt).toLocaleDateString()}</span>
+                          <span>By: {review.reviewerId?.username}</span>
+                        </div>
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '14px', fontStyle: 'italic' }}>"{review.comment}"</p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -98,9 +135,13 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
               <div style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
                 <h3 style={{ fontSize: '18px', marginBottom: '16px' }}>Skills</h3>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                  {['React', 'Node.js', 'MongoDB', 'TypeScript', 'AWS', 'Docker', 'GraphQL', 'Tailwind CSS'].map(skill => (
-                    <span key={skill} style={{ background: 'var(--bg-secondary)', padding: '6px 12px', borderRadius: '8px', fontSize: '13px', color: 'var(--text-primary)' }}>{skill}</span>
-                  ))}
+                  {profile.profile?.skills && profile.profile.skills.length > 0 ? (
+                    profile.profile.skills.map(skill => (
+                      <span key={skill} style={{ background: 'var(--bg-secondary)', padding: '6px 12px', borderRadius: '8px', fontSize: '13px', color: 'var(--text-primary)' }}>{skill}</span>
+                    ))
+                  ) : (
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>No skills listed.</span>
+                  )}
                 </div>
               </div>
 
@@ -116,9 +157,18 @@ export const FreelancerProfile = ({ freelancerId, onClose }) => {
               <div style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
                 <h3 style={{ fontSize: '18px', marginBottom: '16px' }}>Contact & Links</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Globe size={18} color="var(--primary-action)" /> portfolio-alex.dev</a>
-                  <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Link size={18} color="var(--primary-action)" /> github.com/alexdev</a>
-                  <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Link size={18} color="var(--primary-action)" /> linkedin.com/in/alexdev</a>
+                  {profile.profile?.portfolio && profile.profile.portfolio.length > 0 && (
+                    <a href={profile.profile.portfolio[0].link} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Globe size={18} color="var(--primary-action)" /> Portfolio</a>
+                  )}
+                  {profile.profile?.githubUrl && (
+                    <a href={profile.profile.githubUrl} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Link size={18} color="var(--primary-action)" /> GitHub</a>
+                  )}
+                  {profile.profile?.linkedinUrl && (
+                    <a href={profile.profile.linkedinUrl} target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', textDecoration: 'none' }}><Link size={18} color="var(--primary-action)" /> LinkedIn</a>
+                  )}
+                  {!profile.profile?.portfolio?.length && !profile.profile?.githubUrl && !profile.profile?.linkedinUrl && (
+                    <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>No links provided.</span>
+                  )}
                 </div>
               </div>
             </div>

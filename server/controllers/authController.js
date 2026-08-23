@@ -126,6 +126,18 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
+exports.getPublicProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId).select('-password -email -mobileNumber -resetPasswordToken -verificationToken');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
 exports.updateUserProfile = async (req, res) => {
   try {
     const { bio, skills, experience, resume, profileImage, companyName, entityType, country, mobileNumber, hourlyRate, githubUrl, linkedinUrl, portfolio } = req.body;

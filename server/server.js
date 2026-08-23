@@ -20,6 +20,7 @@ const projectRoutes = require('./routes/projectRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const contactRoutes = require('./routes/contactRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
 
 const app = express();
 const server = http.createServer(app);
@@ -117,6 +118,7 @@ app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/reviews', reviewRoutes);
 
 
 //  5. Error handling middleware

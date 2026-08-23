@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
-import { Send, Edit2, Trash2, Check, X, Clock, MapPin, DollarSign, Briefcase } from 'lucide-react';
+import { Send, Edit2, Trash2, Check, X, Clock, MapPin, DollarSign, Briefcase, Star } from 'lucide-react';
 
 import AnimatedButton from '../components/AnimatedButton';
 export const ProjectDetail = () => {
@@ -26,9 +26,17 @@ export const ProjectDetail = () => {
   const messagesEndRef = useRef(null);
   const socketRef = useRef(null);
 
+  // Review State
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [hasReviewed, setHasReviewed] = useState(false);
+  const [reviewRating, setReviewRating] = useState(0);
+  const [reviewComment, setReviewComment] = useState('');
+  const [hoverRating, setHoverRating] = useState(0);
+
   useEffect(() => {
     fetchProject();
     fetchMessages();
+    checkReviewStatus();
 
     // Setup Socket.io connection
     let SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -80,6 +88,39 @@ export const ProjectDetail = () => {
       setMessages(response.data.messages || []);
     } catch (error) {
       console.error('Error fetching messages:', error);
+    }
+  };
+
+  const checkReviewStatus = async () => {
+    try {
+      const response = await apiClient.get(`/reviews/project/${projectId}`);
+      const reviews = response.data.reviews || [];
+      const myReview = reviews.find(r => r.reviewerId?._id === user.id || r.reviewerId === user.id);
+      if (myReview) setHasReviewed(true);
+    } catch (error) {
+      console.error('Error fetching review status:', error);
+    }
+  };
+
+  const handleSubmitReview = async (e) => {
+    e.preventDefault();
+    if (reviewRating === 0) {
+      alert("Please select a rating.");
+      return;
+    }
+    try {
+      const revieweeId = user.id === project.clientId._id ? project.freelancerId._id : project.clientId._id;
+      await apiClient.post('/reviews/submit', {
+        projectId,
+        revieweeId,
+        rating: reviewRating,
+        comment: reviewComment
+      });
+      setHasReviewed(true);
+      setShowReviewModal(false);
+    } catch (error) {
+      console.error('Error submitting review:', error);
+      alert('Error submitting review: ' + (error.response?.data?.message || error.message));
     }
   };
 
@@ -169,7 +210,12 @@ export const ProjectDetail = () => {
               </div>
             </div>
           </div>
-          <div className="responsive-flex-wrap" style={{ display: 'flex', gap: '12px', width: '100%' }}>
+          <div className="responsive-flex-wrap" style={{ display: 'flex', gap: '12px', width: '100%', justifyContent: 'flex-end' }}>
+            {project.status === 'Completed' && !hasReviewed && (
+              <AnimatedButton className="btn btn-primary btn-responsive-full" onClick={() => setShowReviewModal(true)} style={{ background: 'var(--success)', border: 'none', color: '#fff' }}>
+                <Star size={16} fill="white" /> Leave Review
+              </AnimatedButton>
+            )}
             <AnimatedButton className="btn btn-secondary btn-responsive-full" onClick={() => setShowProgressForm(true)}>Project Milestones</AnimatedButton>
             <AnimatedButton className="btn btn-primary btn-responsive-full" onClick={() => navigate(-1)}>Back</AnimatedButton>
           </div>
@@ -343,6 +389,66 @@ export const ProjectDetail = () => {
               </div>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Review Modal */}
+      {showReviewModal && (
+        <div className="modal-overlay" onClick={() => setShowReviewModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, backdropFilter: 'blur(4px)' }}>
+          <motion.div 
+            className="modal-content"
+            onClick={e => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            style={{ background: 'var(--bg-card)', padding: '32px', borderRadius: '24px', width: '90%', maxWidth: '500px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-lg)' }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h3 style={{ fontSize: '24px', margin: 0 }}>Rate {otherUser.username}</h3>
+              <AnimatedButton onClick={() => setShowReviewModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}><X size={24} /></AnimatedButton>
+            </div>
+            
+            <form onSubmit={handleSubmitReview} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ textAlign: 'center', margin: '20px 0' }}>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>How was your experience working on this project?</p>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '8px' }}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      type="button"
+                      key={star}
+                      onMouseEnter={() => setHoverRating(star)}
+                      onMouseLeave={() => setHoverRating(0)}
+                      onClick={() => setReviewRating(star)}
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                    >
+                      <Star 
+                        size={40} 
+                        fill={(hoverRating || reviewRating) >= star ? 'var(--pending)' : 'none'} 
+                        color={(hoverRating || reviewRating) >= star ? 'var(--pending)' : 'var(--text-muted)'} 
+                        style={{ transition: 'all 0.2s' }}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-secondary)' }}>Leave a comment (publicly visible)</label>
+                <textarea 
+                  value={reviewComment}
+                  onChange={(e) => setReviewComment(e.target.value)}
+                  placeholder="Describe your experience..."
+                  required
+                  rows="4"
+                  style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', outline: 'none', fontSize: '15px', resize: 'vertical' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <AnimatedButton type="button" className="btn btn-secondary" onClick={() => setShowReviewModal(false)} style={{ flex: 1 }}>Cancel</AnimatedButton>
+                <AnimatedButton type="submit" className="btn btn-primary" style={{ flex: 1, background: 'var(--success)', border: 'none', color: '#fff' }}>Submit Review</AnimatedButton>
+              </div>
+            </form>
+          </motion.div>
         </div>
       )}
     </DashboardLayout>
