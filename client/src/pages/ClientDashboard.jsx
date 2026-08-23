@@ -172,7 +172,22 @@ export const ClientDashboard = () => {
 
   const renderJobs = () => (
     <div className="jobs-section">
-      <div className="dashboard-top-actions" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
+      <div className="dashboard-hero mesh-bg glass-card" style={{ padding: '40px', borderRadius: '24px', marginBottom: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <h1 className="glow-text" style={{ fontSize: '32px', margin: 0 }}>Welcome back, {user?.username}</h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '16px', margin: 0, maxWidth: '600px' }}>
+          Manage your posted jobs, review incoming proposals, and track your active projects all in one place.
+        </p>
+        <div style={{ display: 'flex', gap: '16px', marginTop: '16px', flexWrap: 'wrap' }}>
+          <div className="status-pill glass-card" style={{ padding: '8px 16px', background: 'rgba(5, 150, 105, 0.1)', color: 'var(--success)', border: '1px solid rgba(5, 150, 105, 0.2)' }}>
+            <Briefcase size={16} /> {jobs.length} Active Postings
+          </div>
+          <div className="status-pill glass-card" style={{ padding: '8px 16px', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
+            <Target size={16} /> {projects.length} Active Projects
+          </div>
+        </div>
+      </div>
+
+      <div className="dashboard-top-actions" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px', alignItems: 'center' }}>
         <h2 style={{ fontSize: '24px' }}>My Posted Jobs</h2>
         <AnimatedButton className="btn btn-primary" onClick={() => setShowJobForm(true)} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <Plus size={18} /> Post New Job
@@ -186,16 +201,18 @@ export const ClientDashboard = () => {
         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
       >
         {jobs.length === 0 ? (
-          <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-            <Briefcase size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
-            <h3>No jobs posted yet</h3>
-            <p style={{ color: 'var(--text-secondary)', marginBottom: '24px' }}>Create your first job posting to start receiving proposals.</p>
-            <AnimatedButton className="btn btn-primary" onClick={() => setShowJobForm(true)}>Post a Job</AnimatedButton>
+          <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '80px 20px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '50%', marginBottom: '24px' }}>
+              <Briefcase size={48} style={{ color: 'var(--primary-action)' }} />
+            </div>
+            <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>No jobs posted yet</h3>
+            <p style={{ color: 'var(--text-secondary)', marginBottom: '32px', fontSize: '16px', maxWidth: '400px' }}>Create your first job posting to start receiving proposals from top freelancers.</p>
+            <AnimatedButton className="btn btn-primary" onClick={() => setShowJobForm(true)} style={{ padding: '12px 32px', fontSize: '16px', background: 'var(--primary-action)', boxShadow: '0 8px 24px -8px rgba(5, 150, 105, 0.5)' }}>Post Your First Job</AnimatedButton>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {jobs.map((job) => (
-              <motion.div key={job._id} className="modern-job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '16px', transition: 'all 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'none'; }}>
+              <motion.div key={job._id} className="modern-job-card glass-card premium-hover" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} style={{ padding: '28px', borderRadius: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div className="modern-job-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>{job.title}</h3>
@@ -241,17 +258,24 @@ export const ClientDashboard = () => {
       <div className="projects-section">
         <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>{isCompleted ? 'Completed Projects' : 'Active Projects'}</h2>
         {filteredProjects.length === 0 ? (
-          <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-            {isCompleted ? <CheckCircle size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} /> : <Briefcase size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />}
-            <h3>No {isCompleted ? 'completed' : 'active'} projects</h3>
-            <p style={{ color: 'var(--text-secondary)' }}>
+          <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '80px 20px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '50%', marginBottom: '24px' }}>
+              {isCompleted ? <CheckCircle size={48} style={{ color: 'var(--success)' }} /> : <Briefcase size={48} style={{ color: '#3b82f6' }} />}
+            </div>
+            <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>No {isCompleted ? 'completed' : 'active'} projects</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>
               {isCompleted ? 'You have no completed projects yet.' : 'Accept a proposal to start a project.'}
             </p>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+          <motion.div 
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}
+            initial="hidden"
+            animate="visible"
+            variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+          >
             {filteredProjects.map((project) => (
-              <motion.div key={project._id} className="card" variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }} initial="hidden" animate="visible">
+              <motion.div key={project._id} className="project-card glass-card premium-hover" variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }} style={{ padding: '24px', borderRadius: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>Project: {project.jobId?.title}</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>Freelancer: <strong>{project.freelancerId?.username}</strong></p>
                 
@@ -265,7 +289,7 @@ export const ClientDashboard = () => {
                 </AnimatedButton>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     );

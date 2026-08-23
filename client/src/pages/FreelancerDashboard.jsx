@@ -242,6 +242,21 @@ export const FreelancerDashboard = () => {
 
   const renderJobs = () => (
     <div className="jobs-section">
+      <div className="dashboard-hero mesh-bg glass-card" style={{ padding: '40px', borderRadius: '24px', marginBottom: '32px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <h1 className="glow-text" style={{ fontSize: '32px', margin: 0 }}>Welcome back, {user?.username}</h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '16px', margin: 0, maxWidth: '600px' }}>
+          Discover new opportunities, manage your submitted proposals, and deliver amazing work on your active projects.
+        </p>
+        <div style={{ display: 'flex', gap: '16px', marginTop: '16px', flexWrap: 'wrap' }}>
+          <div className="status-pill glass-card" style={{ padding: '8px 16px', background: 'rgba(5, 150, 105, 0.1)', color: 'var(--success)', border: '1px solid rgba(5, 150, 105, 0.2)' }}>
+            <FileText size={16} /> {proposals.length} Active Proposals
+          </div>
+          <div className="status-pill glass-card" style={{ padding: '8px 16px', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', border: '1px solid rgba(59, 130, 246, 0.2)' }}>
+            <Target size={16} /> {projects.length} Active Projects
+          </div>
+        </div>
+      </div>
+
       <div className="dashboard-top-actions" style={{ marginBottom: '32px' }}>
         <h2 style={{ fontSize: '24px', marginBottom: '16px' }}>Available Jobs</h2>
         
@@ -352,15 +367,17 @@ export const FreelancerDashboard = () => {
         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
       >
         {filteredJobs.length === 0 ? (
-          <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-            <Search size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
-            <h3>No jobs found</h3>
-            <p style={{ color: 'var(--text-secondary)' }}>Try adjusting your search or filters.</p>
+          <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '80px 20px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '50%', marginBottom: '24px' }}>
+              <Search size={48} style={{ color: 'var(--primary-action)' }} />
+            </div>
+            <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>No jobs found</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>Try adjusting your search or filters to find the perfect match.</p>
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {filteredJobs.map((job) => (
-              <motion.div key={job._id} className="modern-job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '16px', transition: 'all 0.3s ease' }} onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--border-hover)'; e.currentTarget.style.boxShadow = 'var(--shadow-md)'; transform = 'translateY(-2px)' }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border-color)'; e.currentTarget.style.boxShadow = 'none'; transform = 'translateY(0)' }}>
+              <motion.div key={job._id} className="modern-job-card glass-card premium-hover" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} style={{ padding: '28px', borderRadius: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div className="modern-job-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>
                     <h3 style={{ fontSize: '20px', marginBottom: '8px' }}>{job.title}</h3>
@@ -402,15 +419,22 @@ export const FreelancerDashboard = () => {
     <div className="proposals-section">
       <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>My Proposals</h2>
       {proposals.length === 0 ? (
-        <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-          <FileText size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />
-          <h3>No proposals submitted</h3>
-          <p style={{ color: 'var(--text-secondary)' }}>Find a job and submit your first proposal.</p>
+        <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '80px 20px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '50%', marginBottom: '24px' }}>
+            <FileText size={48} style={{ color: 'var(--primary-action)' }} />
+          </div>
+          <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>No proposals submitted</h3>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>Find a job and submit your first proposal to get started.</p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
+        <motion.div 
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}
+          initial="hidden"
+          animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+        >
           {proposals.map((proposal) => (
-            <motion.div key={proposal._id} className="card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} initial="hidden" animate="visible" style={{ position: 'relative', overflow: 'hidden' }}>
+            <motion.div key={proposal._id} className="proposal-card glass-card premium-hover" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} style={{ position: 'relative', overflow: 'hidden', padding: '24px', borderRadius: '20px' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: proposal.status === 'Accepted' ? 'var(--success)' : proposal.status === 'Rejected' ? 'var(--danger)' : 'var(--pending)' }}></div>
               
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
@@ -425,11 +449,11 @@ export const FreelancerDashboard = () => {
               
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px' }}>
                 <AnimatedButton className="btn btn-secondary" style={{ padding: '6px 12px', fontSize: '12px' }}>Details</AnimatedButton>
-                <AnimatedButton className="btn btn-secondary" onClick={() => handleDeleteProposal(proposal._id)} style={{ padding: '6px 12px', fontSize: '12px', color: 'var(--danger)', borderColor: 'var(--danger)' }} disabled={proposal.status === 'Accepted'}>Withdraw</AnimatedButton>
+                <AnimatedButton className="btn btn-secondary" onClick={() => handleDeleteProposal(proposal._id)} style={{ padding: '6px 12px', fontSize: '12px', color: 'var(--danger)', borderColor: 'var(--danger)', background: 'transparent' }} disabled={proposal.status === 'Accepted'}>Withdraw</AnimatedButton>
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );
@@ -441,17 +465,24 @@ export const FreelancerDashboard = () => {
       <div className="projects-section">
         <h2 style={{ fontSize: '24px', marginBottom: '24px' }}>{isCompleted ? 'Completed Projects' : 'Active Projects'}</h2>
         {filteredProjects.length === 0 ? (
-          <div className="empty-state" style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-            {isCompleted ? <CheckCircle size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} /> : <Briefcase size={48} style={{ color: 'var(--text-muted)', marginBottom: '16px' }} />}
-            <h3>No {isCompleted ? 'completed' : 'active'} projects</h3>
-            <p style={{ color: 'var(--text-secondary)' }}>
+          <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '80px 20px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '50%', marginBottom: '24px' }}>
+              {isCompleted ? <CheckCircle size={48} style={{ color: 'var(--success)' }} /> : <Briefcase size={48} style={{ color: '#3b82f6' }} />}
+            </div>
+            <h3 style={{ fontSize: '24px', marginBottom: '12px' }}>No {isCompleted ? 'completed' : 'active'} projects</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>
               {isCompleted ? 'You have no completed projects yet.' : "You don't have any ongoing projects right now."}
             </p>
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
+          <motion.div 
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}
+            initial="hidden"
+            animate="visible"
+            variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
+          >
             {filteredProjects.map((project) => (
-              <motion.div key={project._id} className="card" variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }} initial="hidden" animate="visible">
+              <motion.div key={project._id} className="project-card glass-card premium-hover" variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1 } }} style={{ padding: '24px', borderRadius: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <h3 style={{ fontSize: '18px', marginBottom: '8px' }}>{project.jobId?.title}</h3>
                 <p style={{ color: 'var(--text-secondary)', marginBottom: '16px' }}>Client: <strong>{project.clientId?.username}</strong></p>
                 
@@ -465,7 +496,7 @@ export const FreelancerDashboard = () => {
                 </AnimatedButton>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
     );
