@@ -41,9 +41,46 @@ exports.postJob = [
 // Get all jobs
 exports.getAllJobs = async (req, res) => {
   try {
-    const jobs = await Job.find({ status: 'Open' }).populate('clientId', 'username email profile');
+    const { search, category, experience, budgetMin, budgetMax, skills } = req.query;
+    
+    let query = { status: 'Open' };
+    
+    // Text search in title and description
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    if (category) {
+      query.category = category;
+    }
+    
+    if (experience) {
+      query.experienceRequired = experience;
+    }
+    
+    if (budgetMin || budgetMax) {
+      query.budget = {};
+      if (budgetMin) query.budget.$gte = Number(budgetMin);
+      if (budgetMax) query.budget.$lte = Number(budgetMax);
+    }
+    
+    if (skills) {
+      // skills is passed as a comma-separated string
+      const skillsArray = skills.split(',').map(s => s.trim());
+      // Find jobs where requiredSkills contains any of the requested skills
+      query.requiredSkills = { $in: skillsArray };
+    }
+
+    const jobs = await Job.find(query)
+      .populate('clientId', 'username email profile')
+      .sort({ createdAt: -1 });
+      
     res.status(200).json({ jobs });
   } catch (error) {
+    console.error('Get all jobs error:', error);
     res.status(500).json({ message: 'Server error' });
   }
 };

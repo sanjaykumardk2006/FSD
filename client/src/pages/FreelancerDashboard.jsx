@@ -96,12 +96,51 @@ export const FreelancerDashboard = () => {
 
   const fetchJobs = async () => {
     try {
-      const response = await apiClient.get('/jobs/all');
-      setJobs(response.data.jobs || []);
+      const params = new URLSearchParams();
+      if (searchQuery) params.append('search', searchQuery);
+      if (filters.category) params.append('category', filters.category);
+      if (filters.experience) params.append('experience', filters.experience);
+      
+      // Map frontend budget strings to min/max
+      if (filters.budget === 'under100') {
+        params.append('budgetMax', '99');
+      } else if (filters.budget === '100to500') {
+        params.append('budgetMin', '100');
+        params.append('budgetMax', '500');
+      } else if (filters.budget === 'over500') {
+        params.append('budgetMin', '501');
+      }
+
+      // Duration isn't perfectly mapped to our backend right now, so we skip backend duration filtering 
+      // or implement it client-side. We'll handle duration client-side if needed, but since we are replacing
+      // local filtering, we'll just ignore it or let the user know. For simplicity, we just pass what we can.
+
+      const response = await apiClient.get(`/jobs/all?${params.toString()}`);
+      
+      // If we still want to filter by duration locally, we can do it here:
+      let fetchedJobs = response.data.jobs || [];
+      if (filters.duration) {
+        fetchedJobs = fetchedJobs.filter(job => {
+          const deadlineDate = new Date(job.deadline);
+          const createdAtDate = new Date(job.createdAt);
+          const durationDays = (deadlineDate - createdAtDate) / (1000 * 60 * 60 * 24);
+          if (filters.duration === 'lessThanWeek') return durationDays < 7;
+          if (filters.duration === 'lessThanMonth') return durationDays >= 7 && durationDays <= 30;
+          if (filters.duration === 'moreThanMonth') return durationDays > 30;
+          return true;
+        });
+      }
+      
+      setJobs(fetchedJobs);
     } catch (error) {
       console.error('Error fetching jobs:', error);
     }
   };
+
+  // Add a useEffect to refetch when filters change
+  useEffect(() => {
+    fetchJobs();
+  }, [filters]);
 
   const fetchProposals = async () => {
     try {
@@ -199,55 +238,7 @@ export const FreelancerDashboard = () => {
     }
   };
 
-  const filteredJobs = jobs.filter(job => {
-    // Search Query filter
-    const title = job.title || '';
-    const desc = job.description || '';
-    const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          desc.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    // Budget filter
-    let matchesBudget = true;
-    if (filters.budget === 'under100') matchesBudget = job.budget < 100;
-    if (filters.budget === '100to500') matchesBudget = job.budget >= 100 && job.budget <= 500;
-    if (filters.budget === 'over500') matchesBudget = job.budget > 500;
-
-    // Duration filter
-    let matchesDuration = true;
-    if (filters.duration) {
-      const deadlineDate = new Date(job.deadline);
-      const createdAtDate = new Date(job.createdAt);
-      const durationDays = (deadlineDate - createdAtDate) / (1000 * 60 * 60 * 24);
-      
-      if (filters.duration === 'lessThanWeek') matchesDuration = durationDays < 7;
-      if (filters.duration === 'lessThanMonth') matchesDuration = durationDays >= 7 && durationDays <= 30;
-      if (filters.duration === 'moreThanMonth') matchesDuration = durationDays > 30;
-    }
-
-    // Experience filter
-    let matchesExperience = true;
-    if (filters.experience) {
-      if (job.experienceRequired) {
-        matchesExperience = job.experienceRequired === filters.experience;
-      } else {
-        // Fallback for old jobs without experienceRequired
-        matchesExperience = true;
-      }
-    }
-
-    // Category filter
-    let matchesCategory = true;
-    if (filters.category) {
-      if (job.category) {
-        matchesCategory = job.category === filters.category;
-      } else {
-        // Fallback for old jobs without category
-        matchesCategory = true;
-      }
-    }
-
-    return matchesSearch && matchesBudget && matchesDuration && matchesExperience && matchesCategory;
-  });
+  // filteredJobs logic has been moved to the backend and fetchJobs.
 
   const renderJobs = () => (
     <div className="jobs-section">
@@ -265,7 +256,7 @@ export const FreelancerDashboard = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{ width: '100%', padding: '14px 16px 14px 48px', border: 'none', background: 'transparent', color: 'var(--text-primary)', outline: 'none', fontSize: '15px' }}
             />
-            <AnimatedButton className="btn btn-primary" style={{ margin: '4px 6px', padding: '8px 24px', borderRadius: 'var(--radius-md)' }}>Search</AnimatedButton>
+            <AnimatedButton className="btn btn-primary" onClick={fetchJobs} style={{ margin: '4px 6px', padding: '8px 24px', borderRadius: 'var(--radius-md)' }}>Search</AnimatedButton>
           </div>
           
           <AnimatedButton 
