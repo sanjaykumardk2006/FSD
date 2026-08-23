@@ -5,7 +5,7 @@ import { AuthContext } from '../context/AuthContext';
 import { DashboardLayout } from '../components/DashboardLayout';
 import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
-import { Send, Edit2, Trash2, Check, X, Clock, MapPin, DollarSign, Briefcase, Star } from 'lucide-react';
+import { Send, Edit2, Trash2, Check, X, Clock, MapPin, DollarSign, Briefcase, Star, AlertTriangle } from 'lucide-react';
 
 import AnimatedButton from '../components/AnimatedButton';
 export const ProjectDetail = () => {
@@ -32,6 +32,10 @@ export const ProjectDetail = () => {
   const [reviewRating, setReviewRating] = useState(0);
   const [reviewComment, setReviewComment] = useState('');
   const [hoverRating, setHoverRating] = useState(0);
+
+  // Dispute State
+  const [showDisputeModal, setShowDisputeModal] = useState(false);
+  const [disputeReason, setDisputeReason] = useState('');
 
   useEffect(() => {
     fetchProject();
@@ -124,6 +128,21 @@ export const ProjectDetail = () => {
     }
   };
 
+  const handleRaiseDispute = async (e) => {
+    e.preventDefault();
+    if (!disputeReason.trim()) return;
+    
+    try {
+      await apiClient.post(`/projects/${projectId}/dispute`, { reason: disputeReason });
+      setShowDisputeModal(false);
+      setDisputeReason('');
+      fetchProject();
+    } catch (error) {
+      console.error('Error raising dispute:', error);
+      alert('Error raising dispute: ' + (error.response?.data?.message || error.message));
+    }
+  };
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -204,7 +223,7 @@ export const ProjectDetail = () => {
               <div style={{ display: 'flex', gap: '12px', color: 'var(--text-secondary)', fontSize: '14px', alignItems: 'center' }}>
                 <span>{otherUser.username}</span>
                 <span>•</span>
-                <span className="status-badge" style={{ padding: '2px 10px', borderRadius: '12px', fontSize: '11px', background: project.status === 'Completed' ? 'var(--success-bg)' : 'var(--primary-action-bg)', color: project.status === 'Completed' ? 'var(--success)' : 'var(--primary-action)' }}>
+                <span className="status-badge" style={{ padding: '2px 10px', borderRadius: '12px', fontSize: '11px', background: project.status === 'Completed' ? 'var(--success-bg)' : project.status === 'Disputed' ? 'rgba(239, 68, 68, 0.1)' : 'var(--primary-action-bg)', color: project.status === 'Completed' ? 'var(--success)' : project.status === 'Disputed' ? 'var(--danger)' : 'var(--primary-action)' }}>
                   {project.status}
                 </span>
               </div>
@@ -216,10 +235,31 @@ export const ProjectDetail = () => {
                 <Star size={16} fill="white" /> Leave Review
               </AnimatedButton>
             )}
+            {(project.status === 'Active' || project.status === 'On Hold') && (
+              <AnimatedButton className="btn btn-secondary btn-responsive-full" onClick={() => setShowDisputeModal(true)} style={{ color: 'var(--danger)', borderColor: 'rgba(239, 68, 68, 0.3)', background: 'transparent' }}>
+                <AlertTriangle size={16} /> Raise Dispute
+              </AnimatedButton>
+            )}
             <AnimatedButton className="btn btn-secondary btn-responsive-full" onClick={() => setShowProgressForm(true)}>Project Milestones</AnimatedButton>
             <AnimatedButton className="btn btn-primary btn-responsive-full" onClick={() => navigate(-1)}>Back</AnimatedButton>
           </div>
         </div>
+
+        {project.status === 'Disputed' && (
+          <div style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '16px', padding: '16px 24px', display: 'flex', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
+            <div style={{ background: 'var(--danger)', color: 'white', padding: '10px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <AlertTriangle size={24} />
+            </div>
+            <div>
+              <h3 style={{ color: 'var(--danger)', fontSize: '16px', margin: '0 0 4px 0' }}>Project Under Dispute</h3>
+              <p style={{ color: 'var(--text-primary)', margin: 0, fontSize: '14px', lineHeight: '1.5' }}>
+                This project has been flagged for moderation. 
+                {project.dispute?.reason && <span> Reason: <strong>{project.dispute.reason}</strong>.</span>}
+                {' '}Milestones and completion actions are frozen until moderation is complete.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Chat Interface */}
         <div style={{ flex: 1, background: 'var(--bg-card)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
@@ -327,7 +367,7 @@ export const ProjectDetail = () => {
                 type="text"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type your message here..."
+                placeholder={project.status === 'Disputed' ? "Messaging is available but actions are frozen..." : "Type your message here..."}
                 required
                 style={{ flex: 1, width: '100%', padding: '16px 20px', borderRadius: '30px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', fontSize: '15px', outline: 'none', transition: 'border-color 0.2s' }}
                 onFocus={(e) => e.target.style.borderColor = 'var(--primary-action)'}
@@ -372,7 +412,7 @@ export const ProjectDetail = () => {
               )}
             </div>
 
-            {isFreelancer && (
+            {isFreelancer && project.status !== 'Disputed' && project.status !== 'Completed' && project.status !== 'Cancelled' && (
               <div style={{ padding: '24px', borderTop: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
                 <h3 style={{ fontSize: '16px', marginBottom: '16px' }}>Add New Milestone</h3>
                 <form onSubmit={handleAddProgress}>
@@ -446,6 +486,52 @@ export const ProjectDetail = () => {
               <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
                 <AnimatedButton type="button" className="btn btn-secondary" onClick={() => setShowReviewModal(false)} style={{ flex: 1 }}>Cancel</AnimatedButton>
                 <AnimatedButton type="submit" className="btn btn-primary" style={{ flex: 1, background: 'var(--success)', border: 'none', color: '#fff' }}>Submit Review</AnimatedButton>
+              </div>
+            </form>
+          </motion.div>
+        </div>
+      )}
+
+      {/* Dispute Modal */}
+      {showDisputeModal && (
+        <div className="modal-overlay" onClick={() => setShowDisputeModal(false)} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, backdropFilter: 'blur(4px)' }}>
+          <motion.div 
+            className="modal-content"
+            onClick={e => e.stopPropagation()}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            style={{ background: 'var(--bg-card)', padding: '32px', borderRadius: '24px', width: '90%', maxWidth: '500px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-lg)' }}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+              <h3 style={{ fontSize: '24px', margin: 0, display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--danger)' }}>
+                <AlertTriangle size={24} /> Raise a Dispute
+              </h3>
+              <AnimatedButton onClick={() => setShowDisputeModal(false)} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }}><X size={24} /></AnimatedButton>
+            </div>
+            
+            <form onSubmit={handleRaiseDispute} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ margin: '0 0 16px 0' }}>
+                <p style={{ color: 'var(--text-primary)', marginBottom: '8px', lineHeight: '1.5' }}>
+                  Raising a dispute will immediately freeze this project. Milestones and completion actions will be locked until the issue is resolved by moderation.
+                </p>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Please provide a clear reason for the dispute.</p>
+              </div>
+
+              <div className="form-group">
+                <label style={{ display: 'block', marginBottom: '8px', color: 'var(--text-secondary)' }}>Reason for Dispute</label>
+                <textarea 
+                  value={disputeReason}
+                  onChange={(e) => setDisputeReason(e.target.value)}
+                  placeholder="E.g., Deliverables were not met, payment issue, unresponsiveness..."
+                  required
+                  rows="4"
+                  style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', outline: 'none', fontSize: '15px', resize: 'vertical' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '12px', marginTop: '12px' }}>
+                <AnimatedButton type="button" className="btn btn-secondary" onClick={() => setShowDisputeModal(false)} style={{ flex: 1 }}>Cancel</AnimatedButton>
+                <AnimatedButton type="submit" className="btn btn-primary" style={{ flex: 1, background: 'var(--danger)', border: 'none', color: '#fff' }}>Submit Dispute</AnimatedButton>
               </div>
             </form>
           </motion.div>

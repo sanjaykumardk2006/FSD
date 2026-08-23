@@ -147,3 +147,67 @@ exports.getPendingUpdates = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Raise a dispute for a project
+exports.raiseDispute = async (req, res) => {
+  try {
+    const { reason } = req.body;
+    const { projectId } = req.params;
+    
+    if (!reason || !reason.trim()) {
+      return res.status(400).json({ message: 'Reason is required for raising a dispute.' });
+    }
+
+    const project = await Project.findById(projectId);
+    
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    // Verify user is part of the project
+    if (project.clientId.toString() !== req.user.userId && project.freelancerId.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    if (project.status === 'Completed' || project.status === 'Cancelled') {
+      return res.status(400).json({ message: `Cannot dispute a project that is already ${project.status.toLowerCase()}` });
+    }
+    
+    if (project.status === 'Disputed') {
+      return res.status(400).json({ message: 'Project is already under dispute' });
+    }
+
+    project.status = 'Disputed';
+    project.dispute = {
+      isDisputed: true,
+      disputerId: req.user.userId,
+      reason: reason.trim(),
+      dateRaised: new Date()
+    };
+    
+    await project.save();
+
+    // Determine the other party for notification
+    const otherPartyId = project.clientId.toString() === req.user.userId 
+      ? project.freelancerId 
+      : project.clientId;
+
+    // Create notification for the other party
+    const notification = await Notification.create({
+      userId: otherPartyId,
+      type: 'project_dispute',
+      title: 'Project Disputed',
+      message: 'A dispute has been raised on your active project. Actions are frozen until moderation completes.',
+      relatedId: project._id,
+    });
+
+    if (req.io) {
+      req.io.to(otherPartyId.toString()).emit('new_notification', notification);
+    }
+
+    res.status(200).json({ message: 'Dispute raised successfully', project });
+  } catch (error) {
+    console.error('Raise dispute error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};

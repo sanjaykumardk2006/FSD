@@ -1,5 +1,5 @@
 const express = require('express');
-const { getFreelancerProjects, getClientProjects, getProjectDetails, updateProjectProgress, updateProjectStatus, getPendingUpdates } = require('../controllers/projectController');
+const { getFreelancerProjects, getClientProjects, getProjectDetails, updateProjectProgress, updateProjectStatus, getPendingUpdates, raiseDispute } = require('../controllers/projectController');
 const { authMiddleware } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -21,5 +21,8 @@ router.put('/:projectId/status', authMiddleware, updateProjectStatus);
 
 // Get pending updates (for reminders)
 router.get('/pending-updates', authMiddleware, getPendingUpdates);
+
+// Raise dispute
+router.post('/:projectId/dispute', authMiddleware, raiseDispute);
 
 module.exports = router;

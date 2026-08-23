@@ -19,7 +19,7 @@ const projectSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['Active', 'On Hold', 'Completed', 'Cancelled'],
+      enum: ['Active', 'On Hold', 'Completed', 'Cancelled', 'Disputed'],
       default: 'Active',
     },
     progress: [
@@ -37,6 +37,18 @@ const projectSchema = new mongoose.Schema(
       default: Date.now,
     },
     completionDate: Date,
+    dispute: {
+      isDisputed: {
+        type: Boolean,
+        default: false,
+      },
+      disputerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+      reason: String,
+      dateRaised: Date,
+    },
   },
   { timestamps: true }
 );
