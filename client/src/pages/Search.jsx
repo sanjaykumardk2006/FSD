@@ -104,9 +104,9 @@ export const Search = () => {
                 placeholder="Search projects by title or description..." 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ flex: 1, padding: '16px 24px', fontSize: '16px', borderRadius: '50px', border: '1px solid var(--border-color)', outline: 'none', background: 'var(--bg-secondary)', color: 'var(--text-primary)', width: '100%' }}
+                style={{ flex: 1, padding: '16px 24px', fontSize: '16px', borderRadius: '50px', border: '1px solid var(--border-color)', outline: 'none', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}
               />
-              <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
+              <div style={{ display: 'flex', gap: '12px' }}>
                 <AnimatedButton type="submit" className="btn btn-primary" style={{ padding: '0 32px', borderRadius: '50px', flexShrink: 0, height: '54px' }}>
                   <SearchIcon size={20} />
                 </AnimatedButton>
