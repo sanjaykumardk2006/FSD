@@ -2,14 +2,16 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AuthModal } from './AuthModal';
-import { ChevronDown, User, Briefcase, Menu, X, Sun, Moon, Bell } from 'lucide-react';
+import { ChevronDown, User, Briefcase, Menu, X, Bell, Sun, Moon } from 'lucide-react';
 import apiClient from '../utils/apiClient';
 import { io } from 'socket.io-client';
+import { useThemeToggle } from './AnimatedThemeToggle';
 import '../App.css';
 
 export const Header = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { isDark, handleToggle } = useThemeToggle('circle', 'center');
 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState('login');
@@ -19,7 +21,6 @@ export const Header = () => {
   const [loginDropdownOpen, setLoginDropdownOpen] = useState(false);
   const [signupDropdownOpen, setSignupDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const [unreadCount, setUnreadCount] = useState(0);
 
   const socketRef = useRef(null);
@@ -59,15 +60,6 @@ export const Header = () => {
     } catch (error) {
       console.error('Failed to fetch unread notifications count:', error);
     }
-  };
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
   };
 
   const handleLogout = () => {
@@ -172,11 +164,11 @@ export const Header = () => {
               </div>
             )}
             <button 
-              onClick={toggleTheme} 
+              onClick={handleToggle} 
               style={{ background: 'none', border: 'none', outline: 'none', color: 'var(--text-primary)', cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '8px', marginLeft: 'auto' }}
-              title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              title={`Switch to ${isDark ? 'Light' : 'Dark'} mode`}
             >
-              {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+              {!isDark ? <Moon size={20} /> : <Sun size={20} />}
             </button>
           </nav>
         </div>

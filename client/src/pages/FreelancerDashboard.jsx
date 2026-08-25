@@ -366,7 +366,7 @@ export const FreelancerDashboard = () => {
         animate="visible"
         variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
       >
-        {filteredJobs.length === 0 ? (
+        {jobs.length === 0 ? (
           <div className="empty-state glass-card" style={{ textAlign: 'center', padding: '80px 20px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '50%', marginBottom: '24px' }}>
               <Search size={48} style={{ color: 'var(--primary-action)' }} />
@@ -376,7 +376,7 @@ export const FreelancerDashboard = () => {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {filteredJobs.map((job) => (
+            {jobs.map((job) => (
               <motion.div key={job._id} className="modern-job-card glass-card premium-hover" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} style={{ padding: '28px', borderRadius: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div className="modern-job-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                   <div>

@@ -20,13 +20,14 @@ import {
   ArrowLeft,
   Mail
 } from 'lucide-react';
+import { useThemeToggle } from './AnimatedThemeToggle';
 import '../App.css'; // Make sure styles are available
 
 export const DashboardLayout = ({ children, role }) => {
   const { user, logout } = useContext(AuthContext);
-  const { theme, toggleTheme } = useContext(ThemeContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const { isDark, handleToggle } = useThemeToggle('circle', 'center');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeProfileDetail, setActiveProfileDetail] = useState(null);
 
@@ -114,8 +115,8 @@ export const DashboardLayout = ({ children, role }) => {
                 </div>
               </div>
             </div>
-            <button onClick={toggleTheme} style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }} title={theme === 'dark' ? 'Light Mode' : 'Dark Mode'}>
-              {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            <button onClick={handleToggle} style={{ background: 'var(--bg-secondary)', border: 'none', color: 'var(--text-primary)', cursor: 'pointer', width: '32px', height: '32px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }} title={isDark ? 'Light Mode' : 'Dark Mode'}>
+              {isDark ? <Sun size={16} /> : <Moon size={16} />}
             </button>
           </div>
 
