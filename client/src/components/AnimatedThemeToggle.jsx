@@ -24,6 +24,11 @@ const getPositionCoords = (position) => {
 };
 
 const generateSVG = (variant, start) => {
+  if (variant === 'circle-blur') {
+    const coords = getPositionCoords(start) || { cx: '20', cy: '20' };
+    return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="${coords.cx}" cy="${coords.cy}" r="18" fill="white" filter="url(%23blur)"/></svg>`;
+  }
+
   if (start === 'center') return '';
   if (variant === 'rectangle') return '';
 
@@ -50,21 +55,68 @@ const getTransformOrigin = (start) => {
   }
 };
 
-const createAnimation = (variant = 'circle', start = 'center') => {
-  const svg = generateSVG(variant, start);
-  const transformOrigin = getTransformOrigin(start);
+const createAnimation = (variant = 'circle', start = 'center', blur = false) => {
+  if (blur || variant === 'circle-blur') {
+    const svg = generateSVG('circle-blur', start);
+    const transformOrigin = getTransformOrigin(start);
+    const maskPosition = start === 'center' ? 'center' : start.replace('-', ' ');
 
-  if (variant === 'circle' && start === 'center') {
     return {
-      name: `${variant}-${start}`,
+      name: `circle-blur-${start}`,
       css: `
+      ::view-transition-group(root) {
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      ::view-transition-new(root) {
+        mask: url('${svg}') ${maskPosition} / 0 no-repeat;
+        mask-origin: content-box;
+        animation: scale-blur 1s forwards;
+        transform-origin: ${transformOrigin};
+      }
+
+      ::view-transition-old(root),
+      [data-theme="dark"]::view-transition-old(root) {
+        animation: scale-blur 1s forwards;
+        transform-origin: ${transformOrigin};
+        z-index: -1;
+      }
+
+      @keyframes scale-blur {
+        to {
+          mask-size: 350vmax;
+        }
+      }
+      `
+    };
+  }
+
+  const getClipPathPosition = (position) => {
+    switch (position) {
+      case 'top-left': return '0% 0%';
+      case 'top-right': return '100% 0%';
+      case 'bottom-left': return '0% 100%';
+      case 'bottom-right': return '100% 100%';
+      case 'top-center': return '50% 0%';
+      case 'bottom-center': return '50% 100%';
+      default: return '50% 50%';
+    }
+  };
+
+  const clipPosition = getClipPathPosition(start);
+  const blurSuffix = blur ? '-blur' : '';
+
+  return {
+    name: `${variant}-${start}${blurSuffix}`,
+    css: `
       ::view-transition-group(root) {
         animation-duration: 0.7s;
         animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
       }
             
       ::view-transition-new(root) {
-        animation-name: reveal-light;
+        animation-name: reveal-light-${start}${blurSuffix};
+        ${blur ? 'filter: blur(2px);' : ''}
       }
 
       ::view-transition-old(root),
@@ -73,61 +125,38 @@ const createAnimation = (variant = 'circle', start = 'center') => {
         z-index: -1;
       }
       [data-theme="dark"]::view-transition-new(root) {
-        animation-name: reveal-dark;
+        animation-name: reveal-dark-${start}${blurSuffix};
+        ${blur ? 'filter: blur(2px);' : ''}
       }
 
-      @keyframes reveal-dark {
+      @keyframes reveal-dark-${start}${blurSuffix} {
         from {
-          clip-path: circle(0% at 50% 50%);
+          clip-path: circle(0% at ${clipPosition});
+          ${blur ? 'filter: blur(8px);' : ''}
         }
+        ${blur ? '50% { filter: blur(4px); }' : ''}
         to {
-          clip-path: circle(100.0% at 50% 50%);
+          clip-path: circle(150.0% at ${clipPosition});
+          ${blur ? 'filter: blur(0px);' : ''}
         }
       }
 
-      @keyframes reveal-light {
+      @keyframes reveal-light-${start}${blurSuffix} {
         from {
-           clip-path: circle(0% at 50% 50%);
+           clip-path: circle(0% at ${clipPosition});
+           ${blur ? 'filter: blur(8px);' : ''}
         }
+        ${blur ? '50% { filter: blur(4px); }' : ''}
         to {
-          clip-path: circle(100.0% at 50% 50%);
+          clip-path: circle(150.0% at ${clipPosition});
+          ${blur ? 'filter: blur(0px);' : ''}
         }
       }
-      `,
-    };
-  }
-
-  // Handle other variants if needed, for now defaulting to center circle
-  return {
-    name: `circle-center`,
-    css: `
-      ::view-transition-group(root) {
-        animation-duration: 0.7s;
-        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      ::view-transition-new(root) {
-        animation-name: reveal-light;
-      }
-      ::view-transition-old(root), [data-theme="dark"]::view-transition-old(root) {
-        animation: none;
-        z-index: -1;
-      }
-      [data-theme="dark"]::view-transition-new(root) {
-        animation-name: reveal-dark;
-      }
-      @keyframes reveal-dark {
-        from { clip-path: circle(0% at 50% 50%); }
-        to { clip-path: circle(100.0% at 50% 50%); }
-      }
-      @keyframes reveal-light {
-        from { clip-path: circle(0% at 50% 50%); }
-        to { clip-path: circle(100.0% at 50% 50%); }
-      }
-    `
+    `,
   };
 };
 
-export const useThemeToggle = (variant = 'circle', start = 'center') => {
+export const useThemeToggle = (variant = 'circle', start = 'center', blur = false) => {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const [isDark, setIsDark] = useState(theme === 'dark');
 
@@ -152,7 +181,7 @@ export const useThemeToggle = (variant = 'circle', start = 'center') => {
   }, []);
 
   const handleToggle = useCallback(() => {
-    const animation = createAnimation(variant, start);
+    const animation = createAnimation(variant, start, blur);
     updateStyles(animation.css);
 
     if (typeof window === 'undefined') return;
@@ -167,7 +196,7 @@ export const useThemeToggle = (variant = 'circle', start = 'center') => {
         toggleTheme();
       });
     });
-  }, [variant, start, updateStyles, toggleTheme]);
+  }, [variant, start, blur, updateStyles, toggleTheme]);
 
   return {
     isDark,

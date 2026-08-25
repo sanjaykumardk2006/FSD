@@ -27,7 +27,7 @@ export const DashboardLayout = ({ children, role }) => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDark, handleToggle } = useThemeToggle('circle', 'center');
+  const { isDark, handleToggle } = useThemeToggle('circle', 'top-left', true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeProfileDetail, setActiveProfileDetail] = useState(null);
 

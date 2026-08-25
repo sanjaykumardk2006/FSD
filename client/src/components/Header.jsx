@@ -11,7 +11,7 @@ import '../App.css';
 export const Header = () => {
   const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const { isDark, handleToggle } = useThemeToggle('circle', 'center');
+  const { isDark, handleToggle } = useThemeToggle('circle', 'top-left', true);
 
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState('login');
