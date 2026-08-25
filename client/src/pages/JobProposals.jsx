@@ -118,7 +118,7 @@ export const JobProposals = () => {
                   <div>
                     <h3 style={{ fontSize: '18px', marginBottom: '4px' }}>{proposal.freelancerId?.username}</h3>
                     <p style={{ color: 'var(--text-secondary)', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <Star size={14} style={{ color: 'var(--pending)' }} fill="var(--pending)" /> 4.9 (12 reviews) • {proposal.experience || '3 years exp.'}
+                      <Star size={14} style={{ color: 'var(--pending)' }} fill="var(--pending)" /> {proposal.freelancerId?.averageRating ? proposal.freelancerId.averageRating.toFixed(1) : 'New'} ({proposal.freelancerId?.totalReviews || 0} reviews) • {proposal.experience || '3 years exp.'}
                     </p>
                   </div>
                 </div>

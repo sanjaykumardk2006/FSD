@@ -22,6 +22,10 @@ These core features have been implemented and are active in the codebase:
    - Internal messaging system between client and freelancer (`messageController.js`).
    - Basic notification system for events (`notificationController.js`).
    - Public Contact form (`Contact.jsx`, `contactController.js`).
+5. **Reviews and Ratings**
+   - Database schema and endpoints to submit and retrieve real reviews.
+   - Dynamic rendering of freelancer ratings and reviews on user profiles and proposals.
+   - Capability to submit a review upon project completion (`ProjectDetail.jsx`).
 
 ---
 
@@ -48,9 +52,7 @@ These features are either completely missing or currently exist only as UI place
    - **Status:** Empty Placeholders.
    - In both the `ClientDashboard` ("Payment History") and `FreelancerDashboard` ("Earnings"), the content is currently rendering a placeholder.
    - **Missing:** Integration with a payment gateway (like **Stripe Connect** or **PayPal**) to handle escrow, project funding, and freelancer payouts.
-2. **Reviews & Ratings System**
-   - **Status:** Not Started.
-   - There are no database models or controllers (`reviewController.js`) for users to rate each other and leave feedback after a project is completed. This is critical for marketplace trust.
+
 3. **Admin Dashboard / Moderation**
    - **Status:** Not Started.
    - The platform currently only has `Client` and `Freelancer` roles. There is no `Admin` role or dashboard for platform owners to moderate users, resolve disputes, or monitor platform statistics.
