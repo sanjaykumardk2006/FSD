@@ -51,6 +51,14 @@
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 }
 
+/* Premium Image Theme Optimization */
+img {
+  transition: filter 0.3s ease;
+}
+[data-theme="dark"] img {
+  filter: brightness(0.85) contrast(1.15);
+}
+
 * {
   margin: 0;
   padding: 0;
