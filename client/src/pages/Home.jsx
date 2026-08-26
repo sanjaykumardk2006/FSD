@@ -76,7 +76,6 @@ export const Home = () => {
         position: 'relative',
         background: 'transparent'
       }}>
-        {/* Video Background */}
         <video 
           autoPlay 
           loop 
@@ -90,21 +89,18 @@ export const Home = () => {
             top: 0,
             left: 0,
             zIndex: -2,
-            /* Removed harsh inline brightness filter, relying purely on the CSS overlay */
           }}
         >
-          {/* A relevant tech/developer working video */}
           <source src="/hero_video.mp4" type="video/mp4" />
         </video>
         
-        {/* Static Overlay (Decoupled from Theme) */}
         <div style={{
           position: 'absolute',
           width: '100%',
           height: '100%',
           top: 0,
           left: 0,
-          background: 'rgba(0, 0, 0, 0.15)', /* Very light, constant overlay so video is bright */
+          background: 'rgba(0, 0, 0, 0.15)',
           zIndex: -1,
         }}></div>
 

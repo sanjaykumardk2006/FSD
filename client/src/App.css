@@ -33,9 +33,6 @@
   --radius-lg: 12px;
   --radius-xl: 16px;
 
-  /* Hero Backgrounds */
-  --home-hero-bg: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.9)), url('/hero_bg_premium_light.png');
-  --hero-video-overlay: rgba(0, 0, 0, 0.5); /* Overlay to ensure white text is readable on bright videos */
 }
 
 [data-theme="dark"] {
@@ -54,9 +51,6 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
 
-  /* Hero Backgrounds */
-  --home-hero-bg: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7)), url('/hero_bg_premium.png');
-  --hero-video-overlay: rgba(0, 0, 0, 0.7); /* Darker overlay for dark mode */
 }
 
 /* Premium Image Theme Optimization */
