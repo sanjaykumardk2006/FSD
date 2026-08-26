@@ -45,7 +45,19 @@ const StatsCounter = ({
 export const Home = () => {
   const navigate = useNavigate();
   const sectionRefs = useRef([]);
+  const videoRef = useRef(null);
   const [showAllCategories, setShowAllCategories] = useState(false);
+
+  // Pause video after 10 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.pause();
+      }
+    }, 10000); // 10 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -77,6 +89,7 @@ export const Home = () => {
         background: 'transparent'
       }}>
         <video 
+          ref={videoRef}
           autoPlay 
           loop 
           muted 
@@ -89,6 +102,8 @@ export const Home = () => {
             top: 0,
             left: 0,
             zIndex: -2,
+            transform: 'translate3d(0, 0, 0)', /* Force GPU hardware acceleration */
+            willChange: 'transform' /* Tell browser to optimize this layer */
           }}
         >
           <source src="/hero_video.mp4" type="video/mp4" />
