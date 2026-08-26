@@ -85,7 +85,11 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
         onClose();
         
         const userRole = response.data.user.role;
-        navigate(userRole === 'Client' ? '/client-dashboard' : '/freelancer-dashboard');
+        if (userRole === 'Admin') {
+          navigate('/admin-dashboard');
+        } else {
+          navigate(userRole === 'Client' ? '/client-dashboard' : '/freelancer-dashboard');
+        }
       } else if (mode === 'forgot-password') {
         setError('');
         alert('If an account with that email exists, a password reset link has been sent.');

@@ -59,7 +59,13 @@ export const DashboardLayout = ({ children, role }) => {
     { name: 'Profile', icon: <User size={20} />, path: '/client-dashboard?tab=profile' },
   ];
 
-  const navLinks = role === 'Client' ? clientLinks : freelancerLinks;
+  const adminLinks = [
+    { name: 'Overview', icon: <LayoutDashboard size={20} />, path: '/admin-dashboard', exact: true },
+    { name: 'Users', icon: <User size={20} />, path: '/admin-dashboard?tab=users' },
+    { name: 'Disputes', icon: <FileText size={20} />, path: '/admin-dashboard?tab=disputes' },
+  ];
+
+  const navLinks = role === 'Admin' ? adminLinks : (role === 'Client' ? clientLinks : freelancerLinks);
 
   const getInitials = (name) => {
     if (!name) return 'U';

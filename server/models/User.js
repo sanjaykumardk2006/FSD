@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['Client', 'Freelancer'],
+      enum: ['Client', 'Freelancer', 'Admin'],
       required: true,
     },
     profile: {

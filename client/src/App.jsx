@@ -18,6 +18,7 @@ import { ProjectDetail } from './pages/ProjectDetail';
 import { VerifyEmail } from './pages/VerifyEmail';
 import { ResetPassword } from './pages/ResetPassword';
 import { PublicJobDetail } from './pages/PublicJobDetail';
+import { AdminDashboard } from './pages/AdminDashboard';
 
 import './App.css';
 
@@ -53,6 +54,16 @@ const App = () => {
                 <PrivateRoute>
                   <DashboardLayout role="Freelancer">
                     <FreelancerDashboard />
+                  </DashboardLayout>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/admin-dashboard/*"
+              element={
+                <PrivateRoute>
+                  <DashboardLayout role="Admin">
+                    <AdminDashboard />
                   </DashboardLayout>
                 </PrivateRoute>
               }
