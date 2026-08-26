@@ -71,14 +71,47 @@ export const Home = () => {
     <div className="page">
       <Header />
       {/* 1. Hero Section */}
-      <section className="hero" style={{ 
-        '--hero-bg': 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.4)), url("/hero_bg.png")', 
-        marginBottom: '80px'
+      <section className="hero home-video-hero" style={{ 
+        marginBottom: '80px',
+        position: 'relative',
+        background: 'transparent'
       }}>
-        <div className="hero-content" style={{ color: '#ffffff' }}>
-          <h2 style={{ color: '#ffffff' }}>The Premium Talent Network</h2>
-          <p style={{ color: '#ffffff', opacity: 0.9 }}>
-            Connect with top-tier freelancers and build your next big idea. Secure, fast, and built for production-scale collaboration.
+        {/* Video Background */}
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline 
+          style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            top: 0,
+            left: 0,
+            zIndex: -2,
+            /* Removed harsh inline brightness filter, relying purely on the CSS overlay */
+          }}
+        >
+          {/* A relevant tech/developer working video */}
+          <source src="/hero_video.mp4" type="video/mp4" />
+        </video>
+        
+        {/* Static Overlay (Decoupled from Theme) */}
+        <div style={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          top: 0,
+          left: 0,
+          background: 'rgba(0, 0, 0, 0.15)', /* Very light, constant overlay so video is bright */
+          zIndex: -1,
+        }}></div>
+
+        <div className="hero-content" style={{ color: '#ffffff', textShadow: '0 2px 15px rgba(0,0,0,0.6), 0 4px 30px rgba(0,0,0,0.4)' }}>
+          <h2 style={{ color: '#ffffff', fontSize: '56px', fontWeight: '800', marginBottom: '20px', lineHeight: '1.2' }}>Where Vision Meets Execution</h2>
+          <p style={{ color: '#ffffff', opacity: 0.9, fontSize: '20px', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
+            Welcome to the definitive platform for top-tier talent. Whether you're a visionary client or an elite freelancer, this is your gateway to world-class collaboration.
           </p>
           <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center', marginTop: '40px' }}>
             <AnimatedButton className="btn btn-primary" onClick={() => navigate('/search')} style={{ gap: '10px' }}>
