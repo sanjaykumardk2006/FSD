@@ -103,18 +103,6 @@ export const Header = () => {
             
             {user ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <button 
-                  onClick={() => navigate(user.role === 'Client' ? '/client-dashboard?tab=notifications' : '/freelancer-dashboard?tab=notifications')}
-                  style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', position: 'relative', display: 'flex', alignItems: 'center' }}
-                  title="Notifications"
-                >
-                  <Bell size={20} />
-                  {unreadCount > 0 && (
-                    <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: 'var(--danger)', color: 'white', fontSize: '10px', fontWeight: 'bold', padding: '2px 6px', borderRadius: '10px', border: '2px solid var(--bg-primary)' }}>
-                      {unreadCount > 99 ? '99+' : unreadCount}
-                    </span>
-                  )}
-                </button>
                 <NavLink to={user.role === 'Client' ? '/client-dashboard' : '/freelancer-dashboard'} className="btn btn-primary">Dashboard</NavLink>
                 <button onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', fontSize: '14px', fontWeight: '500', fontFamily: 'inherit' }} onMouseEnter={(e) => e.target.style.color = 'var(--danger)'} onMouseLeave={(e) => e.target.style.color = 'var(--text-secondary)'}>Logout</button>
               </div>
@@ -180,6 +168,41 @@ export const Header = () => {
         initialMode={authMode}
         initialRole={authRole}
       />
+
+      {user && (
+        <button 
+          className="floating-notification-btn"
+          onClick={() => navigate(user.role === 'Client' ? '/client-dashboard?tab=notifications' : '/freelancer-dashboard?tab=notifications')}
+          style={{ 
+            position: 'fixed', 
+            top: '20px', 
+            right: '20px', 
+            zIndex: 9999, 
+            background: 'var(--danger)', 
+            border: 'none', 
+            color: 'white', 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '48px',
+            height: '48px',
+            borderRadius: '50%',
+            boxShadow: '0 4px 16px rgba(239, 68, 68, 0.4)',
+            transition: 'transform 0.2s ease'
+          }}
+          title="Notifications"
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <Bell size={22} />
+          {unreadCount > 0 && (
+            <span style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#fff', color: 'var(--danger)', fontSize: '11px', fontWeight: 'bold', padding: '2px 6px', borderRadius: '12px', border: '2px solid var(--danger)' }}>
+              {unreadCount > 99 ? '99+' : unreadCount}
+            </span>
+          )}
+        </button>
+      )}
     </>
   );
 };
