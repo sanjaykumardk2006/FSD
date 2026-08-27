@@ -176,7 +176,7 @@ export const Header = () => {
           style={{ 
             position: 'fixed', 
             top: '100px', // Below the navbar
-            right: '15%', // Slightly towards the center from the top right
+            right: '24px', // Nearest to the right border
             zIndex: 9999, 
             background: 'var(--danger)', 
             border: 'none', 
@@ -185,8 +185,8 @@ export const Header = () => {
             display: 'flex', 
             alignItems: 'center',
             justifyContent: 'center',
-            width: '56px',
-            height: '56px',
+            width: '64px',
+            height: '64px',
             borderRadius: '50%',
             boxShadow: '0 8px 24px rgba(239, 68, 68, 0.4)',
             transition: 'transform 0.2s ease',
@@ -195,9 +195,9 @@ export const Header = () => {
           onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
           onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
         >
-          <Bell size={28} />
+          <Bell size={32} />
           {unreadCount > 0 && (
-            <span style={{ position: 'absolute', top: '-2px', right: '-2px', background: '#fff', color: 'var(--danger)', fontSize: '12px', fontWeight: 'bold', padding: '2px 8px', borderRadius: '12px', border: '2px solid var(--danger)' }}>
+            <span style={{ position: 'absolute', top: '0px', right: '0px', background: '#fff', color: 'var(--danger)', fontSize: '13px', fontWeight: 'bold', padding: '2px 8px', borderRadius: '12px', border: '2px solid var(--danger)' }}>
               {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           )}
