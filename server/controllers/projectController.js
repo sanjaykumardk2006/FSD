@@ -113,18 +113,22 @@ exports.updateProjectProgress = [
 exports.updateProjectStatus = async (req, res) => {
   try {
     const { status } = req.body;
-    const project = await Project.findByIdAndUpdate(
-      req.params.projectId,
-      {
-        status,
-        ...(status === 'Completed' && { completionDate: new Date() }),
-      },
-      { new: true }
-    );
+    const project = await Project.findById(req.params.projectId);
 
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
     }
+
+    // Verify user is the client (usually clients approve completion)
+    if (project.clientId.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'Only the client can update the project status' });
+    }
+
+    project.status = status;
+    if (status === 'Completed') {
+      project.completionDate = new Date();
+    }
+    await project.save();
 
     res.status(200).json({ message: 'Project status updated', project });
   } catch (error) {

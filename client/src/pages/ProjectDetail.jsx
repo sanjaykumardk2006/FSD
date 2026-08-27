@@ -143,6 +143,19 @@ export const ProjectDetail = () => {
     }
   };
 
+  const handleCompleteProject = async () => {
+    if (!window.confirm('Are you sure you want to mark this project as completed? This will finalize the project and allow both parties to leave reviews.')) return;
+    
+    try {
+      await apiClient.put(`/projects/${projectId}/status`, { status: 'Completed' });
+      fetchProject();
+      checkReviewStatus();
+    } catch (error) {
+      console.error('Error completing project:', error);
+      alert('Error completing project: ' + (error.response?.data?.message || error.message));
+    }
+  };
+
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
@@ -233,6 +246,11 @@ export const ProjectDetail = () => {
             {project.status === 'Completed' && !hasReviewed && (
               <AnimatedButton className="btn btn-primary btn-responsive-full" onClick={() => setShowReviewModal(true)} style={{ background: 'var(--success)', border: 'none', color: '#fff' }}>
                 <Star size={16} fill="white" /> Leave Review
+              </AnimatedButton>
+            )}
+            {!isFreelancer && project.status === 'Active' && (
+              <AnimatedButton className="btn btn-primary btn-responsive-full" onClick={handleCompleteProject} style={{ background: 'var(--success)', border: 'none', color: '#fff' }}>
+                <Check size={16} /> Mark as Completed
               </AnimatedButton>
             )}
             {(project.status === 'Active' || project.status === 'On Hold') && (
