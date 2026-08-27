@@ -206,14 +206,14 @@ main> :first-child {
 }
 
 .nav a {
-  color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
   position: relative;
 }
 
 .nav a:hover {
-  color: var(--text-primary);
+  color: var(--accent-primary);
 }
 
 .nav a::after {
@@ -1957,10 +1957,10 @@ main> :first-child {
 .nav-dropdown-btn {
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -1969,7 +1969,7 @@ main> :first-child {
 }
 
 .nav-dropdown-btn:hover {
-  color: var(--text-primary);
+  color: var(--accent-primary);
 }
 
 .dropdown-menu {
@@ -2002,7 +2002,7 @@ main> :first-child {
   text-align: left;
   padding: 10px 16px;
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
