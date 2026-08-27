@@ -61,7 +61,10 @@ export const DashboardLayout = ({ children, role }) => {
 
   const adminLinks = [
     { name: 'Overview', icon: <LayoutDashboard size={20} />, path: '/admin-dashboard', exact: true },
-    { name: 'Users', icon: <User size={20} />, path: '/admin-dashboard?tab=users' },
+    { name: 'Customers', icon: <User size={20} />, path: '/admin-dashboard?tab=customers' },
+    { name: 'Freelancers', icon: <User size={20} />, path: '/admin-dashboard?tab=freelancers' },
+    { name: 'Jobs', icon: <Briefcase size={20} />, path: '/admin-dashboard?tab=jobs' },
+    { name: 'Proposals', icon: <FileText size={20} />, path: '/admin-dashboard?tab=proposals' },
     { name: 'Disputes', icon: <FileText size={20} />, path: '/admin-dashboard?tab=disputes' },
   ];
 

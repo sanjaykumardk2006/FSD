@@ -5,7 +5,11 @@ const {
   getAllUsers, 
   toggleUserStatus, 
   getDisputes, 
-  resolveDispute 
+  resolveDispute,
+  getAllJobs,
+  deleteJob,
+  getAllProposals,
+  deleteProposal
 } = require('../controllers/adminController');
 const { authMiddleware, roleMiddleware } = require('../middleware/authMiddleware');
 
@@ -22,5 +26,13 @@ router.put('/users/:id/status', toggleUserStatus);
 // Disputes
 router.get('/disputes', getDisputes);
 router.put('/projects/:id/resolve-dispute', resolveDispute);
+
+// Jobs
+router.get('/jobs', getAllJobs);
+router.delete('/jobs/:id', deleteJob);
+
+// Proposals
+router.get('/proposals', getAllProposals);
+router.delete('/proposals/:id', deleteProposal);
 
 module.exports = router;

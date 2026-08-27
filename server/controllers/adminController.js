@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const Job = require('../models/Job');
 const Project = require('../models/Project');
+const Proposal = require('../models/Proposal');
 
 // Get overall platform metrics
 const getMetrics = async (req, res) => {
@@ -105,10 +106,65 @@ const resolveDispute = async (req, res) => {
   }
 };
 
+// Get all jobs
+const getAllJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find().populate('clientId', 'username email').sort({ createdAt: -1 });
+    res.status(200).json(jobs);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching jobs', error: error.message });
+  }
+};
+
+// Delete a job
+const deleteJob = async (req, res) => {
+  try {
+    const job = await Job.findByIdAndDelete(req.params.id);
+    if (!job) {
+      return res.status(404).json({ message: 'Job not found' });
+    }
+    // Also delete proposals related to this job to prevent orphaned records
+    await Proposal.deleteMany({ jobId: req.params.id });
+    res.status(200).json({ message: 'Job and related proposals deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting job', error: error.message });
+  }
+};
+
+// Get all proposals
+const getAllProposals = async (req, res) => {
+  try {
+    const proposals = await Proposal.find()
+      .populate('freelancerId', 'username email')
+      .populate('jobId', 'title')
+      .sort({ createdAt: -1 });
+    res.status(200).json(proposals);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching proposals', error: error.message });
+  }
+};
+
+// Delete a proposal
+const deleteProposal = async (req, res) => {
+  try {
+    const proposal = await Proposal.findByIdAndDelete(req.params.id);
+    if (!proposal) {
+      return res.status(404).json({ message: 'Proposal not found' });
+    }
+    res.status(200).json({ message: 'Proposal deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting proposal', error: error.message });
+  }
+};
+
 module.exports = {
   getMetrics,
   getAllUsers,
   toggleUserStatus,
   getDisputes,
-  resolveDispute
+  resolveDispute,
+  getAllJobs,
+  deleteJob,
+  getAllProposals,
+  deleteProposal
 };

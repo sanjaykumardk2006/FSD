@@ -13,6 +13,8 @@ export const AdminDashboard = () => {
 
   const [metrics, setMetrics] = useState({ totalUsers: 0, totalJobs: 0, totalProjects: 0, activeDisputes: 0 });
   const [users, setUsers] = useState([]);
+  const [jobs, setJobs] = useState([]);
+  const [proposals, setProposals] = useState([]);
   const [disputes, setDisputes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
@@ -27,9 +29,15 @@ export const AdminDashboard = () => {
       if (currentTab === 'overview') {
         const res = await apiClient.get('/admin/metrics');
         setMetrics(res.data);
-      } else if (currentTab === 'users') {
+      } else if (currentTab === 'customers' || currentTab === 'freelancers') {
         const res = await apiClient.get('/admin/users');
         setUsers(res.data);
+      } else if (currentTab === 'jobs') {
+        const res = await apiClient.get('/admin/jobs');
+        setJobs(res.data);
+      } else if (currentTab === 'proposals') {
+        const res = await apiClient.get('/admin/proposals');
+        setProposals(res.data);
       } else if (currentTab === 'disputes') {
         const res = await apiClient.get('/admin/disputes');
         setDisputes(res.data);
@@ -62,6 +70,32 @@ export const AdminDashboard = () => {
       fetchData(); // Refresh disputes list
     } catch (error) {
       alert(error.response?.data?.message || 'Error resolving dispute');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const deleteJob = async (jobId) => {
+    if (!window.confirm('Are you sure you want to delete this job? This action cannot be undone.')) return;
+    setActionLoading(true);
+    try {
+      await apiClient.delete(`/admin/jobs/${jobId}`);
+      fetchData();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error deleting job');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const deleteProposal = async (proposalId) => {
+    if (!window.confirm('Are you sure you want to delete this proposal? This action cannot be undone.')) return;
+    setActionLoading(true);
+    try {
+      await apiClient.delete(`/admin/proposals/${proposalId}`);
+      fetchData();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error deleting proposal');
     } finally {
       setActionLoading(false);
     }
@@ -116,60 +150,143 @@ export const AdminDashboard = () => {
     </div>
   );
 
-  const renderUsers = () => (
+  const renderUsers = (roleFilter) => {
+    const filteredUsers = users.filter(u => u.role === roleFilter);
+    return (
+      <div className="dashboard-section">
+        <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>{roleFilter === 'Client' ? 'Customer Management' : 'Freelancer Management'}</h2>
+        <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Username</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Email</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Status</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredUsers.map(u => (
+                <tr key={u._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                  <td style={{ padding: '12px' }}>{u.username}</td>
+                  <td style={{ padding: '12px' }}>{u.email}</td>
+                  <td style={{ padding: '12px' }}>
+                    <span style={{ 
+                      padding: '4px 8px', 
+                      borderRadius: '4px', 
+                      fontSize: '12px',
+                      background: u.isActive ? 'rgba(56, 176, 0, 0.1)' : 'rgba(230, 57, 70, 0.1)',
+                      color: u.isActive ? '#38b000' : '#e63946'
+                    }}>
+                      {u.isActive ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  <td style={{ padding: '12px' }}>
+                    <button 
+                      onClick={() => toggleUserStatus(u._id)}
+                      disabled={actionLoading || u._id === user._id}
+                      style={{
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        border: 'none',
+                        cursor: u._id === user._id ? 'not-allowed' : 'pointer',
+                        background: u.isActive ? 'rgba(230, 57, 70, 0.1)' : 'rgba(56, 176, 0, 0.1)',
+                        color: u.isActive ? '#e63946' : '#38b000',
+                        opacity: actionLoading ? 0.5 : 1
+                      }}
+                    >
+                      {u.isActive ? 'Deactivate' : 'Activate'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {filteredUsers.length === 0 && (
+                <tr>
+                  <td colSpan="4" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No users found.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
+  };
+
+  const renderJobs = () => (
     <div className="dashboard-section">
-      <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>User Management</h2>
+      <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Job Management</h2>
       <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Username</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Email</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Role</th>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Title</th>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Customer</th>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Status</th>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Budget</th>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jobs.map(job => (
+              <tr key={job._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                <td style={{ padding: '12px', fontWeight: '500' }}>{job.title}</td>
+                <td style={{ padding: '12px' }}>{job.clientId?.username}</td>
+                <td style={{ padding: '12px' }}>{job.status}</td>
+                <td style={{ padding: '12px' }}>${job.budget}</td>
+                <td style={{ padding: '12px' }}>
+                  <button 
+                    onClick={() => deleteJob(job._id)}
+                    disabled={actionLoading}
+                    style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', opacity: actionLoading ? 0.5 : 1 }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+            {jobs.length === 0 && (
+              <tr><td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No jobs found.</td></tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  const renderProposals = () => (
+    <div className="dashboard-section">
+      <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Proposal Management</h2>
+      <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <thead>
+            <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Freelancer</th>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Job Title</th>
+              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Proposed Cost</th>
               <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Status</th>
               <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
-            {users.map(u => (
-              <tr key={u._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '12px' }}>{u.username}</td>
-                <td style={{ padding: '12px' }}>{u.email}</td>
-                <td style={{ padding: '12px' }}>{u.role}</td>
-                <td style={{ padding: '12px' }}>
-                  <span style={{ 
-                    padding: '4px 8px', 
-                    borderRadius: '4px', 
-                    fontSize: '12px',
-                    background: u.isActive ? 'rgba(56, 176, 0, 0.1)' : 'rgba(230, 57, 70, 0.1)',
-                    color: u.isActive ? '#38b000' : '#e63946'
-                  }}>
-                    {u.isActive ? 'Active' : 'Inactive'}
-                  </span>
-                </td>
+            {proposals.map(prop => (
+              <tr key={prop._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                <td style={{ padding: '12px' }}>{prop.freelancerId?.username}</td>
+                <td style={{ padding: '12px' }}>{prop.jobId?.title || 'Deleted Job'}</td>
+                <td style={{ padding: '12px' }}>${prop.proposedCost}</td>
+                <td style={{ padding: '12px' }}>{prop.status}</td>
                 <td style={{ padding: '12px' }}>
                   <button 
-                    onClick={() => toggleUserStatus(u._id)}
-                    disabled={actionLoading || u._id === user._id}
-                    style={{
-                      padding: '6px 12px',
-                      borderRadius: '6px',
-                      border: 'none',
-                      cursor: u._id === user._id ? 'not-allowed' : 'pointer',
-                      background: u.isActive ? 'rgba(230, 57, 70, 0.1)' : 'rgba(56, 176, 0, 0.1)',
-                      color: u.isActive ? '#e63946' : '#38b000',
-                      opacity: actionLoading ? 0.5 : 1
-                    }}
+                    onClick={() => deleteProposal(prop._id)}
+                    disabled={actionLoading}
+                    style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', opacity: actionLoading ? 0.5 : 1 }}
                   >
-                    {u.isActive ? 'Deactivate' : 'Activate'}
+                    Delete
                   </button>
                 </td>
               </tr>
             ))}
-            {users.length === 0 && (
-              <tr>
-                <td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No users found.</td>
-              </tr>
+            {proposals.length === 0 && (
+              <tr><td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No proposals found.</td></tr>
             )}
           </tbody>
         </table>
@@ -248,7 +365,10 @@ export const AdminDashboard = () => {
       </div>
 
       {currentTab === 'overview' && renderOverview()}
-      {currentTab === 'users' && renderUsers()}
+      {currentTab === 'customers' && renderUsers('Client')}
+      {currentTab === 'freelancers' && renderUsers('Freelancer')}
+      {currentTab === 'jobs' && renderJobs()}
+      {currentTab === 'proposals' && renderProposals()}
       {currentTab === 'disputes' && renderDisputes()}
     </div>
   );
