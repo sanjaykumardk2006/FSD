@@ -170,38 +170,53 @@ export const Header = () => {
       />
 
       {user && (
-        <button 
-          className="floating-notification-btn"
-          onClick={() => navigate(user.role === 'Client' ? '/client-dashboard?tab=notifications' : '/freelancer-dashboard?tab=notifications')}
-          style={{ 
-            position: 'fixed', 
-            top: '20px', 
-            right: '20px', 
-            zIndex: 9999, 
-            background: 'var(--danger)', 
-            border: 'none', 
-            color: 'white', 
-            cursor: 'pointer', 
-            display: 'flex', 
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            boxShadow: '0 4px 16px rgba(239, 68, 68, 0.4)',
-            transition: 'transform 0.2s ease'
-          }}
-          title="Notifications"
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-        >
-          <Bell size={22} />
-          {unreadCount > 0 && (
-            <span style={{ position: 'absolute', top: '-4px', right: '-4px', background: '#fff', color: 'var(--danger)', fontSize: '11px', fontWeight: 'bold', padding: '2px 6px', borderRadius: '12px', border: '2px solid var(--danger)' }}>
-              {unreadCount > 99 ? '99+' : unreadCount}
-            </span>
-          )}
-        </button>
+        <>
+          <style>
+            {`
+              @keyframes roamAround {
+                0% { top: 10%; left: 10%; }
+                20% { top: 70%; left: 30%; }
+                40% { top: 30%; left: 80%; }
+                60% { top: 80%; left: 70%; }
+                80% { top: 20%; left: 40%; }
+                100% { top: 10%; left: 10%; }
+              }
+              .roaming-bell:hover {
+                animation-play-state: paused;
+                transform: scale(1.1);
+              }
+            `}
+          </style>
+          <button 
+            className="roaming-bell"
+            onClick={() => navigate(user.role === 'Client' ? '/client-dashboard?tab=notifications' : '/freelancer-dashboard?tab=notifications')}
+            style={{ 
+              position: 'fixed', 
+              zIndex: 9999, 
+              background: 'var(--danger)', 
+              border: 'none', 
+              color: 'white', 
+              cursor: 'pointer', 
+              display: 'flex', 
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              boxShadow: '0 8px 32px rgba(239, 68, 68, 0.6)',
+              transition: 'transform 0.3s ease',
+              animation: 'roamAround 15s linear infinite'
+            }}
+            title="Notifications"
+          >
+            <Bell size={40} />
+            {unreadCount > 0 && (
+              <span style={{ position: 'absolute', top: '0px', right: '0px', background: '#fff', color: 'var(--danger)', fontSize: '16px', fontWeight: 'bold', padding: '4px 10px', borderRadius: '20px', border: '3px solid var(--danger)' }}>
+                {unreadCount > 99 ? '99+' : unreadCount}
+              </span>
+            )}
+          </button>
+        </>
       )}
     </>
   );
