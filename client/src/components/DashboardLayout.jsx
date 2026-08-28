@@ -108,11 +108,11 @@ export const DashboardLayout = ({ children, role }) => {
                 {user?.profile?.profileImage ? (
                   <img src={user.profile.profileImage} alt="Avatar" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 ) : (
-                  getInitials(user?.username)
+                  getInitials(role === 'Admin' ? 'Admin' : user?.username)
                 )}
               </div>
               <div>
-                <h3 style={{ margin: 0, fontSize: '15px', color: 'var(--text-primary)', fontWeight: '600' }}>{user?.username || 'User'}</h3>
+                <h3 style={{ margin: 0, fontSize: '15px', color: 'var(--text-primary)', fontWeight: '600' }}>{role === 'Admin' ? 'Admin' : (user?.username || 'User')}</h3>
                 <div style={{ display: 'flex', gap: '12px', marginTop: '6px' }}>
                   <button onClick={() => setActiveProfileDetail(activeProfileDetail === 'email' ? null : 'email')} style={{ background: 'transparent', border: 'none', color: activeProfileDetail === 'email' ? 'var(--primary-action)' : 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex', alignItems: 'center' }} title="Show Email">
                     <Mail size={14} />

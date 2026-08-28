@@ -295,6 +295,7 @@ export const AdminDashboard = () => {
       </div>
     </div>
   );
+};
 
   const renderProposals = () => {
     const safeSearchTerm = (searchTerm || '').toLowerCase();
@@ -357,6 +358,7 @@ export const AdminDashboard = () => {
       </div>
     </div>
   );
+};
 
   const renderDisputes = () => {
     const safeSearchTerm = (searchTerm || '').toLowerCase();
@@ -432,13 +434,13 @@ export const AdminDashboard = () => {
                   <XCircle size={18} /> Cancel Project
                 </button>
               </div>
-              </div>
             </div>
           ))
         )}
       </div>
     </div>
   );
+};
 
   if (loading && !metrics.totalUsers && users.length === 0 && disputes.length === 0) {
     return <div style={{ padding: '40px', textAlign: 'center', color: 'var(--text-secondary)' }}>Loading admin data...</div>;
