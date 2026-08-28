@@ -248,8 +248,7 @@ export const ProfileSection = ({ role }) => {
                 <label style={{ top: '24px' }}>About Me (Bio)</label>
               </div>
 
-              {role === 'Client' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                   <div className="form-group floating-label">
                     <Building size={18} className="input-icon" />
                     <input type="text" name="companyName" placeholder=" " value={formData.companyName} onChange={handleInputChange} />
@@ -273,8 +272,7 @@ export const ProfileSection = ({ role }) => {
                     <input type="text" name="mobileNumber" placeholder=" " value={formData.mobileNumber} onChange={handleInputChange} />
                     <label>Mobile Number</label>
                   </div>
-                </div>
-              )}
+              </div>
 
               {role === 'Freelancer' && (
                 <>
@@ -441,8 +439,7 @@ export const ProfileSection = ({ role }) => {
                 )}
               </div>
               
-              {role === 'Client' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
                   <div style={{ background: 'var(--bg-secondary)', padding: '16px', borderRadius: '12px' }}>
                     <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Company Name</div>
                     <div style={{ fontSize: '16px', fontWeight: '500' }}>{profile?.companyName || 'Not specified'}</div>
@@ -459,8 +456,7 @@ export const ProfileSection = ({ role }) => {
                     <div style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Mobile Number</div>
                     <div style={{ fontSize: '16px', fontWeight: '500' }}>{profile?.mobileNumber || 'Not specified'}</div>
                   </div>
-                </div>
-              )}
+              </div>
               
               {role === 'Freelancer' && (
                 <>
