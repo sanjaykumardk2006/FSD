@@ -24,7 +24,7 @@ const createAdmin = async () => {
     // Need to use the same logic User model uses for password hashing,
     // but the User model uses a pre-save hook, so we just pass the plain text password.
     const newAdmin = new User({
-      username: 'PlatformAdmin',
+      username: 'Admin',
       email: adminEmail,
       password: 'admin123',
       role: 'Admin',
