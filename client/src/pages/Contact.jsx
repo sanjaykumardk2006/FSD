@@ -19,11 +19,23 @@ export const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    if (name === 'mobileNumber') {
+      const onlyNums = value.replace(/[^0-9]/g, '');
+      if (onlyNums.length <= 10) {
+        setFormData({ ...formData, [name]: onlyNums });
+      }
+      return;
+    }
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!/^[6-9]\d{9}$/.test(formData.mobileNumber)) {
+      setErrorMsg('Please enter a valid 10-digit mobile number.');
+      setTimeout(() => setErrorMsg(''), 5000);
+      return;
+    }
     try {
       const response = await apiClient.post('/contact/submit', formData);
       setSubmitted(true);

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Lock, User, Briefcase, ChevronRight } from 'lucide-react';
+import { X, Mail, Lock, User, Briefcase, ChevronRight, Eye, EyeOff } from 'lucide-react';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
 
@@ -21,6 +21,8 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
@@ -29,6 +31,8 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
     setMode(initialMode);
     setRole(initialRole);
     setError('');
+    setShowPassword(false);
+    setShowConfirmPassword(false);
     setFormData({
       username: '',
       email: '',
@@ -59,6 +63,17 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
     e.preventDefault();
     setLoading(true);
     setError('');
+    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setError('Please enter a valid email address format.');
+      setLoading(false);
+      return;
+    }
+
+    if (mode !== 'forgot-password' && formData.password.length < 6) {
+      setError('Password must be at least 6 characters long.');
+      setLoading(false);
+      return;
+    }
 
     if (mode === 'signup' && formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
@@ -66,8 +81,8 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
       return;
     }
 
-    if (mode === 'signup' && formData.mobileNumber && formData.mobileNumber.length !== 10) {
-      setError('Mobile number must be exactly 10 digits');
+    if (mode === 'signup' && formData.mobileNumber && !/^[6-9]\d{9}$/.test(formData.mobileNumber)) {
+      setError('Please enter a valid 10-digit mobile number.');
       setLoading(false);
       return;
     }
@@ -225,10 +240,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
               </div>
 
               {mode !== 'forgot-password' && (
-                <div className="form-group floating-label">
+                <div className="form-group floating-label" style={{ position: 'relative' }}>
                   <Lock size={18} className="input-icon" />
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     name="password"
                     placeholder=" "
                     value={formData.password}
@@ -236,6 +251,13 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
                     required
                   />
                   <label>Password</label>
+                  <button 
+                    type="button" 
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex' }}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               )}
 
@@ -248,10 +270,10 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
               )}
 
               {mode === 'signup' && (
-                <div className="form-group floating-label">
+                <div className="form-group floating-label" style={{ position: 'relative' }}>
                   <Lock size={18} className="input-icon" />
                   <input
-                    type="password"
+                    type={showConfirmPassword ? 'text' : 'password'}
                     name="confirmPassword"
                     placeholder=" "
                     value={formData.confirmPassword}
@@ -259,6 +281,13 @@ export const AuthModal = ({ isOpen, onClose, initialMode = 'login', initialRole 
                     required
                   />
                   <label>Confirm Password</label>
+                  <button 
+                    type="button" 
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer', padding: 0, display: 'flex' }}
+                  >
+                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               )}
 

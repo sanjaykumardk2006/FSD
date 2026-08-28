@@ -3,6 +3,7 @@ const User = require('../models/User');
 const { generateToken } = require('../utils/tokenUtils');
 const { sendVerificationEmail, sendPasswordResetEmail } = require('../utils/mailer');
 const { body, validationResult } = require('express-validator');
+const emailValidator = require('deep-email-validator');
 
 exports.signup = [
   // username validation is moved inside the controller since it's auto-generated for Freelancers
@@ -41,6 +42,14 @@ exports.signup = [
       const existingUsername = await User.findOne({ username });
       if (existingUsername) {
         return res.status(400).json({ message: 'username exist' });
+      }
+
+      // Check if email actually exists and is not fake
+      const emailValidationResult = await emailValidator.validate(email);
+      if (!emailValidationResult.valid) {
+        return res.status(400).json({ 
+          message: `Please provide a valid, existing email address. Reason: ${emailValidationResult.validators[emailValidationResult.reason]?.reason || 'Invalid email'}` 
+        });
       }
 
       const verificationToken = crypto.randomBytes(32).toString('hex');
