@@ -51,4 +51,29 @@ const scheduleProjectReminders = (io) => {
   });
 };
 
-module.exports = { scheduleProjectReminders };
+// Run daily at midnight to deactivate inactive accounts
+const scheduleInactivityDeactivation = () => {
+  cron.schedule('0 0 * * *', async () => {
+    try {
+      const sixMonthsAgo = new Date();
+      sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+      const result = await User.updateMany(
+        {
+          role: { $in: ['Client', 'Freelancer'] },
+          isActive: true,
+          lastLogin: { $lt: sixMonthsAgo }
+        },
+        { $set: { isActive: false } }
+      );
+
+      if (result.modifiedCount > 0) {
+        console.log(`Inactivity cron: Deactivated ${result.modifiedCount} accounts due to 6 months of inactivity.`);
+      }
+    } catch (error) {
+      console.error('Error in inactivity deactivation cron:', error);
+    }
+  });
+};
+
+module.exports = { scheduleProjectReminders, scheduleInactivityDeactivation };

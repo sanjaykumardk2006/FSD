@@ -10,7 +10,7 @@ require('dotenv').config();
 process.noDeprecation = true;
 
 const connectDB = require('./config/database');
-const { scheduleProjectReminders } = require('./utils/cronScheduler');
+const { scheduleProjectReminders, scheduleInactivityDeactivation } = require('./utils/cronScheduler');
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
@@ -149,6 +149,7 @@ server.listen(PORT, '0.0.0.0', async () => {
 
     // Start cron AFTER DB is ready
     scheduleProjectReminders(io);
+    scheduleInactivityDeactivation();
     console.log("Cron scheduler initialized");
 
   } catch (err) {

@@ -94,6 +94,15 @@ exports.login = [
         return res.status(401).json({ message: 'invalid email and password' });
       }
 
+      // Check if user is active
+      if (!user.isActive) {
+        return res.status(403).json({ message: 'Your account has been deactivated. Please contact support.' });
+      }
+
+      // Update lastLogin
+      user.lastLogin = Date.now();
+      await user.save({ validateBeforeSave: false });
+
       // Generate token
       const token = generateToken(user._id, user.role);
 
