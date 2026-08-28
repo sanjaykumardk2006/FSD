@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
-import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle } from 'lucide-react';
+import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search } from 'lucide-react';
 import '../App.css'; // For basic styling, assumes it exists
 
 export const AdminDashboard = () => {
@@ -18,9 +18,11 @@ export const AdminDashboard = () => {
   const [disputes, setDisputes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchData();
+    setSearchTerm(''); // Clear search on tab change
   }, [currentTab]);
 
   const fetchData = async () => {
@@ -151,10 +153,29 @@ export const AdminDashboard = () => {
   );
 
   const renderUsers = (roleFilter) => {
-    const filteredUsers = users.filter(u => u.role === roleFilter);
+    const filteredUsers = users.filter(u => 
+      u.role === roleFilter && 
+      (u.username.toLowerCase().includes(searchTerm.toLowerCase()) || 
+       u.email.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+    
     return (
       <div className="dashboard-section">
         <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>{roleFilter === 'Client' ? 'Customer Management' : 'Freelancer Management'}</h2>
+        
+        <div style={{ marginBottom: '20px', position: 'relative' }}>
+          <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }}>
+            <Search size={20} />
+          </div>
+          <input 
+            type="text" 
+            placeholder={`Search ${roleFilter === 'Client' ? 'customers' : 'freelancers'} by name or email...`}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ width: '100%', padding: '12px 16px 12px 48px', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }} 
+          />
+        </div>
+
         <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
@@ -212,26 +233,46 @@ export const AdminDashboard = () => {
     );
   };
 
-  const renderJobs = () => (
-    <div className="dashboard-section">
-      <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Job Management</h2>
-      <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-          <thead>
-            <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Title</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Customer</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Status</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Budget</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {jobs.map(job => (
-              <tr key={job._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '12px', fontWeight: '500' }}>{job.title}</td>
-                <td style={{ padding: '12px' }}>{job.clientId?.username}</td>
-                <td style={{ padding: '12px' }}>{job.status}</td>
+  const renderJobs = () => {
+    const filteredJobs = jobs.filter(j => 
+      j.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+      (j.clientId?.username || '').toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+      <div className="dashboard-section">
+        <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Job Management</h2>
+
+        <div style={{ marginBottom: '20px', position: 'relative' }}>
+          <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }}>
+            <Search size={20} />
+          </div>
+          <input 
+            type="text" 
+            placeholder="Search jobs by title or customer name..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ width: '100%', padding: '12px 16px 12px 48px', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }} 
+          />
+        </div>
+
+        <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Title</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Customer</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Status</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Budget</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredJobs.map(job => (
+                <tr key={job._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                  <td style={{ padding: '12px', fontWeight: '500' }}>{job.title}</td>
+                  <td style={{ padding: '12px' }}>{job.clientId?.username}</td>
+                  <td style={{ padding: '12px' }}>{job.status}</td>
                 <td style={{ padding: '12px' }}>${job.budget}</td>
                 <td style={{ padding: '12px' }}>
                   <button 
@@ -243,37 +284,57 @@ export const AdminDashboard = () => {
                   </button>
                 </td>
               </tr>
-            ))}
-            {jobs.length === 0 && (
-              <tr><td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No jobs found.</td></tr>
-            )}
+              ))}
+              {filteredJobs.length === 0 && (
+                <tr><td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No jobs found.</td></tr>
+              )}
           </tbody>
         </table>
       </div>
     </div>
   );
 
-  const renderProposals = () => (
-    <div className="dashboard-section">
-      <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Proposal Management</h2>
-      <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-          <thead>
-            <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Freelancer</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Job Title</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Proposed Cost</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Status</th>
-              <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {proposals.map(prop => (
-              <tr key={prop._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                <td style={{ padding: '12px' }}>{prop.freelancerId?.username}</td>
-                <td style={{ padding: '12px' }}>{prop.jobId?.title || 'Deleted Job'}</td>
-                <td style={{ padding: '12px' }}>${prop.proposedCost}</td>
-                <td style={{ padding: '12px' }}>{prop.status}</td>
+  const renderProposals = () => {
+    const filteredProposals = proposals.filter(p => 
+      (p.freelancerId?.username || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+      (p.jobId?.title || '').toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+      <div className="dashboard-section">
+        <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Proposal Management</h2>
+
+        <div style={{ marginBottom: '20px', position: 'relative' }}>
+          <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }}>
+            <Search size={20} />
+          </div>
+          <input 
+            type="text" 
+            placeholder="Search proposals by freelancer name or job title..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ width: '100%', padding: '12px 16px 12px 48px', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }} 
+          />
+        </div>
+
+        <div style={{ overflowX: 'auto', background: 'var(--bg-secondary)', borderRadius: '12px', padding: '20px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Freelancer</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Job Title</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Proposed Cost</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Status</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredProposals.map(prop => (
+                <tr key={prop._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                  <td style={{ padding: '12px' }}>{prop.freelancerId?.username}</td>
+                  <td style={{ padding: '12px' }}>{prop.jobId?.title || 'Deleted Job'}</td>
+                  <td style={{ padding: '12px' }}>${prop.proposedCost}</td>
+                  <td style={{ padding: '12px' }}>{prop.status}</td>
                 <td style={{ padding: '12px' }}>
                   <button 
                     onClick={() => deleteProposal(prop._id)}
@@ -284,28 +345,49 @@ export const AdminDashboard = () => {
                   </button>
                 </td>
               </tr>
-            ))}
-            {proposals.length === 0 && (
-              <tr><td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No proposals found.</td></tr>
-            )}
+              ))}
+              {filteredProposals.length === 0 && (
+                <tr><td colSpan="5" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No proposals found.</td></tr>
+              )}
           </tbody>
         </table>
       </div>
     </div>
   );
 
-  const renderDisputes = () => (
-    <div className="dashboard-section">
-      <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Dispute Management</h2>
-      <div style={{ display: 'grid', gap: '20px' }}>
-        {disputes.length === 0 ? (
-          <div style={{ padding: '40px', background: 'var(--bg-secondary)', borderRadius: '12px', textAlign: 'center', color: 'var(--text-secondary)' }}>
-            No active disputes.
+  const renderDisputes = () => {
+    const filteredDisputes = disputes.filter(d => 
+      (d.jobId?.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (d.clientId?.username || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (d.freelancerId?.username || '').toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+      <div className="dashboard-section">
+        <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Dispute Management</h2>
+        
+        <div style={{ marginBottom: '20px', position: 'relative' }}>
+          <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }}>
+            <Search size={20} />
           </div>
-        ) : (
-          disputes.map(project => (
-            <div key={project._id} style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <input 
+            type="text" 
+            placeholder="Search disputes by job title, client, or freelancer name..." 
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            style={{ width: '100%', padding: '12px 16px 12px 48px', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'var(--bg-primary)', color: 'var(--text-primary)', outline: 'none' }} 
+          />
+        </div>
+
+        <div style={{ display: 'grid', gap: '20px' }}>
+          {filteredDisputes.length === 0 ? (
+            <div style={{ padding: '40px', background: 'var(--bg-secondary)', borderRadius: '12px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+              No disputes found.
+            </div>
+          ) : (
+            filteredDisputes.map(project => (
+              <div key={project._id} style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '12px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3 style={{ fontSize: '18px', fontWeight: 'bold' }}>Project: {project.jobId?.title || 'Unknown Job'}</h3>
                 <span style={{ padding: '6px 12px', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', borderRadius: '20px', fontSize: '12px', fontWeight: '600' }}>
                   Disputed
@@ -345,6 +427,7 @@ export const AdminDashboard = () => {
                 >
                   <XCircle size={18} /> Cancel Project
                 </button>
+              </div>
               </div>
             </div>
           ))
