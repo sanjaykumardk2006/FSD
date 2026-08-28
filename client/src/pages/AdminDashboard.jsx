@@ -153,10 +153,11 @@ export const AdminDashboard = () => {
   );
 
   const renderUsers = (roleFilter) => {
+    const safeSearchTerm = (searchTerm || '').toLowerCase();
     const filteredUsers = users.filter(u => 
       u.role === roleFilter && 
-      (u.username.toLowerCase().includes(searchTerm.toLowerCase()) || 
-       u.email.toLowerCase().includes(searchTerm.toLowerCase()))
+      ((u.username || '').toLowerCase().includes(safeSearchTerm) || 
+       (u.email || '').toLowerCase().includes(safeSearchTerm))
     );
     
     return (
@@ -234,9 +235,10 @@ export const AdminDashboard = () => {
   };
 
   const renderJobs = () => {
+    const safeSearchTerm = (searchTerm || '').toLowerCase();
     const filteredJobs = jobs.filter(j => 
-      j.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-      (j.clientId?.username || '').toLowerCase().includes(searchTerm.toLowerCase())
+      (j.title || '').toLowerCase().includes(safeSearchTerm) || 
+      (j.clientId?.username || '').toLowerCase().includes(safeSearchTerm)
     );
 
     return (
@@ -295,9 +297,10 @@ export const AdminDashboard = () => {
   );
 
   const renderProposals = () => {
+    const safeSearchTerm = (searchTerm || '').toLowerCase();
     const filteredProposals = proposals.filter(p => 
-      (p.freelancerId?.username || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
-      (p.jobId?.title || '').toLowerCase().includes(searchTerm.toLowerCase())
+      (p.freelancerId?.username || '').toLowerCase().includes(safeSearchTerm) || 
+      (p.jobId?.title || '').toLowerCase().includes(safeSearchTerm)
     );
 
     return (
@@ -356,10 +359,11 @@ export const AdminDashboard = () => {
   );
 
   const renderDisputes = () => {
+    const safeSearchTerm = (searchTerm || '').toLowerCase();
     const filteredDisputes = disputes.filter(d => 
-      (d.jobId?.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (d.clientId?.username || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (d.freelancerId?.username || '').toLowerCase().includes(searchTerm.toLowerCase())
+      (d.jobId?.title || '').toLowerCase().includes(safeSearchTerm) ||
+      (d.clientId?.username || '').toLowerCase().includes(safeSearchTerm) ||
+      (d.freelancerId?.username || '').toLowerCase().includes(safeSearchTerm)
     );
 
     return (
