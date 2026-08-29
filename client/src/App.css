@@ -2083,7 +2083,7 @@ main> :first-child {
 }
 
 .auth-form-content {
-  padding: 0 32px 32px;
+  padding: 12px 32px 32px;
 }
 
 .floating-label {
@@ -2170,6 +2170,7 @@ main> :first-child {
   background-color: var(--bg-card);
   padding: 0 4px;
   transform: none;
+  z-index: 10;
 }
 
 .floating-label select + label {
