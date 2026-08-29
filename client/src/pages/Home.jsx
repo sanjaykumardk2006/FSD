@@ -120,9 +120,9 @@ export const Home = () => {
         }}></div>
 
         <div className="hero-content" style={{ color: '#ffffff', textShadow: '0 2px 15px rgba(0,0,0,0.6), 0 4px 30px rgba(0,0,0,0.4)' }}>
-          <h2 style={{ color: '#ffffff', fontSize: '56px', fontWeight: '800', marginBottom: '20px', lineHeight: '1.2' }}>Where Vision Meets Execution</h2>
+          <h2 style={{ color: '#ffffff', fontSize: '56px', fontWeight: '800', marginBottom: '20px', lineHeight: '1.2' }}>Connect with Elite Global Talent</h2>
           <p style={{ color: '#ffffff', opacity: 0.9, fontSize: '20px', maxWidth: '700px', margin: '0 auto', lineHeight: '1.6' }}>
-            Welcome to the definitive platform for top-tier talent. Whether you're a visionary client or an elite freelancer, this is your gateway to world-class collaboration.
+            Freelancer Hub is the premier marketplace bridging the gap between innovative companies and top-tier freelancers. Whether you're an independent professional or a growing business, find the perfect match here.
           </p>
           <div className="hero-buttons" style={{ display: 'flex', flexWrap: 'wrap', gap: '20px', justifyContent: 'center', marginTop: '40px' }}>
             <AnimatedButton className="btn btn-primary" onClick={() => navigate('/search')} style={{ gap: '10px' }}>
@@ -140,10 +140,10 @@ export const Home = () => {
 
         {/* Who We Are */}
         <section className="content-section" style={{ maxWidth: '1440px', margin: '0 auto 120px', padding: '60px', textAlign: 'center', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)' }} ref={(el) => sectionRefs.current.push(el)}>
-          <h2 style={{ fontSize: '36px', marginBottom: '10px' }}>Who We Are</h2>
-          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '18px' }}>Empowering the future of digital work</p>
+          <h2 style={{ fontSize: '36px', marginBottom: '10px' }}>Our Objective</h2>
+          <p style={{ textAlign: 'center', color: 'var(--text-secondary)', marginBottom: '30px', fontSize: '18px' }}>A unified platform designed to streamline project lifecycles</p>
           <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.8', textAlign: 'center' }}>
-            At Freelancer Hub, we are redefining the modern workforce by creating a seamless, transparent marketplace that connects ambitious companies with elite global talent. Born from the shift to remote-first cultures, our platform is deeply integrated with tools ensuring fair compensation, secure transactions, and real-time collaboration. By leveraging advanced AI matching algorithms and rigorous vetting, we empower independent professionals to build sustainable careers while giving businesses the agility to scale on demand. We are a dedicated partner in your growth journey, committed to fostering a community built on trust, excellence, and relentless innovation.
+            At Freelancer Hub, we provide a sophisticated marketplace designed to seamlessly connect Clients with skilled Freelancers. With tailored, role-based dashboards, secure authentication, and real-time notifications, we make managing digital work effortless. Whether you're an independent contractor looking for your next gig, a company seeking specialized talent, or an agency building a portfolio with verifiable certifications, our platform provides the tools and visibility you need to succeed in the modern digital economy.
           </p>
         </section>
 
@@ -157,35 +157,35 @@ export const Home = () => {
                 <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Hire Top Freelancers" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Hire Top Freelancers</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Browse thousands of skilled freelancers across web development, design, digital marketing, and more. Our platform makes it easy to find the perfect independent professional for your specific project needs.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Role-Based Dashboards</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Experience dedicated interfaces tailored to your needs. Clients can easily post jobs and manage applicants, while Freelancers get powerful tools to track applications and showcase their portfolios.</p>
               </div>
             </div>
             <div className="zigzag-item zigzag-right">
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Seamless Collaboration</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Work directly with freelancers in our centralized project workspaces. Chat in real-time, share files securely, and track project milestones effortlessly from start to finish.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Smart Job Discovery</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Utilize our advanced job search capabilities to find the perfect projects matching your skills. Filter opportunities efficiently to focus on work that aligns with your expertise and goals.</p>
               </div>
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80" alt="Seamless Collaboration" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80" alt="Smart Job Discovery" className="zoom-in-image" />
               </div>
             </div>
             <div className="zigzag-item zigzag-left">
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="Secure Milestone Payments" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="Verifiable Portfolios" className="zoom-in-image" />
               </div>
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Secure Milestone Payments</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Pay only for approved work. Our escrow system protects both clients and freelancers by holding funds securely until project milestones are explicitly approved by you.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Verifiable Portfolios</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Stand out from the crowd by building a comprehensive profile. Freelancers can upload certifications and define their entity type to build trust and credibility with potential clients.</p>
               </div>
             </div>
             <div className="zigzag-item zigzag-right">
               <div className="zigzag-content" style={{ textAlign: 'left' }}>
-                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>24/7 Dedicated Support</h3>
-                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Get help whenever you need it. Our dedicated support team is available around the clock to assist you with everything from finding talent to resolving project disputes.</p>
+                <h3 style={{ fontSize: '32px', marginBottom: '15px' }}>Real-Time Notifications</h3>
+                <p style={{ fontSize: '18px', color: 'var(--text-secondary)', lineHeight: '1.6' }}>Stay in the loop with instant updates. Our integrated live notification system ensures you are always informed about new job applications, project updates, and important administrative actions.</p>
               </div>
               <div className="zigzag-image zoom-out-image-container">
-                <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80" alt="24/7 Dedicated Support" className="zoom-in-image" />
+                <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=800&q=80" alt="Real-Time Notifications" className="zoom-in-image" />
               </div>
             </div>
 
@@ -313,22 +313,22 @@ export const Home = () => {
               <div style={{ width: '48px', height: '48px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0110 0v4"></path></svg>
               </div>
-              <h3 style={{ marginBottom: '10px' }}>Secure Escrow</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>We guarantee complete peace of mind for both parties. Your funds are held safely and securely until the work is fully reviewed and explicitly approved by you.</p>
+              <h3 style={{ marginBottom: '10px' }}>Admin Moderated</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>A secure and trusted ecosystem. Our dedicated admin dashboard allows continuous moderation of projects and profiles to maintain the highest quality standards across the platform.</p>
             </motion.div>
             <motion.div className="card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}>
               <div style={{ width: '48px', height: '48px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
               </div>
-              <h3 style={{ marginBottom: '10px' }}>Real-time Sync</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>Communicate instantly with your team. Zero delays and perfect synchronization across all your devices ensures your project moves forward seamlessly without blockers.</p>
+              <h3 style={{ marginBottom: '10px' }}>Instant Connectivity</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>Never miss a beat with WebSocket-powered real-time notifications. Whether it's a new job application or a profile update, you're always instantly informed.</p>
             </motion.div>
             <motion.div className="card" variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}>
               <div style={{ width: '48px', height: '48px', background: 'rgba(0, 0, 0, 0.05)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
               </div>
-              <h3 style={{ marginBottom: '10px' }}>Verified Talent</h3>
-              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>Every freelancer passes a strict vetting process to ensure top-tier quality. We carefully review their portfolios and past work to guarantee excellence on every project.</p>
+              <h3 style={{ marginBottom: '10px' }}>Tailored Experiences</h3>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}>Whether you register as a Client or Freelancer, you get an interface designed specifically for your workflow, maximizing productivity and minimizing friction.</p>
             </motion.div>
           </motion.div>
         </section>
