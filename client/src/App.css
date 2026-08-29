@@ -205,18 +205,18 @@ main> :first-child {
   display: none;
 }
 
-.nav a {
+.nav a:not(.btn) {
   color: var(--text-primary);
   font-size: 15px;
   font-weight: 600;
   position: relative;
 }
 
-.nav a:hover {
+.nav a:not(.btn):hover {
   color: var(--accent-primary);
 }
 
-.nav a::after {
+.nav a:not(.btn)::after {
   content: '';
   position: absolute;
   bottom: -4px;
@@ -227,12 +227,12 @@ main> :first-child {
   transition: width 0.3s ease;
 }
 
-.nav a:hover::after,
-.nav a.active::after {
+.nav a:not(.btn):hover::after,
+.nav a.active:not(.btn)::after {
   width: 100%;
 }
 
-.nav a.active {
+.nav a.active:not(.btn) {
   color: var(--text-primary);
 }
 
