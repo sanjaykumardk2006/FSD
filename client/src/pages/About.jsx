@@ -604,8 +604,8 @@ export const About = () => {
             {/* Medium Card */}
             <motion.div className="bento-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}>
               <div className="bento-icon-wrapper"><ShieldCheck size={24} /></div>
-              <h3 className="bento-title">Escrow Protection</h3>
-              <p className="bento-desc">Funds are safely held in escrow before work begins, giving clients the power to review milestones before release, and guaranteeing freelancers they will be paid.</p>
+              <h3 className="bento-title">Admin Moderated</h3>
+              <p className="bento-desc">A secure and trusted ecosystem. Our dedicated admin dashboard allows continuous moderation of projects and profiles to maintain the highest quality standards.</p>
             </motion.div>
 
             {/* Tall Card */}
@@ -617,9 +617,9 @@ export const About = () => {
             
             {/* Wide Card */}
             <motion.div className="bento-card bento-card-large" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}>
-              <div className="bento-icon-wrapper"><FileText size={24} /></div>
-              <h3 className="bento-title">Automated Invoicing</h3>
-              <p className="bento-desc">We handle the boring administrative tasks. Invoices and receipts are generated automatically upon milestone completion.</p>
+              <div className="bento-icon-wrapper"><Globe size={24} /></div>
+              <h3 className="bento-title">Real-Time Notifications</h3>
+              <p className="bento-desc">Stay in the loop with instant updates. Our integrated live notification system ensures you are always informed about new job applications and project updates.</p>
             </motion.div>
           </motion.div>
         </section>
@@ -651,7 +651,7 @@ export const About = () => {
               </div>
               <h3 style={{ fontSize: '24px', marginBottom: '12px', fontWeight: '600' }}>For Customers</h3>
               <p style={{ color: 'var(--text-secondary)', fontSize: '16px', lineHeight: '1.6', margin: 0 }}>
-                Scale your team on-demand with highly vetted global talent, secure escrow, and AI matching.
+                Scale your team on-demand with highly vetted global talent, robust milestone tracking, and smart AI matching.
               </p>
             </div>
           </div>
@@ -694,7 +694,7 @@ export const About = () => {
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
-                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Enjoy guaranteed payment protection for every approved milestone—eliminating the stress of chasing unpaid invoices.</span>
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Enjoy robust milestone tracking and continuous support—eliminating the stress of mismanaged projects.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
@@ -760,7 +760,7 @@ export const About = () => {
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--text-primary)' }} />
-                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Benefit from secure escrow payments and milestone-based tracking, ensuring you only pay for work you explicitly approve.</span>
+                    <span style={{ fontSize: '18px', color: 'var(--text-primary)', lineHeight: '1.6' }}>Benefit from a strictly moderated platform and milestone-based tracking, ensuring you always retain control of your project's progress.</span>
                   </motion.div>
                   <motion.div className="feature-card" variants={{ hidden: { opacity: 0, x: -50 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}>
                     <ArrowRight size={20} style={{ flexShrink: 0, marginRight: '16px', color: 'var(--primary-action)' }} />
@@ -794,34 +794,34 @@ export const About = () => {
           <div className="core-values-grid">
             <div className="core-value-card">
               <div className="core-value-icon" style={{ backgroundColor: 'var(--primary-action-bg)', color: 'var(--primary-action)' }}>
-                <Users size={32} />
+                <ShieldCheck size={32} />
               </div>
-              <h3 className="core-value-title">Community</h3>
-              <p className="core-value-desc">Building meaningful relationships that support and encourage one another in faith.</p>
+              <h3 className="core-value-title">Trust & Security</h3>
+              <p className="core-value-desc">Maintaining a safe, continuously moderated environment where quality and reliability are our highest priorities.</p>
             </div>
             
             <div className="core-value-card">
               <div className="core-value-icon" style={{ backgroundColor: 'var(--success-bg)', color: 'var(--success)' }}>
-                <BookOpen size={32} />
+                <Brain size={32} />
               </div>
-              <h3 className="core-value-title">Faith</h3>
-              <p className="core-value-desc">Growing deeper in our understanding and practice of biblical principles.</p>
+              <h3 className="core-value-title">Innovation</h3>
+              <p className="core-value-desc">Leveraging intelligent algorithms and modern tools to redefine how digital work is sourced and managed.</p>
             </div>
 
             <div className="core-value-card">
               <div className="core-value-icon" style={{ backgroundColor: '#fef2f2', color: '#ef4444' }}>
                 <Heart size={32} />
               </div>
-              <h3 className="core-value-title">Service</h3>
-              <p className="core-value-desc">Serving our local and global communities with compassion and love.</p>
+              <h3 className="core-value-title">Empowerment</h3>
+              <p className="core-value-desc">Giving professionals the tools, visibility, and autonomy they need to build sustainable, independent careers.</p>
             </div>
 
             <div className="core-value-card">
               <div className="core-value-icon" style={{ backgroundColor: '#faf5ff', color: '#a855f7' }}>
                 <TrendingUp size={32} />
               </div>
-              <h3 className="core-value-title">Growth</h3>
-              <p className="core-value-desc">Pursuing spiritual maturity and personal development through discipleship.</p>
+              <h3 className="core-value-title">Excellence</h3>
+              <p className="core-value-desc">Pursuing the highest standards in both our platform experience and the talent we bring together.</p>
             </div>
           </div>
         </motion.section>
