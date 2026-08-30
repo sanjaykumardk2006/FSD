@@ -282,13 +282,31 @@ export const Home = () => {
             }}
           >
             {[
-              { title: 'E-Commerce Redesign', desc: 'Seeking a senior React developer to completely overhaul our frontend architecture.', budget: '$4,500' },
-              { title: 'Fintech Mobile Application', desc: 'Need a React Native expert to build a secure cross-platform crypto wallet.', budget: '$8,200' },
-              { title: 'Corporate Rebranding', desc: 'Looking for a senior designer to create a new brand identity and marketing assets.', budget: '$2,800' }
+              { title: 'E-Commerce Redesign', desc: 'Seeking a senior React developer to completely overhaul our frontend architecture.', budget: '$4,500', tags: ['React', 'Frontend'], postedTime: '2h ago' },
+              { title: 'Fintech Mobile Application', desc: 'Need a React Native expert to build a secure cross-platform crypto wallet.', budget: '$8,200', tags: ['React Native', 'Mobile'], postedTime: '5h ago' },
+              { title: 'Corporate Rebranding', desc: 'Looking for a senior designer to create a new brand identity and marketing assets.', budget: '$2,800', tags: ['Design', 'Branding'], postedTime: '1d ago' }
             ].map((job, i) => (
               <motion.div className="card" key={i} variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } } }} style={{ padding: '30px', display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ fontSize: '20px', marginBottom: '10px' }}>{job.title}</h3>
-                <p style={{ color: 'var(--text-secondary)', marginBottom: '0', lineHeight: '1.5', flex: 1 }}>{job.desc}</p>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px', gap: '10px' }}>
+                  <h3 style={{ fontSize: '20px', margin: 0, lineHeight: '1.3' }}>{job.title}</h3>
+                  <span style={{ background: 'var(--primary-action-bg)', color: 'var(--primary-action)', padding: '4px 10px', borderRadius: '20px', fontSize: '14px', fontWeight: '600', whiteSpace: 'nowrap' }}>{job.budget}</span>
+                </div>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: '20px', lineHeight: '1.5', flex: 1 }}>{job.desc}</p>
+                
+                <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                  {job.tags.map(tag => (
+                    <span key={tag} style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', padding: '4px 10px', borderRadius: '6px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '20px', marginTop: 'auto' }}>
+                  <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>Posted {job.postedTime}</span>
+                  <AnimatedButton className="btn btn-primary" onClick={() => navigate('/search')} style={{ padding: '8px 20px', fontSize: '14px' }}>
+                    View Job
+                  </AnimatedButton>
+                </div>
               </motion.div>
             ))}
           </motion.div>
