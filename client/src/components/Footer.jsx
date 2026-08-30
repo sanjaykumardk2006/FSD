@@ -41,14 +41,17 @@ export const Footer = () => {
                 Login <ChevronDown size={14} />
               </a>
               {loginDropdownOpen && (
-                <div className="dropdown-menu" style={{ bottom: '100%', top: 'auto', left: 0, marginBottom: '8px' }}>
-                  <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Freelancer'); }}>
-                    <User size={16} /> As Freelancer
-                  </button>
-                  <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Client'); }}>
-                    <Briefcase size={16} /> As Customer
-                  </button>
-                </div>
+                <>
+                  <div style={{ position: 'absolute', bottom: '100%', left: 0, width: '100%', height: '8px' }}></div>
+                  <div className="dropdown-menu" style={{ bottom: 'calc(100% + 8px)', top: 'auto', left: 0 }}>
+                    <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Freelancer'); }}>
+                      <User size={16} /> As Freelancer
+                    </button>
+                    <button onClick={(e) => { e.stopPropagation(); openAuth('login', 'Client'); }}>
+                      <Briefcase size={16} /> As Customer
+                    </button>
+                  </div>
+                </>
               )}
             </div>
 
@@ -62,14 +65,17 @@ export const Footer = () => {
                 Sign Up <ChevronDown size={14} />
               </a>
               {signupDropdownOpen && (
-                <div className="dropdown-menu" style={{ bottom: '100%', top: 'auto', left: 0, marginBottom: '8px' }}>
-                  <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Freelancer'); }}>
-                    <User size={16} /> As Freelancer
-                  </button>
-                  <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Client'); }}>
-                    <Briefcase size={16} /> As Customer
-                  </button>
-                </div>
+                <>
+                  <div style={{ position: 'absolute', bottom: '100%', left: 0, width: '100%', height: '8px' }}></div>
+                  <div className="dropdown-menu" style={{ bottom: 'calc(100% + 8px)', top: 'auto', left: 0 }}>
+                    <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Freelancer'); }}>
+                      <User size={16} /> As Freelancer
+                    </button>
+                    <button onClick={(e) => { e.stopPropagation(); openAuth('signup', 'Client'); }}>
+                      <Briefcase size={16} /> As Customer
+                    </button>
+                  </div>
+                </>
               )}
             </div>
           </div>
