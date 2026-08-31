@@ -237,18 +237,20 @@ export const Search = () => {
                     <span>{job.experienceRequired}</span>
                   </div>
 
-                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '24px' }}>
-                    {job.requiredSkills?.map((skill, i) => (
-                      <span key={i} style={{ padding: '6px 12px', background: 'rgba(0,0,0,0.05)', borderRadius: '100px', fontSize: '12px', fontWeight: '500', color: 'var(--text-secondary)' }}>{skill}</span>
-                    ))}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', gap: '16px' }}>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      {job.requiredSkills?.map((skill, i) => (
+                        <span key={i} style={{ padding: '6px 12px', background: 'rgba(0,0,0,0.05)', borderRadius: '100px', fontSize: '12px', fontWeight: '500', color: 'var(--text-secondary)' }}>{skill}</span>
+                      ))}
+                    </div>
+                    <AnimatedButton 
+                      className="btn btn-primary" 
+                      style={{ padding: '12px 24px', borderRadius: '8px', fontSize: '15px', flexShrink: 0 }} 
+                      onClick={() => navigate(`/job/${job._id}`)}
+                    >
+                      View Details
+                    </AnimatedButton>
                   </div>
-                  <AnimatedButton 
-                    className="btn btn-primary" 
-                    style={{ padding: '12px 24px', borderRadius: '8px', fontSize: '15px', alignSelf: 'flex-start' }} 
-                    onClick={() => navigate(`/job/${job._id}`)}
-                  >
-                    View Details
-                  </AnimatedButton>
                 </motion.div>
               ))}
             </motion.div>
