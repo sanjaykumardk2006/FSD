@@ -223,8 +223,27 @@ export const Search = () => {
             >
               {jobs.map(job => (
                 <motion.div key={job._id} className="job-card" variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }} style={{ display: 'flex', flexDirection: 'column', padding: '24px', cursor: 'pointer', margin: 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', gap: '16px' }}>
                     <h3 style={{ fontSize: '20px', margin: '0', color: 'var(--text-primary)', flex: 1 }}>{job.title}</h3>
+                    <span style={{ 
+                      padding: '6px 14px', 
+                      borderRadius: '100px', 
+                      fontSize: '12px', 
+                      fontWeight: '600',
+                      whiteSpace: 'nowrap',
+                      background: job.status === 'Open' ? 'rgba(46, 204, 113, 0.15)' : 
+                                  job.status === 'In Progress' ? 'rgba(52, 152, 219, 0.15)' : 
+                                  job.status === 'Completed' ? 'rgba(155, 89, 182, 0.15)' :
+                                  job.status === 'Closed' ? 'rgba(231, 76, 60, 0.15)' :
+                                  'rgba(149, 165, 166, 0.15)',
+                      color: job.status === 'Open' ? '#2ecc71' : 
+                             job.status === 'In Progress' ? '#3498db' : 
+                             job.status === 'Completed' ? '#9b59b6' :
+                             job.status === 'Closed' ? '#e74c3c' :
+                             '#7f8c8d'
+                    }}>
+                      {job.status || 'Open'}
+                    </span>
                   </div>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '15px', lineHeight: '1.6', marginBottom: '24px', flex: 1 }}>
                     {job.description?.length > 150 ? `${job.description.substring(0, 150)}...` : job.description}
