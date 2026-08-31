@@ -164,12 +164,12 @@ export const PublicJobDetail = () => {
                 className="btn btn-primary" 
                 style={{ width: '100%', padding: '16px', fontSize: '16px', borderRadius: '8px', fontWeight: '600', textAlign: 'center' }}
               >
-                {user ? (user.role === 'Freelancer' ? 'Apply Now' : 'View as Client') : 'Log in to Apply'}
+                {user ? (user.role === 'Freelancer' ? 'Apply Now' : 'View as Client') : 'Sign up to Apply'}
               </AnimatedButton>
               
               {!user && (
                 <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', marginTop: '16px', marginBottom: 0 }}>
-                  Dont have an account? <span onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'signup', role: 'Freelancer' } }))} style={{ color: 'red', cursor: 'pointer' }}>sign in</span>
+                  Already have an account? <span onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'login', role: 'Freelancer' } }))} style={{ color: 'var(--primary-action)', cursor: 'pointer' }}>Log in</span>
                 </p>
               )}
             </div>
