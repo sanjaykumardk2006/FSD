@@ -169,7 +169,7 @@ export const PublicJobDetail = () => {
               
               {!user && (
                 <p style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '13px', marginTop: '16px', marginBottom: 0 }}>
-                  Already have an account? <span onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'login', role: 'Freelancer' } }))} style={{ color: 'var(--primary-action)', cursor: 'pointer' }}>Log in</span>
+                  Dont have an account? <span onClick={() => window.dispatchEvent(new CustomEvent('open-auth-modal', { detail: { mode: 'signup', role: 'Freelancer' } }))} style={{ color: 'red', cursor: 'pointer' }}>sign in</span>
                 </p>
               )}
             </div>
