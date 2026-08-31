@@ -216,7 +216,7 @@ export const Search = () => {
             <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>No projects found matching your search.</div>
           ) : (
             <motion.div 
-              style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: '24px' }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}
               initial="hidden"
               animate="visible"
               variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
@@ -244,7 +244,7 @@ export const Search = () => {
                   </div>
                   <AnimatedButton 
                     className="btn btn-primary" 
-                    style={{ width: '100%', padding: '12px', borderRadius: '8px', fontSize: '15px' }} 
+                    style={{ padding: '12px 24px', borderRadius: '8px', fontSize: '15px', alignSelf: 'flex-start' }} 
                     onClick={() => navigate(`/job/${job._id}`)}
                   >
                     View Details
