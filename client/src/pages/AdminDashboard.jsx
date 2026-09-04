@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
-import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare } from 'lucide-react';
+import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare, Eye, X } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import '../App.css'; // For basic styling, assumes it exists
 
@@ -23,6 +23,8 @@ export const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [selectedProposal, setSelectedProposal] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -378,13 +380,21 @@ export const AdminDashboard = () => {
                   <td style={{ padding: '12px' }}>{job.status}</td>
                 <td style={{ padding: '12px' }}>${job.budget}</td>
                 <td style={{ padding: '12px' }}>
-                  <button 
-                    onClick={() => deleteJob(job._id)}
-                    disabled={actionLoading}
-                    style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', opacity: actionLoading ? 0.5 : 1 }}
-                  >
-                    Delete
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button 
+                      onClick={() => setSelectedJob(job)}
+                      style={{ padding: '6px 12px', borderRadius: '6px', border: '1px solid var(--border-color)', cursor: 'pointer', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+                    >
+                      View
+                    </button>
+                    <button 
+                      onClick={() => deleteJob(job._id)}
+                      disabled={actionLoading}
+                      style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', opacity: actionLoading ? 0.5 : 1 }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
               ))}
@@ -441,13 +451,21 @@ export const AdminDashboard = () => {
                   <td style={{ padding: '12px' }}>${prop.proposedCost}</td>
                   <td style={{ padding: '12px' }}>{prop.status}</td>
                 <td style={{ padding: '12px' }}>
-                  <button 
-                    onClick={() => deleteProposal(prop._id)}
-                    disabled={actionLoading}
-                    style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', opacity: actionLoading ? 0.5 : 1 }}
-                  >
-                    Delete
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button 
+                      onClick={() => setSelectedProposal(prop)}
+                      style={{ padding: '6px 12px', borderRadius: '6px', border: '1px solid var(--border-color)', cursor: 'pointer', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+                    >
+                      View
+                    </button>
+                    <button 
+                      onClick={() => deleteProposal(prop._id)}
+                      disabled={actionLoading}
+                      style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', cursor: 'pointer', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', opacity: actionLoading ? 0.5 : 1 }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
               ))}
@@ -560,6 +578,125 @@ export const AdminDashboard = () => {
       {currentTab === 'jobs' && renderJobs()}
       {currentTab === 'proposals' && renderProposals()}
       {currentTab === 'disputes' && renderDisputes()}
+
+      {/* Job Details Modal */}
+      {selectedJob && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
+          <div style={{ background: 'var(--bg-secondary)', padding: '32px', borderRadius: '12px', width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', position: 'relative' }}>
+            <button 
+              onClick={() => setSelectedJob(null)}
+              style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}
+            >
+              <X size={24} />
+            </button>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>Job Details</h2>
+            <div style={{ display: 'grid', gap: '16px', marginTop: '24px' }}>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Title</p>
+                <p style={{ fontSize: '18px', fontWeight: '500' }}>{selectedJob.title}</p>
+              </div>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Customer</p>
+                <p>{selectedJob.clientId?.username} ({selectedJob.clientId?.email})</p>
+              </div>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Description</p>
+                <div style={{ padding: '12px', background: 'var(--bg-primary)', borderRadius: '8px', fontSize: '14px', lineHeight: '1.6' }}>
+                  {selectedJob.description}
+                </div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Budget</p>
+                  <p>${selectedJob.budget}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Status</p>
+                  <p>{selectedJob.status}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Category</p>
+                  <p>{selectedJob.category}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Experience Required</p>
+                  <p>{selectedJob.experienceRequired}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Deadline</p>
+                  <p>{new Date(selectedJob.deadline).toLocaleDateString()}</p>
+                </div>
+              </div>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Required Skills</p>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
+                  {selectedJob.requiredSkills?.map((skill, idx) => (
+                    <span key={idx} style={{ padding: '4px 10px', background: 'var(--bg-primary)', borderRadius: '20px', fontSize: '12px' }}>{skill}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Proposal Details Modal */}
+      {selectedProposal && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}>
+          <div style={{ background: 'var(--bg-secondary)', padding: '32px', borderRadius: '12px', width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', position: 'relative' }}>
+            <button 
+              onClick={() => setSelectedProposal(null)}
+              style={{ position: 'absolute', top: '16px', right: '16px', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)' }}
+            >
+              <X size={24} />
+            </button>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '8px' }}>Proposal Details</h2>
+            <div style={{ display: 'grid', gap: '16px', marginTop: '24px' }}>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Freelancer</p>
+                <p style={{ fontSize: '18px', fontWeight: '500' }}>{selectedProposal.freelancerId?.username} ({selectedProposal.freelancerId?.email})</p>
+              </div>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Job Title</p>
+                <p>{selectedProposal.jobId?.title || 'Deleted Job'}</p>
+              </div>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Cover Letter</p>
+                <div style={{ padding: '12px', background: 'var(--bg-primary)', borderRadius: '8px', fontSize: '14px', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>
+                  {selectedProposal.coverLetter || 'No cover letter provided.'}
+                </div>
+              </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Proposed Cost</p>
+                  <p>${selectedProposal.proposedCost}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Status</p>
+                  <p>{selectedProposal.status}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Experience</p>
+                  <p>{selectedProposal.experience}</p>
+                </div>
+                <div>
+                  <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Proposed Deadline</p>
+                  <p>{new Date(selectedProposal.proposedDeadline).toLocaleDateString()}</p>
+                </div>
+              </div>
+              <div>
+                <p style={{ fontSize: '14px', color: 'var(--text-secondary)' }}>Freelancer Skills</p>
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '4px' }}>
+                  {selectedProposal.skills?.map((skill, idx) => (
+                    <span key={idx} style={{ padding: '4px 10px', background: 'var(--bg-primary)', borderRadius: '20px', fontSize: '12px' }}>{skill}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
