@@ -2,6 +2,7 @@ const User = require('../models/User');
 const Job = require('../models/Job');
 const Project = require('../models/Project');
 const Proposal = require('../models/Proposal');
+const ContactMessage = require('../models/ContactMessage');
 
 // Get overall platform metrics
 const getMetrics = async (req, res) => {
@@ -11,13 +12,56 @@ const getMetrics = async (req, res) => {
     const totalProjects = await Project.countDocuments();
     const activeDisputes = await Project.countDocuments({ status: 'Disputed' });
 
+    // Financial Volume (Sum of budgets for completed Jobs)
+    const completedJobsAgg = await Job.aggregate([
+      { $match: { status: 'Completed' } },
+      { $group: { _id: null, totalVolume: { $sum: "$budget" } } }
+    ]);
+    const financialVolume = completedJobsAgg.length > 0 ? completedJobsAgg[0].totalVolume : 0;
+
+    // Unread Support Tickets
+    let unreadMessages = 0;
+    try {
+      unreadMessages = await ContactMessage.countDocuments({ isRead: false });
+    } catch (err) {
+      console.error('Error fetching contact messages:', err);
+    }
+
+    // User Breakdown
+    const totalClients = await User.countDocuments({ role: 'Client' });
+    const totalFreelancers = await User.countDocuments({ role: 'Freelancer' });
+    const userBreakdown = [
+      { name: 'Clients', value: totalClients },
+      { name: 'Freelancers', value: totalFreelancers }
+    ];
+
+    // Project Status Distribution
+    const activeProjects = await Project.countDocuments({ status: 'Active' });
+    const completedProjects = await Project.countDocuments({ status: 'Completed' });
+    const cancelledProjects = await Project.countDocuments({ status: 'Cancelled' });
+    const projectStatusBreakdown = [
+      { name: 'Active', value: activeProjects, color: '#3b82f6' }, // Blue
+      { name: 'Completed', value: completedProjects, color: '#10b981' }, // Green
+      { name: 'Cancelled', value: cancelledProjects, color: '#ef4444' }, // Red
+      { name: 'Disputed', value: activeDisputes, color: '#f59e0b' } // Orange
+    ];
+
+    // Recent Activity (Latest 5 Users)
+    const recentUsers = await User.find().select('username role email createdAt').sort({ createdAt: -1 }).limit(5);
+
     res.status(200).json({
       totalUsers,
       totalJobs,
       totalProjects,
-      activeDisputes
+      activeDisputes,
+      financialVolume,
+      unreadMessages,
+      userBreakdown,
+      projectStatusBreakdown,
+      recentUsers
     });
   } catch (error) {
+    console.error('Error fetching metrics:', error);
     res.status(500).json({ message: 'Error fetching metrics', error: error.message });
   }
 };

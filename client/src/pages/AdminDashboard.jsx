@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
-import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search } from 'lucide-react';
+import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare } from 'lucide-react';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import '../App.css'; // For basic styling, assumes it exists
 
 export const AdminDashboard = () => {
@@ -11,7 +12,10 @@ export const AdminDashboard = () => {
   const queryParams = new URLSearchParams(location.search);
   const currentTab = queryParams.get('tab') || 'overview';
 
-  const [metrics, setMetrics] = useState({ totalUsers: 0, totalJobs: 0, totalProjects: 0, activeDisputes: 0 });
+  const [metrics, setMetrics] = useState({ 
+    totalUsers: 0, totalJobs: 0, totalProjects: 0, activeDisputes: 0,
+    financialVolume: 0, unreadMessages: 0, userBreakdown: [], projectStatusBreakdown: [], recentUsers: [] 
+  });
   const [users, setUsers] = useState([]);
   const [jobs, setJobs] = useState([]);
   const [proposals, setProposals] = useState([]);
@@ -106,7 +110,9 @@ export const AdminDashboard = () => {
   const renderOverview = () => (
     <div className="dashboard-section">
       <h2 style={{ marginBottom: '24px', fontSize: '24px', fontWeight: 'bold' }}>Platform Overview</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
+      
+      {/* Top KPI Cards */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '32px' }}>
         
         <div style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '16px' }}>
           <div style={{ padding: '16px', background: 'rgba(67, 97, 238, 0.1)', color: 'var(--primary-action)', borderRadius: '12px' }}>
@@ -120,11 +126,11 @@ export const AdminDashboard = () => {
 
         <div style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '16px' }}>
           <div style={{ padding: '16px', background: 'rgba(56, 176, 0, 0.1)', color: '#38b000', borderRadius: '12px' }}>
-            <Briefcase size={28} />
+            <DollarSign size={28} />
           </div>
           <div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Total Jobs</p>
-            <h3 style={{ fontSize: '28px', fontWeight: 'bold' }}>{metrics.totalJobs}</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Total Revenue</p>
+            <h3 style={{ fontSize: '28px', fontWeight: 'bold' }}>${metrics.financialVolume?.toLocaleString()}</h3>
           </div>
         </div>
 
@@ -140,15 +146,110 @@ export const AdminDashboard = () => {
 
         <div style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '16px' }}>
           <div style={{ padding: '16px', background: 'rgba(230, 57, 70, 0.1)', color: '#e63946', borderRadius: '12px' }}>
-            <AlertTriangle size={28} />
+            <MessageSquare size={28} />
           </div>
           <div>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Active Disputes</p>
-            <h3 style={{ fontSize: '28px', fontWeight: 'bold' }}>{metrics.activeDisputes}</h3>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '4px' }}>Unread Tickets</p>
+            <h3 style={{ fontSize: '28px', fontWeight: 'bold' }}>{metrics.unreadMessages}</h3>
+          </div>
+        </div>
+      </div>
+
+      {/* Charts Row */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px', marginBottom: '32px' }}>
+        {/* Project Status Pie Chart */}
+        <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '12px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px' }}>Project Status Distribution</h3>
+          <div style={{ height: '300px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={metrics.projectStatusBreakdown}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={60}
+                  outerRadius={100}
+                  paddingAngle={5}
+                  dataKey="value"
+                >
+                  {metrics.projectStatusBreakdown?.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
+            {metrics.projectStatusBreakdown?.map((entry, idx) => (
+              <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px' }}>
+                <span style={{ display: 'inline-block', width: '12px', height: '12px', borderRadius: '50%', background: entry.color }}></span>
+                {entry.name} ({entry.value})
+              </div>
+            ))}
           </div>
         </div>
 
+        {/* User Breakdown Bar Chart */}
+        <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '12px' }}>
+          <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px' }}>User Registration Breakdown</h3>
+          <div style={{ height: '300px' }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={metrics.userBreakdown} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>
+                <XAxis dataKey="name" stroke="var(--text-secondary)" />
+                <YAxis stroke="var(--text-secondary)" />
+                <Tooltip cursor={{ fill: 'var(--bg-primary)' }} contentStyle={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '8px', color: 'var(--text-primary)' }} />
+                <Bar dataKey="value" fill="var(--primary-action)" radius={[4, 4, 0, 0]} barSize={50} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
       </div>
+
+      {/* Recent Activity List */}
+      <div style={{ background: 'var(--bg-secondary)', padding: '24px', borderRadius: '12px' }}>
+        <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '20px' }}>Recent Signups</h3>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr style={{ borderBottom: '1px solid var(--border-color)' }}>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Username</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Role</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Email</th>
+                <th style={{ padding: '12px', color: 'var(--text-secondary)' }}>Registered</th>
+              </tr>
+            </thead>
+            <tbody>
+              {metrics.recentUsers?.map(user => (
+                <tr key={user._id} style={{ borderBottom: '1px solid var(--border-color)' }}>
+                  <td style={{ padding: '12px', fontWeight: '500' }}>{user.username}</td>
+                  <td style={{ padding: '12px' }}>
+                    <span style={{ 
+                      padding: '4px 10px', 
+                      borderRadius: '20px', 
+                      fontSize: '12px', 
+                      background: user.role === 'Freelancer' ? 'rgba(56, 176, 0, 0.1)' : 'rgba(67, 97, 238, 0.1)',
+                      color: user.role === 'Freelancer' ? '#38b000' : 'var(--primary-action)'
+                    }}>
+                      {user.role}
+                    </span>
+                  </td>
+                  <td style={{ padding: '12px' }}>{user.email}</td>
+                  <td style={{ padding: '12px', color: 'var(--text-secondary)', fontSize: '14px' }}>
+                    {new Date(user.createdAt).toLocaleDateString()}
+                  </td>
+                </tr>
+              ))}
+              {(!metrics.recentUsers || metrics.recentUsers.length === 0) && (
+                <tr>
+                  <td colSpan="4" style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>No recent signups.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </div>
   );
 
