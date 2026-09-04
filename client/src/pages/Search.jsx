@@ -17,6 +17,11 @@ export const Search = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   
+  // Pagination States
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loadingMore, setLoadingMore] = useState(false);
+
   // Filter States
   const [searchTerm, setSearchTerm] = useState('');
   const [showFilters, setShowFilters] = useState(false);
@@ -27,11 +32,14 @@ export const Search = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
 
   useEffect(() => {
-    fetchJobs();
+    setPage(1);
+    fetchJobs(1);
   }, [category, experience, selectedSkills]); // Refetch when dropdown filters change
 
-  const fetchJobs = async () => {
-    setLoading(true);
+  const fetchJobs = async (pageNum = page) => {
+    if (pageNum === 1) setLoading(true);
+    else setLoadingMore(true);
+    
     try {
       const params = new URLSearchParams();
       if (searchTerm) params.append('search', searchTerm);
@@ -40,20 +48,32 @@ export const Search = () => {
       if (budgetMin) params.append('budgetMin', budgetMin);
       if (budgetMax) params.append('budgetMax', budgetMax);
       if (selectedSkills.length > 0) params.append('skills', selectedSkills.join(','));
+      
+      params.append('page', pageNum);
+      params.append('limit', 10);
 
       const response = await apiClient.get(`/jobs/all?${params.toString()}`);
-      setJobs(response.data.jobs || []);
+      
+      if (pageNum === 1) {
+        setJobs(response.data.jobs || []);
+      } else {
+        setJobs(prev => [...prev, ...(response.data.jobs || [])]);
+      }
+      
+      setTotalPages(response.data.totalPages || 1);
       setError('');
     } catch {
       setError('Failed to fetch jobs. Please try again later.');
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
   };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    fetchJobs();
+    setPage(1);
+    fetchJobs(1);
   };
 
   const toggleSkill = (skill) => {
@@ -69,21 +89,29 @@ export const Search = () => {
     setBudgetMin('');
     setBudgetMax('');
     setSelectedSkills([]);
-    setTimeout(fetchJobs, 0); // Need to wait for state to clear before fetching? Wait, fetchJobs uses state values. Better to just reload or rely on useEffect.
-    // Actually, setting state is async, so we'll just call api directly without params
+    setPage(1);
     fetchJobsDirectlyWithoutParams();
   };
   
   const fetchJobsDirectlyWithoutParams = async () => {
     setLoading(true);
     try {
-      const response = await apiClient.get('/jobs/all');
+      const response = await apiClient.get('/jobs/all?page=1&limit=10');
       setJobs(response.data.jobs || []);
+      setTotalPages(response.data.totalPages || 1);
       setError('');
     } catch {
       setError('Failed to fetch jobs. Please try again later.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadMore = () => {
+    if (page < totalPages) {
+      const nextPage = page + 1;
+      setPage(nextPage);
+      fetchJobs(nextPage);
     }
   };
 
@@ -272,6 +300,19 @@ export const Search = () => {
                   </div>
                 </motion.div>
               ))}
+              
+              {page < totalPages && (
+                <div style={{ textAlign: 'center', marginTop: '32px' }}>
+                  <AnimatedButton 
+                    onClick={loadMore} 
+                    disabled={loadingMore}
+                    className="btn btn-secondary" 
+                    style={{ padding: '12px 32px', borderRadius: '50px' }}
+                  >
+                    {loadingMore ? 'Loading...' : 'Load More Jobs'}
+                  </AnimatedButton>
+                </div>
+              )}
             </motion.div>
           )}
         </section>

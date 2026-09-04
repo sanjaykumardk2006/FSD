@@ -41,16 +41,13 @@ exports.postJob = [
 // Get all jobs
 exports.getAllJobs = async (req, res) => {
   try {
-    const { search, category, experience, budgetMin, budgetMax, skills } = req.query;
+    const { search, category, experience, budgetMin, budgetMax, skills, page = 1, limit = 10 } = req.query;
     
     let query = { status: 'Open' };
     
-    // Text search in title and description
+    // Text search using the newly created index
     if (search) {
-      query.$or = [
-        { title: { $regex: search, $options: 'i' } },
-        { description: { $regex: search, $options: 'i' } }
-      ];
+      query.$text = { $search: search };
     }
     
     if (category) {
@@ -74,11 +71,24 @@ exports.getAllJobs = async (req, res) => {
       query.requiredSkills = { $in: skillsArray };
     }
 
+    const pageNumber = parseInt(page, 10);
+    const limitNumber = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const totalJobs = await Job.countDocuments(query);
+
     const jobs = await Job.find(query)
       .populate('clientId', 'username email profile')
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limitNumber);
       
-    res.status(200).json({ jobs });
+    res.status(200).json({ 
+      jobs, 
+      totalPages: Math.ceil(totalJobs / limitNumber),
+      currentPage: pageNumber,
+      totalJobs 
+    });
   } catch (error) {
     console.error('Get all jobs error:', error);
     res.status(500).json({ message: 'Server error' });
