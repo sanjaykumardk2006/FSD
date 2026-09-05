@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
-import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare, Eye, X, Activity, Pencil, LogOut, Home } from 'lucide-react';
+import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare, Eye, X, Activity, Pencil, LogOut, Home, Calendar, Target, Star, Clock, AlignLeft, User } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../App.css'; 
@@ -840,41 +840,58 @@ export const AdminDashboard = () => {
               >
                 <button 
                   onClick={() => setSelectedJob(null)}
-                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s', zIndex: 10 }}
                   className="btn-hover-effect"
                 >
                   <X size={20} />
                 </button>
-                <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '8px', paddingRight: '40px' }}>Job Details</h2>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
-                  <span style={{ padding: '6px 12px', background: 'rgba(16, 185, 129, 0.1)', color: '#059669', borderRadius: '8px', fontSize: '12px', fontWeight: '600' }}>{selectedJob.status}</span>
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Posted by <strong>{selectedJob.clientId?.username}</strong></span>
+                
+                {/* Premium Card Header */}
+                <div style={{ position: 'relative', padding: '40px 40px 32px', margin: '-40px -40px 32px -40px', background: 'linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.05) 100%)', borderBottom: '1px solid var(--border-color)', borderRadius: '24px 24px 0 0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                    <span style={{ padding: '6px 14px', background: 'rgba(16, 185, 129, 0.15)', color: '#059669', borderRadius: '20px', fontSize: '13px', fontWeight: '700', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                      {selectedJob.status}
+                    </span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '14px', fontWeight: '500' }}>
+                      <User size={16} /> {selectedJob.clientId?.username}
+                    </span>
+                  </div>
+                  <h2 style={{ fontSize: '32px', fontWeight: '800', lineHeight: '1.2', color: 'var(--text-primary)', paddingRight: '40px' }}>
+                    {selectedJob.title}
+                  </h2>
                 </div>
                 
                 <div style={{ display: 'grid', gap: '32px' }}>
-                  <div>
-                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Description</p>
-                    <div style={{ fontSize: '16px', lineHeight: '1.7', color: 'var(--text-primary)' }}>
-                      {selectedJob.description}
+                  
+                  {/* Stats Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '16px' }}>
+                    <div style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><DollarSign size={16} /> <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase' }}>Budget</span></div>
+                      <p style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-primary)' }}>${selectedJob.budget}</p>
+                    </div>
+                    
+                    <div style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Target size={16} /> <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase' }}>Category</span></div>
+                      <p style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)' }}>{selectedJob.category}</p>
+                    </div>
+                    
+                    <div style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Star size={16} /> <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase' }}>Experience</span></div>
+                      <p style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)' }}>{selectedJob.experienceRequired}</p>
+                    </div>
+
+                    <div style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Calendar size={16} /> <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase' }}>Deadline</span></div>
+                      <p style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)' }}>{new Date(selectedJob.deadline).toLocaleDateString()}</p>
                     </div>
                   </div>
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', background: 'var(--bg-secondary)', padding: '24px', borderRadius: '16px' }}>
-                    <div>
-                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Budget</p>
-                      <p style={{ fontSize: '20px', fontWeight: '700' }}>${selectedJob.budget}</p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Category</p>
-                      <p style={{ fontSize: '16px', fontWeight: '600' }}>{selectedJob.category}</p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Experience Needed</p>
-                      <p style={{ fontSize: '16px', fontWeight: '600' }}>{selectedJob.experienceRequired}</p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Deadline</p>
-                      <p style={{ fontSize: '16px', fontWeight: '600' }}>{new Date(selectedJob.deadline).toLocaleDateString()}</p>
+
+                  <div>
+                    <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: 'var(--text-primary)' }}>
+                      <AlignLeft size={20} color="var(--primary-action)" /> Project Description
+                    </h3>
+                    <div style={{ fontSize: '16px', lineHeight: '1.8', color: 'var(--text-secondary)', padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+                      {selectedJob.description}
                     </div>
                   </div>
 
@@ -909,42 +926,54 @@ export const AdminDashboard = () => {
               >
                 <button 
                   onClick={() => setSelectedProposal(null)}
-                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s', zIndex: 10 }}
                   className="btn-hover-effect"
                 >
                   <X size={20} />
                 </button>
-                <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '8px', paddingRight: '40px' }}>Proposal Details</h2>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
-                  <span style={{ padding: '6px 12px', background: 'rgba(67, 97, 238, 0.1)', color: '#4361ee', borderRadius: '8px', fontSize: '12px', fontWeight: '600' }}>{selectedProposal.status}</span>
-                  <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Submitted by <strong>{selectedProposal.freelancerId?.username}</strong></span>
+                
+                {/* Premium Card Header */}
+                <div style={{ position: 'relative', padding: '40px 40px 32px', margin: '-40px -40px 32px -40px', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%)', borderBottom: '1px solid var(--border-color)', borderRadius: '24px 24px 0 0' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
+                    <span style={{ padding: '6px 14px', background: 'rgba(67, 97, 238, 0.15)', color: '#4361ee', borderRadius: '20px', fontSize: '13px', fontWeight: '700', border: '1px solid rgba(67, 97, 238, 0.2)' }}>
+                      {selectedProposal.status}
+                    </span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '14px', fontWeight: '500' }}>
+                      <User size={16} /> {selectedProposal.freelancerId?.username}
+                    </span>
+                  </div>
+                  <h2 style={{ fontSize: '24px', fontWeight: '800', lineHeight: '1.3', color: 'var(--text-primary)', paddingRight: '40px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+                    <Briefcase size={28} style={{ color: 'var(--primary-action)', flexShrink: 0, marginTop: '2px' }} />
+                    {selectedProposal.jobId?.title || 'Deleted Job'}
+                  </h2>
                 </div>
                 
                 <div style={{ display: 'grid', gap: '32px' }}>
-                  <div>
-                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Target Job</p>
-                    <p style={{ fontSize: '18px', fontWeight: '600' }}>{selectedProposal.jobId?.title || 'Deleted Job'}</p>
+                  
+                  {/* Stats Grid */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '16px' }}>
+                    <div style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><DollarSign size={16} /> <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase' }}>Proposed Cost</span></div>
+                      <p style={{ fontSize: '24px', fontWeight: '800', color: '#10b981' }}>${selectedProposal.proposedCost}</p>
+                    </div>
+                    
+                    <div style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Star size={16} /> <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase' }}>Experience</span></div>
+                      <p style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)' }}>{selectedProposal.experience}</p>
+                    </div>
+                    
+                    <div style={{ padding: '20px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)' }}><Calendar size={16} /> <span style={{ fontSize: '13px', fontWeight: '600', textTransform: 'uppercase' }}>Delivery By</span></div>
+                      <p style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)' }}>{new Date(selectedProposal.proposedDeadline).toLocaleDateString()}</p>
+                    </div>
                   </div>
 
                   <div>
-                    <p style={{ fontSize: '14px', color: 'var(--text-secondary)', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Cover Letter</p>
-                    <div style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', fontSize: '15px', lineHeight: '1.7', whiteSpace: 'pre-wrap', color: 'var(--text-primary)' }}>
+                    <h3 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '18px', fontWeight: '700', marginBottom: '16px', color: 'var(--text-primary)' }}>
+                      <AlignLeft size={20} color="var(--primary-action)" /> Cover Letter
+                    </h3>
+                    <div style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', fontSize: '15px', lineHeight: '1.8', whiteSpace: 'pre-wrap', color: 'var(--text-secondary)' }}>
                       {selectedProposal.coverLetter || 'No cover letter provided.'}
-                    </div>
-                  </div>
-                  
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', background: 'var(--bg-secondary)', padding: '24px', borderRadius: '16px' }}>
-                    <div>
-                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Proposed Cost</p>
-                      <p style={{ fontSize: '20px', fontWeight: '700', color: '#10b981' }}>${selectedProposal.proposedCost}</p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Freelancer Experience</p>
-                      <p style={{ fontSize: '16px', fontWeight: '600' }}>{selectedProposal.experience}</p>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '4px' }}>Proposed Deadline</p>
-                      <p style={{ fontSize: '16px', fontWeight: '600' }}>{new Date(selectedProposal.proposedDeadline).toLocaleDateString()}</p>
                     </div>
                   </div>
 
