@@ -62,9 +62,7 @@ const App = () => {
               path="/admin-dashboard/*"
               element={
                 <PrivateRoute>
-                  <DashboardLayout role="Admin">
-                    <AdminDashboard />
-                  </DashboardLayout>
+                  <AdminDashboard />
                 </PrivateRoute>
               }
             />

@@ -2,17 +2,22 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
-import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare, Eye, X, Activity, Pencil } from 'lucide-react';
+import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare, Eye, X, Activity, Pencil, LogOut, Home } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../App.css'; 
 
 export const AdminDashboard = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const currentTab = queryParams.get('tab') || 'overview';
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   const [metrics, setMetrics] = useState({ 
     totalUsers: 0, totalJobs: 0, totalProjects: 0, activeDisputes: 0,
@@ -748,10 +753,26 @@ export const AdminDashboard = () => {
       {/* Premium Admin Header */}
       <div style={{ background: 'var(--bg-card)', borderBottom: '1px solid var(--border-color)', position: 'sticky', top: 0, zIndex: 50, padding: '24px 0' }}>
         <div style={{ maxWidth: '1440px', margin: '0 auto', padding: '0 40px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
             <div>
               <h1 style={{ fontSize: '36px', fontWeight: '800', marginBottom: '8px', letterSpacing: '-0.5px' }}>Admin Command Center</h1>
               <p style={{ color: 'var(--text-secondary)', fontSize: '16px' }}>Manage operations, users, and platform metrics with precision.</p>
+            </div>
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <button 
+                onClick={() => navigate('/')} 
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '100px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', cursor: 'pointer', fontWeight: '600' }}
+                className="btn-hover-effect"
+              >
+                <Home size={18} /> Home
+              </button>
+              <button 
+                onClick={handleLogout} 
+                style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '100px', border: 'none', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', cursor: 'pointer', fontWeight: '600' }}
+                className="btn-hover-effect"
+              >
+                <LogOut size={18} /> Logout
+              </button>
             </div>
           </div>
 
