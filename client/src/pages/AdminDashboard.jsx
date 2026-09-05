@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import apiClient from '../utils/apiClient';
 import { AuthContext } from '../context/AuthContext';
-import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare, Eye, X, Activity } from 'lucide-react';
+import { Users, Briefcase, FileText, AlertTriangle, CheckCircle, XCircle, Search, DollarSign, MessageSquare, Eye, X, Activity, Pencil } from 'lucide-react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
 import '../App.css'; 
@@ -27,6 +27,9 @@ export const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedJob, setSelectedJob] = useState(null);
   const [selectedProposal, setSelectedProposal] = useState(null);
+  const [editingUser, setEditingUser] = useState(null);
+  const [editingJob, setEditingJob] = useState(null);
+  const [editingProposal, setEditingProposal] = useState(null);
 
   useEffect(() => {
     fetchData();
@@ -106,6 +109,61 @@ export const AdminDashboard = () => {
       fetchData();
     } catch (error) {
       alert(error.response?.data?.message || 'Error deleting proposal');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    setActionLoading(true);
+    try {
+      await apiClient.put(`/admin/users/${editingUser._id}`, editingUser);
+      setEditingUser(null);
+      fetchData();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error updating user');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    if (!window.confirm('Are you sure you want to permanently delete this user?')) return;
+    setActionLoading(true);
+    try {
+      await apiClient.delete(`/admin/users/${userId}`);
+      fetchData();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error deleting user');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleUpdateJob = async (e) => {
+    e.preventDefault();
+    setActionLoading(true);
+    try {
+      await apiClient.put(`/admin/jobs/${editingJob._id}`, editingJob);
+      setEditingJob(null);
+      fetchData();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error updating job');
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleUpdateProposal = async (e) => {
+    e.preventDefault();
+    setActionLoading(true);
+    try {
+      await apiClient.put(`/admin/proposals/${editingProposal._id}`, editingProposal);
+      setEditingProposal(null);
+      fetchData();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Error updating proposal');
     } finally {
       setActionLoading(false);
     }
@@ -309,24 +367,41 @@ export const AdminDashboard = () => {
                       </span>
                     </td>
                     <td style={{ padding: '16px' }}>
-                      <button 
-                        onClick={() => toggleUserStatus(u._id)}
-                        disabled={actionLoading || u._id === user._id}
-                        style={{
-                          padding: '8px 16px',
-                          borderRadius: '8px',
-                          border: 'none',
-                          cursor: u._id === user._id ? 'not-allowed' : 'pointer',
-                          background: u.isActive ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
-                          color: u.isActive ? '#ef4444' : '#059669',
-                          fontWeight: '600',
-                          opacity: actionLoading ? 0.5 : 1,
-                          transition: 'all 0.2s'
-                        }}
-                        className="btn-hover-effect"
-                      >
-                        {u.isActive ? 'Deactivate' : 'Activate'}
-                      </button>
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        <button 
+                          onClick={() => toggleUserStatus(u._id)}
+                          disabled={actionLoading || u._id === user._id}
+                          style={{
+                            padding: '8px 16px',
+                            borderRadius: '8px',
+                            border: 'none',
+                            cursor: u._id === user._id ? 'not-allowed' : 'pointer',
+                            background: u.isActive ? 'rgba(239, 68, 68, 0.1)' : 'rgba(16, 185, 129, 0.1)',
+                            color: u.isActive ? '#ef4444' : '#059669',
+                            fontWeight: '600',
+                            opacity: actionLoading ? 0.5 : 1,
+                            transition: 'all 0.2s'
+                          }}
+                          className="btn-hover-effect"
+                        >
+                          {u.isActive ? 'Deactivate' : 'Activate'}
+                        </button>
+                        <button 
+                          onClick={() => setEditingUser(u)}
+                          style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border-color)', cursor: 'pointer', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontWeight: '500', transition: 'all 0.2s' }}
+                          className="btn-hover-effect"
+                        >
+                          <Pencil size={16} /> Edit
+                        </button>
+                        <button 
+                          onClick={() => handleDeleteUser(u._id)}
+                          disabled={actionLoading || u._id === user._id}
+                          style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '8px 12px', borderRadius: '8px', border: 'none', cursor: u._id === user._id ? 'not-allowed' : 'pointer', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', fontWeight: '500', opacity: actionLoading ? 0.5 : 1, transition: 'all 0.2s' }}
+                          className="btn-hover-effect"
+                        >
+                          <XCircle size={16} /> Delete
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -414,6 +489,13 @@ export const AdminDashboard = () => {
                         className="btn-hover-effect"
                       >
                         <Eye size={16} /> View
+                      </button>
+                      <button 
+                        onClick={() => setEditingJob(job)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border-color)', cursor: 'pointer', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontWeight: '500', transition: 'all 0.2s' }}
+                        className="btn-hover-effect"
+                      >
+                        <Pencil size={16} /> Edit
                       </button>
                       <button 
                         onClick={() => deleteJob(job._id)}
@@ -509,6 +591,13 @@ export const AdminDashboard = () => {
                         className="btn-hover-effect"
                       >
                         <Eye size={16} /> View
+                      </button>
+                      <button 
+                        onClick={() => setEditingProposal(prop)}
+                        style={{ display: 'flex', alignItems: 'center', gap: '4px', padding: '8px 12px', borderRadius: '8px', border: '1px solid var(--border-color)', cursor: 'pointer', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontWeight: '500', transition: 'all 0.2s' }}
+                        className="btn-hover-effect"
+                      >
+                        <Pencil size={16} /> Edit
                       </button>
                       <button 
                         onClick={() => deleteProposal(prop._id)}
@@ -847,6 +936,182 @@ export const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Edit User Modal */}
+        <AnimatePresence>
+          {editingUser && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}
+            >
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                style={{ background: 'var(--bg-card)', padding: '40px', borderRadius: '24px', width: '100%', maxWidth: '600px', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-color)' }}
+              >
+                <button 
+                  onClick={() => setEditingUser(null)}
+                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                  className="btn-hover-effect"
+                >
+                  <X size={20} />
+                </button>
+                <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '32px' }}>Edit User</h2>
+                <form onSubmit={handleUpdateUser} style={{ display: 'grid', gap: '20px' }}>
+                  <div className="form-group">
+                    <label>Username</label>
+                    <input type="text" value={editingUser.username || ''} onChange={e => setEditingUser({...editingUser, username: e.target.value})} required />
+                  </div>
+                  <div className="form-group">
+                    <label>Email</label>
+                    <input type="email" value={editingUser.email || ''} onChange={e => setEditingUser({...editingUser, email: e.target.value})} required />
+                  </div>
+                  <div className="form-group">
+                    <label>Role</label>
+                    <select value={editingUser.role || ''} onChange={e => setEditingUser({...editingUser, role: e.target.value})} required>
+                      <option value="Client">Client</option>
+                      <option value="Freelancer">Freelancer</option>
+                      <option value="Admin">Admin</option>
+                    </select>
+                  </div>
+                  <button type="submit" disabled={actionLoading} className="btn btn-primary" style={{ marginTop: '16px', width: '100%' }}>
+                    {actionLoading ? 'Saving...' : 'Save Changes'}
+                  </button>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Edit Job Modal */}
+        <AnimatePresence>
+          {editingJob && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}
+            >
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                style={{ background: 'var(--bg-card)', padding: '40px', borderRadius: '24px', width: '100%', maxWidth: '700px', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-color)' }}
+              >
+                <button 
+                  onClick={() => setEditingJob(null)}
+                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                  className="btn-hover-effect"
+                >
+                  <X size={20} />
+                </button>
+                <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '32px' }}>Edit Job</h2>
+                <form onSubmit={handleUpdateJob} style={{ display: 'grid', gap: '20px' }}>
+                  <div className="form-group">
+                    <label>Title</label>
+                    <input type="text" value={editingJob.title || ''} onChange={e => setEditingJob({...editingJob, title: e.target.value})} required />
+                  </div>
+                  <div className="form-group">
+                    <label>Description</label>
+                    <textarea value={editingJob.description || ''} onChange={e => setEditingJob({...editingJob, description: e.target.value})} rows={4} required></textarea>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div className="form-group">
+                      <label>Budget ($)</label>
+                      <input type="number" value={editingJob.budget || ''} onChange={e => setEditingJob({...editingJob, budget: e.target.value})} required />
+                    </div>
+                    <div className="form-group">
+                      <label>Category</label>
+                      <input type="text" value={editingJob.category || ''} onChange={e => setEditingJob({...editingJob, category: e.target.value})} required />
+                    </div>
+                    <div className="form-group">
+                      <label>Experience Required</label>
+                      <select value={editingJob.experienceRequired || ''} onChange={e => setEditingJob({...editingJob, experienceRequired: e.target.value})} required>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Status</label>
+                      <select value={editingJob.status || ''} onChange={e => setEditingJob({...editingJob, status: e.target.value})} required>
+                        <option value="Open">Open</option>
+                        <option value="InProgress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" disabled={actionLoading} className="btn btn-primary" style={{ marginTop: '16px', width: '100%' }}>
+                    {actionLoading ? 'Saving...' : 'Save Changes'}
+                  </button>
+                </form>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Edit Proposal Modal */}
+        <AnimatePresence>
+          {editingProposal && (
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '20px' }}
+            >
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                style={{ background: 'var(--bg-card)', padding: '40px', borderRadius: '24px', width: '100%', maxWidth: '700px', maxHeight: '90vh', overflowY: 'auto', position: 'relative', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', border: '1px solid var(--border-color)' }}
+              >
+                <button 
+                  onClick={() => setEditingProposal(null)}
+                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s' }}
+                  className="btn-hover-effect"
+                >
+                  <X size={20} />
+                </button>
+                <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '32px' }}>Edit Proposal</h2>
+                <form onSubmit={handleUpdateProposal} style={{ display: 'grid', gap: '20px' }}>
+                  <div className="form-group">
+                    <label>Cover Letter</label>
+                    <textarea value={editingProposal.coverLetter || ''} onChange={e => setEditingProposal({...editingProposal, coverLetter: e.target.value})} rows={5} required></textarea>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                    <div className="form-group">
+                      <label>Proposed Cost ($)</label>
+                      <input type="number" value={editingProposal.proposedCost || ''} onChange={e => setEditingProposal({...editingProposal, proposedCost: e.target.value})} required />
+                    </div>
+                    <div className="form-group">
+                      <label>Experience Level</label>
+                      <select value={editingProposal.experience || ''} onChange={e => setEditingProposal({...editingProposal, experience: e.target.value})} required>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Expert">Expert</option>
+                      </select>
+                    </div>
+                    <div className="form-group">
+                      <label>Status</label>
+                      <select value={editingProposal.status || ''} onChange={e => setEditingProposal({...editingProposal, status: e.target.value})} required>
+                        <option value="Pending">Pending</option>
+                        <option value="Accepted">Accepted</option>
+                        <option value="Rejected">Rejected</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="submit" disabled={actionLoading} className="btn btn-primary" style={{ marginTop: '16px', width: '100%' }}>
+                    {actionLoading ? 'Saving...' : 'Save Changes'}
+                  </button>
+                </form>
               </motion.div>
             </motion.div>
           )}

@@ -201,14 +201,65 @@ const deleteProposal = async (req, res) => {
   }
 };
 
+// Update a user
+const updateUser = async (req, res) => {
+  try {
+    const { username, email, role } = req.body;
+    const user = await User.findByIdAndUpdate(req.params.id, { username, email, role }, { new: true, runValidators: true });
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating user', error: error.message });
+  }
+};
+
+// Delete a user
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting user', error: error.message });
+  }
+};
+
+// Update a job
+const updateJob = async (req, res) => {
+  try {
+    const { title, description, budget, category, experienceRequired, status, deadline } = req.body;
+    const job = await Job.findByIdAndUpdate(req.params.id, { title, description, budget, category, experienceRequired, status, deadline }, { new: true, runValidators: true });
+    if (!job) return res.status(404).json({ message: 'Job not found' });
+    res.status(200).json(job);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating job', error: error.message });
+  }
+};
+
+// Update a proposal
+const updateProposal = async (req, res) => {
+  try {
+    const { coverLetter, proposedCost, status, experience, proposedDeadline } = req.body;
+    const proposal = await Proposal.findByIdAndUpdate(req.params.id, { coverLetter, proposedCost, status, experience, proposedDeadline }, { new: true, runValidators: true });
+    if (!proposal) return res.status(404).json({ message: 'Proposal not found' });
+    res.status(200).json(proposal);
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating proposal', error: error.message });
+  }
+};
+
 module.exports = {
   getMetrics,
   getAllUsers,
   toggleUserStatus,
+  updateUser,
+  deleteUser,
   getDisputes,
   resolveDispute,
   getAllJobs,
+  updateJob,
   deleteJob,
   getAllProposals,
+  updateProposal,
   deleteProposal
 };
