@@ -840,23 +840,27 @@ export const AdminDashboard = () => {
               >
                 <button 
                   onClick={() => setSelectedJob(null)}
-                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s', zIndex: 10 }}
+                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', border: 'none', cursor: 'pointer', color: '#fff', padding: '10px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s', zIndex: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                   className="btn-hover-effect"
                 >
                   <X size={20} />
                 </button>
                 
                 {/* Premium Card Header */}
-                <div style={{ position: 'relative', padding: '40px 40px 32px', margin: '-40px -40px 32px -40px', background: 'linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.05) 100%)', borderBottom: '1px solid var(--border-color)', borderRadius: '24px 24px 0 0' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <span style={{ padding: '6px 14px', background: 'rgba(16, 185, 129, 0.15)', color: '#059669', borderRadius: '20px', fontSize: '13px', fontWeight: '700', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+                <div style={{ position: 'relative', padding: '50px 40px', margin: '-40px -40px 32px -40px', background: 'linear-gradient(135deg, #4361ee 0%, #7209b7 100%)', borderBottom: '1px solid var(--border-color)', borderRadius: '24px 24px 0 0', overflow: 'hidden' }}>
+                  {/* Decorative Elements */}
+                  <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '300px', height: '300px', background: 'rgba(255,255,255,0.15)', borderRadius: '50%', filter: 'blur(40px)' }}></div>
+                  <div style={{ position: 'absolute', bottom: '-20%', left: '10%', width: '200px', height: '200px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', filter: 'blur(20px)' }}></div>
+
+                  <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                    <span style={{ padding: '6px 14px', background: 'rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(4px)', color: '#fff', borderRadius: '20px', fontSize: '13px', fontWeight: '700', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
                       {selectedJob.status}
                     </span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '14px', fontWeight: '500' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255, 255, 255, 0.9)', fontSize: '14px', fontWeight: '500' }}>
                       <User size={16} /> {selectedJob.clientId?.username}
                     </span>
                   </div>
-                  <h2 style={{ fontSize: '32px', fontWeight: '800', lineHeight: '1.2', color: 'var(--text-primary)', paddingRight: '40px' }}>
+                  <h2 style={{ position: 'relative', zIndex: 1, fontSize: '36px', fontWeight: '800', lineHeight: '1.2', color: '#fff', paddingRight: '40px', textShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
                     {selectedJob.title}
                   </h2>
                 </div>
@@ -926,24 +930,28 @@ export const AdminDashboard = () => {
               >
                 <button 
                   onClick={() => setSelectedProposal(null)}
-                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'var(--bg-secondary)', border: 'none', cursor: 'pointer', color: 'var(--text-secondary)', padding: '8px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s', zIndex: 10 }}
+                  style={{ position: 'absolute', top: '24px', right: '24px', background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(10px)', border: 'none', cursor: 'pointer', color: '#fff', padding: '10px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.2s', zIndex: 10, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                   className="btn-hover-effect"
                 >
                   <X size={20} />
                 </button>
                 
                 {/* Premium Card Header */}
-                <div style={{ position: 'relative', padding: '40px 40px 32px', margin: '-40px -40px 32px -40px', background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(67, 97, 238, 0.05) 100%)', borderBottom: '1px solid var(--border-color)', borderRadius: '24px 24px 0 0' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-                    <span style={{ padding: '6px 14px', background: 'rgba(67, 97, 238, 0.15)', color: '#4361ee', borderRadius: '20px', fontSize: '13px', fontWeight: '700', border: '1px solid rgba(67, 97, 238, 0.2)' }}>
+                <div style={{ position: 'relative', padding: '50px 40px', margin: '-40px -40px 32px -40px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', borderBottom: '1px solid var(--border-color)', borderRadius: '24px 24px 0 0', overflow: 'hidden' }}>
+                  {/* Decorative Elements */}
+                  <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '300px', height: '300px', background: 'rgba(255,255,255,0.15)', borderRadius: '50%', filter: 'blur(40px)' }}></div>
+                  <div style={{ position: 'absolute', bottom: '-20%', left: '10%', width: '200px', height: '200px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%', filter: 'blur(20px)' }}></div>
+
+                  <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+                    <span style={{ padding: '6px 14px', background: 'rgba(255, 255, 255, 0.2)', backdropFilter: 'blur(4px)', color: '#fff', borderRadius: '20px', fontSize: '13px', fontWeight: '700', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
                       {selectedProposal.status}
                     </span>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-secondary)', fontSize: '14px', fontWeight: '500' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'rgba(255, 255, 255, 0.9)', fontSize: '14px', fontWeight: '500' }}>
                       <User size={16} /> {selectedProposal.freelancerId?.username}
                     </span>
                   </div>
-                  <h2 style={{ fontSize: '24px', fontWeight: '800', lineHeight: '1.3', color: 'var(--text-primary)', paddingRight: '40px', display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                    <Briefcase size={28} style={{ color: 'var(--primary-action)', flexShrink: 0, marginTop: '2px' }} />
+                  <h2 style={{ position: 'relative', zIndex: 1, fontSize: '28px', fontWeight: '800', lineHeight: '1.3', color: '#fff', paddingRight: '40px', display: 'flex', alignItems: 'flex-start', gap: '12px', textShadow: '0 2px 10px rgba(0,0,0,0.1)' }}>
+                    <Briefcase size={28} style={{ color: 'rgba(255, 255, 255, 0.9)', flexShrink: 0, marginTop: '2px' }} />
                     {selectedProposal.jobId?.title || 'Deleted Job'}
                   </h2>
                 </div>
