@@ -21,7 +21,7 @@
 <img width="1909" height="912" alt="image" src="https://github.com/user-attachments/assets/5e39aba2-9931-4816-8267-d418a0840d34" />
 
 
-# Admin Dashbo
+# Admin Dashboa
 
 
 <img width="1903" height="922" alt="image" src="https://github.com/user-attachments/assets/c8987e33-151d-4d11-b452-31a7366cd947" />
