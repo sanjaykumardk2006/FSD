@@ -15,7 +15,7 @@
 <img width="1907" height="912" alt="image" src="https://github.com/user-attachments/assets/e2c169e5-a875-4848-8963-b15b0365c8fc" />
 
 
-# Signup as the freelancer or the 
+# Signup as the freelancer or the cus
 
 
 <img width="1909" height="912" alt="image" src="https://github.com/user-attachments/assets/5e39aba2-9931-4816-8267-d418a0840d34" />
